@@ -1,11 +1,15 @@
+// ...existing code...
 import React from "react";
+interface SectionTitleProps {
+  text: string;
+}
 
-export default function SectionTitle({ text }) {
+export default function SectionTitle({ text }: SectionTitleProps) {
   return (
     <h2
       className="
       text-xl md:text-2xl font-extrabold 
-      text-[#2f5c3f] 
+      text-white 
       mb-4 
       tracking-tight
     "
@@ -14,3 +18,4 @@ export default function SectionTitle({ text }) {
     </h2>
   );
 }
+// ...existing code...
