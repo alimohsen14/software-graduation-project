@@ -5,6 +5,7 @@ import { SignupPage } from "./pages/SIgnupPage";
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
 import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 import { GoogleRedirectHandler } from "./pages/GoogleRedirectHandler";
+import PalestineAIPage from "./pages/PalestineAIPage";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/google-redirect" element={<GoogleRedirectHandler />} />
+        <Route path="/palestine-ai" element={<PalestineAIPage />} />
       </Routes>
     </BrowserRouter>
   );
