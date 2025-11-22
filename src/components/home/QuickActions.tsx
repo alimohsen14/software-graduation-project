@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 // ...existing code...
 type Action = {
   key: string;
@@ -35,6 +37,7 @@ const ACTIONS: Action[] = [
 ];
 
 export default function QuickAction(): React.ReactElement {
+  const navigate = useNavigate();
   return (
     <section
       aria-label="Quick actions"
@@ -46,7 +49,11 @@ export default function QuickAction(): React.ReactElement {
             <button
               key={a.key}
               type="button"
-              onClick={() => {}}
+              onClick={() => {
+                if (a.key === "ai") {
+                  navigate("/palestine-ai");
+                }
+              }}
               className="w-full text-left bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#CDA15A]/20"
               aria-label={a.title}
             >
