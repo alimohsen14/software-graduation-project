@@ -2,19 +2,23 @@ import React from "react";
 
 interface NavbarProps {
   onMenuClick: () => void;
+  // دالة اختيارية لأنها مش ضرورية بكل الصفحات، بس بصفحة الـ AI
+  onToggleAISidebar?: () => void;
 }
 
-export default function Navbar({ onMenuClick }: NavbarProps) {
+export default function Navbar({
+  onMenuClick,
+  onToggleAISidebar,
+}: NavbarProps) {
   return (
     <header className="w-full bg-[#eaf5ea] border-b-2 border-emerald-700/30 shadow-sm">
       <div className="w-full px-6">
         <div className="h-16 flex items-center justify-between">
           {/* Left side: Hamburger + Brand */}
           <div className="flex items-center gap-3">
-            {/* Hamburger Menu (mobile only) */}
             <button
               onClick={onMenuClick}
-              className="md:hidden p-2 rounded-md hover:bg-emerald-100 focus:outline-none"
+              className="p-2 rounded-md hover:bg-emerald-100 focus:outline-none"
               aria-label="Open Sidebar"
             >
               <svg
@@ -36,12 +40,40 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
             </span>
           </div>
 
-          {/* Right - Icons */}
+          {/* Right side icons */}
           <div className="flex items-center gap-3">
-            {/* Notification Bell */}
+            {/* --- AI Sidebar Toggle Button (Visible on Mobile Only) --- */}
+            {onToggleAISidebar && (
+              <button
+                onClick={onToggleAISidebar}
+                className="block md:hidden p-2 rounded-full hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+                aria-label="Toggle AI Sidebar"
+              >
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-100 border border-emerald-200 text-[#2f5c3f]">
+                  {/* أيقونة القائمة الجانبية اليسرى/الشات */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 6h16M4 12h16m-7 6h7"
+                    />
+                  </svg>
+                </span>
+              </button>
+            )}
+
+            {/* Notification (Always Visible Now) */}
             <button
               type="button"
               aria-label="Notifications"
+              // شلت hidden sm:block ورجعته يظهر دايماً
               className="p-2 rounded-full hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
             >
               <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/60 border border-emerald-200">
@@ -74,7 +106,7 @@ export default function Navbar({ onMenuClick }: NavbarProps) {
               </span>
             </button>
 
-            {/* Globe Icon */}
+            {/* Language */}
             <button
               type="button"
               aria-label="Select language"

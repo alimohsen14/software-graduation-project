@@ -23,6 +23,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
 
   function handleTouchEnd(e: React.TouchEvent) {
     if (touchStartX.current === null) return;
+
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartX.current - touchEndX;
 
@@ -39,7 +40,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
       {isOpen && (
         <div
           onClick={closeSidebar}
-          className="fixed inset-0 bg-black/20 z-30 md:hidden"
+          className="fixed inset-0 bg-black/30 z-30"
         />
       )}
 
@@ -47,18 +48,19 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         className={`
-          fixed md:sticky top-0 left-0 h-screen w-60 z-40
+          fixed top-0 left-0 h-screen w-60 z-40
           transform transition-transform duration-300
-          ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
           bg-[#eaf5ea]
           shadow-lg
         `}
       >
+        {/* Palestine flag line */}
         <div
           className="absolute left-0 top-0 bottom-4 w-2 rounded-r-2xl"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(47,92,63,0.9) 0%, rgba(255,255,255,0.85) 33%, rgba(0,0,0,0.6) 66%, rgba(217,56,42,0.9) 100%)",
+              "linear-gradient(to bottom, black 0%, white 33%, #007A3D 66%, #CE1126 100%)",
           }}
         />
 
@@ -102,6 +104,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
 }
 
 /* Icons */
+
 function ProfileIcon({ className = "" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none">

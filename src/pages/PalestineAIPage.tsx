@@ -6,7 +6,6 @@ import AISuggestions from "../components/ai/AISuggestions";
 import AIChatInput from "../components/ai/AIChatInput";
 import AIMessageBubble from "../components/ai/AIMessageBubble";
 
-// ...existing code...
 type Message = {
   id: string;
   text: string;
@@ -14,51 +13,42 @@ type Message = {
   createdAt: number;
 };
 
-export default function PalestineAIPage(): React.ReactElement {
+type AIPageProps = {
+  setIsSidebarOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+  // استقبلنا البروبس الخاصة بالـ AI Sidebar
+  isAISidebarOpen?: boolean;
+  toggleAISidebar?: () => void;
+};
+
+function AIPageContent({
+  setIsSidebarOpen,
+  isAISidebarOpen = false,
+  toggleAISidebar,
+}: AIPageProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // إغلاق القائمة الرئيسية عند التحميل (اختياري)
   useEffect(() => {
-    const selectors = [
-      "#sidebar",
-      ".sidebar",
-      ".main-sidebar",
-      "[data-sidebar]",
-    ];
-    const added: Element[] = [];
-
-    selectors.forEach((sel) => {
-      const el = document.querySelector(sel);
-      if (el) {
-        el.classList.add("hidden");
-        added.push(el);
-      }
-    });
-
-    return () => {
-      added.forEach((el) => el.classList.remove("hidden"));
-    };
-  }, []);
+    if (setIsSidebarOpen) setIsSidebarOpen(false);
+  }, [setIsSidebarOpen]);
 
   function handleSend() {
-    const text = input.trim();
-    if (!text) return;
-    setIsLoading(true);
+    if (!input.trim()) return;
 
     const msg: Message = {
       id: String(Date.now()),
-      text,
+      text: input,
       role: "user",
       createdAt: Date.now(),
     };
 
-    setMessages((s) => [...s, msg]);
+    setMessages((prev) => [...prev, msg]);
     setInput("");
+    setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 600);
+    setTimeout(() => setIsLoading(false), 600);
   }
 
   function handleSuggestionSelect(text: string) {
@@ -67,34 +57,38 @@ export default function PalestineAIPage(): React.ReactElement {
   }
 
   return (
-    <DashboardLayout>
-      <div
-        dir="rtl"
-        style={{ background: "#3e6347" }}
-        className="min-h-screen text-white"
-      >
-        <AISidebar />
+    <div
+      dir="rtl"
+      style={{ background: "#3e6347" }}
+      className="min-h-screen text-white relative rounded-2xl md:ml-[190px] transition-all duration-300"
+    >
+      {/* 
+         ملاحظة: ضفت md:ml-[190px] للـ container 
+         عشان المحتوى ما ييجي تحت الـ Sidebar بالديسك توب
+         لأن الـ Sidebar ماخد fixed
+      */}
 
-        <main className="mx-auto max-w-[900px] px-4 py-8 md:py-12">
-          <div className="flex flex-col gap-6">
-            {messages.length === 0 && <AIWelcomeBox />}
+      {/* AI Sidebar */}
+      <AISidebar
+        isOpen={isAISidebarOpen}
+        toggle={toggleAISidebar || (() => {})}
+      />
 
-            <section
-              aria-live="polite"
-              className="flex flex-col gap-3"
-              style={{ minHeight: 240 }}
-            >
-              {messages.map((m) => (
-                <AIMessageBubble
-                  key={m.id}
-                  message={m.text}
-                  sender={m.role === "user" ? "user" : "ai"}
-                />
-              ))}
-            </section>
-          </div>
-        </main>
+      {/* Content */}
+      <main className="mx-auto max-w-[900px] px-4 py-8 pb-32">
+        {messages.length === 0 && <AIWelcomeBox />}
 
+        {messages.map((m) => (
+          <AIMessageBubble
+            key={m.id}
+            message={m.text}
+            sender={m.role === "user" ? "user" : "ai"}
+          />
+        ))}
+      </main>
+
+      <div className=" md:pr-[190px]">
+        {/*  Container for input area to respect sidebar on desktop */}
         <AISuggestions onSelect={handleSuggestionSelect} />
 
         <AIChatInput
@@ -104,7 +98,22 @@ export default function PalestineAIPage(): React.ReactElement {
           isLoading={isLoading}
         />
       </div>
+    </div>
+  );
+}
+
+export default function PalestineAIPage() {
+  // هون عرفنا الستيت عشان نقدر نتحكم فيه من النافبار ومن السايدبار نفسه
+  const [isAiSidebarOpen, setAiSidebarOpen] = useState(false);
+
+  return (
+    <DashboardLayout
+      onToggleAISidebar={() => setAiSidebarOpen((prev) => !prev)}
+    >
+      <AIPageContent
+        isAISidebarOpen={isAiSidebarOpen}
+        toggleAISidebar={() => setAiSidebarOpen((prev) => !prev)}
+      />
     </DashboardLayout>
   );
 }
-// ...existing code...
