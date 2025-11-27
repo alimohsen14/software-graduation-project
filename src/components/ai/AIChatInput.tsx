@@ -15,12 +15,13 @@ export default function AIChatInput({
 }: Props): React.ReactElement {
   const taRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // auto-resize textarea
+  // Auto resize textarea
   useEffect(() => {
     const ta = taRef.current;
     if (!ta) return;
-    ta.style.height = "auto";
-    const maxH = 240; // px max height
+
+    ta.style.height = "36px"; // starting height
+    const maxH = 180;
     ta.style.height = Math.min(ta.scrollHeight, maxH) + "px";
   }, [value]);
 
@@ -38,10 +39,10 @@ export default function AIChatInput({
       style={{ maxWidth: "700px" }}
     >
       <div
-        className="flex items-center gap-3 p-3 rounded-[22px] shadow-lg"
+        className="flex items-center gap-3 px-3 py-2 rounded-[22px] shadow-lg"
         style={{
           background: "#456a53",
-        }} /* slightly lighter than page #3e6347 */
+        }}
       >
         <textarea
           ref={taRef}
@@ -50,8 +51,9 @@ export default function AIChatInput({
           onKeyDown={handleKeyDown}
           placeholder="اكتب سؤالك عن فلسطين هنا..."
           aria-label="اكتب سؤالك عن فلسطين هنا"
-          className="flex-1 resize-none bg-transparent text-white placeholder-white/70 text-base md:text-lg leading-snug outline-none border-none min-h-[44px] max-h-[240px] p-1"
+          className="flex-1 resize-none bg-transparent text-white placeholder-white/70 text-sm md:text-base leading-snug outline-none border-none min-h-[36px] max-h-[180px] p-1"
           style={{ direction: "rtl" }}
+          rows={1}
         />
 
         <button
@@ -59,7 +61,7 @@ export default function AIChatInput({
           onClick={onSend}
           disabled={isLoading || value.trim().length === 0}
           aria-label="إرسال"
-          className={`w-12 h-12 rounded-full flex items-center justify-center transition-shadow ${
+          className={`w-10 h-10 rounded-full flex items-center justify-center transition-shadow ${
             isLoading || value.trim().length === 0
               ? "opacity-60 cursor-not-allowed"
               : "hover:brightness-110"
@@ -68,7 +70,7 @@ export default function AIChatInput({
         >
           {isLoading ? (
             <svg
-              className="w-5 h-5 text-white animate-spin"
+              className="w-4 h-4 text-white animate-spin"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -90,7 +92,7 @@ export default function AIChatInput({
             </svg>
           ) : (
             <svg
-              className="w-5 h-5 text-white"
+              className="w-4 h-4 text-white"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"

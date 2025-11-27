@@ -1,28 +1,45 @@
-import React, { useState, ReactNode } from "react";
+import React, { useState } from "react";
 import Navbar from "../navbar/Navbar";
 import Sidebar from "../sidebar/Sidebar";
 
+type WithSidebarControl = {
+  setIsSidebarOpen?: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 interface DashboardLayoutProps {
-  children: ReactNode;
+  children: React.ReactElement<WithSidebarControl>;
+  // البروب الجديد عشان نمرره للنافبار
+  onToggleAISidebar?: () => void;
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function DashboardLayout({
+  children,
+  onToggleAISidebar,
+}: DashboardLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="flex min-h-screen bg-[#3e6347]">
+      {/* القائمة الرئيسية اليسرى */}
       <Sidebar
         isOpen={isSidebarOpen}
         closeSidebar={() => setIsSidebarOpen(false)}
       />
 
       <div className="flex-1 flex flex-col">
-        <div className="fixed top-0 left-0 md:left-60 right-0 z-50 bg-[#e8f2e5] shadow-sm">
-          <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
+        {/* Navbar */}
+        <div className="fixed top-0 left-0 right-0 z-50 bg-[#e8f2e5] shadow-sm">
+          <Navbar
+            onMenuClick={() => setIsSidebarOpen((prev) => !prev)}
+            onToggleAISidebar={onToggleAISidebar} // تمرير الدالة للنافبار
+          />
         </div>
 
+        {/* Content */}
         <main className="mt-16 px-4 md:px-8 lg:px-10">
-          <div className="max-w-6xl mx-auto">{children}</div>
+          <div className="max-w-6xl mx-auto">
+            {React.cloneElement(children, { setIsSidebarOpen })}
+          </div>
         </main>
       </div>
     </div>

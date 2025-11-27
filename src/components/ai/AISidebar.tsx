@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
-export default function AISidebar(): React.ReactElement {
+interface Props {
+  isOpen: boolean;
+  toggle: () => void;
+}
+
+export default function AISidebar({
+  isOpen,
+  toggle,
+}: Props): React.ReactElement {
   const [active, setActive] = useState<string | null>(null);
 
   const items = [
@@ -11,71 +19,58 @@ export default function AISidebar(): React.ReactElement {
   ];
 
   return (
-    <aside
-      aria-label="AI Sidebar"
-      className="hidden md:block fixed top-0 right-0 h-screen z-40 w-[180px] flex flex-col"
-    >
-      {/* outer rounded container to match Sidebar shape */}
-      <div
-        className="h-full rounded-l-2xl overflow-hidden shadow-lg"
-        style={{ background: "#3e6347" }}
+    <>
+      {/* Optional: Backdrop for mobile only when open */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={toggle}
+        />
+      )}
+
+      <aside
+        aria-label="AI Sidebar"
+        className={`
+        fixed right-0 top-16 h-[calc(100vh-64px)] w-[240px] sm:w-[260px] md:w-[190px]
+        bg-[#3e6347] shadow-lg
+        transform transition-transform duration-300 ease-in-out border-l border-emerald-800/20
+        ${
+          isOpen
+            ? "translate-x-0 z-40 pointer-events-auto"
+            : "translate-x-full z-10 pointer-events-none"
+        }
+        md:translate-x-0 md:pointer-events-auto md:z-30 md:border-none
+      `}
       >
-        <div className="px-4 py-6 flex flex-col h-full text-white">
-          {/* Header: flag circle + title */}
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="w-10 h-10 rounded-full flex items-center justify-center ring-2 ring-white/15"
-              style={{ background: "#fff" }}
-              aria-hidden
-            >
-              {/* simple circular Palestinian flag (visual only) */}
-              <svg
-                className="w-8 h-8 rounded-full"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden
-              >
-                <defs>
-                  <clipPath id="c">
-                    <circle cx="12" cy="12" r="12" />
-                  </clipPath>
-                </defs>
-                <g clipPath="url(#c)">
-                  <rect width="24" height="24" fill="#fff" />
-                  <path d="M0 0v24h24V0H0z" fill="#fff" />
-                  <path d="M0 0h24v8H0z" fill="#000" />
-                  <path d="M0 8h24v8H0z" fill="#fff" />
-                  <path d="M0 16h24v8H0z" fill="#d9392a" />
-                  <path d="M0 0l9.7 12L0 24z" fill="#2f5c3f" />
-                </g>
-              </svg>
-            </div>
+        <div className="h-full overflow-hidden px-4 py-6 flex flex-col text-white">
+          {/* Header: title + mobile close button */}
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-semibold">Palestine AI</span>
 
-            <div>
-              <div className="text-sm font-semibold leading-none">
-                Palestine AI
-              </div>
-            </div>
-          </div>
-
-          {/* New Chat button */}
-          <div className="mb-4">
+            {/* Close shown on mobile */}
             <button
-              type="button"
-              className="w-full px-3 py-2 rounded-full text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-white/20 transition"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.06)",
-              }}
+              onClick={toggle}
+              aria-label="Close AI sidebar"
+              className="md:hidden text-white hover:bg-white/10 w-7 h-7 rounded-full flex items-center justify-center transition"
             >
-              + New Chat
+              ✕
             </button>
           </div>
 
-          {/* divider */}
+          {/* New Chat */}
+          <button
+            type="button"
+            className="w-full mb-4 px-3 py-2 rounded-full text-sm font-medium text-white transition hover:bg-white/10"
+            style={{ backgroundColor: "rgba(255,255,255,0.06)" }}
+          >
+            + New Chat
+          </button>
+
           <div className="border-t border-white/10 my-3" />
 
-          {/* list */}
-          <nav className="flex-1 overflow-y-auto">
+          {/* Navigation list */}
+          {/* التعديل هون: ضفت overflow-x-hidden عشان يمنع السكرول اللي بالعرض */}
+          <nav className="flex-1 overflow-y-auto overflow-x-hidden">
             <ul className="flex flex-col gap-2">
               {items.map((label) => {
                 const isActive = active === label;
@@ -83,10 +78,7 @@ export default function AISidebar(): React.ReactElement {
                   <li key={label}>
                     <button
                       onClick={() => setActive(label)}
-                      className={`w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg transition focus:outline-none`}
-                      // active bg & hover use subtle transparent green to match requirement
-                      // tailwind arbitrary color for hover/bg
-                      // active state uses inline style fallback for older setups
+                      className="w-full text-right px-3 py-2 rounded-lg transition"
                       style={
                         isActive
                           ? {
@@ -96,29 +88,7 @@ export default function AISidebar(): React.ReactElement {
                           : { color: "#fff" }
                       }
                     >
-                      <span
-                        className="flex-shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md"
-                        aria-hidden
-                      >
-                        {/* small chat icon (stroke uses currentColor which is white here) */}
-                        <svg
-                          className="w-4 h-4"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden
-                        >
-                          <path
-                            d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-                            strokeWidth="1.4"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
-
-                      <span className="text-sm truncate">{label}</span>
+                      <span className="text-sm truncate block">{label}</span>
                     </button>
                   </li>
                 );
@@ -126,12 +96,11 @@ export default function AISidebar(): React.ReactElement {
             </ul>
           </nav>
 
-          <div className="mt-auto text-xs text-white/80 pt-4">
-            {/* small footer text to match Sidebar style */}
+          <div className="mt-auto text-xs text-white/80 pt-4 text-center">
             Palestine3D AI
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }

@@ -33,6 +33,7 @@ export function HomePage() {
   const [user, setUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -72,23 +73,25 @@ export function HomePage() {
 
   return (
     <DashboardLayout>
-      {/* Welcome Section */}
-      <WelcomeCard name={user?.name ?? "User"} />
+      <div>
+        {/* Welcome Section */}
+        <WelcomeCard name={user?.name ?? "User"} />
 
-      {/* Quick Access Buttons */}
-      <QuickActions />
+        {/* Quick Access Buttons */}
+        <QuickActions />
 
-      {/* Featured 3D Models */}
-      <SectionTitle text="Featured 3D Models" />
-      <FeaturedModelsSection />
+        {/* Featured 3D Models */}
+        <SectionTitle text="Featured 3D Models" />
+        <FeaturedModelsSection />
 
-      {/* Official Store Products */}
-      <SectionTitle text="From Our Store" />
-      <StoreSection />
+        {/* Official Store Products */}
+        <SectionTitle text="From Our Store" />
+        <StoreSection />
 
-      {/* Heritage Section */}
-      <SectionTitle text="Discover Our Heritage" />
-      <HeritageSection />
+        {/* Heritage Section */}
+        <SectionTitle text="Discover Our Heritage" />
+        <HeritageSection />
+      </div>
     </DashboardLayout>
   );
 }
