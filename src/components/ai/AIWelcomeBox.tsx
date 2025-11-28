@@ -1,6 +1,14 @@
 import React from "react";
 
-export default function AIWelcomeBox(): React.ReactElement {
+// ضفنا تعريف للخصائص عشان نستقبل الاسم
+type Props = {
+  userName?: string;
+};
+
+export default function AIWelcomeBox({ userName }: Props): React.ReactElement {
+  // إذا الاسم مش واصل لسا، بنكتب "يا صديقي" كاحتياط
+  const displayName = userName ? `يا ${userName}` : "بك";
+
   return (
     <section
       aria-label="AI welcome box"
@@ -8,7 +16,7 @@ export default function AIWelcomeBox(): React.ReactElement {
       className="mx-auto max-w-[700px] p-6 md:p-8 bg-[#FBF7EF] rounded-[24px] shadow-lg text-[#21492f]"
     >
       <h3 className="text-lg md:text-2xl font-extrabold mb-3 leading-tight">
-        أهلًا يا علي <span aria-hidden>🤍</span>
+        أهلًا {displayName} <span aria-hidden>🤍</span>
       </h3>
 
       <p className="text-sm md:text-base leading-relaxed">
