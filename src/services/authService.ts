@@ -84,3 +84,8 @@ export const resetPassword = async (token: string, newPassword: string) => {
     newPassword,
   });
 };
+
+/* ✅ أضفنا هاد الجزء فقط بدون لمس أي كود فوق */
+export const getToken = (): string | null => {
+  return localStorage.getItem("accessToken");
+};
