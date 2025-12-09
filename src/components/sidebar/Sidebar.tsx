@@ -1,21 +1,35 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { FiUser, FiCpu, FiShoppingBag, FiUsers, FiBook } from "react-icons/fi";
+import type { IconType } from "react-icons";
+import { useTranslation } from "react-i18next";
 
 interface SidebarProps {
   isOpen: boolean;
   closeSidebar: () => void;
 }
 
+type SidebarItem = {
+  key: string;
+  label: string;
+  Icon: IconType;
+};
+
 export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
+  const { t, i18n } = useTranslation();
   const [active, setActive] = useState("Profile");
   const touchStartX = useRef<number | null>(null);
+  const navigate = useNavigate();
 
-  const items = [
-    { key: "Profile", label: "Profile", icon: ProfileIcon },
-    { key: "AI", label: "AI System", icon: AiIcon },
-    { key: "Official", label: "Official Store", icon: StoreIcon },
-    { key: "Community", label: "Community Store", icon: CommunityIcon },
-    { key: "Library", label: "Heritage Library", icon: LibraryIcon },
+  const items: SidebarItem[] = [
+    { key: "Profile", label: t("sidebar.profile"), Icon: FiUser },
+    { key: "AI", label: t("sidebar.aiSystem"), Icon: FiCpu },
+    { key: "Official", label: t("sidebar.officialStore"), Icon: FiShoppingBag },
+    { key: "Community", label: t("sidebar.communityForum"), Icon: FiUsers },
+    { key: "Library", label: t("sidebar.heritageLibrary"), Icon: FiBook },
   ];
+
+  const direction = i18n.dir();
 
   function handleTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX;
@@ -23,20 +37,14 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
 
   function handleTouchEnd(e: React.TouchEvent) {
     if (touchStartX.current === null) return;
-
     const touchEndX = e.changedTouches[0].clientX;
     const diff = touchStartX.current - touchEndX;
-
-    if (diff > 50) {
-      closeSidebar();
-    }
-
+    if (diff > 50) closeSidebar();
     touchStartX.current = null;
   }
 
   return (
     <>
-      {/* Overlay */}
       {isOpen && (
         <div
           onClick={closeSidebar}
@@ -48,47 +56,58 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         className={`
-          fixed top-0 left-0 h-screen w-60 z-40
-          transform transition-transform duration-300
-          ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          bg-[#eaf5ea]
-          shadow-lg
+          fixed top-0
+          ${direction === "rtl" ? "right-0" : "left-0"}
+          h-screen w-60 z-40 transform transition-transform duration-300
+          ${
+            isOpen
+              ? "translate-x-0"
+              : direction === "rtl"
+              ? "translate-x-full"
+              : "-translate-x-full"
+          }
+          bg-[#eaf5ea] shadow-lg
         `}
+        dir={direction}
       >
-        {/* Palestine flag line */}
+        {/* Flag stripe */}
         <div
-          className="absolute left-0 top-0 bottom-4 w-2 rounded-r-2xl"
+          className={`
+            absolute ${direction === "rtl" ? "right-0 rounded-l-2xl" : "left-0 rounded-r-2xl"}
+            top-0 bottom-4 w-2
+          `}
           style={{
             background:
               "linear-gradient(to bottom, black 0%, white 33%, #007A3D 66%, #CE1126 100%)",
           }}
         />
 
-        <div className="h-full pl-5 pr-4 py-6 flex flex-col">
+        <div className="h-full px-5 py-6 flex flex-col">
           <div className="text-xl font-extrabold text-[#2f5c3f] mb-6">
             Palestine3D
           </div>
 
           <nav className="flex flex-col gap-2">
-            {items.map((it) => {
-              const Icon = it.icon;
-              const isActive = active === it.key;
+            {items.map(({ key, label, Icon }) => {
+              const isActive = active === key;
 
               return (
                 <button
-                  key={it.key}
+                  key={key}
                   onClick={() => {
-                    setActive(it.key);
+                    if (key === "Profile") navigate("/profile");
+                    if (key === "AI") navigate("/palestine-ai");
+                    setActive(key);
                     closeSidebar();
                   }}
-                  className={`w-full text-left flex items-center gap-3 px-3 py-2 rounded-lg ${
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg ${
                     isActive
                       ? "bg-[#dff3e8] text-[#21492f]"
                       : "text-[#2f5c3f] hover:bg-[#f1fbf4]"
                   }`}
                 >
                   <Icon className="w-5 h-5" />
-                  <span className="text-sm font-medium">{it.label}</span>
+                  <span className="text-sm font-medium">{label}</span>
                 </button>
               );
             })}
@@ -100,79 +119,5 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
         </div>
       </aside>
     </>
-  );
-}
-
-/* Icons */
-
-function ProfileIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 12a4 4 0 100-8 4 4 0 000 8z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path d="M4 20a8 8 0 0116 0" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function AiIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <rect
-        x="3"
-        y="3"
-        width="18"
-        height="18"
-        rx="3"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-      <path d="M8 12h8M8 8h8M8 16h8" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
-function StoreIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M3 9.5h18v9a1 1 0 01-1 1H4a1 1 0 01-1-1v-9z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-      <path d="M3 9.5l2-4h14l2 4" stroke="currentColor" strokeWidth="1.4" />
-    </svg>
-  );
-}
-
-function CommunityIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 11a4 4 0 100-8 4 4 0 000 8z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-      <path
-        d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-    </svg>
-  );
-}
-
-function LibraryIcon({ className = "" }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M4 19.5V5.5h6v14M14 19.5V3.5h6v16"
-        stroke="currentColor"
-        strokeWidth="1.4"
-      />
-    </svg>
   );
 }

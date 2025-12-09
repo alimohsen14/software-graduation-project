@@ -1,8 +1,10 @@
-import React from "react";
+// src/components/Navbar/Navbar.tsx
+import React, { useState, useRef, useEffect } from "react";
+import { FiMenu, FiBell, FiUser, FiGlobe } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 interface NavbarProps {
   onMenuClick: () => void;
-  // دالة اختيارية لأنها مش ضرورية بكل الصفحات، بس بصفحة الـ AI
   onToggleAISidebar?: () => void;
 }
 
@@ -10,117 +12,108 @@ export default function Navbar({
   onMenuClick,
   onToggleAISidebar,
 }: NavbarProps) {
+  const { t, i18n } = useTranslation();
+  const [showLanguageMenu, setShowLanguageMenu] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const toggleLanguageMenu = () => {
+    setShowLanguageMenu((prev) => !prev);
+  };
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    document.body.dir = lng === "ar" ? "rtl" : "ltr";
+    setShowLanguageMenu(false);
+  };
+
+  // closes dropdown if clicked outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowLanguageMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <header className="w-full bg-[#eaf5ea] border-b-2 border-emerald-700/30 shadow-sm">
       <div className="w-full px-6">
         <div className="h-16 flex items-center justify-between">
-          {/* Left side: Hamburger + Brand */}
+          
+          {/* Menu + Brand */}
           <div className="flex items-center gap-3">
             <button
               onClick={onMenuClick}
-              className="p-2 rounded-md hover:bg-emerald-100 focus:outline-none"
-              aria-label="Open Sidebar"
+              className="p-2 rounded-md hover:bg-emerald-100 transition"
             >
-              <svg
-                className="w-6 h-6 text-[#2f5c3f]"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <FiMenu className="w-6 h-6 text-[#2f5c3f]" />
             </button>
 
-            <span className="text-2xl sm:text-3xl font-extrabold text-[#2f5c3f] tracking-tight">
+            <span className="text-2xl sm:text-3xl font-extrabold text-[#2f5c3f]">
               Palestine3D
             </span>
           </div>
 
-          {/* Right side icons */}
-          <div className="flex items-center gap-3">
-            {/* --- AI Sidebar Toggle Button (Visible on Mobile Only) --- */}
-            {onToggleAISidebar && (
-              <button
-                onClick={onToggleAISidebar}
-                className="block md:hidden p-2 rounded-full hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
-                aria-label="Toggle AI Sidebar"
-              >
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-emerald-100 border border-emerald-200 text-[#2f5c3f]">
-                  {/* أيقونة القائمة الجانبية اليسرى/الشات */}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4 6h16M4 12h16m-7 6h7"
-                    />
-                  </svg>
-                </span>
-              </button>
-            )}
-
-            {/* Notification (Always Visible Now) */}
-            <button
-              type="button"
-              aria-label="Notifications"
-              // شلت hidden sm:block ورجعته يظهر دايماً
-              className="p-2 rounded-full hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
-            >
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/60 border border-emerald-200">
-                <svg
-                  className="w-5 h-5 text-[#2f5c3f]"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 17h5l-1.405-1.405
-                    A2.032 2.032 0 0118 14.158V11
-                    a6.002 6.002 0 00-4-5.659V4
-                    a2 2 0 10-4 0v1.341
-                    C7.67 7.165 6 9.388 6 12v2.159
-                    c0 .538-.214 1.055-.595 1.436
-                    L4 17h11z"
-                  />
-                  <path
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9.5 20a2.5 2.5 0 005 0"
-                  />
-                </svg>
+          {/* Icons */}
+          <div className="flex items-center gap-3 relative" ref={dropdownRef}>
+            {/* Notifications */}
+            <button className="p-2 hover:bg-emerald-100 rounded-full transition">
+              <span className="inline-flex items-center justify-center w-9 h-9 bg-white/60 border border-emerald-200 rounded-full">
+                <FiBell className="w-5 h-5 text-[#2f5c3f]" />
               </span>
             </button>
 
-            {/* Language */}
+            {/* Language Selector */}
             <button
-              type="button"
-              aria-label="Select language"
-              className="p-2 rounded-full hover:bg-emerald-100 focus:outline-none focus:ring-2 focus:ring-emerald-300 transition"
+              onClick={toggleLanguageMenu}
+              aria-label={t("navbar.changeLanguage")}
+              className="p-2 hover:bg-emerald-100 rounded-full transition focus:ring-2 focus:ring-emerald-300"
             >
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/60 border border-emerald-200 text-[#2f5c3f]">
-                <svg
-                  className="w-5 h-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
+              <span className="inline-flex items-center justify-center w-9 h-9 bg-white/60 border border-emerald-200 rounded-full">
+                <FiGlobe className="w-5 h-5 text-[#2f5c3f]" />
+              </span>
+            </button>
+
+            {/* Dropdown Menu */}
+            {showLanguageMenu && (
+              <div
+                className={`absolute mt-12 ${
+                  i18n.language === "ar" ? "left-0" : "right-0"
+                } bg-white shadow-lg border rounded-lg w-32 p-2 z-50`}
+              >
+                <button
+                  onClick={() => changeLanguage("en")}
+                  className={`block w-full text-left px-3 py-2 rounded ${
+                    i18n.language === "en"
+                      ? "bg-emerald-100 font-semibold"
+                      : "hover:bg-gray-100"
+                  }`}
                 >
-                  <path d="M12 2C6.477 2 2 6.486 2 12s4.477 10 10 10 10-4.486 10-10S17.523 2 12 2zM9.5 12a10.5 10.5 0 01.69-3.5h3.62A10.5 10.5 0 0114.5 12a10.5 10.5 0 01-.69 3.5H10.19A10.5 10.5 0 019.5 12z" />
-                </svg>
+                  English
+                </button>
+                <button
+                  onClick={() => changeLanguage("ar")}
+                  className={`block w-full text-left px-3 py-2 rounded ${
+                    i18n.language === "ar"
+                      ? "bg-emerald-100 font-semibold"
+                      : "hover:bg-gray-100"
+                  }`}
+                >
+                  العربية
+                </button>
+              </div>
+            )}
+
+            {/* Profile */}
+            <button className="p-2 hover:bg-emerald-100 rounded-full transition">
+              <span className="inline-flex items-center justify-center w-9 h-9 bg-white/60 border border-emerald-200 rounded-full">
+                <FiUser className="w-5 h-5 text-[#2f5c3f]" />
               </span>
             </button>
           </div>

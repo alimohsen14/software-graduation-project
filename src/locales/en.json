@@ -1,0 +1,98 @@
+{
+  "appName": "Palestine3D",
+  "navbar": {
+    "home": "Home",
+    "selectLanguage": "Select Language",
+    "changeLanguage": "Change Language",
+    "notifications": "Notifications",
+    "profile": "User Profile"
+  },
+  "home": {
+    "welcome": "Welcome back",
+    "subtitle": "Explore the latest 3D models, historical collections, and store updates.",
+    "exploreButton": "Explore 3D Models"
+  },
+  "quickActions": {
+    "ai": { "title": "AI Assistant", "subtitle": "Ask anything" },
+    "museum": { "title": "3D Museum", "subtitle": "Explore models" },
+    "store": { "title": "Official Store", "subtitle": "Shop now" },
+    "community": { "title": "Community Forum", "subtitle": "Join discussions" }
+  },
+  "sidebar": {
+    "profile": "Profile",
+    "aiSystem": "AI System",
+    "officialStore": "Official Store",
+    "communityForum": "Community Forum",
+    "heritageLibrary": "Heritage Library"
+  },
+  "ai": {
+    "sidebarTitle": "Palestine AI",
+    "newChat": "New Chat",
+    "deleteChat": "Delete Chat",
+    "confirmDeleteTitle": "Delete chat?",
+    "confirmDeleteDesc": "Are you sure you want to permanently delete this chat?",
+    "cannotUndo": "This action cannot be undone.",
+    "deleteConfirm": "Yes, delete",
+    "cancel": "Cancel",
+    "copyright": "Palestine3D AI System",
+    "welcomeTitle": "Welcome",
+    "welcomeIntro": "I am Palestine AI, your smart assistant in Palestine3D. I can help you with:",
+    "welcomeFooter": "Choose one of the suggestions or type your question.",
+    "topicHeritage": "Palestinian heritage",
+    "topicSoapNablus": "Nablus soap history",
+    "topicTraditions": "Traditions & Culture",
+    "topicCities": "Palestinian cities & villages",
+    "topicPalestineCause": "The Palestinian cause",
+    "suggestions": [
+      "Tell me about the soap factories history in Nablus",
+      "What are the most famous Palestinian traditions?",
+      "Introduce me to a Palestinian city",
+      "Explain the Palestinian cause briefly",
+      "Tell me about Al-Aqsa Mosque",
+      "What's the story of Nablus soap?"
+    ],
+    "chatPlaceholder": "Ask anything about Palestine...",
+    "send": "Send"
+  },
+  "profile": {
+    "infoTitle": "Profile Information",
+    "infoSubtitle": "Update your personal details.",
+    "changePassword": "Change Password",
+    "editProfile": "Edit Profile",
+
+    "passwordMismatch": "New passwords do not match",
+    "passwordUpdated": "Password updated successfully",
+    "updateFailed": "Failed to update profile",
+
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+
+    "cancel": "Cancel",
+    "updatePassword": "Update Password",
+    "updating": "Updating...",
+
+    "name": "Name",
+    "email": "Email",
+    "age": "Age",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other",
+    "country": "Country",
+    "provider": "Auth Provider",
+    "notSpecified": "Not specified",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+
+    "securityTitle": "Security",
+    "securityGoogle": "You are securely logged in using Google.",
+    "securityPassword": "You are securely logged in using Email & Password.",
+
+    "accountActivity": "Account Activity",
+    "createdAt": "Created At",
+    "updatedAt": "Last Updated",
+
+    "logout": "Logout"
+  }
+}
