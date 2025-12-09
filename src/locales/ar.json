@@ -1,0 +1,98 @@
+{
+  "appName": "Palestine3D",
+  "navbar": {
+    "home": "الرئيسية",
+    "selectLanguage": "اختر اللغة",
+    "changeLanguage": "تغيير اللغة",
+    "notifications": "الإشعارات",
+    "profile": "الملف الشخصي"
+  },
+  "home": {
+    "welcome": "مرحباً بعودتك",
+    "subtitle": "استكشف أحدث النماذج ثلاثية الأبعاد والمجموعات التراثية وتحديثات المتجر.",
+    "exploreButton": "استكشف النماذج"
+  },
+  "quickActions": {
+    "ai": { "title": "المساعد الذكي", "subtitle": "اسأل أي شيء" },
+    "museum": { "title": "متحف ثلاثي الأبعاد", "subtitle": "اكتشف النماذج" },
+    "store": { "title": "المتجر الرسمي", "subtitle": "تسوق الآن" },
+    "community": { "title": "منتدى المجتمع", "subtitle": "شارك النقاشات" }
+  },
+  "sidebar": {
+    "profile": "الملف الشخصي",
+    "aiSystem": "نظام الذكاء الاصطناعي",
+    "officialStore": "المتجر الرسمي",
+    "communityForum": "منتدى المجتمع",
+    "heritageLibrary": "مكتبة التراث"
+  },
+  "ai": {
+    "sidebarTitle": "فلسطين AI",
+    "newChat": "محادثة جديدة",
+    "deleteChat": "حذف المحادثة",
+    "confirmDeleteTitle": "حذف المحادثة؟",
+    "confirmDeleteDesc": "هل أنت متأكد من رغبتك في حذف هذه المحادثة نهائيًا؟",
+    "cannotUndo": "لا يمكن التراجع عن هذا الإجراء.",
+    "deleteConfirm": "نعم، احذف",
+    "cancel": "إلغاء",
+    "copyright": "نظام فلسطين للذكاء الاصطناعي",
+    "welcomeTitle": "أهلًا",
+    "welcomeIntro": "أنا Palestine AI، مساعدك الذكي من منصة Palestine3D. بقدر أساعدك في:",
+    "welcomeFooter": "اختر أحد الاقتراحات أو اكتب سؤالك.",
+    "topicHeritage": "التراث الفلسطيني",
+    "topicSoapNablus": "تاريخ الصبّانات في نابلس",
+    "topicTraditions": "العادات والتقاليد",
+    "topicCities": "المدن والقرى الفلسطينية",
+    "topicPalestineCause": "القضية الفلسطينية",
+    "suggestions": [
+      "احكيلي عن تاريخ الصبّانات في نابلس",
+      "شو هي أشهر العادات الفلسطينية؟",
+      "عرفني على مدينة فلسطينية",
+      "اشرحلي القضية الفلسطينية باختصار",
+      "احكيلي عن المسجد الأقصى",
+      "شو قصة صابونة نابلس؟"
+    ],
+    "chatPlaceholder": "اكتب سؤالك عن فلسطين هنا...",
+    "send": "إرسال"
+  },
+  "profile": {
+    "infoTitle": "معلومات الحساب",
+    "infoSubtitle": "قم بتحديث بياناتك الشخصية.",
+    "changePassword": "تغيير كلمة المرور",
+    "editProfile": "تعديل الحساب",
+
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "passwordUpdated": "تم تحديث كلمة المرور بنجاح",
+    "updateFailed": "حدث خطأ أثناء التحديث",
+
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+
+    "cancel": "إلغاء",
+    "updatePassword": "تحديث كلمة المرور",
+    "updating": "جاري التحديث...",
+
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "age": "العمر",
+    "gender": "الجنس",
+    "male": "ذكر",
+    "female": "أنثى",
+    "other": "آخر",
+    "country": "الدولة",
+    "provider": "مزود التسجيل",
+    "notSpecified": "غير محدد",
+    "saveChanges": "حفظ التغييرات",
+    "saving": "جاري الحفظ...",
+
+    "securityTitle": "الأمان",
+    "securityGoogle": "أنت مسجّل دخولك بشكل آمن بواسطة حساب Google.",
+    "securityPassword": "أنت مسجّل دخولك بواسطة البريد وكلمة المرور بأمان.",
+
+    "accountActivity": "نشاط الحساب",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "آخر تحديث",
+
+    "logout": "تسجيل الخروج"
+  }
+}
