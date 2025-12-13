@@ -59,7 +59,7 @@ export default function QuickAction(): React.ReactElement {
               onClick={() => {
                 if (a.key === "ai") navigate("/palestine-ai");
                 if (a.key === "museum") navigate("/museum");
-                if (a.key === "store") navigate("/store");
+                if (a.key === "store") navigate("/shop");
                 if (a.key === "community") navigate("/community");
               }}
               className="w-full text-left bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#CDA15A]/20"

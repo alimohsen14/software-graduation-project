@@ -7,6 +7,7 @@ import { ResetPasswordPage } from "./pages/ResetPasswordPage";
 import { GoogleRedirectHandler } from "./pages/GoogleRedirectHandler";
 import PalestineAIPage from "./pages/PalestineAIPage";
 import ProfilePage from "./pages/ProfilePage";
+import ShopPage from "./pages/ShopPage";
 
 export default function App() {
   return (
@@ -19,7 +20,8 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/google-redirect" element={<GoogleRedirectHandler />} />
         <Route path="/palestine-ai" element={<PalestineAIPage />} />
-        <Route path = "/profile" element={<ProfilePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/shop" element={<ShopPage />} />
       </Routes>
     </BrowserRouter>
   );

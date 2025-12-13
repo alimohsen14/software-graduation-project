@@ -68,29 +68,24 @@ function AIPageContent({
     setInput("");
   };
 
-  // ✅ دالة الحذف المنطقية
   async function handleDeleteChatLogic(chatId: number) {
     if (!token) return;
 
-    // 1. حذف بصري فوري (Optimistic Update) عشان السرعة
     setChats((prev) => prev.filter((c) => c.id !== chatId));
 
-    // 2. إذا كان المستخدم فاتح الشات اللي انحذف، نرجعه للبداية
     if (activeChatId === chatId) {
       handleNewChat();
     }
 
-    // 3. الاتصال بالسيرفر للحذف الفعلي
     try {
       await deleteChat(chatId, token);
     } catch (error) {
       console.error("Failed to delete chat:", error);
-      // ممكن هون ترجع الشات لو فشلت العملية (اختياري)
+
       alert("حدث خطأ أثناء الحذف");
     }
   }
 
-  // ... (نفس دوال performSend و handleSendClick) ...
   async function performSend(textToSend: string) {
     if (!textToSend.trim() || !token) return;
     const userMsg: Message = {
@@ -134,7 +129,6 @@ function AIPageContent({
   };
   const handleSuggestionSelect = (text: string) => performSend(text);
 
-  // ... (نفس دالة handleSelectChat) ...
   async function handleSelectChat(chatId: number) {
     if (!token) return;
     setActiveChatId(chatId);
@@ -168,7 +162,7 @@ function AIPageContent({
         chats={chats}
         onSelectChat={handleSelectChat}
         onNewChat={handleNewChat}
-        onDeleteChat={handleDeleteChatLogic} // ✅ مررنا دالة الحذف
+        onDeleteChat={handleDeleteChatLogic}
       />
 
       <main className="mx-auto max-w-[900px] px-4 py-8 pb-32">
