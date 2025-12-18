@@ -6,11 +6,13 @@ import LoadMoreButton from "../components/shop/LoadMoreButton";
 import { FiArrowLeft, FiTrash2 } from "react-icons/fi";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import { getAllProducts, Product } from "../services/shopService";
+import { useCart } from "../context/CartContext";
 
 export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [cart, setCart] = useState<any[]>([]);
   const [view, setView] = useState<"shop" | "cart">("shop");
+
+  const { cartItems, addToCart, removeFromCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,36 +27,31 @@ export default function ShopPage() {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = (product: any) => {
-    setCart((prev) => [...prev, product]);
-  };
-
-  const handleRemoveFromCart = (index: number) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
-  };
-
-  const totalAmount = cart.reduce((acc, item) => acc + item.price, 0);
+  const totalAmount = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   return (
     <DashboardLayout>
       <div className="w-full min-h-screen bg-[#3e6347] p-4 sm:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
-          <ShopHeader />
+          <ShopHeader
+            cartCount={cartItems.length}
+            onCartClick={() => setView("cart")}
+          />
 
           {view === "shop" && (
             <>
               <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-md mb-8">
                 <ShopFiltersBar
-                  cartCount={cart.length}
+                  cartCount={cartItems.length}
                   onCartClick={() => setView("cart")}
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {products.map((apiProduct) => {
-                  // Map API data structure to UI component props
                   const productForUI = {
                     ...apiProduct,
                     title: apiProduct.name,
@@ -64,14 +61,15 @@ export default function ShopPage() {
                   return (
                     <ProductCard
                       key={productForUI.id}
+                      id={productForUI.id}
                       image={productForUI.image}
                       title={productForUI.title}
                       description={productForUI.description}
                       price={productForUI.price}
                       badge={productForUI.badge}
-                      onAddToCart={() => handleAddToCart(productForUI)}
+                      onAddToCart={() => addToCart(productForUI)}
                       onBuyNow={() => {
-                        handleAddToCart(productForUI);
+                        addToCart(productForUI);
                         setView("cart");
                       }}
                     />
@@ -96,7 +94,7 @@ export default function ShopPage() {
                 Your Shopping Cart
               </h2>
 
-              {cart.length === 0 ? (
+              {cartItems.length === 0 ? (
                 <div className="text-center py-20 bg-gray-50 rounded-xl border border-gray-100">
                   <p className="text-gray-500 text-lg">
                     Your cart is currently empty.
@@ -111,28 +109,28 @@ export default function ShopPage() {
               ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                   <div className="lg:col-span-2 space-y-4">
-                    {cart.map((item, index) => (
+                    {cartItems.map((item) => (
                       <div
-                        key={index}
+                        key={item.id}
                         className="flex items-center justify-between bg-white p-4 rounded-xl shadow-sm border border-gray-200"
                       >
                         <div className="flex items-center gap-4">
                           <img
                             src={item.image}
-                            alt={item.title}
+                            alt={item.name}
                             className="w-20 h-20 object-cover rounded-lg bg-gray-50"
                           />
                           <div>
                             <h3 className="font-bold text-gray-900">
-                              {item.title}
+                              {item.name}
                             </h3>
                             <p className="text-[#3e6347] font-semibold">
-                              {item.price}₪
+                              {item.price}₪ × {item.quantity}
                             </p>
                           </div>
                         </div>
                         <button
-                          onClick={() => handleRemoveFromCart(index)}
+                          onClick={() => removeFromCart(item.id)}
                           className="text-red-500 hover:text-red-700 p-2 bg-red-50 rounded-full transition"
                         >
                           <FiTrash2 size={20} />
