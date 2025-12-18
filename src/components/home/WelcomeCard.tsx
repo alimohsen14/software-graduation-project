@@ -1,5 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 interface WelcomeCardProps {
   name: string;
@@ -7,6 +8,7 @@ interface WelcomeCardProps {
 
 export default function WelcomeCard({ name }: WelcomeCardProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   return (
     <section
@@ -26,7 +28,6 @@ export default function WelcomeCard({ name }: WelcomeCardProps) {
 
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
-          
           {/* Text content */}
           <div className="flex-1">
             <h2
@@ -44,6 +45,7 @@ export default function WelcomeCard({ name }: WelcomeCardProps) {
               <button
                 type="button"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#2f5c3f] text-[#FBF7EF] text-sm md:text-base font-semibold shadow-md hover:bg-[#274b34] focus:outline-none focus:ring-2 focus:ring-[#CDA15A]/30 transition"
+                onClick={() => navigate("/soap3d")}
               >
                 {t("home.exploreButton")}
               </button>
