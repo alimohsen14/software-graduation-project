@@ -24,11 +24,20 @@ export function LoginPage() {
 
       const res = await login({ email, password });
 
+      // 🔐 Save tokens
       localStorage.setItem("accessToken", res.data.tokens.accessToken);
       localStorage.setItem("refreshToken", res.data.tokens.refreshToken);
-      localStorage.setItem("userName", res.data.user.name);
 
-      navigate("/home");
+      // 🔐 Save full user object (includes isAdmin)
+      localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      // 🔀 Redirect based on role
+
+      if (res.data.user.isAdmin) {
+        navigate("/admin/market");
+      } else {
+        navigate("/home");
+      }
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ||
@@ -107,7 +116,6 @@ export function LoginPage() {
                 placeholder="********"
               />
 
-              {/* 🔥 Forgot Password Button */}
               <div className="flex justify-end -mt-2">
                 <button
                   type="button"

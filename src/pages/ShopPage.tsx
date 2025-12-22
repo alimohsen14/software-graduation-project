@@ -7,12 +7,15 @@ import { FiArrowLeft, FiTrash2 } from "react-icons/fi";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import { getAllProducts, Product } from "../services/shopService";
 import { useCart } from "../context/CartContext";
+import CheckoutModal from "../components/checkout/CheckoutModal";
+import { createOrder } from "../services/order.service";
 
 export default function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [view, setView] = useState<"shop" | "cart">("shop");
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
-  const { cartItems, addToCart, removeFromCart } = useCart();
+  const { cartItems, addToCart, removeFromCart, clearCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -32,6 +35,46 @@ export default function ShopPage() {
     0
   );
 
+  // ===============================
+  // ✅ CONFIRM CHECKOUT
+  // ===============================
+  const handleConfirmOrder = async ({
+    city,
+    address,
+    phone,
+  }: {
+    city: string;
+    address: string;
+    phone: string;
+  }) => {
+    try {
+      const token = localStorage.getItem("accessToken");
+      if (!token) throw new Error("Not authenticated");
+
+      await createOrder(
+        {
+          city,
+          address,
+          phone,
+          total: totalAmount + 15,
+          items: cartItems.map((item) => ({
+            productId: item.id,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+        },
+        token
+      );
+
+      clearCart(); // 🧹 يفضّي السلة
+      setIsCheckoutOpen(false); // ❌ يسكر المودال
+      setView("shop"); // 🔙 يرجّع على السوق
+    } catch (err) {
+      console.error("Order failed", err);
+      alert("Failed to place order");
+    }
+  };
+
   return (
     <DashboardLayout>
       <div className="w-full min-h-screen bg-[#3e6347] p-4 sm:p-6 lg:p-8">
@@ -41,6 +84,7 @@ export default function ShopPage() {
             onCartClick={() => setView("cart")}
           />
 
+          {/* ================= SHOP VIEW ================= */}
           {view === "shop" && (
             <>
               <div className="bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-md mb-8">
@@ -70,7 +114,7 @@ export default function ShopPage() {
                       onAddToCart={() => addToCart(productForUI)}
                       onBuyNow={() => {
                         addToCart(productForUI);
-                        setView("cart");
+                        setIsCheckoutOpen(true);
                       }}
                     />
                   );
@@ -81,6 +125,7 @@ export default function ShopPage() {
             </>
           )}
 
+          {/* ================= CART VIEW ================= */}
           {view === "cart" && (
             <div className="bg-white rounded-3xl p-6 shadow-2xl min-h-[60vh]">
               <button
@@ -99,12 +144,6 @@ export default function ShopPage() {
                   <p className="text-gray-500 text-lg">
                     Your cart is currently empty.
                   </p>
-                  <button
-                    onClick={() => setView("shop")}
-                    className="mt-6 px-8 py-3 bg-[#1d2d1f] text-white rounded-full hover:bg-[#2a402d]"
-                  >
-                    Start Shopping
-                  </button>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -118,12 +157,10 @@ export default function ShopPage() {
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-20 h-20 object-cover rounded-lg bg-gray-50"
+                            className="w-20 h-20 object-cover rounded-lg"
                           />
                           <div>
-                            <h3 className="font-bold text-gray-900">
-                              {item.name}
-                            </h3>
+                            <h3 className="font-bold">{item.name}</h3>
                             <p className="text-[#3e6347] font-semibold">
                               {item.price}₪ × {item.quantity}
                             </p>
@@ -131,7 +168,7 @@ export default function ShopPage() {
                         </div>
                         <button
                           onClick={() => removeFromCart(item.id)}
-                          className="text-red-500 hover:text-red-700 p-2 bg-red-50 rounded-full transition"
+                          className="text-red-500 hover:text-red-700 p-2"
                         >
                           <FiTrash2 size={20} />
                         </button>
@@ -139,25 +176,16 @@ export default function ShopPage() {
                     ))}
                   </div>
 
-                  <div className="lg:col-span-1">
-                    <div className="bg-gray-50 p-6 rounded-2xl sticky top-10 border border-gray-100">
-                      <h3 className="text-xl font-bold mb-6 text-[#1d2d1f]">
-                        Order Summary
-                      </h3>
-                      <div className="flex justify-between mb-3 text-gray-600">
-                        <span>Subtotal</span>
-                        <span>{totalAmount}₪</span>
-                      </div>
-                      <div className="flex justify-between mb-6 text-gray-600">
-                        <span>Shipping</span>
-                        <span>15₪</span>
-                      </div>
-                      <hr className="border-gray-200 mb-6" />
-                      <div className="flex justify-between text-2xl font-bold text-[#3e6347] mb-8">
+                  <div>
+                    <div className="bg-gray-50 p-6 rounded-2xl sticky top-10">
+                      <div className="flex justify-between text-2xl font-bold text-[#3e6347] mb-6">
                         <span>Total</span>
                         <span>{totalAmount + 15}₪</span>
                       </div>
-                      <button className="w-full py-3 rounded-full bg-red-600 text-white font-bold hover:bg-red-700 transition shadow-md">
+                      <button
+                        onClick={() => setIsCheckoutOpen(true)}
+                        className="w-full py-3 rounded-full bg-red-600 text-white font-bold"
+                      >
                         Proceed to Checkout
                       </button>
                     </div>
@@ -167,6 +195,15 @@ export default function ShopPage() {
             </div>
           )}
         </div>
+
+        {/* ================= CHECKOUT MODAL ================= */}
+        {isCheckoutOpen && (
+          <CheckoutModal
+            total={totalAmount + 15}
+            onClose={() => setIsCheckoutOpen(false)}
+            onConfirm={handleConfirmOrder}
+          />
+        )}
       </div>
     </DashboardLayout>
   );

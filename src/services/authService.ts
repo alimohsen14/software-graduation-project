@@ -16,6 +16,7 @@ export type User = {
   country?: string | null;
   age?: number | null;
   gender?: "MALE" | "FEMALE";
+  isAdmin?: boolean;
 };
 
 export type AuthEnvelope = {
