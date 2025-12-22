@@ -10,6 +10,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import Sop3DPage from "./pages/Soap3DPage";
+import AdminMarketPage from "./pages/admin/AdminMarketPage";
 
 export default function App() {
   return (
@@ -25,7 +26,8 @@ export default function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/shop/product/:id" element={<ProductDetailsPage />} />
-        <Route path="/soap3d" element={<Sop3DPage />} />
+        <Route path="/soap3d" element={<Sop3DPage />} />.
+        <Route path="/admin/market" element={<AdminMarketPage />} />
       </Routes>
     </BrowserRouter>
   );
