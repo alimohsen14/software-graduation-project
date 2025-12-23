@@ -22,12 +22,12 @@ export default function ShopFiltersBar({
   const [sortOpen, setSortOpen] = useState(false);
 
   return (
-    <div className="w-full mt-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-4 py-2">
       {/* LEFT: Filters */}
-      <div className="flex flex-col md:flex-row gap-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-4">
         <div className="flex items-center gap-2">
-          <FiFilter className="text-gray-600 text-lg" />
-          <span className="text-gray-700 font-semibold text-sm md:text-base">
+          <FiFilter className="text-[#4A6F5D] text-lg" />
+          <span className="text-[#1F2933] font-semibold text-sm whitespace-nowrap">
             Filter By:
           </span>
         </div>
@@ -41,25 +41,25 @@ export default function ShopFiltersBar({
                 setPriceOpen(false);
                 setSortOpen(false);
               }}
-              className="flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition text-sm bg-white"
+              className="flex items-center gap-2 border border-[#E5E7EB] text-[#1F2933] px-4 py-2.5 rounded-lg hover:border-[#4A6F5D] hover:bg-[#F3F4F1] transition text-sm bg-white h-10"
             >
-              <FiTag className="text-gray-600" />
+              <FiTag className="text-[#4A6F5D]" />
               Category
-              <FiChevronDown className="text-gray-500" />
+              <FiChevronDown className="text-[#6B7280]" />
             </button>
             {categoryOpen && (
-              <div className="absolute mt-2 bg-white shadow-md border rounded-lg w-40 z-50">
-                <ul className="text-sm text-gray-700">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+              <div className="absolute mt-2 bg-white shadow-lg border border-[#E5E7EB] rounded-lg w-44 z-50">
+                <ul className="text-sm text-[#1F2933] py-1">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     All
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     Nabulsi Soap
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     Oils
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     Ceramics
                   </li>
                 </ul>
@@ -75,25 +75,25 @@ export default function ShopFiltersBar({
                 setCategoryOpen(false);
                 setSortOpen(false);
               }}
-              className="flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition text-sm bg-white"
+              className="flex items-center gap-2 border border-[#E5E7EB] text-[#1F2933] px-4 py-2.5 rounded-lg hover:border-[#4A6F5D] hover:bg-[#F3F4F1] transition text-sm bg-white h-10"
             >
-              <FiDollarSign className="text-gray-600" />
+              <FiDollarSign className="text-[#4A6F5D]" />
               Price Range
-              <FiChevronDown className="text-gray-500" />
+              <FiChevronDown className="text-[#6B7280]" />
             </button>
             {priceOpen && (
-              <div className="absolute mt-2 bg-white shadow-md border rounded-lg w-40 z-50">
-                <ul className="text-sm text-gray-700">
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+              <div className="absolute mt-2 bg-white shadow-lg border border-[#E5E7EB] rounded-lg w-44 z-50">
+                <ul className="text-sm text-[#1F2933] py-1">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     All
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     0 - 50₪
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     50 - 100₪
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                  <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                     100+ ₪
                   </li>
                 </ul>
@@ -104,7 +104,7 @@ export default function ShopFiltersBar({
       </div>
 
       {/* RIGHT: Sort & Cart */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-4">
         {/* Sort Button */}
         <div className="relative">
           <button
@@ -113,25 +113,25 @@ export default function ShopFiltersBar({
               setPriceOpen(false);
               setCategoryOpen(false);
             }}
-            className="flex items-center gap-2 border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition text-sm bg-white"
+            className="flex items-center gap-2 border border-[#E5E7EB] text-[#1F2933] px-4 py-2.5 rounded-lg hover:border-[#4A6F5D] hover:bg-[#F3F4F1] transition text-sm bg-white h-10"
           >
-            <MdSort className="text-gray-600" />
+            <MdSort className="text-[#4A6F5D]" />
             Sort: Featured
-            <FiChevronDown className="text-gray-500" />
+            <FiChevronDown className="text-[#6B7280]" />
           </button>
           {sortOpen && (
-            <div className="absolute right-0 mt-2 bg-white shadow-md border rounded-lg w-40 z-50">
-              <ul className="text-sm text-gray-700">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+            <div className="absolute right-0 mt-2 bg-white shadow-lg border border-[#E5E7EB] rounded-lg w-48 z-50">
+              <ul className="text-sm text-[#1F2933] py-1">
+                <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                   Featured
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                   Price: Low to High
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                   Price: High to Low
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                <li className="px-4 py-2.5 hover:bg-[#F3F4F1] hover:text-[#4A6F5D] cursor-pointer transition">
                   Newest
                 </li>
               </ul>
@@ -142,11 +142,11 @@ export default function ShopFiltersBar({
         {/* Cart Button */}
         <button
           onClick={onCartClick}
-          className="relative flex items-center justify-center p-2 rounded-lg bg-[#1d2d1f] text-white hover:bg-[#2a402d] transition shadow-md"
+          className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[#4A6F5D] text-white hover:bg-[#A33A2B] transition shadow-sm"
         >
-          <FiShoppingCart className="text-xl" />
+          <FiShoppingCart className="text-lg" />
           {cartCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow border-2 border-white">
+            <span className="absolute -top-1.5 -right-1.5 bg-[#A33A2B] text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow border-2 border-white">
               {cartCount}
             </span>
           )}
@@ -155,3 +155,4 @@ export default function ShopFiltersBar({
     </div>
   );
 }
+

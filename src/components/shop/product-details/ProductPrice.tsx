@@ -5,5 +5,6 @@ type Props = {
 };
 
 export default function ProductPrice({ price }: Props) {
-  return <div className="text-3xl font-bold text-[#3e6347]">{price}₪</div>;
+  return <div className="text-2xl font-bold text-[#4A6F5D]">{price}₪</div>;
 }
+

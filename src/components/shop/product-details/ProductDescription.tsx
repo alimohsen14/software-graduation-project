@@ -8,12 +8,15 @@ export default function ProductDescription({ description }: Props) {
   if (!description) return null;
 
   return (
-    <section className="mt-16">
-      <h3 className="text-2xl font-bold text-[#1d2d1f] mb-4">
+    <section className="mt-10 pt-8 border-t border-[#E5E7EB]">
+      <h3 className="text-lg font-bold text-[#1F2933] mb-3">
         Product Description
       </h3>
 
-      <p className="text-gray-700 leading-relaxed max-w-3xl">{description}</p>
+      <p className="text-[#6B7280] text-sm leading-relaxed max-w-2xl">
+        {description}
+      </p>
     </section>
   );
 }
+

@@ -48,14 +48,18 @@ export default function ProductHeroSection({
   const disabled = stock === 0;
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
       <ProductImage image={image} badge={badge} name={name} />
 
       <div className="flex flex-col gap-4">
-        <h1 className="text-4xl font-extrabold text-[#1d2d1f]">{name}</h1>
+        <h1 className="text-2xl lg:text-3xl font-bold text-[#1F2933] leading-tight">
+          {name}
+        </h1>
 
         {shortDescription && (
-          <p className="text-gray-600 max-w-xl">{shortDescription}</p>
+          <p className="text-[#6B7280] text-sm leading-relaxed max-w-md">
+            {shortDescription}
+          </p>
         )}
 
         <RatingStars rating={rating} reviewsCount={reviewsCount} />
@@ -64,11 +68,13 @@ export default function ProductHeroSection({
 
         <StockStatus stock={stock} />
 
-        <QuantitySelector
-          quantity={quantity}
-          onIncrease={handleIncrease}
-          onDecrease={handleDecrease}
-        />
+        <div className="flex items-center gap-4 mt-2">
+          <QuantitySelector
+            quantity={quantity}
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
+          />
+        </div>
 
         <AddToCartActions
           disabled={disabled}
@@ -79,3 +85,4 @@ export default function ProductHeroSection({
     </section>
   );
 }
+
