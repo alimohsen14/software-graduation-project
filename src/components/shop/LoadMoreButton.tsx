@@ -6,22 +6,22 @@ interface LoadMoreButtonProps {
 
 export default function LoadMoreButton({ onClick }: LoadMoreButtonProps) {
   return (
-    <div className="flex justify-center mt-12 pb-10">
+    <div className="flex justify-center mt-14 pb-10">
       <button
         onClick={onClick}
         className="
           px-8 
           py-3 
           rounded-full 
-          bg-red-600 
-          text-white 
+          bg-transparent
+          border-2
+          border-[#4A6F5D]
+          text-[#4A6F5D] 
           font-bold 
-          shadow-md
-          hover:shadow-lg
-          hover:bg-red-700
-          transition
-          transform
-          hover:-translate-y-0.5
+          hover:bg-[#4A6F5D]
+          hover:text-white
+          transition-all
+          duration-200
         "
       >
         Load More Products

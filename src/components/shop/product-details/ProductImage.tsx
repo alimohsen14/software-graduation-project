@@ -8,14 +8,15 @@ type Props = {
 
 export default function ProductImage({ image, badge, name }: Props) {
   return (
-    <div className="relative w-full h-[420px] rounded-2xl overflow-hidden bg-gray-100 shadow-lg">
+    <div className="relative w-full max-w-md h-[320px] rounded-xl overflow-hidden bg-white shadow-sm border border-[#E5E7EB]">
       <img src={image} alt={name} className="w-full h-full object-cover" />
 
       {badge && (
-        <span className="absolute top-4 left-4 bg-[#ce1126] text-white text-xs font-bold px-4 py-1 rounded-full shadow-md">
+        <span className="absolute top-3 left-3 bg-[#A33A2B] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
           {badge}
         </span>
       )}
     </div>
   );
 }
+

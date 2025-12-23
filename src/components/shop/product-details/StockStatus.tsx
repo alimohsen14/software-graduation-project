@@ -9,20 +9,21 @@ export default function StockStatus({ stock }: Props) {
   const inStock = stock > 0;
 
   return (
-    <div className="flex items-center gap-2 text-sm">
+    <div className="flex items-center gap-1.5 text-xs">
       {inStock ? (
         <>
-          <FiCheckCircle className="text-green-600" />
-          <span className="text-green-700 font-medium">
-            In Stock ({stock} items available)
+          <FiCheckCircle className="text-[#4A6F5D]" size={14} />
+          <span className="text-[#4A6F5D] font-medium">
+            In Stock ({stock} available)
           </span>
         </>
       ) : (
         <>
-          <FiXCircle className="text-red-600" />
-          <span className="text-red-600 font-medium">Out of Stock</span>
+          <FiXCircle className="text-[#A33A2B]" size={14} />
+          <span className="text-[#A33A2B] font-medium">Out of Stock</span>
         </>
       )}
     </div>
   );
 }
+

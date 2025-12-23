@@ -21,21 +21,21 @@ export default function ProductReviewsSection({
   reviews = [],
 }: Props) {
   return (
-    <section className="mt-20">
-      <h3 className="text-2xl font-bold text-[#1d2d1f] mb-6">
+    <section className="mt-10 pt-8 border-t border-[#E5E7EB]">
+      <h3 className="text-lg font-bold text-[#1F2933] mb-4">
         Customer Reviews
       </h3>
 
-      <div className="flex items-center gap-4 mb-8">
+      <div className="flex items-center gap-3 mb-6">
         <RatingStars rating={rating} reviewsCount={reviewsCount} />
       </div>
 
       {reviews.length === 0 ? (
-        <p className="text-gray-500 text-sm">
+        <p className="text-[#6B7280] text-sm">
           No reviews yet. Be the first to review this product.
         </p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {reviews.map((review, index) => (
             <ReviewCard
               key={index}
@@ -50,3 +50,4 @@ export default function ProductReviewsSection({
     </section>
   );
 }
+

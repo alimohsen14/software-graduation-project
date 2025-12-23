@@ -12,20 +12,26 @@ export default function QuantitySelector({
   onDecrease,
 }: Props) {
   return (
-    <div className="flex items-center gap-3 bg-gray-100 rounded-full px-4 py-2">
+    <div className="inline-flex items-center gap-2 bg-white border border-[#E5E7EB] rounded-lg px-3 py-1.5">
       <button
         onClick={onDecrease}
         disabled={quantity <= 1}
-        className="text-xl font-bold text-gray-600 disabled:opacity-40"
+        className="w-7 h-7 flex items-center justify-center text-base font-medium text-[#6B7280] hover:text-[#1F2933] disabled:opacity-40 transition"
       >
         −
       </button>
 
-      <span className="w-6 text-center font-medium">{quantity}</span>
+      <span className="w-8 text-center font-medium text-[#1F2933] text-sm">
+        {quantity}
+      </span>
 
-      <button onClick={onIncrease} className="text-xl font-bold text-gray-600">
+      <button
+        onClick={onIncrease}
+        className="w-7 h-7 flex items-center justify-center text-base font-medium text-[#6B7280] hover:text-[#1F2933] transition"
+      >
         +
       </button>
     </div>
   );
 }
+

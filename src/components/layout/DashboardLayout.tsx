@@ -8,7 +8,7 @@ type WithSidebarControl = {
 
 interface DashboardLayoutProps {
   children: React.ReactElement<WithSidebarControl>;
-  // البروب الجديد عشان نمرره للنافبار
+
   onToggleAISidebar?: () => void;
 }
 
@@ -19,8 +19,8 @@ export default function DashboardLayout({
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex min-h-screen bg-[#3e6347]">
-      {/* القائمة الرئيسية اليسرى */}
+    <div className="flex min-h-screen ">
+
       <Sidebar
         isOpen={isSidebarOpen}
         closeSidebar={() => setIsSidebarOpen(false)}
@@ -31,11 +31,11 @@ export default function DashboardLayout({
         <div className="fixed top-0 left-0 right-0 z-50 bg-[#e8f2e5] shadow-sm">
           <Navbar
             onMenuClick={() => setIsSidebarOpen((prev) => !prev)}
-            onToggleAISidebar={onToggleAISidebar} // تمرير الدالة للنافبار
+            onToggleAISidebar={onToggleAISidebar}
           />
         </div>
 
-        {/* Content */}
+
         <main className="mt-16 px-4 md:px-8 lg:px-10">
           <div className="max-w-6xl mx-auto">
             {React.cloneElement(children, { setIsSidebarOpen })}

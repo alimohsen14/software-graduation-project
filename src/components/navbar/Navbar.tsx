@@ -45,7 +45,7 @@ export default function Navbar({
     <header className="w-full bg-[#eaf5ea] border-b-2 border-emerald-700/30 shadow-sm">
       <div className="w-full px-6">
         <div className="h-16 flex items-center justify-between">
-          
+
           {/* Menu + Brand */}
           <div className="flex items-center gap-3">
             <button
@@ -83,27 +83,24 @@ export default function Navbar({
             {/* Dropdown Menu */}
             {showLanguageMenu && (
               <div
-                className={`absolute mt-12 ${
-                  i18n.language === "ar" ? "left-0" : "right-0"
-                } bg-white shadow-lg border rounded-lg w-32 p-2 z-50`}
+                className={`absolute mt-12 ${i18n.language === "ar" ? "left-0" : "right-0"
+                  } bg-white shadow-lg border rounded-lg w-32 p-2 z-50`}
               >
                 <button
                   onClick={() => changeLanguage("en")}
-                  className={`block w-full text-left px-3 py-2 rounded ${
-                    i18n.language === "en"
-                      ? "bg-emerald-100 font-semibold"
-                      : "hover:bg-gray-100"
-                  }`}
+                  className={`block w-full text-left px-3 py-2 rounded ${i18n.language === "en"
+                    ? "bg-emerald-100 font-semibold"
+                    : "hover:bg-gray-100"
+                    }`}
                 >
                   English
                 </button>
                 <button
                   onClick={() => changeLanguage("ar")}
-                  className={`block w-full text-left px-3 py-2 rounded ${
-                    i18n.language === "ar"
-                      ? "bg-emerald-100 font-semibold"
-                      : "hover:bg-gray-100"
-                  }`}
+                  className={`block w-full text-left px-3 py-2 rounded ${i18n.language === "ar"
+                    ? "bg-emerald-100 font-semibold"
+                    : "hover:bg-gray-100"
+                    }`}
                 >
                   العربية
                 </button>
