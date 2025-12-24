@@ -3,12 +3,14 @@ import { FiShoppingCart } from "react-icons/fi";
 
 type Props = {
   disabled?: boolean;
+  isSoldOut?: boolean;
   onAddToCart: () => void;
   onBuyNow: () => void;
 };
 
 export default function AddToCartActions({
   disabled = false,
+  isSoldOut = false,
   onAddToCart,
   onBuyNow,
 }: Props) {
@@ -27,9 +29,10 @@ export default function AddToCartActions({
         disabled={disabled}
         className="px-6 py-2 rounded-full bg-[#4A6F5D] text-white text-sm font-bold hover:bg-[#A33A2B] transition shadow-sm disabled:opacity-50"
       >
-        Buy Now
+        {isSoldOut ? "Sold Out" : "Buy Now"}
       </button>
     </div>
   );
 }
+
 

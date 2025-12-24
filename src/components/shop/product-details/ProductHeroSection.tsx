@@ -5,11 +5,14 @@ import StockStatus from "./StockStatus";
 import QuantitySelector from "./QuantitySelector";
 import AddToCartActions from "./AddToCartActions";
 import RatingStars from "./RatingStars";
+import StockWarningBox from "../StockWarningBox";
+import { ProductBadges } from "../../../services/shopService";
 
 type Props = {
   name: string;
   image: string;
   badge?: string;
+  badges?: ProductBadges;
   shortDescription?: string;
   price: number;
   stock: number;
@@ -23,6 +26,7 @@ export default function ProductHeroSection({
   name,
   image,
   badge,
+  badges,
   shortDescription,
   price,
   stock,
@@ -32,6 +36,7 @@ export default function ProductHeroSection({
   onBuyNow,
 }: Props) {
   const [quantity, setQuantity] = useState(1);
+  const isSoldOut = badges?.isSoldOut ?? false;
 
   const handleIncrease = () => {
     if (quantity < stock) {
@@ -45,11 +50,11 @@ export default function ProductHeroSection({
     }
   };
 
-  const disabled = stock === 0;
+  const disabled = stock === 0 || isSoldOut;
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-      <ProductImage image={image} badge={badge} name={name} />
+      <ProductImage image={image} badge={badge} badges={badges} name={name} />
 
       <div className="flex flex-col gap-4">
         <h1 className="text-2xl lg:text-3xl font-bold text-[#1F2933] leading-tight">
@@ -68,6 +73,9 @@ export default function ProductHeroSection({
 
         <StockStatus stock={stock} />
 
+        {/* Stock Warning Box */}
+        <StockWarningBox stock={stock} badges={badges} />
+
         <div className="flex items-center gap-4 mt-2">
           <QuantitySelector
             quantity={quantity}
@@ -78,6 +86,7 @@ export default function ProductHeroSection({
 
         <AddToCartActions
           disabled={disabled}
+          isSoldOut={isSoldOut}
           onAddToCart={() => onAddToCart(quantity)}
           onBuyNow={() => onBuyNow(quantity)}
         />
@@ -85,4 +94,5 @@ export default function ProductHeroSection({
     </section>
   );
 }
+
 

@@ -5,6 +5,14 @@ const API_URL = "http://localhost:3000/products";
 // =========================
 // Types
 // =========================
+export type ProductBadges = {
+  isSoldOut: boolean;
+  isLowStock: boolean;
+  isNew: boolean;
+  isHot: boolean;
+  isBestSeller: boolean;
+};
+
 export type Product = {
   id: number;
   name: string;
@@ -15,6 +23,7 @@ export type Product = {
   stock: number;
   category: string;
   badge?: string;
+  badges?: ProductBadges;
   rating?: number;
   reviewsCount?: number;
   createdAt: string;

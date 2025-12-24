@@ -90,10 +90,30 @@ export default function ProductDetailsPage() {
 
           {/* Main Content Card */}
           <div className="bg-[#eaf5ea] rounded-2xl p-6 lg:p-8 shadow-sm border border-[#E5E7EB]">
+            {/* Store Info */}
+            {(product as any).store && (
+              <div className="mb-6 pb-4 border-b border-[#E5E7EB]">
+                <button
+                  onClick={() => navigate(`/store/${(product as any).store.id}`)}
+                  className="flex items-center gap-2 text-[#4A6F5D] hover:underline transition"
+                >
+                  <span className="text-sm font-medium">
+                    Sold by: <span className="font-bold">{(product as any).store.name}</span>
+                  </span>
+                  {(product as any).store.isOfficial && (
+                    <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs font-bold">
+                      Official Store
+                    </span>
+                  )}
+                </button>
+              </div>
+            )}
+
             <ProductHeroSection
               name={product.name}
               image={product.image}
               badge={product.badge}
+              badges={product.badges}
               shortDescription={product.shortDescription}
               price={product.price}
               stock={product.stock}

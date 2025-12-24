@@ -11,6 +11,12 @@ import ShopPage from "./pages/ShopPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import Sop3DPage from "./pages/Soap3DPage";
 import AdminMarketPage from "./pages/admin/AdminMarketPage";
+import UserOrdersPage from "./pages/UserOrdersPage";
+import UserOrderDetailsPage from "./pages/UserOrderDetailsPage";
+import MarketplacePage from "./pages/MarketplacePage";
+import StorePage from "./pages/StorePage";
+import BecomeSellerPage from "./pages/BecomeSellerPage";
+import SellerDashboardPage from "./pages/SellerDashboardPage";
 import { CartProvider } from "./context/CartContext";
 
 export default function App() {
@@ -30,8 +36,17 @@ export default function App() {
           <Route path="/shop/product/:id" element={<ProductDetailsPage />} />
           <Route path="/soap3d" element={<Sop3DPage />} />
           <Route path="/admin/market" element={<AdminMarketPage />} />
+          <Route path="/orders" element={<UserOrdersPage />} />
+          <Route path="/orders/:id" element={<UserOrderDetailsPage />} />
+          <Route path="/marketplace" element={<MarketplacePage />} />
+          <Route path="/marketplace/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/store/:id" element={<StorePage />} />
+          <Route path="/become-seller" element={<BecomeSellerPage />} />
+          <Route path="/seller" element={<SellerDashboardPage />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>
   );
 }
+
+

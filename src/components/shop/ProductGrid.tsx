@@ -8,6 +8,7 @@ export default function ProductGrid() {
       title: "Nabulsi Soap",
       description: "Authentic handmade olive oil soap from Nablus.",
       price: 12,
+      stock: 50,
       badge: "BEST SELLER",
     },
     {
@@ -16,6 +17,7 @@ export default function ProductGrid() {
       title: "Virgin Olive Oil",
       description: "Cold-pressed Palestinian olive oil (500ml).",
       price: 45,
+      stock: 30,
       badge: "ORGANIC",
     },
     {
@@ -24,6 +26,7 @@ export default function ProductGrid() {
       title: "Arabic Oud Perfume",
       description: "Long-lasting Arabian fragrance.",
       price: 30,
+      stock: 25,
     },
     {
       image:
@@ -31,6 +34,7 @@ export default function ProductGrid() {
       title: "Olive Oil Soap",
       description: "Pure olive oil moisturizing soap.",
       price: 8,
+      stock: 100,
     },
     {
       image:
@@ -38,6 +42,7 @@ export default function ProductGrid() {
       title: "Palestinian Bukhoor",
       description: "Traditional incense with rich aroma.",
       price: 25,
+      stock: 15,
     },
   ];
 
@@ -51,6 +56,7 @@ export default function ProductGrid() {
           title={p.title}
           description={p.description}
           price={p.price}
+          stock={p.stock}
           badge={p.badge}
           onAddToCart={() => console.log("Add to cart:", p.title)}
           onBuyNow={() => console.log("Buy:", p.title)}
@@ -59,3 +65,4 @@ export default function ProductGrid() {
     </div>
   );
 }
+

@@ -126,7 +126,9 @@ export default function ShopPage() {
                       title={productForUI.title}
                       description={productForUI.description}
                       price={productForUI.price}
+                      stock={apiProduct.stock}
                       badge={productForUI.badge}
+                      badges={apiProduct.badges}
                       onAddToCart={() => addToCart(productForUI)}
                       onBuyNow={() => {
                         addToCart(productForUI);
