@@ -32,16 +32,16 @@ export default function QuickAction(): React.ReactElement {
       Icon: FiBox,
     },
     {
+      key: "marketplace",
+      title: "Marketplace",
+      subtitle: "Buy from multiple stores",
+      Icon: FiShoppingBag,
+    },
+    {
       key: "store",
       title: t("quickActions.store.title"),
       subtitle: t("quickActions.store.subtitle"),
       Icon: FiShoppingBag,
-    },
-    {
-      key: "community",
-      title: t("quickActions.community.title"),
-      subtitle: t("quickActions.community.subtitle"),
-      Icon: FiUsers,
     },
   ];
 
@@ -59,8 +59,8 @@ export default function QuickAction(): React.ReactElement {
               onClick={() => {
                 if (a.key === "ai") navigate("/palestine-ai");
                 if (a.key === "museum") navigate("/museum");
+                if (a.key === "marketplace") navigate("/marketplace");
                 if (a.key === "store") navigate("/shop");
-                if (a.key === "community") navigate("/community");
               }}
               className="w-full text-left bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-[#CDA15A]/20"
               aria-label={a.title}

@@ -1,7 +1,8 @@
 // src/components/Navbar/Navbar.tsx
 import React, { useState, useRef, useEffect } from "react";
-import { FiMenu, FiBell, FiUser, FiGlobe } from "react-icons/fi";
+import { FiMenu, FiUser, FiGlobe } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import NotificationBell from "./NotificationBell";
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -63,11 +64,7 @@ export default function Navbar({
           {/* Icons */}
           <div className="flex items-center gap-3 relative" ref={dropdownRef}>
             {/* Notifications */}
-            <button className="p-2 hover:bg-emerald-100 rounded-full transition">
-              <span className="inline-flex items-center justify-center w-9 h-9 bg-white/60 border border-emerald-200 rounded-full">
-                <FiBell className="w-5 h-5 text-[#2f5c3f]" />
-              </span>
-            </button>
+            <NotificationBell />
 
             {/* Language Selector */}
             <button

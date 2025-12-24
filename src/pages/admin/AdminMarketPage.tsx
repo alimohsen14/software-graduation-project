@@ -15,17 +15,36 @@ import {
   deleteProduct,
   CreateProductPayload,
 } from "../../services/shopService";
-import { getAllOrders } from "../../services/order.service";
+import {
+  getAllOrders,
+  approveOrder,
+  rejectOrder,
+  AdminStatus,
+} from "../../services/order.service";
 
 type ProductStatus = "IN_STOCK" | "LOW_STOCK" | "OUT_OF_STOCK";
+
+type OrderItem = {
+  quantity: number;
+  product: {
+    name: string;
+  };
+};
 
 type AdminOrder = {
   id: string;
   customerName: string;
+  customerEmail?: string;
+  phone: string;
+  city: string;
+  address: string;
   products: string;
+  items: OrderItem[];
   total: number;
   location: string;
   status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED";
+  adminStatus: AdminStatus;
+  rejectionReason?: string;
 };
 
 export default function AdminMarketPage() {
@@ -87,12 +106,19 @@ export default function AdminMarketPage() {
       const mappedOrders: AdminOrder[] = data.map((order) => ({
         id: String(order.id),
         customerName: order.user?.name || "Unknown",
+        customerEmail: order.user?.email,
+        phone: order.phone,
+        city: order.city,
+        address: order.address,
         products: order.items
           ?.map((item) => `${item.product?.name || "Product"} (x${item.quantity})`)
           .join(", ") || "No items",
+        items: order.items || [],
         total: order.total,
         location: order.city,
         status: order.status,
+        adminStatus: order.adminStatus || "ADMIN_PENDING",
+        rejectionReason: order.rejectionReason,
       }));
 
       setOrders(mappedOrders);
@@ -181,6 +207,45 @@ export default function AdminMarketPage() {
   };
 
   // =========================
+  // Handle Approve Order
+  // =========================
+  const handleApproveOrder = async (orderId: string) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      alert("You must be logged in to perform this action");
+      return;
+    }
+
+    try {
+      await approveOrder(token, Number(orderId));
+      await fetchOrders();
+    } catch (err) {
+      console.error("Failed to approve order", err);
+      alert("Failed to approve order. Please try again.");
+    }
+  };
+
+  // =========================
+  // Handle Reject Order
+  // =========================
+  const handleRejectOrder = async (orderId: string, reason: string) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      alert("You must be logged in to perform this action");
+      return;
+    }
+
+    try {
+      await rejectOrder(token, Number(orderId), reason);
+      // Refetch both orders and products (stock restored after reject)
+      await Promise.all([fetchOrders(), fetchProducts()]);
+    } catch (err) {
+      console.error("Failed to reject order", err);
+      alert("Failed to reject order. Please try again.");
+    }
+  };
+
+  // =========================
   // Low stock alerts
   // =========================
   const lowStockItems = products
@@ -263,7 +328,11 @@ export default function AdminMarketPage() {
             </button>
           </div>
         ) : (
-          <CustomerOrdersPreview orders={orders} />
+          <CustomerOrdersPreview
+            orders={orders}
+            onApprove={handleApproveOrder}
+            onReject={handleRejectOrder}
+          />
         )}
 
         {/* Products */}
