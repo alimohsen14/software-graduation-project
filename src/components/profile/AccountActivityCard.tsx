@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import { format, parseISO } from "date-fns";
 
 interface AccountActivityCardProps {
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default function AccountActivityCard({
@@ -13,7 +13,8 @@ export default function AccountActivityCard({
 }: AccountActivityCardProps) {
   const { t, i18n } = useTranslation();
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return "N/A";
     try {
       const date = parseISO(dateString);
 

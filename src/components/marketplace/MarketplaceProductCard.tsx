@@ -1,7 +1,7 @@
-import React from "react";
-import { FiShoppingCart, FiBox } from "react-icons/fi";
+import { FiShoppingCart, FiBox, FiPlus, FiCheck, FiHeart } from "react-icons/fi";
 import { MarketplaceProduct } from "../../services/marketplace.service";
 import ProductBadges from "../shop/ProductBadges";
+import { useStoreSocialStatus } from "../../hooks/useStoreSocialStatus";
 import StockWarningBox from "../shop/StockWarningBox";
 
 type Props = {
@@ -16,6 +16,14 @@ export default function MarketplaceProductCard({
     onStoreClick,
 }: Props) {
     const isSoldOut = product.badges?.isSoldOut ?? false;
+    const {
+        isFollowed,
+        isFavorited,
+        toggleFollow,
+        toggleFavorite,
+        togglingFollow,
+        togglingFavorite
+    } = useStoreSocialStatus(product.store.id);
 
     const handleStoreClick = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -35,21 +43,56 @@ export default function MarketplaceProductCard({
                     alt={product.name}
                 />
                 {product.badges && <ProductBadges badges={product.badges} />}
+
+                {/* Float Favorite Button on Image */}
+                <button
+                    onClick={toggleFavorite}
+                    disabled={togglingFavorite}
+                    className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-md ${isFavorited
+                        ? "bg-red-500 text-white scale-110"
+                        : "bg-white/80 text-gray-400 hover:text-red-500 hover:bg-white"
+                        }`}
+                >
+                    <FiHeart size={16} fill={isFavorited ? "currentColor" : "none"} />
+                </button>
             </div>
 
-            {/* Store Name */}
-            <button
-                onClick={handleStoreClick}
-                className="flex items-center gap-1.5 text-xs text-[#4A6F5D] font-medium mb-2 hover:underline"
-            >
-                <FiBox size={12} />
-                {product.store.name}
-                {product.store.isOfficial && (
-                    <span className="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-[10px] font-bold">
-                        Official
-                    </span>
-                )}
-            </button>
+            {/* Store Name & Social Stats */}
+            <div className="flex items-center justify-between mb-2">
+                <button
+                    onClick={handleStoreClick}
+                    className="flex items-center gap-2 text-xs text-[#4A6F5D] font-medium hover:underline group truncate mr-2"
+                >
+                    {product.store.logo && product.store.logo.length > 0 ? (
+                        <img
+                            src={product.store.logo}
+                            alt={product.store.name}
+                            className="w-5 h-5 rounded-full object-cover border border-gray-200"
+                        />
+                    ) : (
+                        <FiBox size={12} />
+                    )}
+                    <span className="truncate">{product.store.name}</span>
+                    {product.store.isOfficial && (
+                        <span className="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                            Official
+                        </span>
+                    )}
+                </button>
+
+                {/* Follow Toggle Icon */}
+                <button
+                    onClick={toggleFollow}
+                    disabled={togglingFollow}
+                    title={isFollowed ? "Unfollow Store" : "Follow Store"}
+                    className={`flex items-center justify-center w-6 h-6 rounded-lg transition-colors shrink-0 ${isFollowed
+                        ? "bg-emerald-100 text-emerald-600"
+                        : "bg-gray-100 text-gray-500 hover:bg-emerald-50 hover:text-emerald-500"
+                        }`}
+                >
+                    {isFollowed ? <FiCheck size={14} /> : <FiPlus size={14} />}
+                </button>
+            </div>
 
             {/* Product Info */}
             <div className="flex flex-col gap-1">

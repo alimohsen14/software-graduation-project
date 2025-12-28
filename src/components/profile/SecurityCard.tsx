@@ -2,7 +2,7 @@ import { FiShield, FiCheckCircle } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 
 interface SecurityCardProps {
-  provider: string;
+  provider?: string;
 }
 
 export default function SecurityCard({ provider }: SecurityCardProps) {

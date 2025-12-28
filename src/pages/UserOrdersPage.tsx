@@ -12,15 +12,14 @@ export default function UserOrdersPage() {
 
     useEffect(() => {
         const fetchOrders = async () => {
-            const token = localStorage.getItem("accessToken");
-            if (!token) {
+            if (!localStorage.getItem("accessToken")) {
                 setError("Please log in to view your orders");
                 setLoading(false);
                 return;
             }
 
             try {
-                const data = await getMyOrders(token);
+                const data = await getMyOrders();
                 setOrders(data);
             } catch (err) {
                 console.error("Failed to load orders", err);

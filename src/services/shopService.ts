@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:3000/products";
+import client from "../api/client";
 
 // =========================
 // Types
@@ -26,6 +24,12 @@ export type Product = {
   badges?: ProductBadges;
   rating?: number;
   reviewsCount?: number;
+  store?: {
+    id: number;
+    name: string;
+    logo?: string;
+    isOfficial: boolean;
+  };
   createdAt: string;
   updatedAt: string;
 };
@@ -49,12 +53,12 @@ export type UpdateProductPayload = Partial<CreateProductPayload>;
 // Public (Shop)
 // =========================
 export const getAllProducts = async (): Promise<Product[]> => {
-  const res = await axios.get<Product[]>(API_URL);
+  const res = await client.get<Product[]>("/products");
   return res.data;
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
-  const res = await axios.get<Product>(`${API_URL}/${id}`);
+  const res = await client.get<Product>(`/products/${id}`);
   return res.data;
 };
 
@@ -71,7 +75,7 @@ export const createProduct = async (
   token: string,
   data: CreateProductPayload
 ): Promise<Product> => {
-  const res = await axios.post<Product>(API_URL, data, authHeaders(token));
+  const res = await client.post<Product>("/products", data, authHeaders(token));
   return res.data;
 };
 
@@ -80,8 +84,8 @@ export const updateProduct = async (
   id: number,
   data: UpdateProductPayload
 ): Promise<Product> => {
-  const res = await axios.patch<Product>(
-    `${API_URL}/${id}`,
+  const res = await client.patch<Product>(
+    `/products/${id}`,
     data,
     authHeaders(token)
   );
@@ -92,8 +96,8 @@ export const deleteProduct = async (
   token: string,
   id: number
 ): Promise<Product> => {
-  const res = await axios.delete<Product>(
-    `${API_URL}/${id}`,
+  const res = await client.delete<Product>(
+    `/products/${id}`,
     authHeaders(token)
   );
   return res.data;

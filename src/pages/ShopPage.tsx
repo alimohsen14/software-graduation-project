@@ -67,8 +67,7 @@ export default function ShopPage() {
             quantity: item.quantity,
             price: item.price,
           })),
-        },
-        token
+        }
       );
 
       clearCart();

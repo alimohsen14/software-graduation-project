@@ -59,10 +59,9 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
           fixed top-0
           ${direction === "rtl" ? "right-0" : "left-0"}
           h-screen w-60 z-40 transform transition-transform duration-300
-          ${
-            isOpen
-              ? "translate-x-0"
-              : direction === "rtl"
+          ${isOpen
+            ? "translate-x-0"
+            : direction === "rtl"
               ? "translate-x-full"
               : "-translate-x-full"
           }
@@ -97,20 +96,48 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                   onClick={() => {
                     if (key === "Profile") navigate("/profile");
                     if (key === "AI") navigate("/palestine-ai");
+                    if (key === "Official") navigate("/shop"); // Assuming Official Store is Shop
                     setActive(key);
                     closeSidebar();
                   }}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg ${
-                    isActive
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg ${isActive
                       ? "bg-[#dff3e8] text-[#21492f]"
                       : "text-[#2f5c3f] hover:bg-[#f1fbf4]"
-                  }`}
+                    }`}
                 >
                   <Icon className="w-5 h-5" />
                   <span className="text-sm font-medium">{label}</span>
                 </button>
               );
             })}
+
+            {/* Admin Links */}
+            {JSON.parse(localStorage.getItem("user") || "{}")?.role === "ADMIN" && (
+              <>
+                <div className="my-2 border-t border-[#2f5c3f]/10"></div>
+                <div className="px-3 text-xs font-bold text-[#2f5c3f]/60 uppercase tracking-wider mb-1">Admin</div>
+                <button
+                  onClick={() => {
+                    navigate("/admin/market");
+                    closeSidebar();
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
+                >
+                  <FiShoppingBag className="w-5 h-5" />
+                  <span className="text-sm font-medium">Market Admin</span>
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/admin/seller-requests");
+                    closeSidebar();
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
+                >
+                  <FiUsers className="w-5 h-5" />
+                  <span className="text-sm font-medium">Seller Requests</span>
+                </button>
+              </>
+            )}
           </nav>
 
           <div className="mt-auto text-xs text-[#2f5c3f] opacity-80">

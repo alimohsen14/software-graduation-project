@@ -38,7 +38,9 @@ export default function DashboardLayout({
 
         <main className="mt-16 px-4 md:px-8 lg:px-10">
           <div className="max-w-6xl mx-auto">
-            {React.cloneElement(children, { setIsSidebarOpen })}
+            {React.isValidElement(children) && typeof children.type !== 'string'
+              ? React.cloneElement(children as React.ReactElement<any>, { setIsSidebarOpen })
+              : children}
           </div>
         </main>
       </div>
