@@ -21,6 +21,7 @@ import {
   rejectOrder,
   AdminStatus,
 } from "../../services/order.service";
+import { getSellerRequests } from "../../services/admin.service";
 
 type ProductStatus = "IN_STOCK" | "LOW_STOCK" | "OUT_OF_STOCK";
 
@@ -80,6 +81,23 @@ export default function AdminMarketPage() {
   }, []);
 
   // =========================
+  // Fetch Seller Requests Count
+  // =========================
+  const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
+
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const requests = await getSellerRequests();
+        setPendingRequestsCount(requests.filter(r => r.status === "PENDING").length);
+      } catch (err) {
+        console.error("Failed to load seller requests", err);
+      }
+    };
+    fetchRequests();
+  }, []);
+
+  // =========================
   // Fetch Orders (Admin)
   // =========================
   const fetchOrders = async () => {
@@ -87,14 +105,7 @@ export default function AdminMarketPage() {
     setOrdersError(null);
 
     try {
-      const token = localStorage.getItem("accessToken");
-      if (!token) {
-        setOrdersError("Not authenticated. Please log in.");
-        setLoadingOrders(false);
-        return;
-      }
-
-      const data = await getAllOrders(token);
+      const data = await getAllOrders();
       console.log("Orders fetched:", data);
 
       if (!data || !Array.isArray(data)) {
@@ -210,14 +221,8 @@ export default function AdminMarketPage() {
   // Handle Approve Order
   // =========================
   const handleApproveOrder = async (orderId: string) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      alert("You must be logged in to perform this action");
-      return;
-    }
-
     try {
-      await approveOrder(token, Number(orderId));
+      await approveOrder(Number(orderId));
       await fetchOrders();
     } catch (err) {
       console.error("Failed to approve order", err);
@@ -229,14 +234,8 @@ export default function AdminMarketPage() {
   // Handle Reject Order
   // =========================
   const handleRejectOrder = async (orderId: string, reason: string) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      alert("You must be logged in to perform this action");
-      return;
-    }
-
     try {
-      await rejectOrder(token, Number(orderId), reason);
+      await rejectOrder(Number(orderId), reason);
       // Refetch both orders and products (stock restored after reject)
       await Promise.all([fetchOrders(), fetchProducts()]);
     } catch (err) {
@@ -300,6 +299,27 @@ export default function AdminMarketPage() {
       <div className="max-w-7xl mx-auto flex flex-col gap-6">
         {/* Header */}
         <AdminMarketHeader onAddProduct={handleOpenAddModal} />
+
+        {/* Dashboard Actions Row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Seller Requests Card */}
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
+            <div>
+              <h3 className="text-gray-500 font-medium text-sm uppercase tracking-wider mb-2">Pending Seller Requests</h3>
+              <div className="text-3xl font-bold text-[#1d2d1f]">
+                {pendingRequestsCount}
+              </div>
+            </div>
+            <button
+              onClick={() => window.location.href = "/admin/seller-requests"}
+              className="px-4 py-2 bg-[#eaf5ea] text-[#2f5c3f] rounded-lg font-bold text-sm hover:bg-[#dff3e8] transition"
+            >
+              Review Requests
+            </button>
+          </div>
+
+          {/* Quick Stats or other cards can go here */}
+        </div>
 
         {/* Low stock alerts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">

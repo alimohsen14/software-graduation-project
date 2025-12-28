@@ -4,13 +4,7 @@ import { profileService } from '../../../services/profileService';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
-interface User {
-  name: string;
-  email: string;
-  age: number;
-  gender: string;
-  country: string;
-}
+import { User } from '../../../services/authService';
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -24,11 +18,11 @@ export default function EditProfileModal({ isOpen, onClose, user, onUpdate }: Ed
   const direction = i18n.dir();
 
   const [formData, setFormData] = useState({
-    name: user.name,
-    email: user.email,
-    age: user.age,
-    gender: user.gender,
-    country: user.country,
+    name: user.name || "",
+    email: user.email || "",
+    age: user.age || 0,
+    gender: user.gender || "MALE",
+    country: user.country || "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +37,7 @@ export default function EditProfileModal({ isOpen, onClose, user, onUpdate }: Ed
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       await profileService.updateProfile(formData);
       onUpdate();
@@ -59,7 +53,7 @@ export default function EditProfileModal({ isOpen, onClose, user, onUpdate }: Ed
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={onClose}>
-        
+
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -86,13 +80,13 @@ export default function EditProfileModal({ isOpen, onClose, user, onUpdate }: Ed
             >
 
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all">
-                
+
                 <Dialog.Title className="text-lg font-bold text-gray-900 mb-2">
                   {t("profile.editProfile")}
                 </Dialog.Title>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       {t("profile.name")}

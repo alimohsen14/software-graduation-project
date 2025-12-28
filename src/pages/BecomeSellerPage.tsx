@@ -8,7 +8,8 @@ export default function BecomeSellerPage() {
     const navigate = useNavigate();
     const [formData, setFormData] = useState<SellerApplication>({
         storeName: "",
-        whatToSell: "",
+        productType: "",
+        region: "",
         description: "",
     });
     const [loading, setLoading] = useState(false);
@@ -27,13 +28,12 @@ export default function BecomeSellerPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!formData.storeName.trim() || !formData.whatToSell.trim()) {
-            setError("Please fill in all required fields");
+        if (!formData.storeName.trim() || !formData.productType.trim() || !formData.region.trim()) {
+            setError("Please fill in all required fields (Store Name, Product Type, Region)");
             return;
         }
 
-        const token = localStorage.getItem("accessToken");
-        if (!token) {
+        if (!localStorage.getItem("accessToken")) {
             setError("Please log in to apply as a seller");
             return;
         }
@@ -42,7 +42,7 @@ export default function BecomeSellerPage() {
         setError(null);
 
         try {
-            await applyToBeSeller(token, formData);
+            await applyToBeSeller(formData);
             setSuccess(true);
         } catch (err: any) {
             console.error("Failed to submit application", err);
@@ -115,17 +115,32 @@ export default function BecomeSellerPage() {
                             />
                         </div>
 
-                        {/* What to Sell */}
+                        {/* Product Type (was What to Sell) */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                What do you want to sell? <span className="text-red-500">*</span>
+                                Product Type <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
-                                name="whatToSell"
-                                value={formData.whatToSell}
+                                name="productType"
+                                value={formData.productType}
                                 onChange={handleChange}
-                                placeholder="e.g., Handmade soaps, Olive oil, Crafts"
+                                placeholder="e.g., Handmade soaps, Olive oil"
+                                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                            />
+                        </div>
+
+                        {/* Region */}
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-2">
+                                Region / Area <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="region"
+                                value={formData.region}
+                                onChange={handleChange}
+                                placeholder="e.g., Ramallah, Nablus, Gaza"
                                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
                             />
                         </div>
@@ -133,14 +148,14 @@ export default function BecomeSellerPage() {
                         {/* Description */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Tell us about your business
+                                Optional Message / Description
                             </label>
                             <textarea
                                 name="description"
                                 value={formData.description}
                                 onChange={handleChange}
-                                placeholder="Describe your products and why customers should buy from you..."
-                                rows={4}
+                                placeholder="Tell us more about your business..."
+                                rows={3}
                                 className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition resize-none"
                             />
                         </div>

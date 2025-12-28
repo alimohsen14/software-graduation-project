@@ -1,11 +1,10 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:3000/marketplace";
+import client from "../api/client";
 
 // ================= TYPES =================
 export type StoreInfo = {
     id: number;
     name: string;
+    logo?: string | null;
     isOfficial: boolean;
 };
 
@@ -55,13 +54,13 @@ export const getMarketplaceProducts = async (
     if (filters?.sortBy) params.append("sortBy", filters.sortBy);
     if (filters?.storeId) params.append("storeId", String(filters.storeId));
 
-    const res = await axios.get<MarketplaceProduct[]>(
-        `${API_URL}/products?${params.toString()}`
+    const res = await client.get<MarketplaceProduct[]>(
+        `/marketplace/products`, { params: filters }
     );
     return res.data;
 };
 
 export const getMarketplaceCategories = async (): Promise<string[]> => {
-    const res = await axios.get<string[]>(`${API_URL}/categories`);
+    const res = await client.get<string[]>("/marketplace/categories");
     return res.data;
 };

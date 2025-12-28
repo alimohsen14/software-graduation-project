@@ -1,6 +1,4 @@
-import axios from "axios";
-
-const API_URL = "http://localhost:3000/uploads";
+import client from "../api/client";
 
 type UploadResponse = {
     url: string;
@@ -11,7 +9,7 @@ export const uploadImage = async (file: File): Promise<string> => {
     const formData = new FormData();
     formData.append("file", file);
 
-    const res = await axios.post<UploadResponse>(`${API_URL}/image`, formData, {
+    const res = await client.post<UploadResponse>("/uploads/image", formData, {
         headers: {
             "Content-Type": "multipart/form-data",
         },

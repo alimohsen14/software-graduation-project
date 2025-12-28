@@ -1,7 +1,5 @@
 // @ts-ignore
-import axios from "axios";
-
-const API_URL = "http://localhost:3000/auth";
+import client from "../api/client";
 
 // ===== Types =====
 export type Tokens = {
@@ -17,6 +15,19 @@ export type User = {
   age?: number | null;
   gender?: "MALE" | "FEMALE";
   isAdmin?: boolean;
+  provider?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  store?: {
+    id: number;
+    name: string;
+    logo?: string | null;
+    type: "SELLER" | "ADMIN";
+  };
+  sellerRequest?: {
+    id: number;
+    status: "PENDING" | "REJECTED";
+  };
 };
 
 export type AuthEnvelope = {
@@ -28,6 +39,7 @@ export type AuthEnvelope = {
 export type ProfileEnvelope = {
   message: string;
   user: User;
+  tokens?: Tokens; // Sometimes returned
 };
 
 export type ForgotPasswordEnvelope = {
@@ -48,11 +60,11 @@ export const signup = async (data: {
   gender: "MALE" | "FEMALE";
   isSeller?: boolean;
 }) => {
-  return axios.post<AuthEnvelope>(`${API_URL}/signup`, data);
+  return client.post<AuthEnvelope>("/auth/signup", data);
 };
 
 export const login = async (data: { email: string; password: string }) => {
-  return axios.post<AuthEnvelope>(`${API_URL}/login`, data);
+  return client.post<AuthEnvelope>("/auth/login", data);
 };
 
 export const completeGoogleSignup = async (data: {
@@ -63,24 +75,25 @@ export const completeGoogleSignup = async (data: {
   gender: "MALE" | "FEMALE";
   token: string;
 }) => {
-  return axios.post<AuthEnvelope>(`${API_URL}/complete-google-signup`, data);
+  return client.post<AuthEnvelope>("/auth/complete-google-signup", data);
 };
 
 export const getProfile = async (accessToken?: string) => {
-  const token = accessToken ?? localStorage.getItem("accessToken") ?? "";
-  return axios.get<ProfileEnvelope>(`${API_URL}/profile`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  // Client handles token via interceptor, but if we need to pass a specific one:
+  const config = accessToken
+    ? { headers: { Authorization: `Bearer ${accessToken}` } }
+    : {};
+  return client.get<ProfileEnvelope>("/auth/profile", config);
 };
 
 export const forgotPassword = async (email: string) => {
-  return axios.post<ForgotPasswordEnvelope>(`${API_URL}/forgot-password`, {
+  return client.post<ForgotPasswordEnvelope>("/auth/forgot-password", {
     email,
   });
 };
 
 export const resetPassword = async (token: string, newPassword: string) => {
-  return axios.post<ResetPasswordEnvelope>(`${API_URL}/reset-password`, {
+  return client.post<ResetPasswordEnvelope>("/auth/reset-password", {
     token,
     newPassword,
   });
@@ -90,3 +103,4 @@ export const resetPassword = async (token: string, newPassword: string) => {
 export const getToken = (): string | null => {
   return localStorage.getItem("accessToken");
 };
+

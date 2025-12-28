@@ -1,6 +1,6 @@
-import axios from "axios";
+import client from "../api/client";
 
-const API_URL = "http://localhost:3000/orders";
+const API_URL = "/orders";
 
 // ================= TYPES =================
 export type OrderItemPayload = {
@@ -41,79 +41,48 @@ export type OrderResponse = {
 };
 
 // ================= ADMIN =================
-export const getAllOrders = async (token: string): Promise<OrderResponse[]> => {
-  const res = await axios.get<OrderResponse[]>(API_URL, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
+export const getAllOrders = async (): Promise<OrderResponse[]> => {
+  const res = await client.get<OrderResponse[]>(API_URL);
   return res.data;
 };
 
 export const approveOrder = async (
-  token: string,
   orderId: number
 ): Promise<OrderResponse> => {
-  const res = await axios.post<OrderResponse>(
+  const res = await client.post<OrderResponse>(
     `${API_URL}/${orderId}/approve`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    {}
   );
   return res.data;
 };
 
 export const rejectOrder = async (
-  token: string,
   orderId: number,
   rejectionReason: string
 ): Promise<OrderResponse> => {
-  const res = await axios.post<OrderResponse>(
+  const res = await client.post<OrderResponse>(
     `${API_URL}/${orderId}/reject`,
-    { rejectionReason },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+    { rejectionReason }
   );
   return res.data;
 };
 
 // ================= USER =================
 export const createOrder = async (
-  payload: CreateOrderPayload,
-  token: string
+  payload: CreateOrderPayload
 ) => {
-  return axios.post(API_URL, payload, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return client.post(API_URL, payload);
 };
 
-export const getMyOrders = async (token: string): Promise<OrderResponse[]> => {
-  const res = await axios.get<OrderResponse[]>(`${API_URL}/my`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const getMyOrders = async (): Promise<OrderResponse[]> => {
+  const res = await client.get<OrderResponse[]>(`${API_URL}/my`);
   return res.data;
 };
 
 export const getOrderById = async (
-  token: string,
   orderId: number
 ): Promise<OrderResponse> => {
-  const res = await axios.get<OrderResponse>(`${API_URL}/${orderId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const res = await client.get<OrderResponse>(`${API_URL}/${orderId}`);
   return res.data;
 };
 

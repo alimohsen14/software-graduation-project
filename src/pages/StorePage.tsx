@@ -6,7 +6,7 @@ import { FiShoppingBag, FiPackage, FiArrowLeft, FiShield } from "react-icons/fi"
 import MarketplaceProductCard from "../components/marketplace/MarketplaceProductCard";
 
 export default function StorePage() {
-    const { id } = useParams<{ id: string }>();
+    const { storeId } = useParams<{ storeId: string }>();
     const navigate = useNavigate();
     const [store, setStore] = useState<Store | null>(null);
     const [products, setProducts] = useState<StoreProduct[]>([]);
@@ -14,14 +14,21 @@ export default function StorePage() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!id) return;
+        const numericStoreId = Number(storeId);
+
+        if (!storeId || Number.isNaN(numericStoreId)) {
+            setError("Invalid store ID");
+            setLoading(false);
+            return;
+        }
 
         const fetchData = async () => {
             setLoading(true);
+            setError(null);
             try {
                 const [storeData, productsData] = await Promise.all([
-                    getStoreById(Number(id)),
-                    getStoreProducts(Number(id)),
+                    getStoreById(numericStoreId),
+                    getStoreProducts(numericStoreId),
                 ]);
                 setStore(storeData);
                 setProducts(productsData);
@@ -34,7 +41,7 @@ export default function StorePage() {
         };
 
         fetchData();
-    }, [id]);
+    }, [storeId]);
 
     if (loading) {
         return (
@@ -46,11 +53,21 @@ export default function StorePage() {
         );
     }
 
-    if (error || !store) {
+    if (error || (!loading && !store)) {
         return (
             <DashboardLayout>
-                <div className="min-h-screen flex items-center justify-center">
-                    <p className="text-red-600">{error || "Store not found"}</p>
+                <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center">
+                    <div className="bg-red-50 text-red-600 p-4 rounded-2xl mb-6 max-w-md">
+                        <p className="font-bold mb-1">Store Error</p>
+                        <p className="text-sm opacity-90">{error || "The store you're looking for was not found."}</p>
+                    </div>
+                    <button
+                        onClick={() => navigate("/marketplace")}
+                        className="flex items-center gap-2 px-6 py-3 bg-[#4A6F5D] text-white rounded-xl font-bold hover:bg-[#3d5c4d] transition shadow-md"
+                    >
+                        <FiArrowLeft size={18} />
+                        Back to Marketplace
+                    </button>
                 </div>
             </DashboardLayout>
         );
@@ -72,20 +89,28 @@ export default function StorePage() {
                     {/* Store Header */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mb-8">
                         <div className="flex items-start gap-4">
-                            <div className="w-16 h-16 bg-[#eaf5ea] rounded-xl flex items-center justify-center">
-                                <FiShoppingBag className="w-8 h-8 text-[#4A6F5D]" />
+                            <div className="w-16 h-16 bg-[#eaf5ea] rounded-xl flex items-center justify-center overflow-hidden border border-gray-100">
+                                {store?.logo && store.logo.length > 0 ? (
+                                    <img
+                                        src={store.logo}
+                                        alt={store.name}
+                                        className="w-full h-full object-cover"
+                                    />
+                                ) : (
+                                    <FiShoppingBag className="w-8 h-8 text-[#4A6F5D]" />
+                                )}
                             </div>
                             <div className="flex-1">
                                 <div className="flex items-center gap-3 mb-2">
-                                    <h1 className="text-2xl font-bold text-[#1F2933]">{store.name}</h1>
-                                    {store.isOfficial && (
+                                    <h1 className="text-2xl font-bold text-[#1F2933]">{store?.name}</h1>
+                                    {store?.isOfficial && (
                                         <span className="flex items-center gap-1 bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-xs font-bold">
                                             <FiShield size={12} />
                                             Official Store
                                         </span>
                                     )}
                                 </div>
-                                {store.description && (
+                                {store?.description && (
                                     <p className="text-gray-500 text-sm mb-2">{store.description}</p>
                                 )}
                                 <p className="text-xs text-gray-400">
@@ -109,9 +134,10 @@ export default function StorePage() {
                                     product={{
                                         ...product,
                                         store: {
-                                            id: store.id,
-                                            name: store.name,
-                                            isOfficial: store.isOfficial,
+                                            id: store!.id,
+                                            name: store!.name,
+                                            logo: store?.logo || null,
+                                            isOfficial: store?.isOfficial || false,
                                         },
                                     }}
                                     onClick={() => navigate(`/marketplace/product/${product.id}`)}

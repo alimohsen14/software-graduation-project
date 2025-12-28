@@ -3,10 +3,10 @@ import { useTranslation } from "react-i18next";
 interface ProfileHeaderCardProps {
   name: string;
   email: string;
-  country: string;
-  age: number;
-  gender: string;
-  provider: string;
+  country?: string | null;
+  age?: number | null;
+  gender?: string;
+  provider?: string;
 }
 
 export default function ProfileHeaderCard({
@@ -42,9 +42,8 @@ export default function ProfileHeaderCard({
           <p className="text-sm text-gray-600 mt-1">{email}</p>
 
           <div
-            className={`mt-5 grid grid-cols-2 gap-x-6 gap-y-4 ${
-              isRTL ? "text-right" : "text-left"
-            }`}
+            className={`mt-5 grid grid-cols-2 gap-x-6 gap-y-4 ${isRTL ? "text-right" : "text-left"
+              }`}
           >
             <div>
               <p className="text-xs font-semibold text-gray-500">

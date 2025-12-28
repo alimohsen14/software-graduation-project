@@ -1,12 +1,14 @@
-import { FiShoppingCart, FiShoppingBag } from "react-icons/fi";
+import { FiShoppingCart, FiShoppingBag, FiCheck, FiPlus, FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { ProductBadges as BadgesType } from "../../services/shopService";
 import ProductBadges from "./ProductBadges";
 import StockWarningBox from "./StockWarningBox";
+import { useStoreSocialStatus } from "../../hooks/useStoreSocialStatus";
 
 type StoreInfo = {
   id: number;
   name: string;
+  logo?: string;
   isOfficial?: boolean;
 };
 
@@ -39,6 +41,14 @@ export default function ProductCard({
 }: ProductCardProps) {
   const navigate = useNavigate();
   const isSoldOut = badges?.isSoldOut ?? false;
+  const {
+    isFollowed,
+    isFavorited,
+    toggleFollow,
+    toggleFavorite,
+    togglingFollow,
+    togglingFavorite
+  } = useStoreSocialStatus(store?.id);
 
   const handleStoreClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -67,22 +77,61 @@ export default function ProductCard({
             </span>
           )
         )}
+
+        {/* Float Favorite Button on Image */}
+        {store && (
+          <button
+            onClick={toggleFavorite}
+            disabled={togglingFavorite}
+            className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-md ${isFavorited
+                ? "bg-red-500 text-white scale-110"
+                : "bg-white/80 text-gray-400 hover:text-red-500 hover:bg-white"
+              }`}
+          >
+            <FiHeart size={16} fill={isFavorited ? "currentColor" : "none"} />
+          </button>
+        )}
       </div>
 
-      {/* Store Name */}
+      {/* Store Name & Logo */}
       {store && (
-        <button
-          onClick={handleStoreClick}
-          className="flex items-center gap-1.5 text-xs text-[#4A6F5D] font-medium mb-2 hover:underline"
-        >
-          <FiShoppingBag size={12} />
-          {store.name}
-          {store.isOfficial && (
-            <span className="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-[10px] font-bold">
-              Official
-            </span>
-          )}
-        </button>
+        <div className="flex items-center justify-between mb-2">
+          <button
+            onClick={handleStoreClick}
+            className="flex items-center gap-2 text-xs text-[#4A6F5D] font-medium hover:underline group truncate mr-2"
+          >
+            {store.logo && store.logo.length > 0 ? (
+              <img
+                src={store.logo}
+                alt={store.name}
+                className="w-5 h-5 rounded-full object-cover border border-gray-200 group-hover:border-[#4A6F5D] transition-colors"
+              />
+            ) : (
+              <FiShoppingBag size={14} />
+            )}
+
+            <span className="truncate">{store.name}</span>
+
+            {store.isOfficial && (
+              <span className="bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded text-[10px] font-bold shrink-0">
+                Official
+              </span>
+            )}
+          </button>
+
+          {/* Follow Toggle Icon */}
+          <button
+            onClick={toggleFollow}
+            disabled={togglingFollow}
+            title={isFollowed ? "Unfollow Store" : "Follow Store"}
+            className={`flex items-center justify-center w-6 h-6 rounded-lg transition-colors shrink-0 ${isFollowed
+                ? "bg-emerald-100 text-emerald-600"
+                : "bg-gray-100 text-gray-500 hover:bg-emerald-50 hover:text-emerald-500"
+              }`}
+          >
+            {isFollowed ? <FiCheck size={14} /> : <FiPlus size={14} />}
+          </button>
+        </div>
       )}
 
       <div className="flex flex-col gap-2">
@@ -110,8 +159,8 @@ export default function ProductCard({
             }}
             disabled={isSoldOut}
             className={`w-10 h-10 rounded-full flex items-center justify-center text-white transition shadow-sm ${isSoldOut
-                ? "bg-[#9CA3AF] cursor-not-allowed"
-                : "bg-[#4A6F5D] hover:bg-[#A33A2B]"
+              ? "bg-[#9CA3AF] cursor-not-allowed"
+              : "bg-[#4A6F5D] hover:bg-[#A33A2B]"
               }`}
           >
             <FiShoppingCart size={18} />
@@ -124,8 +173,8 @@ export default function ProductCard({
             }}
             disabled={isSoldOut}
             className={`px-6 py-2 rounded-full text-white text-sm font-bold transition shadow-sm ${isSoldOut
-                ? "bg-[#9CA3AF] cursor-not-allowed"
-                : "bg-[#4A6F5D] hover:bg-[#A33A2B]"
+              ? "bg-[#9CA3AF] cursor-not-allowed"
+              : "bg-[#4A6F5D] hover:bg-[#A33A2B]"
               }`}
           >
             {isSoldOut ? "Sold Out" : "Buy Now"}

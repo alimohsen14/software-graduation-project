@@ -5,10 +5,10 @@ interface ProfileInfoCardProps {
   user: {
     name: string;
     email: string;
-    age: number;
-    gender: string;
-    country: string;
-    provider: string;
+    age?: number | null;
+    gender?: string;
+    country?: string | null;
+    provider?: string;
   };
   onEditClick: () => void;
   onChangePasswordClick: () => void;
