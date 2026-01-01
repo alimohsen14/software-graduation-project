@@ -25,6 +25,7 @@ export default function SellerOrdersPage() {
         try {
             setLoading(true);
             const res = await getMyOrders();
+            console.log("DEBUG: Raw Seller Orders Response:", res); // DEBUG LOG
             // Data Hardening: Ensure orders is an array
             const ordersList = Array.isArray(res.orders) ? res.orders : [];
             setOrders(ordersList);

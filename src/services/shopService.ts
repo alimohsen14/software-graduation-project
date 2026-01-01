@@ -65,40 +65,30 @@ export const getProductById = async (id: number): Promise<Product> => {
 // =========================
 // Admin (CRUD)
 // =========================
-const authHeaders = (token: string) => ({
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
-});
 
 export const createProduct = async (
-  token: string,
   data: CreateProductPayload
 ): Promise<Product> => {
-  const res = await client.post<Product>("/products", data, authHeaders(token));
+  const res = await client.post<Product>("/products", data);
   return res.data;
 };
 
 export const updateProduct = async (
-  token: string,
   id: number,
   data: UpdateProductPayload
 ): Promise<Product> => {
   const res = await client.patch<Product>(
     `/products/${id}`,
-    data,
-    authHeaders(token)
+    data
   );
   return res.data;
 };
 
 export const deleteProduct = async (
-  token: string,
   id: number
 ): Promise<Product> => {
   const res = await client.delete<Product>(
-    `/products/${id}`,
-    authHeaders(token)
+    `/products/${id}`
   );
   return res.data;
 };

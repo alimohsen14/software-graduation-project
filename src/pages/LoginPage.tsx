@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 export function LoginPage() {
   const [tab, setTab] = useState<"login" | "signup">("login");
@@ -9,7 +10,9 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+  const { refreshUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,21 +25,15 @@ export function LoginPage() {
       setLoading(true);
       setError("");
 
-      const res = await login({ email, password });
+      await login({ email, password });
 
-      // 🔐 Save tokens
-      localStorage.setItem("accessToken", res.data.tokens.accessToken);
-      localStorage.setItem("refreshToken", res.data.tokens.refreshToken);
+      // Update global auth state before navigating
+      const userData = await refreshUser();
 
-      // 🔐 Save full user object (includes isAdmin)
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-
-      // 🔀 Redirect based on role
-
-      if (res.data.user.isAdmin) {
-        navigate("/admin/market");
+      if (userData) {
+        navigate("/home", { replace: true });
       } else {
-        navigate("/home");
+        setError("Login successful, but session failing. Please ensure cookies are enabled.");
       }
     } catch (err: any) {
       const msg =
@@ -78,11 +75,10 @@ export function LoginPage() {
               <div className="flex gap-1 bg-gray-100 rounded-full p-1">
                 <button
                   onClick={() => setTab("login")}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    tab === "login"
-                      ? "bg-white text-red-600 shadow-sm"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${tab === "login"
+                    ? "bg-white text-red-600 shadow-sm"
+                    : "text-gray-500 hover:text-gray-700"
+                    }`}
                 >
                   Login
                 </button>
@@ -99,7 +95,6 @@ export function LoginPage() {
               {error && <div className="text-red-500 text-sm">{error}</div>}
 
               <input
-                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -108,7 +103,6 @@ export function LoginPage() {
               />
 
               <input
-                id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

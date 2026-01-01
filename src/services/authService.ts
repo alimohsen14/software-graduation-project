@@ -2,9 +2,14 @@
 import client from "../api/client";
 
 // ===== Types =====
-export type Tokens = {
-  accessToken: string;
-  refreshToken: string;
+export type SellerStore = {
+  id: number;
+  name: string;
+  description?: string;
+  logo?: string | null;
+  type: "SELLER" | "ADMIN";
+  isApproved: boolean;
+  createdAt: string;
 };
 
 export type User = {
@@ -18,28 +23,21 @@ export type User = {
   provider?: string;
   createdAt?: string;
   updatedAt?: string;
-  store?: {
-    id: number;
-    name: string;
-    logo?: string | null;
-    type: "SELLER" | "ADMIN";
-  };
+  store?: SellerStore;
   sellerRequest?: {
     id: number;
-    status: "PENDING" | "REJECTED";
+    status: "PENDING" | "REJECTED" | "APPROVED";
   };
 };
 
 export type AuthEnvelope = {
   message: string;
   user: User;
-  tokens: Tokens;
 };
 
 export type ProfileEnvelope = {
   message: string;
   user: User;
-  tokens?: Tokens; // Sometimes returned
 };
 
 export type ForgotPasswordEnvelope = {
@@ -67,6 +65,10 @@ export const login = async (data: { email: string; password: string }) => {
   return client.post<AuthEnvelope>("/auth/login", data);
 };
 
+export const logout = async () => {
+  return client.post("/auth/logout");
+};
+
 export const completeGoogleSignup = async (data: {
   name: string;
   email: string;
@@ -78,12 +80,13 @@ export const completeGoogleSignup = async (data: {
   return client.post<AuthEnvelope>("/auth/complete-google-signup", data);
 };
 
-export const getProfile = async (accessToken?: string) => {
-  // Client handles token via interceptor, but if we need to pass a specific one:
-  const config = accessToken
-    ? { headers: { Authorization: `Bearer ${accessToken}` } }
-    : {};
-  return client.get<ProfileEnvelope>("/auth/profile", config);
+export const getMe = async () => {
+  return client.get<ProfileEnvelope>("/auth/me");
+};
+
+// Kept if some components still use getProfile name, but pointing to /auth/me
+export const getProfile = async () => {
+  return getMe();
 };
 
 export const forgotPassword = async (email: string) => {
@@ -97,10 +100,5 @@ export const resetPassword = async (token: string, newPassword: string) => {
     token,
     newPassword,
   });
-};
-
-/* ✅ أضفنا هاد الجزء فقط بدون لمس أي كود فوق */
-export const getToken = (): string | null => {
-  return localStorage.getItem("accessToken");
 };
 

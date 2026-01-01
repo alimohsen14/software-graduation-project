@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
+import SellerStoreHeader from "../components/seller/SellerStoreHeader";
+import {
+    FiPackage,
+    FiShoppingBag,
+    FiAlertTriangle,
+    FiArrowRight,
+    FiSettings,
+} from "react-icons/fi";
+
 import {
     getMyStore,
     getMyProducts,
@@ -8,98 +17,62 @@ import {
     getStockAlerts,
     SellerStore,
 } from "../services/seller.service";
-import SellerStoreHeader from "../components/seller/SellerStoreHeader";
-import { FiPackage, FiShoppingBag, FiAlertCircle, FiAlertTriangle, FiArrowRight, FiSettings } from "react-icons/fi";
 
 import { useAuth } from "../context/AuthContext";
-// ... imports
 
 export default function SellerDashboardPage() {
     const navigate = useNavigate();
-    const { user, loading: authLoading } = useAuth();
-    const [stats, setStats] = useState({ products: 0, orders: 0, alerts: 0 });
-    const [loadingStats, setLoadingStats] = useState(true);
-    const [dashboardStore, setDashboardStore] = useState<any>(user?.store);
+    const { user } = useAuth();
+
+    const [store, setStore] = useState<SellerStore | null>(null);
+    const [stats, setStats] = useState({
+        products: 0,
+        orders: 0,
+        alerts: 0,
+    });
 
     useEffect(() => {
-        if (user?.store) {
-            setDashboardStore(user.store);
+        if (!user) return;
+
+        if (user.store?.type !== "SELLER") {
+            navigate("/profile", {
+                replace: true,
+                state: { error: "Access denied. Seller account required." },
+            });
+            return;
         }
-    }, [user?.store]);
 
-    // Get store from global auth as initial
-    const store = dashboardStore;
-
-    useEffect(() => {
-        const fetchStats = async () => {
-            if (!store) {
-                setLoadingStats(false);
-                return;
-            }
-
-            const token = localStorage.getItem("accessToken");
-            if (!token) return;
-
+        async function loadDashboard() {
             try {
-                // Fetch store explicitly to ensure we have the logo (profile might omit it)
+                // Ensure we have the full store data if context only has limited info
                 const storeData = await getMyStore();
-                if (storeData) {
-                    setDashboardStore((prev: any) => ({
-                        ...prev,
-                        ...storeData,
-                        id: storeData.id,
-                        name: storeData.name,
-                        logo: storeData.logo
-                    }));
-                }
+                if (storeData) setStore(storeData);
 
-                const [productsData, ordersResponse, alertsData] = await Promise.all([
+                const [products, orders, alerts] = await Promise.all([
                     getMyProducts(),
                     getMyOrders(),
-                    getStockAlerts()
+                    getStockAlerts(),
                 ]);
+
+                // Calculate pending items count
+                const pendingItemsCount = orders.orders.reduce((acc, order) => {
+                    return acc + order.items.filter(item => item.status === "PENDING_APPROVAL").length;
+                }, 0);
+
                 setStats({
-                    products: productsData.length,
-                    orders: ordersResponse.totalOrders ?? 0,
-                    alerts: alertsData.length
+                    products: products.length,
+                    orders: pendingItemsCount,
+                    alerts: alerts.length,
                 });
             } catch (err) {
-                console.error("Failed to load dashboard stats", err);
-            } finally {
-                setLoadingStats(false);
+                console.error("Seller dashboard load failed:", err);
             }
-        };
-
-        if (!authLoading) {
-            fetchStats();
         }
-    }, [authLoading, store]);
 
-    // Strictly check for approved Seller status
-    const isApprovedSeller = store?.type === 'SELLER';
+        loadDashboard();
+    }, [user, navigate]);
 
-    useEffect(() => {
-        if (!authLoading && !isApprovedSeller) {
-            // Redirect if not an approved seller
-            // Option: Redirect to profile OR show restricted access
-            navigate('/profile', { state: { error: "You must be an approved seller to access the dashboard." } });
-        }
-    }, [authLoading, isApprovedSeller, navigate]);
-
-    if (authLoading || !store) { // Wait for auth or if store is null (will redirect)
-        return (
-            <DashboardLayout>
-                <div className="min-h-screen flex items-center justify-center">
-                    <p className="text-gray-500">Loading dashboard...</p>
-                </div>
-            </DashboardLayout>
-        );
-    }
-
-    // Double check to prevent render flash before redirect
-    if (!isApprovedSeller) return null;
-
-    // Remaining logic for stats...
+    if (!user || user.store?.type !== "SELLER" || !store) return null;
 
     return (
         <DashboardLayout>
@@ -111,69 +84,82 @@ export default function SellerDashboardPage() {
                         onAddProduct={() => navigate("/seller/products")}
                     />
 
-                    {/* Dashboard Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {/* Store Settings Card */}
-                        <div
+                        <DashboardCard
+                            title="Settings"
+                            subtitle="Manage Store Info"
+                            icon={<FiSettings />}
                             onClick={() => navigate("/seller/store")}
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
-                        >
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-3 bg-purple-50 rounded-xl">
-                                    <FiSettings className="w-6 h-6 text-purple-600" />
-                                </div>
-                                <FiArrowRight className="text-gray-300 group-hover:text-purple-600 transition" />
-                            </div>
-                            <h3 className="text-xl font-bold text-[#1f2933]">Settings</h3>
-                            <p className="text-gray-500 text-sm">Manage Store Info</p>
-                        </div>
-                        {/* Products Card */}
-                        <div
+                            variant="purple"
+                        />
+
+                        <DashboardCard
+                            title={String(stats.products)}
+                            subtitle="Active Products"
+                            icon={<FiPackage />}
                             onClick={() => navigate("/seller/products")}
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
-                        >
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-3 bg-green-50 rounded-xl">
-                                    <FiPackage className="w-6 h-6 text-[#4A6F5D]" />
-                                </div>
-                                <FiArrowRight className="text-gray-300 group-hover:text-[#4A6F5D] transition" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-[#1f2933]">{stats.products}</h3>
-                            <p className="text-gray-500 text-sm">Active Products</p>
-                        </div>
+                            variant="green"
+                        />
 
-                        {/* Orders Card */}
-                        <div
+                        <DashboardCard
+                            title={String(stats.orders)}
+                            subtitle="Pending Orders"
+                            icon={<FiShoppingBag />}
                             onClick={() => navigate("/seller/orders")}
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
-                        >
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-3 bg-blue-50 rounded-xl">
-                                    <FiShoppingBag className="w-6 h-6 text-blue-600" />
-                                </div>
-                                <FiArrowRight className="text-gray-300 group-hover:text-blue-600 transition" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-[#1f2933]">{stats.orders}</h3>
-                            <p className="text-gray-500 text-sm">Total Orders</p>
-                        </div>
+                            variant="blue"
+                        />
 
-                        {/* Alerts Card */}
-                        <div
+                        <DashboardCard
+                            title={String(stats.alerts)}
+                            subtitle="Low Stock Alerts"
+                            icon={<FiAlertTriangle />}
                             onClick={() => navigate("/seller/stock-alerts")}
-                            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
-                        >
-                            <div className="flex items-center justify-between mb-4">
-                                <div className="p-3 bg-amber-50 rounded-xl">
-                                    <FiAlertTriangle className="w-6 h-6 text-amber-600" />
-                                </div>
-                                <FiArrowRight className="text-gray-300 group-hover:text-amber-600 transition" />
-                            </div>
-                            <h3 className="text-2xl font-bold text-[#1f2933]">{stats.alerts}</h3>
-                            <p className="text-gray-500 text-sm">Low Stock Alerts</p>
-                        </div>
+                            variant="amber"
+                        />
                     </div>
                 </div>
             </div>
         </DashboardLayout>
+    );
+}
+
+/* ---------- CARD COMPONENT ---------- */
+
+type CardVariant = "purple" | "green" | "blue" | "amber";
+
+const VARIANT_STYLES: Record<CardVariant, string> = {
+    purple: "bg-purple-50 text-purple-600",
+    green: "bg-green-50 text-green-600",
+    blue: "bg-blue-50 text-blue-600",
+    amber: "bg-amber-50 text-amber-600",
+};
+
+function DashboardCard({
+    title,
+    subtitle,
+    icon,
+    onClick,
+    variant,
+}: {
+    title: string;
+    subtitle: string;
+    icon: React.ReactNode;
+    onClick: () => void;
+    variant: CardVariant;
+}) {
+    return (
+        <div
+            onClick={onClick}
+            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
+        >
+            <div className="flex items-center justify-between mb-4">
+                <div className={`p-3 rounded-xl ${VARIANT_STYLES[variant]}`}>
+                    {icon}
+                </div>
+                <FiArrowRight className="text-gray-300 group-hover:text-gray-700 transition" />
+            </div>
+            <h3 className="text-2xl font-bold text-[#1f2933]">{title}</h3>
+            <p className="text-gray-500 text-sm">{subtitle}</p>
+        </div>
     );
 }

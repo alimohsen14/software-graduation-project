@@ -108,6 +108,14 @@ export default function SellerOrderCard({ order, onApprove, onReject, onShowDeta
                             </div>
 
                             <div className="flex items-center gap-3 self-end sm:self-auto">
+                                {/* Delivery Info */}
+                                <div className="text-right text-xs pr-4 border-r border-gray-100 hidden md:block">
+                                    <p className="font-bold text-gray-700">Delivery To</p>
+                                    <p className="text-gray-500">{order.city || (order as any).order?.city || order.customer?.city || "N/A"}</p>
+                                    <p className="text-gray-400">{order.address || (order as any).order?.address || order.customer?.address || "No address"}</p>
+                                    <p className="text-gray-400 font-mono mt-1">{order.phone || (order as any).order?.phone || order.customer?.phone || "No phone"}</p>
+                                </div>
+
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => handleApproveClick(item.id)}

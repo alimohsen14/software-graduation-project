@@ -33,11 +33,6 @@ export default function BecomeSellerPage() {
             return;
         }
 
-        if (!localStorage.getItem("accessToken")) {
-            setError("Please log in to apply as a seller");
-            return;
-        }
-
         setLoading(true);
         setError(null);
 

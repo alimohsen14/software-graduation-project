@@ -15,12 +15,6 @@ export default function UserOrderDetailsPage() {
         if (!id) return;
 
         const fetchOrder = async () => {
-            if (!localStorage.getItem("accessToken")) {
-                setError("Please log in to view order details");
-                setLoading(false);
-                return;
-            }
-
             try {
                 const data = await getOrderById(Number(id));
                 setOrder(data);

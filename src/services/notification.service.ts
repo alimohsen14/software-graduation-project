@@ -1,6 +1,6 @@
-import axios from "axios";
+import client from "../api/client";
 
-const API_URL = "http://localhost:3000/notifications";
+const API_URL = "/notifications";
 
 // ================= TYPES =================
 export type NotificationType = "ORDER_CREATED" | "ORDER_APPROVED" | "ORDER_REJECTED";
@@ -19,37 +19,28 @@ export type UnreadCountResponse = {
 };
 
 // ================= API =================
-const authHeaders = (token: string) => ({
-    headers: {
-        Authorization: `Bearer ${token}`,
-    },
-});
-
-export const getNotifications = async (token: string): Promise<Notification[]> => {
-    const res = await axios.get<Notification[]>(API_URL, authHeaders(token));
+export const getNotifications = async (): Promise<Notification[]> => {
+    const res = await client.get<Notification[]>(API_URL);
     return res.data;
 };
 
-export const getUnreadCount = async (token: string): Promise<number> => {
-    const res = await axios.get<UnreadCountResponse>(
-        `${API_URL}/unread`,
-        authHeaders(token)
+export const getUnreadCount = async (): Promise<number> => {
+    const res = await client.get<UnreadCountResponse>(
+        `${API_URL}/unread`
     );
     return res.data.count;
 };
 
 export const markAsRead = async (
-    token: string,
     notificationId: number
 ): Promise<Notification> => {
-    const res = await axios.patch<Notification>(
+    const res = await client.patch<Notification>(
         `${API_URL}/${notificationId}/read`,
-        {},
-        authHeaders(token)
+        {}
     );
     return res.data;
 };
 
-export const markAllAsRead = async (token: string): Promise<void> => {
-    await axios.patch(`${API_URL}/read-all`, {}, authHeaders(token));
+export const markAllAsRead = async (): Promise<void> => {
+    await client.patch(`${API_URL}/read-all`, {});
 };

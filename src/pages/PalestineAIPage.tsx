@@ -7,23 +7,28 @@ import AISuggestions from "../components/ai/AISuggestions";
 import AIChatInput from "../components/ai/AIChatInput";
 import AIMessageBubble from "../components/ai/AIMessageBubble";
 
-// ✅ استوردنا deleteChat
 import {
   askAI,
   getChats,
   getChatMessages,
   deleteChat,
 } from "../services/aiService";
-import { getToken, getProfile } from "../services/authService";
 
-// ... (نفس الأنواع Types) ...
+import { useAuth } from "../context/AuthContext";
+
+// ===== Types =====
 type Message = {
   id: string;
   text: string;
   role: "user" | "assistant";
   createdAt: number;
 };
-type Chat = { id: number; title: string; createdAt: string };
+
+type Chat = {
+  id: number;
+  title: string;
+  createdAt: string;
+};
 
 type AIPageProps = {
   setIsSidebarOpen?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,31 +41,21 @@ function AIPageContent({
   isAISidebarOpen = false,
   toggleAISidebar,
 }: AIPageProps) {
+  const { user, refreshUser } = useAuth();
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [userName, setUserName] = useState<string>("");
   const [chats, setChats] = useState<Chat[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
 
-  const token = getToken();
-
-  // ... (نفس الـ useEffect القديم لجلب الداتا) ...
   useEffect(() => {
     if (setIsSidebarOpen) setIsSidebarOpen(false);
-    async function loadData() {
-      if (!token) return;
-      try {
-        const chatsData: Chat[] = await getChats(token);
-        setChats(chatsData.reverse());
-        const profileRes = await getProfile(token);
-        if (profileRes.data?.user) setUserName(profileRes.data.user.name);
-      } catch (error) {
-        console.error("Failed to load initial data:", error);
-      }
-    }
-    loadData();
-  }, [setIsSidebarOpen, token]);
+
+    getChats()
+      .then((data) => setChats(data.reverse()))
+      .catch(() => { });
+  }, [setIsSidebarOpen]);
 
   const handleNewChat = () => {
     setMessages([]);
@@ -69,86 +64,80 @@ function AIPageContent({
   };
 
   async function handleDeleteChatLogic(chatId: number) {
-    if (!token) return;
-
     setChats((prev) => prev.filter((c) => c.id !== chatId));
 
-    if (activeChatId === chatId) {
-      handleNewChat();
-    }
+    if (activeChatId === chatId) handleNewChat();
 
     try {
-      await deleteChat(chatId, token);
-    } catch (error) {
-      console.error("Failed to delete chat:", error);
-
-      alert("حدث خطأ أثناء الحذف");
-    }
+      await deleteChat(chatId);
+    } catch { }
   }
 
-  async function performSend(textToSend: string) {
-    if (!textToSend.trim() || !token) return;
+  async function performSend(text: string) {
+    if (!text.trim()) return;
+
     const userMsg: Message = {
       id: String(Date.now()),
-      text: textToSend,
+      text,
       role: "user",
       createdAt: Date.now(),
     };
+
     setMessages((prev) => [...prev, userMsg]);
     setIsLoading(true);
 
     try {
-      const res = await askAI(textToSend, "ar", token, activeChatId);
+      const res = await askAI(text, "ar", activeChatId);
+
       const aiMsg: Message = {
         id: String(Date.now() + 1),
         text: res.answer,
         role: "assistant",
         createdAt: Date.now(),
       };
+
       setMessages((prev) => [...prev, aiMsg]);
 
       if (!activeChatId) {
         setActiveChatId(res.chatId);
-        const newChat: Chat = {
-          id: res.chatId,
-          title: res.title,
-          createdAt: new Date().toISOString(),
-        };
-        setChats((prev) => [newChat, ...prev]);
+        setChats((prev) => [
+          {
+            id: res.chatId,
+            title: res.title,
+            createdAt: new Date().toISOString(),
+          },
+          ...prev,
+        ]);
       }
-    } catch (error) {
-      console.error("AI error:", error);
+    } catch {
     } finally {
       setIsLoading(false);
     }
   }
-
-  const handleSendClick = () => {
-    performSend(input);
-    setInput("");
-  };
-  const handleSuggestionSelect = (text: string) => performSend(text);
 
   async function handleSelectChat(chatId: number) {
-    if (!token) return;
     setActiveChatId(chatId);
     setIsLoading(true);
+
     try {
-      const data = await getChatMessages(chatId, token);
-      const formatted: Message[] = data.map((m: any) => ({
-        id: String(m.id),
-        text: m.content,
-        role: m.role,
-        createdAt: new Date(m.createdAt).getTime(),
-      }));
-      setMessages(formatted);
+      const data = await getChatMessages(chatId);
+      setMessages(
+        data.map((m: any) => ({
+          id: String(m.id),
+          text: m.content,
+          role: m.role,
+          createdAt: new Date(m.createdAt).getTime(),
+        }))
+      );
+
       if (window.innerWidth < 768 && toggleAISidebar) toggleAISidebar();
-    } catch (error) {
-      console.error("Error loading chat messages:", error);
+    } catch {
     } finally {
       setIsLoading(false);
     }
   }
+
+  if (!user) return null;
 
   return (
     <div
@@ -158,7 +147,7 @@ function AIPageContent({
     >
       <AISidebar
         isOpen={isAISidebarOpen}
-        toggle={toggleAISidebar || (() => {})}
+        toggle={toggleAISidebar || (() => { })}
         chats={chats}
         onSelectChat={handleSelectChat}
         onNewChat={handleNewChat}
@@ -166,7 +155,9 @@ function AIPageContent({
       />
 
       <main className="mx-auto max-w-[900px] px-4 py-8 pb-32">
-        {messages.length === 0 && <AIWelcomeBox userName={userName} />}
+        {messages.length === 0 && (
+          <AIWelcomeBox userName={user.name} />
+        )}
 
         {messages.map((m) => (
           <AIMessageBubble
@@ -179,12 +170,16 @@ function AIPageContent({
 
       <div className="md:pr-[190px]">
         {messages.length === 0 && (
-          <AISuggestions onSelect={handleSuggestionSelect} />
+          <AISuggestions onSelect={performSend} />
         )}
+
         <AIChatInput
           value={input}
           onChange={setInput}
-          onSend={handleSendClick}
+          onSend={() => {
+            performSend(input);
+            setInput("");
+          }}
           isLoading={isLoading}
         />
       </div>
@@ -194,6 +189,7 @@ function AIPageContent({
 
 export default function PalestineAIPage() {
   const [isAiSidebarOpen, setAiSidebarOpen] = useState(false);
+
   return (
     <DashboardLayout
       onToggleAISidebar={() => setAiSidebarOpen((prev) => !prev)}

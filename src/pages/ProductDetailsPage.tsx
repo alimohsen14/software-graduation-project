@@ -46,15 +46,14 @@ export default function ProductDetailsPage() {
 
   const handleAddToCart = (quantity: number) => {
     if (!product) return;
-    addToCart(product, quantity);
+    addToCart(product, quantity, false); // Silent add
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
   const handleBuyNow = (quantity: number) => {
     if (!product) return;
-    addToCart(product, quantity);
-    navigate("/shop");
+    addToCart(product, quantity, true); // Add and Open
   };
 
   if (loading) {
@@ -137,8 +136,8 @@ export default function ProductDetailsPage() {
                     onClick={toggleFollow}
                     disabled={togglingFollow}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm ${isFollowed
-                        ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
-                        : "bg-[#4A6F5D] text-white hover:bg-[#3d5c4d]"
+                      ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
+                      : "bg-[#4A6F5D] text-white hover:bg-[#3d5c4d]"
                       }`}
                   >
                     {isFollowed ? <FiCheck /> : <FiPlus />}
@@ -149,8 +148,8 @@ export default function ProductDetailsPage() {
                     onClick={toggleFavorite}
                     disabled={togglingFavorite}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all shadow-sm ${isFavorited
-                        ? "bg-red-50 text-red-600 border border-red-100"
-                        : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
+                      ? "bg-red-50 text-red-600 border border-red-100"
+                      : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-50"
                       }`}
                   >
                     <FiHeart fill={isFavorited ? "currentColor" : "none"} />

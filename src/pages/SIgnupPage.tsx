@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { signup, completeGoogleSignup } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
 
 export function SignupPage() {
   const navigate = useNavigate();
@@ -10,7 +11,6 @@ export function SignupPage() {
 
   const isGoogleUser = query.get("google") === "true";
   const googleEmail = query.get("email") ?? "";
-  const googleToken = query.get("token") ?? "";
 
   const [form, setForm] = useState({
     name: "",
@@ -24,6 +24,7 @@ export function SignupPage() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { refreshUser } = useAuth();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -48,24 +49,25 @@ export function SignupPage() {
       };
 
       if (!isGoogleUser) {
-        // Normal Signup
         if (!form.password || !form.confirmPassword)
           throw new Error("Please enter and confirm password");
         if (form.password !== form.confirmPassword)
           throw new Error("Passwords do not match");
 
         payload.password = form.password;
-
         await signup(payload);
       } else {
-        // Google Signup — MUST include token
-        await completeGoogleSignup({
-          ...payload,
-          token: googleToken,
-        });
+        await completeGoogleSignup(payload);
       }
 
-      navigate("/home");
+      // Update global auth state
+      const userData = await refreshUser();
+
+      if (userData) {
+        navigate("/home", { replace: true });
+      } else {
+        setError("Signup successful, but session failing (cookies blocked?).");
+      }
     } catch (err: any) {
       setError(
         err?.response?.data?.message || err?.message || "Signup failed."
@@ -96,41 +98,37 @@ export function SignupPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
-                type="text"
                 name="name"
                 value={form.name}
                 onChange={handleChange}
                 placeholder="Full Name"
-                className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-50"
+                className="w-full px-4 py-2 border rounded-md bg-gray-50"
               />
 
               {!isGoogleUser && (
                 <input
-                  type="email"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-50"
+                  className="w-full px-4 py-2 border rounded-md bg-gray-50"
                 />
               )}
 
               {isGoogleUser && (
                 <input
-                  type="email"
                   value={googleEmail}
                   disabled
-                  className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-100 cursor-not-allowed"
+                  className="w-full px-4 py-2 border rounded-md bg-gray-100"
                 />
               )}
 
               <input
-                type="text"
                 name="country"
                 value={form.country}
                 onChange={handleChange}
                 placeholder="Country"
-                className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-50"
+                className="w-full px-4 py-2 border rounded-md bg-gray-50"
               />
 
               <input
@@ -139,14 +137,14 @@ export function SignupPage() {
                 value={form.age}
                 onChange={handleChange}
                 placeholder="Age"
-                className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-50"
+                className="w-full px-4 py-2 border rounded-md bg-gray-50"
               />
 
               <select
                 name="gender"
                 value={form.gender}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-50"
+                className="w-full px-4 py-2 border rounded-md bg-gray-50"
               >
                 <option value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
@@ -160,7 +158,7 @@ export function SignupPage() {
                     value={form.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-50"
+                    className="w-full px-4 py-2 border rounded-md bg-gray-50"
                   />
                   <input
                     type="password"
@@ -168,7 +166,7 @@ export function SignupPage() {
                     value={form.confirmPassword}
                     onChange={handleChange}
                     placeholder="Confirm Password"
-                    className="w-full px-4 py-2 border border-gray-200 rounded-md bg-gray-50"
+                    className="w-full px-4 py-2 border rounded-md bg-gray-50"
                   />
                 </>
               )}
@@ -176,17 +174,13 @@ export function SignupPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3 text-white rounded-lg font-semibold transition-transform ${
-                  loading
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-red-600 hover:bg-red-700"
-                }`}
+                className="w-full py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700"
               >
                 {loading
                   ? "Creating Account..."
                   : isGoogleUser
-                  ? "Complete Signup"
-                  : "Create Account"}
+                    ? "Complete Signup"
+                    : "Create Account"}
               </button>
             </form>
           </div>

@@ -7,7 +7,6 @@ import MarketplaceProductCard from "../components/marketplace/MarketplaceProduct
 import StoreSocialLists from "../components/marketplace/StoreSocialLists";
 import {
     getMarketplaceProducts,
-    getMarketplaceCategories,
     MarketplaceProduct,
     MarketplaceFilters as FiltersType,
 } from "../services/marketplace.service";
@@ -19,7 +18,6 @@ export default function MarketplacePage() {
     const navigate = useNavigate();
     const { user } = useAuth(); // Global Auth
     const [products, setProducts] = useState<MarketplaceProduct[]>([]);
-    const [categories, setCategories] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState<FiltersType>({});
 
@@ -32,14 +30,10 @@ export default function MarketplacePage() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const [productsData, categoriesData] = await Promise.all([
-                    getMarketplaceProducts(filters),
-                    getMarketplaceCategories(),
-                ]);
+                const productsData = await getMarketplaceProducts(filters);
                 // Shuffle products for random display
                 const shuffled = [...productsData].sort(() => Math.random() - 0.5);
                 setProducts(shuffled);
-                setCategories(categoriesData);
             } catch (err) {
                 console.error("Failed to load marketplace", err);
             } finally {
@@ -110,7 +104,6 @@ export default function MarketplacePage() {
                         )}
 
                         <MarketplaceFilters
-                            categories={categories}
                             filters={filters}
                             onFilterChange={handleFilterChange}
                         />

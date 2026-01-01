@@ -19,9 +19,10 @@ import {
   getAllOrders,
   approveOrder,
   rejectOrder,
-  AdminStatus,
 } from "../../services/order.service";
 import { getSellerRequests } from "../../services/admin.service";
+
+type AdminStatus = "ADMIN_PENDING" | "ADMIN_APPROVED" | "ADMIN_REJECTED";
 
 type ProductStatus = "IN_STOCK" | "LOW_STOCK" | "OUT_OF_STOCK";
 
@@ -43,7 +44,7 @@ type AdminOrder = {
   items: OrderItem[];
   total: number;
   location: string;
-  status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED";
+  status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED" | "COMPLETED";
   adminStatus: AdminStatus;
   rejectionReason?: string;
 };
@@ -170,18 +171,12 @@ export default function AdminMarketPage() {
   // Handle Submit (Add/Edit)
   // =========================
   const handleSubmit = async (data: CreateProductPayload) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      alert("You must be logged in to perform this action");
-      return;
-    }
-
     setIsSubmitting(true);
     try {
       if (editingProduct) {
-        await updateProduct(token, editingProduct.id, data);
+        await updateProduct(editingProduct.id, data);
       } else {
-        await createProduct(token, data);
+        await createProduct(data);
       }
 
       await fetchProducts();
@@ -199,15 +194,9 @@ export default function AdminMarketPage() {
   // Handle Delete Product
   // =========================
   const handleDelete = async (productId: string) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      alert("You must be logged in to perform this action");
-      return;
-    }
-
     setIsDeleting(true);
     try {
-      await deleteProduct(token, Number(productId));
+      await deleteProduct(Number(productId));
       await fetchProducts();
     } catch (err) {
       console.error("Failed to delete product", err);

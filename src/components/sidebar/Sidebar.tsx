@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FiUser, FiCpu, FiShoppingBag, FiUsers, FiBook } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ type SidebarItem = {
 
 export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
   const [active, setActive] = useState("Profile");
   const touchStartX = useRef<number | null>(null);
   const navigate = useNavigate();
@@ -101,8 +103,8 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                     closeSidebar();
                   }}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg ${isActive
-                      ? "bg-[#dff3e8] text-[#21492f]"
-                      : "text-[#2f5c3f] hover:bg-[#f1fbf4]"
+                    ? "bg-[#dff3e8] text-[#21492f]"
+                    : "text-[#2f5c3f] hover:bg-[#f1fbf4]"
                     }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -112,7 +114,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
             })}
 
             {/* Admin Links */}
-            {JSON.parse(localStorage.getItem("user") || "{}")?.role === "ADMIN" && (
+            {user?.isAdmin && (
               <>
                 <div className="my-2 border-t border-[#2f5c3f]/10"></div>
                 <div className="px-3 text-xs font-bold text-[#2f5c3f]/60 uppercase tracking-wider mb-1">Admin</div>

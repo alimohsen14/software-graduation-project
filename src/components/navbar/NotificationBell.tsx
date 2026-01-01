@@ -22,11 +22,8 @@ export default function NotificationBell() {
     const [markingAllRead, setMarkingAllRead] = useState(false);
 
     const fetchUnreadCount = useCallback(async () => {
-        const token = localStorage.getItem("accessToken");
-        if (!token) return;
-
         try {
-            const count = await getUnreadCount(token);
+            const count = await getUnreadCount();
             setUnreadCount(count);
         } catch (err) {
             console.error("Failed to fetch unread count", err);
@@ -34,12 +31,9 @@ export default function NotificationBell() {
     }, []);
 
     const fetchNotifications = useCallback(async () => {
-        const token = localStorage.getItem("accessToken");
-        if (!token) return;
-
         setLoading(true);
         try {
-            const data = await getNotifications(token);
+            const data = await getNotifications();
             setNotifications(data);
         } catch (err) {
             console.error("Failed to fetch notifications", err);
@@ -58,9 +52,6 @@ export default function NotificationBell() {
     };
 
     const handleNotificationClick = async (notification: Notification) => {
-        const token = localStorage.getItem("accessToken");
-        if (!token) return;
-
         // Toggle expand/collapse
         if (expandedId === notification.id) {
             setExpandedId(null);
@@ -72,7 +63,7 @@ export default function NotificationBell() {
         if (!notification.isRead && markingReadId !== notification.id) {
             setMarkingReadId(notification.id);
             try {
-                await markAsRead(token, notification.id);
+                await markAsRead(notification.id);
                 // Refetch to get fresh data
                 await fetchNotifications();
                 await fetchUnreadCount();
@@ -91,12 +82,11 @@ export default function NotificationBell() {
     };
 
     const handleMarkAllAsRead = async () => {
-        const token = localStorage.getItem("accessToken");
-        if (!token || markingAllRead) return;
+        if (markingAllRead) return;
 
         setMarkingAllRead(true);
         try {
-            await markAllAsRead(token);
+            await markAllAsRead();
             // Refetch to get fresh data
             await fetchNotifications();
             await fetchUnreadCount();
