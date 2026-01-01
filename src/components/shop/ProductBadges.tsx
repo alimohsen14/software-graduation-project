@@ -1,15 +1,18 @@
 import React from "react";
-import { ProductBadges as BadgesType } from "../../services/shopService";
 
 type Props = {
-    badges?: BadgesType;
+    badges?: string[];
     showLowStock?: boolean;
 };
 
-export default function ProductBadges({ badges, showLowStock = true }: Props) {
-    if (!badges) return null;
+export default function ProductBadges({ badges = [], showLowStock = true }: Props) {
+    if (!badges || badges.length === 0) return null;
 
-    const { isSoldOut, isLowStock, isNew, isHot, isBestSeller } = badges;
+    const isSoldOut = badges.includes("SOLD_OUT");
+    const isHot = badges.includes("HOT");
+    const isBestSeller = badges.includes("BEST_SELLER") || badges.includes("BEST"); // Handle potential variations
+    const isNew = badges.includes("NEW");
+    const isLowStock = badges.includes("LOW_STOCK");
 
     // Priority-based main badge selection
     const renderMainBadge = () => {
@@ -62,7 +65,7 @@ export default function ProductBadges({ badges, showLowStock = true }: Props) {
 
             {showLowStock && isLowStock && !isSoldOut && (
                 <span className="bg-[#FEF3C7] text-[#92400E] text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-                    Only few items left
+                    Low Stock
                 </span>
             )}
         </div>

@@ -17,7 +17,7 @@ export default function MarketplaceProductCard({
     onStoreClick,
 }: Props) {
     const { addToCart } = useCart();
-    const isSoldOut = product.badges?.isSoldOut ?? false;
+    const isSoldOut = product.badges?.includes("SOLD_OUT") ?? false;
     const {
         isFollowed,
         isFavorited,

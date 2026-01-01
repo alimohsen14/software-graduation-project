@@ -1,15 +1,14 @@
 import React from "react";
 import { FiAlertTriangle } from "react-icons/fi";
-import { ProductBadges } from "../../services/shopService";
 
 type Props = {
     stock: number;
-    badges?: ProductBadges;
+    badges?: string[];
 };
 
-export default function StockWarningBox({ stock, badges }: Props) {
-    const isSoldOut = badges?.isSoldOut ?? false;
-    const isLowStock = badges?.isLowStock ?? (stock > 0 && stock <= 10);
+export default function StockWarningBox({ stock, badges = [] }: Props) {
+    const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
+    const isLowStock = badges?.includes("LOW_STOCK") ?? false;
 
     if (!isSoldOut && !isLowStock) return null;
 
@@ -26,7 +25,7 @@ export default function StockWarningBox({ stock, badges }: Props) {
         <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 flex items-center gap-2">
             <FiAlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
             <span className="text-sm font-medium text-amber-700">
-                Low stock – only {stock} items left
+                Low stock
             </span>
         </div>
     );

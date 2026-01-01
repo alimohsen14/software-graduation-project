@@ -4,19 +4,18 @@ import ProductPrice from "./ProductPrice";
 import StockStatus from "./StockStatus";
 import QuantitySelector from "./QuantitySelector";
 import AddToCartActions from "./AddToCartActions";
-import RatingStars from "./RatingStars";
+import StarRating from "./StarRating";
 import StockWarningBox from "../StockWarningBox";
-import { ProductBadges } from "../../../services/shopService";
 
 type Props = {
   name: string;
   image: string;
   badge?: string;
-  badges?: ProductBadges;
+  badges?: string[];
   shortDescription?: string;
   price: number;
   stock: number;
-  rating?: number;
+  avgRating?: number;
   reviewsCount?: number;
   onAddToCart: (quantity: number) => void;
   onBuyNow: (quantity: number) => void;
@@ -30,13 +29,13 @@ export default function ProductHeroSection({
   shortDescription,
   price,
   stock,
-  rating = 0,
+  avgRating = 0,
   reviewsCount = 0,
   onAddToCart,
   onBuyNow,
 }: Props) {
   const [quantity, setQuantity] = useState(1);
-  const isSoldOut = badges?.isSoldOut ?? false;
+  const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
 
   const handleIncrease = () => {
     if (quantity < stock) {
@@ -67,7 +66,7 @@ export default function ProductHeroSection({
           </p>
         )}
 
-        <RatingStars rating={rating} reviewsCount={reviewsCount} />
+        <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={16} />
 
         <ProductPrice price={price} />
 

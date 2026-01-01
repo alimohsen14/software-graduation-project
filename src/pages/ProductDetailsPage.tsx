@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import ProductHeroSection from "../components/shop/product-details/ProductHeroSection";
@@ -27,22 +27,22 @@ export default function ProductDetailsPage() {
     togglingFavorite
   } = useStoreSocialStatus(product?.store?.id);
 
-  useEffect(() => {
+  const fetchProduct = useCallback(async () => {
     if (!id) return;
-
-    const fetchProduct = async () => {
-      try {
-        const data = await getProductById(Number(id));
-        setProduct(data);
-      } catch (error) {
-        console.error("Failed to load product", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
+    try {
+      setLoading(true);
+      const data = await getProductById(Number(id));
+      setProduct(data);
+    } catch (error) {
+      console.error("Failed to load product", error);
+    } finally {
+      setLoading(false);
+    }
   }, [id]);
+
+  useEffect(() => {
+    fetchProduct();
+  }, [fetchProduct]);
 
   const handleAddToCart = (quantity: number) => {
     if (!product) return;
@@ -167,7 +167,7 @@ export default function ProductDetailsPage() {
               shortDescription={product.shortDescription}
               price={product.price}
               stock={product.stock}
-              rating={product.rating}
+              avgRating={product.avgRating}
               reviewsCount={product.reviewsCount}
               onAddToCart={handleAddToCart}
               onBuyNow={handleBuyNow}
@@ -176,22 +176,10 @@ export default function ProductDetailsPage() {
             <ProductDescription description={product.fullDescription} />
 
             <ProductReviewsSection
-              rating={product.rating}
+              productId={product.id}
+              avgRating={product.avgRating}
               reviewsCount={product.reviewsCount}
-              reviews={[
-                {
-                  userName: "Ahmad",
-                  rating: 5,
-                  comment: "Excellent quality and authentic product.",
-                  date: "2025-01-02",
-                },
-                {
-                  userName: "Sara",
-                  rating: 4,
-                  comment: "Very good, will buy again.",
-                  date: "2025-01-10",
-                },
-              ]}
+              onMutation={fetchProduct}
             />
           </div>
         </div>

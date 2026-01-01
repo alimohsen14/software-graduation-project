@@ -18,14 +18,10 @@ export type MarketplaceProduct = {
     stock: number;
     category?: string;
     badge?: string;
-    badges?: {
-        isSoldOut: boolean;
-        isLowStock: boolean;
-        isNew: boolean;
-        isHot: boolean;
-        isBestSeller: boolean;
-    };
+    badges?: string[];
     store: StoreInfo;
+    avgRating?: number;
+    reviewsCount?: number;
     createdAt: string;
 };
 

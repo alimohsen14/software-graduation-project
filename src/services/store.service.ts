@@ -23,13 +23,7 @@ export type StoreProduct = {
     stock: number;
     category?: string;
     badge?: string;
-    badges?: {
-        isSoldOut: boolean;
-        isLowStock: boolean;
-        isNew: boolean;
-        isHot: boolean;
-        isBestSeller: boolean;
-    };
+    badges?: string[];
     createdAt: string;
 };
 

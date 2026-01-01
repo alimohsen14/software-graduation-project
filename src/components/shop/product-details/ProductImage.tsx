@@ -1,16 +1,15 @@
 import React from "react";
-import { ProductBadges as BadgesType } from "../../../services/shopService";
 import ProductBadges from "../ProductBadges";
 
 type Props = {
   image: string;
   badge?: string;
-  badges?: BadgesType;
+  badges?: string[];
   name: string;
 };
 
 export default function ProductImage({ image, badge, badges, name }: Props) {
-  const isSoldOut = badges?.isSoldOut ?? false;
+  const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
 
   return (
     <div className="relative w-full max-w-md h-[320px] rounded-xl overflow-hidden bg-white shadow-sm border border-[#E5E7EB]">
