@@ -14,7 +14,6 @@ export default function SellerProductsPage() {
     const [editingProduct, setEditingProduct] = useState<SellerProduct | null>(null);
 
     const fetchProducts = async () => {
-        if (!localStorage.getItem("accessToken")) return;
         setLoading(true);
         try {
             const data = await getMyProducts();

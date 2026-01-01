@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FiPackage, FiMapPin, FiCheck, FiX, FiEye, FiLoader } from "react-icons/fi";
-import { AdminStatus } from "../../services/order.service";
 import RejectOrderModal from "./RejectOrderModal";
 import OrderDetailsModal from "./OrderDetailsModal";
+
+export type AdminStatus = "ADMIN_PENDING" | "ADMIN_APPROVED" | "ADMIN_REJECTED";
 
 type OrderItem = {
   quantity: number;
@@ -22,7 +23,7 @@ type AdminOrder = {
   items: OrderItem[];
   total: number;
   location: string;
-  status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED";
+  status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED" | "COMPLETED";
   adminStatus: AdminStatus;
   rejectionReason?: string;
 };
@@ -34,7 +35,7 @@ interface CustomerOrdersPreviewProps {
   isRefreshing?: boolean;
 }
 
-type TabType = "ADMIN_PENDING" | "ADMIN_APPROVED" | "ADMIN_REJECTED";
+type TabType = AdminStatus;
 
 export default function CustomerOrdersPreview({
   orders,
@@ -128,15 +129,15 @@ export default function CustomerOrdersPreview({
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className={`px-4 py-2 rounded-lg text-sm font-semibold transition ${activeTab === tab.key
-                ? "bg-[#4A6F5D] text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              ? "bg-[#4A6F5D] text-white"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
               }`}
           >
             {tab.label}
             <span
               className={`ml-2 px-1.5 py-0.5 rounded text-xs ${activeTab === tab.key
-                  ? "bg-white/20 text-white"
-                  : "bg-gray-200 text-gray-500"
+                ? "bg-white/20 text-white"
+                : "bg-gray-200 text-gray-500"
                 }`}
             >
               {tab.count}

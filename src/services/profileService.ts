@@ -24,7 +24,6 @@ export const profileService = {
   },
 
   logout() {
-    localStorage.removeItem('accessToken');
     window.location.href = '/';
   }
 };

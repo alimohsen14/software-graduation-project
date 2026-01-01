@@ -15,11 +15,14 @@ export default function OrderDetailsModal({
 }: OrderDetailsModalProps) {
     if (!isOpen || !order) return null;
 
-    const customer = order.customer;
-    // Robust lookup: Check top-level order fields OR nested customer fields
-    const displayPhone = order.phone || customer?.phone || 'N/A';
-    const displayCity = order.city || customer?.city || 'N/A';
-    const displayAddress = customer?.address || order.address || 'N/A';
+    // Delivery Source of Truth: Order fields (Strictly from backend)
+    // Data Mapping: Robust Fallback Strategy
+    // 1. Order Delivery Details (Primary Source)
+    // 2. Nested Order Object (Potential Backend Structure)
+    // 3. Customer Profile (Fallback for old orders)
+    const displayPhone = order.phone || (order as any).order?.phone || order.customer?.phone || 'N/A';
+    const displayCity = order.city || (order as any).order?.city || order.customer?.city || 'N/A';
+    const displayAddress = order.address || (order as any).order?.address || order.customer?.address || 'N/A';
 
     const formattedDate = new Date(order.createdAt).toLocaleDateString('en-US', {
         year: 'numeric',
@@ -48,7 +51,8 @@ export default function OrderDetailsModal({
                             </div>
                             <div>
                                 <p className="text-xs text-gray-400 uppercase tracking-wider font-bold">Customer Name</p>
-                                <p className="text-sm font-medium text-gray-900">{customer?.name || 'N/A'}</p>
+                                {/* Name (Customer profile name is still fine for Identity) */}
+                                <p className="text-sm font-medium text-gray-900">{order.customer?.name || 'Guest Customer'}</p>
                             </div>
                         </div>
 

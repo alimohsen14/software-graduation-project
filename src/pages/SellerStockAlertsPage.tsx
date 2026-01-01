@@ -9,7 +9,6 @@ export default function SellerStockAlertsPage() {
 
     useEffect(() => {
         const fetchAlerts = async () => {
-            if (!localStorage.getItem("accessToken")) return;
             try {
                 const data = await getStockAlerts();
                 setProducts(data);

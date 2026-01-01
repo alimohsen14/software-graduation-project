@@ -1,25 +1,32 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export function GoogleRedirectHandler() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { refreshUser } = useAuth();
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const token = params.get("token");
+    const handleRedirect = async () => {
+      // With cookie-based auth, the backend should have already set the cookie 
+      // before redirecting the user back to the frontend.
+      // We just need to refresh our local state.
+      try {
+        await refreshUser();
+        navigate("/home");
+      } catch (error) {
+        console.error("Google Auth Refresh failed:", error);
+        navigate("/login");
+      }
+    };
 
-    if (token) {
-      localStorage.setItem("accessToken", token);
-      navigate("/home");
-    } else {
-      navigate("/");
-    }
-  }, [location, navigate]);
+    handleRedirect();
+  }, [location, navigate, refreshUser]);
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-lg text-gray-700">Loading...</h1>
+      <h1 className="text-lg text-gray-700">Authenticating...</h1>
     </div>
   );
 }

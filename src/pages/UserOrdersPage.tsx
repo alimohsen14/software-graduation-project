@@ -12,12 +12,6 @@ export default function UserOrdersPage() {
 
     useEffect(() => {
         const fetchOrders = async () => {
-            if (!localStorage.getItem("accessToken")) {
-                setError("Please log in to view your orders");
-                setLoading(false);
-                return;
-            }
-
             try {
                 const data = await getMyOrders();
                 setOrders(data);
@@ -32,14 +26,14 @@ export default function UserOrdersPage() {
         fetchOrders();
     }, []);
 
-    const getAdminStatusBadge = (status: string) => {
+    const getAdminStatusBadge = (status: string | undefined) => {
         const base = "px-3 py-1 rounded-full text-xs font-bold ";
         if (status === "ADMIN_APPROVED") return base + "bg-green-100 text-green-700";
         if (status === "ADMIN_REJECTED") return base + "bg-red-100 text-red-700";
         return base + "bg-amber-100 text-amber-700";
     };
 
-    const getAdminStatusText = (status: string) => {
+    const getAdminStatusText = (status: string | undefined) => {
         if (status === "ADMIN_APPROVED") return "Approved";
         if (status === "ADMIN_REJECTED") return "Rejected";
         return "Pending";

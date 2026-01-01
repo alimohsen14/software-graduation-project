@@ -15,7 +15,6 @@ export default function WelcomeCard({ name }: WelcomeCardProps) {
       className="relative w-full bg-[#FBF7EF] rounded-2xl p-5 sm:p-6 md:p-8 shadow-sm border border-[#E6DFC6] mb-6 pl-6 sm:pl-8 mt-4 overflow-hidden z-0"
       aria-labelledby="welcome-heading"
     >
-      {/* Left color flag stripe */}
       <div
         className="absolute left-4 top-4 bottom-4 w-2 rounded-r-2xl pointer-events-none"
         style={{
@@ -28,13 +27,12 @@ export default function WelcomeCard({ name }: WelcomeCardProps) {
 
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-5">
-          {/* Text content */}
           <div className="flex-1">
             <h2
               id="welcome-heading"
               className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#2f5c3f] leading-tight"
             >
-              {t("home.welcome")}, {name} 👋
+              {t("home.welcome")}{name ? `, ${name}` : ""} 👋
             </h2>
 
             <p className="mt-3 text-sm md:text-base text-[#2f5c3f]/85 max-w-xl leading-relaxed">
@@ -52,7 +50,6 @@ export default function WelcomeCard({ name }: WelcomeCardProps) {
             </div>
           </div>
 
-          {/* 3D preview image */}
           <div className="w-full md:w-40 lg:w-48 flex-shrink-0">
             <div className="w-full h-40 md:h-48 rounded-lg bg-[#F6F1E6] border border-[#E6DFC6] overflow-hidden flex items-center justify-center">
               <img

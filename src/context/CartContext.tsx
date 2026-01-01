@@ -1,35 +1,53 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Product } from "../services/shopService";
 
-export type CartItem = Product & {
+// Minimal compatible type for both Product and MarketplaceProduct
+export type CartItem = {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
   quantity: number;
+  store?: {
+    id: number;
+    name: string;
+  };
 };
 
 type CartContextType = {
   cartItems: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
+  isCartOpen: boolean;
+  addToCart: (product: any, quantity?: number, autoOpen?: boolean) => void;
   removeFromCart: (id: number) => void;
   updateQuantity: (id: number, quantity: number) => void;
   clearCart: () => void;
+  openCart: () => void;
+  closeCart: () => void;
+  toggleCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-const STORAGE_KEY = "p3d_cart";
+const STORAGE_KEY = "p3d_cart_global";
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  // ✅ load from localStorage BEFORE first render
+  // Load initial state
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
   });
 
-  // ✅ save to localStorage on every change
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Persistence
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (product: Product, quantity: number = 1) => {
+  const addToCart = (product: any, quantity: number = 1, autoOpen: boolean = true) => {
     setCartItems((prev) => {
       const existing = prev.find((x) => x.id === product.id);
 
@@ -39,8 +57,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         );
       }
 
-      return [...prev, { ...product, quantity }];
+      // Normalize product data to CartItem
+      const newItem: CartItem = {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity,
+        store: product.store ? {
+          id: product.store.id,
+          name: product.store.name
+        } : undefined
+      };
+
+      return [...prev, newItem];
     });
+
+    // Auto-open cart on add if requested
+    if (autoOpen) {
+      setIsCartOpen(true);
+    }
   };
 
   const removeFromCart = (id: number) => {
@@ -63,14 +99,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.removeItem(STORAGE_KEY);
   };
 
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
+  const toggleCart = () => setIsCartOpen((prev) => !prev);
+
   return (
     <CartContext.Provider
       value={{
         cartItems,
+        isCartOpen,
         addToCart,
         removeFromCart,
         updateQuantity,
         clearCart,
+        openCart,
+        closeCart,
+        toggleCart,
       }}
     >
       {children}

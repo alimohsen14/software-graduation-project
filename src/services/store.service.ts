@@ -1,4 +1,4 @@
-import client from "../api/client";
+import client, { publicClient } from "../api/client";
 
 // ================= TYPES =================
 export type Store = {
@@ -34,15 +34,31 @@ export type StoreProduct = {
 };
 
 // ================= API =================
+/**
+ * Publicly accessible store details
+ * Endpoint: GET /stores/:id
+ */
+export const getPublicStoreById = async (storeId: number): Promise<Store> => {
+    const res = await publicClient.get<Store>(`/stores/${storeId}`);
+    return res.data;
+};
+
 export const getStoreById = async (storeId: number): Promise<Store> => {
     const res = await client.get<Store>(`/store/${storeId}`);
     return res.data;
 };
 
+/**
+ * Public store products with optional filtering
+ * Endpoint: GET /marketplace/products?storeId=:id
+ */
 export const getStoreProducts = async (
-    storeId: number
+    storeId: number,
+    filters?: { category?: string; minPrice?: number; maxPrice?: number }
 ): Promise<StoreProduct[]> => {
-    const res = await client.get<StoreProduct[]>(`/store/${storeId}/products`);
+    const res = await publicClient.get<StoreProduct[]>(`/marketplace/products`, {
+        params: { ...filters, storeId }
+    });
     return res.data;
 };
 
@@ -57,25 +73,30 @@ export type StoreSocialStatus = {
     isFavorited: boolean;
 };
 
+/**
+ * Get social status (follow/favorite) for a store
+ * Endpoint: GET /stores/:id/social-status
+ * Auth required
+ */
 export const getStoreSocialStatus = async (storeId: number): Promise<StoreSocialStatus> => {
-    const res = await client.get<StoreSocialStatus>(`/store/${storeId}/social-status`);
+    const res = await client.get<StoreSocialStatus>(`/stores/${storeId}/social-status`);
     return res.data;
 };
 
 export const followStore = async (storeId: number): Promise<void> => {
-    await client.post(`/store/${storeId}/follow`);
+    await client.post(`/stores/${storeId}/follow`);
 };
 
 export const unfollowStore = async (storeId: number): Promise<void> => {
-    await client.delete(`/store/${storeId}/follow`);
+    await client.delete(`/stores/${storeId}/follow`);
 };
 
 export const favoriteStore = async (storeId: number): Promise<void> => {
-    await client.post(`/store/${storeId}/favorite`);
+    await client.post(`/stores/${storeId}/favorite`);
 };
 
 export const unfavoriteStore = async (storeId: number): Promise<void> => {
-    await client.delete(`/store/${storeId}/favorite`);
+    await client.delete(`/stores/${storeId}/favorite`);
 };
 
 export const getFollowedStores = async (): Promise<Store[]> => {

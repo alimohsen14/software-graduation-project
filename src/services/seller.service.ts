@@ -1,4 +1,5 @@
 import client from "../api/client";
+import { SellerStore } from "./authService";
 
 // ================= TYPES =================
 export type SellerApplication = {
@@ -8,14 +9,7 @@ export type SellerApplication = {
     description: string;
 };
 
-export type SellerStore = {
-    id: number;
-    name: string;
-    description?: string;
-    logo?: string;
-    isApproved: boolean;
-    createdAt: string;
-};
+export type { SellerStore };
 
 export type UpdateStorePayload = {
     name: string;
@@ -65,10 +59,10 @@ export type SellerOrder = {
     orderId: number;
     createdAt: string;
     orderStatus: string;
-    // Standard response might have these at top level
-    phone?: string;
-    city?: string;
-    address?: string;
+    // Delivery Details (Source of Truth)
+    phone: string;
+    city: string;
+    address: string;
     customer: {
         name: string | null;
         phone: string | null;

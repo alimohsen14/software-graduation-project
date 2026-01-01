@@ -3,6 +3,7 @@ import { MarketplaceProduct } from "../../services/marketplace.service";
 import ProductBadges from "../shop/ProductBadges";
 import { useStoreSocialStatus } from "../../hooks/useStoreSocialStatus";
 import StockWarningBox from "../shop/StockWarningBox";
+import { useCart } from "../../context/CartContext";
 
 type Props = {
     product: MarketplaceProduct;
@@ -15,6 +16,7 @@ export default function MarketplaceProductCard({
     onClick,
     onStoreClick,
 }: Props) {
+    const { addToCart } = useCart();
     const isSoldOut = product.badges?.isSoldOut ?? false;
     const {
         isFollowed,
@@ -28,6 +30,18 @@ export default function MarketplaceProductCard({
     const handleStoreClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         onStoreClick();
+    };
+
+    const handleAddToCart = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        // Silent add
+        addToCart(product, 1, false);
+    };
+
+    const handleBuyNow = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        // Add and Open Cart
+        addToCart(product, 1, true);
     };
 
     return (
@@ -110,19 +124,33 @@ export default function MarketplaceProductCard({
             </div>
 
             {/* Price and Action */}
-            <div className="mt-4 flex items-center justify-between">
+            <div className="mt-4 flex items-center justify-between gap-3">
                 <span className="text-xl font-bold text-[#4A6F5D]">{product.price}₪</span>
 
-                <button
-                    onClick={(e) => e.stopPropagation()}
-                    disabled={isSoldOut}
-                    className={`w-10 h-10 rounded-full flex items-center justify-center text-white transition shadow-sm ${isSoldOut
-                        ? "bg-[#9CA3AF] cursor-not-allowed"
-                        : "bg-[#4A6F5D] hover:bg-[#A33A2B]"
-                        }`}
-                >
-                    <FiShoppingCart size={18} />
-                </button>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={handleBuyNow}
+                        disabled={isSoldOut}
+                        className={`px-4 py-2 rounded-lg text-sm font-bold text-white transition shadow-sm ${isSoldOut
+                            ? "bg-[#9CA3AF] cursor-not-allowed"
+                            : "bg-[#A33A2B] hover:bg-[#8B2F22]"
+                            }`}
+                    >
+                        {isSoldOut ? "Sold Out" : "Buy Now"}
+                    </button>
+
+                    <button
+                        onClick={handleAddToCart}
+                        disabled={isSoldOut}
+                        className={`w-10 h-10 rounded-full flex items-center justify-center text-white transition shadow-sm ${isSoldOut
+                            ? "bg-[#9CA3AF] cursor-not-allowed"
+                            : "bg-[#4A6F5D] hover:bg-[#3d5c4d]"
+                            }`}
+                        title="Add to Cart"
+                    >
+                        <FiShoppingCart size={18} />
+                    </button>
+                </div>
             </div>
         </div>
     );

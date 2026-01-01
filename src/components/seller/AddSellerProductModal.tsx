@@ -75,11 +75,6 @@ export default function AddSellerProductModal({ onClose, onSuccess, initialData 
             return;
         }
 
-        if (!localStorage.getItem("accessToken")) {
-            setError("Please log in to manage products");
-            return;
-        }
-
         setLoading(true);
         setError(null);
 
