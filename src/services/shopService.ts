@@ -3,13 +3,8 @@ import client from "../api/client";
 // =========================
 // Types
 // =========================
-export type ProductBadges = {
-  isSoldOut: boolean;
-  isLowStock: boolean;
-  isNew: boolean;
-  isHot: boolean;
-  isBestSeller: boolean;
-};
+// Types
+// =========================
 
 export type Product = {
   id: number;
@@ -20,9 +15,9 @@ export type Product = {
   image: string;
   stock: number;
   category: string;
-  badge?: string;
-  badges?: ProductBadges;
-  rating?: number;
+  badge?: string; // Keep for backward compat if needed, or remove? User said "Remove any outdated frontend logic". Let's keep it optional but prioritize badges array.
+  badges?: string[];
+  avgRating?: number;
   reviewsCount?: number;
   store?: {
     id: number;

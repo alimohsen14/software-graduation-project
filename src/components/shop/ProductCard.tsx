@@ -1,6 +1,5 @@
 import { FiShoppingCart, FiShoppingBag, FiCheck, FiPlus, FiHeart } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { ProductBadges as BadgesType } from "../../services/shopService";
 import ProductBadges from "./ProductBadges";
 import StockWarningBox from "./StockWarningBox";
 import { useStoreSocialStatus } from "../../hooks/useStoreSocialStatus";
@@ -20,7 +19,7 @@ interface ProductCardProps {
   price: number;
   stock: number;
   badge?: string;
-  badges?: BadgesType;
+  badges?: string[];
   store?: StoreInfo;
   onAddToCart: () => void;
   onBuyNow: () => void;
@@ -40,7 +39,7 @@ export default function ProductCard({
   onBuyNow,
 }: ProductCardProps) {
   const navigate = useNavigate();
-  const isSoldOut = badges?.isSoldOut ?? false;
+  const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
   const {
     isFollowed,
     isFavorited,
@@ -84,8 +83,8 @@ export default function ProductCard({
             onClick={toggleFavorite}
             disabled={togglingFavorite}
             className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all shadow-md ${isFavorited
-                ? "bg-red-500 text-white scale-110"
-                : "bg-white/80 text-gray-400 hover:text-red-500 hover:bg-white"
+              ? "bg-red-500 text-white scale-110"
+              : "bg-white/80 text-gray-400 hover:text-red-500 hover:bg-white"
               }`}
           >
             <FiHeart size={16} fill={isFavorited ? "currentColor" : "none"} />
@@ -125,8 +124,8 @@ export default function ProductCard({
             disabled={togglingFollow}
             title={isFollowed ? "Unfollow Store" : "Follow Store"}
             className={`flex items-center justify-center w-6 h-6 rounded-lg transition-colors shrink-0 ${isFollowed
-                ? "bg-emerald-100 text-emerald-600"
-                : "bg-gray-100 text-gray-500 hover:bg-emerald-50 hover:text-emerald-500"
+              ? "bg-emerald-100 text-emerald-600"
+              : "bg-gray-100 text-gray-500 hover:bg-emerald-50 hover:text-emerald-500"
               }`}
           >
             {isFollowed ? <FiCheck size={14} /> : <FiPlus size={14} />}
