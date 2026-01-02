@@ -27,6 +27,7 @@ export type SellerProduct = {
     stock: number;
     category?: string;
     badge?: string;
+    isActive: boolean;
     createdAt: string;
 };
 

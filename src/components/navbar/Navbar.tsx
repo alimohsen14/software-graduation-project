@@ -3,7 +3,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { FiMenu, FiUser, FiGlobe } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import NotificationBell from "./NotificationBell";
-import SellerNotificationBell from "../seller/SellerNotificationBell";
 import { useAuth } from "../../context/AuthContext";
 
 interface NavbarProps {
@@ -66,9 +65,6 @@ export default function Navbar({
 
           {/* Icons */}
           <div className="flex items-center gap-3 relative" ref={dropdownRef}>
-            {/* Seller Notifications */}
-            {user?.store?.type === "SELLER" && <SellerNotificationBell />}
-
             {/* Notifications */}
             <NotificationBell />
 

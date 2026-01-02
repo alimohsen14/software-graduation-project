@@ -75,6 +75,7 @@ export default function SellerProductsPage() {
                             products={products}
                             onRefresh={fetchProducts}
                             onEdit={handleEdit}
+                            onDelete={(id) => setProducts(prev => prev.filter(p => p.id !== id))}
                         />
                     )}
                 </div>

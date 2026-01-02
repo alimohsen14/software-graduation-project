@@ -15,7 +15,7 @@ export default function ShopPage() {
     const fetchProducts = async () => {
       try {
         const data = await getAllProducts();
-        setProducts(data);
+        setProducts(data.filter(p => p.isActive !== false));
       } catch (error) {
         console.error("Failed to fetch products:", error);
       }

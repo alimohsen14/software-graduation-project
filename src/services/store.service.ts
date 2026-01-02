@@ -24,6 +24,7 @@ export type StoreProduct = {
     category?: string;
     badge?: string;
     badges?: string[];
+    isActive: boolean;
     createdAt: string;
 };
 

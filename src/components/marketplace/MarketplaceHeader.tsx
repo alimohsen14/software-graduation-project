@@ -1,13 +1,21 @@
 import React from "react";
 import { FiShoppingBag, FiUserPlus, FiShoppingCart } from "react-icons/fi";
 import { useCart } from "../../context/CartContext";
+import SellerNotificationBell from "../seller/SellerNotificationBell";
 
 type Props = {
     onBecomeSeller: () => void;
+    onGoToDashboard: () => void;
     showBecomeSeller?: boolean;
+    showDashboard?: boolean;
 };
 
-export default function MarketplaceHeader({ onBecomeSeller, showBecomeSeller = true }: Props) {
+export default function MarketplaceHeader({
+    onBecomeSeller,
+    onGoToDashboard,
+    showBecomeSeller = true,
+    showDashboard = false
+}: Props) {
     const { toggleCart, cartItems } = useCart();
     return (
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
@@ -22,6 +30,8 @@ export default function MarketplaceHeader({ onBecomeSeller, showBecomeSeller = t
             </div>
 
             <div className="flex items-center gap-3">
+                {showDashboard && <SellerNotificationBell />}
+
                 <button
                     onClick={toggleCart}
                     className="relative p-3 bg-white border border-[#E5E7EB] text-gray-700 rounded-xl hover:bg-gray-50 transition shadow-sm"
@@ -41,6 +51,16 @@ export default function MarketplaceHeader({ onBecomeSeller, showBecomeSeller = t
                     >
                         <FiUserPlus size={18} />
                         Become a Seller
+                    </button>
+                )}
+
+                {showDashboard && (
+                    <button
+                        onClick={onGoToDashboard}
+                        className="flex items-center gap-2 px-6 py-3 bg-[#21492f] text-white rounded-xl font-bold hover:bg-[#1a3a25] transition shadow-sm"
+                    >
+                        <FiUserPlus size={18} />
+                        Seller Dashboard
                     </button>
                 )}
             </div>

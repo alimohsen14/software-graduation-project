@@ -6,18 +6,23 @@ type Props = {
     products: SellerProduct[];
     onRefresh: () => void;
     onEdit: (product: SellerProduct) => void;
+    onDelete?: (productId: number) => void;
 };
 
-export default function SellerProductsTable({ products, onRefresh, onEdit }: Props) {
+export default function SellerProductsTable({ products, onRefresh, onEdit, onDelete }: Props) {
     const [deletingId, setDeletingId] = useState<number | null>(null);
 
     const handleDelete = async (productId: number) => {
-        if (!confirm("Are you sure you want to delete this product?")) return;
+        if (!window.confirm("Are you sure you want to delete this product?")) return;
 
         setDeletingId(productId);
         try {
             await deleteProduct(productId);
-            onRefresh();
+            if (onDelete) {
+                onDelete(productId);
+            } else {
+                onRefresh();
+            }
         } catch (err) {
             console.error("Failed to delete product", err);
             alert("Failed to delete product. Please try again.");
