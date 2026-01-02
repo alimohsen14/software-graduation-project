@@ -31,8 +31,9 @@ export default function MarketplacePage() {
             setLoading(true);
             try {
                 const productsData = await getMarketplaceProducts(filters);
+                const activeProducts = productsData.filter(p => p.isActive !== false);
                 // Shuffle products for random display
-                const shuffled = [...productsData].sort(() => Math.random() - 0.5);
+                const shuffled = [...activeProducts].sort(() => Math.random() - 0.5);
                 setProducts(shuffled);
             } catch (err) {
                 console.error("Failed to load marketplace", err);
@@ -73,7 +74,9 @@ export default function MarketplacePage() {
                     <div className="max-w-7xl mx-auto">
                         <MarketplaceHeader
                             onBecomeSeller={() => navigate("/become-seller")}
+                            onGoToDashboard={() => navigate("/seller")}
                             showBecomeSeller={showBecomeSeller}
+                            showDashboard={isSeller}
                         />
 
                         {isPending && (

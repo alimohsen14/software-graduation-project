@@ -22,6 +22,7 @@ export type MarketplaceProduct = {
     store: StoreInfo;
     avgRating?: number;
     reviewsCount?: number;
+    isActive: boolean;
     createdAt: string;
 };
 

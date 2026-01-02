@@ -53,7 +53,7 @@ export default function StorePage() {
             ]);
 
             setStore(storeData);
-            setProducts(productsData);
+            setProducts(productsData.filter(p => p.isActive !== false));
             document.title = `${storeData.name} | Palestine 3D`;
 
             // 2. Fetch social status only if authenticated
@@ -318,6 +318,7 @@ export default function StorePage() {
                                             logo: store?.logo || null,
                                             isOfficial: store?.isOfficial || false,
                                         },
+                                        isActive: product.isActive
                                     }}
                                     onClick={() => navigate(`/marketplace/product/${product.id}`)}
                                     onStoreClick={() => { }}

@@ -48,57 +48,6 @@ export default function ProfilePage() {
 
             <SecurityCard provider={user.provider} />
 
-            {/* ===== SELLER LOGIC ===== */}
-            {user.store?.type === "SELLER" ? (
-              <div className="bg-white rounded-2xl p-6 shadow-sm flex items-center justify-between">
-                <div>
-                  <h3 className="text-lg font-bold">My Seller Dashboard</h3>
-                  <p className="text-sm text-gray-500">
-                    Manage your products and store
-                  </p>
-                  <span className="inline-block mt-1 text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
-                    {user.store.name}
-                  </span>
-                </div>
-
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => navigate("/seller")}
-                    className="px-4 py-2 bg-[#4A6F5D] text-white rounded-lg"
-                  >
-                    Dashboard
-                  </button>
-
-                  <button
-                    onClick={() => navigate("/seller/store")}
-                    className="px-4 py-2 border rounded-lg"
-                  >
-                    Store Settings
-                  </button>
-                </div>
-              </div>
-            ) : user.sellerRequest?.status === "PENDING" ? (
-              <div className="bg-amber-50 p-6 rounded-xl border">
-                <h3 className="font-bold text-amber-800">
-                  Seller application under review
-                </h3>
-              </div>
-            ) : (
-              <div className="bg-white p-6 rounded-xl flex justify-between items-center">
-                <div>
-                  <h3 className="font-bold">Become a Seller</h3>
-                  <p className="text-sm text-gray-500">
-                    Start selling on Palestine3D
-                  </p>
-                </div>
-                <button
-                  onClick={() => navigate("/become-seller")}
-                  className="px-4 py-2 bg-[#4A6F5D] text-white rounded-lg"
-                >
-                  Apply
-                </button>
-              </div>
-            )}
 
             <AccountActivityCard
               createdAt={user.createdAt}

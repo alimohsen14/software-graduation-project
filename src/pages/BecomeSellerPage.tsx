@@ -110,19 +110,23 @@ export default function BecomeSellerPage() {
                             />
                         </div>
 
-                        {/* Product Type (was What to Sell) */}
+                        {/* Product Type */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">
                                 Product Type <span className="text-red-500">*</span>
                             </label>
-                            <input
-                                type="text"
+                            <select
                                 name="productType"
                                 value={formData.productType}
-                                onChange={handleChange}
-                                placeholder="e.g., Handmade soaps, Olive oil"
-                                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
-                            />
+                                onChange={(e) => setFormData({ ...formData, productType: e.target.value })}
+                                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition bg-white"
+                            >
+                                <option value="">Select a category</option>
+                                <option value="Palestinian Food">Palestinian Food</option>
+                                <option value="Palestinian Lifestyle">Palestinian Lifestyle</option>
+                                <option value="Handmade">Handmade</option>
+                                <option value="Palestinian Heritage">Palestinian Heritage</option>
+                            </select>
                         </div>
 
                         {/* Region */}

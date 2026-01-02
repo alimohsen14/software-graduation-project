@@ -19,7 +19,8 @@ export default function SellerRequestsPage() {
         setError(null);
         try {
             const data = await getSellerRequests();
-            setRequests(data);
+            // Strictly show only PENDING requests
+            setRequests(data.filter(r => r.status === "PENDING"));
         } catch (err: any) {
             console.error("Failed to fetch requests", err);
             setError(err?.response?.data?.message || "Failed to load requests.");
@@ -37,8 +38,11 @@ export default function SellerRequestsPage() {
         setProcessingId(id);
         try {
             await approveSellerRequest(id);
+            // Remove from local state immediately for fast feedback
             setRequests((prev) => prev.filter((r) => r.id !== id));
             alert("Seller approved successfully!");
+            // Re-fetch in background to stay in sync
+            fetchRequests();
         } catch (err: any) {
             console.error("Failed to approve", err);
             alert(err?.response?.data?.message || "Failed to approve seller.");
@@ -59,8 +63,11 @@ export default function SellerRequestsPage() {
         setProcessingId(id);
         try {
             await rejectSellerRequest(id, reason);
+            // Remove from local state immediately for fast feedback
             setRequests((prev) => prev.filter((r) => r.id !== id));
             alert("Request rejected.");
+            // Re-fetch in background to stay in sync
+            fetchRequests();
         } catch (err: any) {
             console.error("Failed to reject", err);
             alert(err?.response?.data?.message || "Failed to reject request.");

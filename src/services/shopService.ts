@@ -25,6 +25,7 @@ export type Product = {
     logo?: string;
     isOfficial: boolean;
   };
+  isActive: boolean;
   createdAt: string;
   updatedAt: string;
 };

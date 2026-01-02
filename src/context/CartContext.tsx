@@ -7,6 +7,7 @@ export type CartItem = {
   price: number;
   image: string;
   quantity: number;
+  isActive: boolean;
   store?: {
     id: number;
     name: string;
@@ -48,6 +49,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [cartItems]);
 
   const addToCart = (product: any, quantity: number = 1, autoOpen: boolean = true) => {
+    if (product.isActive === false) {
+      console.warn("Attempted to add inactive product to cart:", product.id);
+      return;
+    }
+
     setCartItems((prev) => {
       const existing = prev.find((x) => x.id === product.id);
 
@@ -64,6 +70,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         price: product.price,
         image: product.image,
         quantity,
+        isActive: true, // If we're here, it passed the initial check
         store: product.store ? {
           id: product.store.id,
           name: product.store.name
