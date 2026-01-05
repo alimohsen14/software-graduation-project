@@ -17,7 +17,7 @@ type AdminOrderDetails = {
     address: string;
     products: string;
     items: OrderItem[];
-    total: number;
+    total?: number;
     status: string;
     adminStatus: string;
     rejectionReason?: string;
@@ -119,7 +119,7 @@ export default function OrderDetailsModal({ order, onClose }: Props) {
                     <div className="border-t border-gray-100 pt-4">
                         <div className="flex items-center justify-between">
                             <span className="text-sm text-gray-500">Total</span>
-                            <span className="text-xl font-bold text-[#4A6F5D]">{order.total.toFixed(2)}₪</span>
+                            <span className="text-xl font-bold text-[#4A6F5D]">{(order.total ?? 0).toFixed(2)}₪</span>
                         </div>
                     </div>
                 </div>

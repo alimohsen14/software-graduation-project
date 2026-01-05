@@ -21,14 +21,14 @@ export type CreateOrderPayload = {
 
 export type Payment = {
   id: number;
-  amount: number;
+  amount?: number;
   status: "SUCCESS" | "FAILED";
   createdAt: string;
 };
 
 export type Refund = {
   id: number;
-  amount: number;
+  amount?: number;
   reason: string;
   status: "PENDING" | "COMPLETED";
   createdAt: string;
@@ -39,7 +39,7 @@ export type OrderItemResponse = {
   productId: number;
   storeId: number;
   quantity: number;
-  price: number;
+  price?: number;
   status: OrderItemStatus;
   product: {
     name: string;
@@ -53,7 +53,7 @@ export type OrderItemResponse = {
 
 export type OrderResponse = {
   id: number;
-  total: number;
+  total?: number;
   status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED" | "COMPLETED";
   city: string;
   address: string;

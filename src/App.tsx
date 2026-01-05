@@ -13,7 +13,12 @@ import ShopPage from "./pages/ShopPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
 import Sop3DPage from "./pages/Soap3DPage";
 import AdminMarketPage from "./pages/admin/AdminMarketPage";
+import AdminProductsPage from "./pages/admin/AdminProductsPage";
+import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
+import AdminStockAlertsPage from "./pages/admin/AdminStockAlertsPage";
+import AdminStorePage from "./pages/admin/AdminStorePage";
 import SellerRequestsPage from "./pages/admin/SellerRequestsPage";
+import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserOrderDetailsPage from "./pages/UserOrderDetailsPage";
 import MarketplacePage from "./pages/MarketplacePage";
@@ -59,7 +64,12 @@ export default function App() {
 
             {/* ADMIN */}
             <Route path="/admin/market" element={<RequireAuth><AdminMarketPage /></RequireAuth>} />
+            <Route path="/admin/products" element={<RequireAuth><AdminProductsPage /></RequireAuth>} />
+            <Route path="/admin/orders" element={<RequireAuth><AdminOrdersPage /></RequireAuth>} />
+            <Route path="/admin/stock-alerts" element={<RequireAuth><AdminStockAlertsPage /></RequireAuth>} />
+            <Route path="/admin/store" element={<RequireAuth><AdminStorePage /></RequireAuth>} />
             <Route path="/admin/seller-requests" element={<RequireAuth><SellerRequestsPage /></RequireAuth>} />
+            <Route path="/admin/analytics" element={<RequireAuth><AdminAnalyticsPage /></RequireAuth>} />
 
             {/* SELLER */}
             <Route path="/seller" element={<RequireAuth><SellerDashboardPage /></RequireAuth>} />

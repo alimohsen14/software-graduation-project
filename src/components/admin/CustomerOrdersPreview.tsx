@@ -21,7 +21,7 @@ type AdminOrder = {
   address: string;
   products: string;
   items: OrderItem[];
-  total: number;
+  total?: number;
   location: string;
   status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED" | "COMPLETED";
   adminStatus: AdminStatus;
@@ -184,7 +184,7 @@ export default function CustomerOrdersPreview({
                     {o.products}
                   </td>
                   <td className="px-8 py-5 font-black text-[#4A6F5D]">
-                    {o.total.toFixed(2)}₪
+                    {(o.total ?? 0).toFixed(2)}₪
                   </td>
                   <td className="px-8 py-5 text-gray-500">
                     <span className="flex items-center gap-1.5">

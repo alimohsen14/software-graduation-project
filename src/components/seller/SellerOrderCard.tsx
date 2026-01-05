@@ -102,7 +102,7 @@ export default function SellerOrderCard({ order, onApprove, onReject, onShowDeta
                                     <h4 className="text-sm font-bold text-[#1d2d1f] tracking-tight">{item.productName}</h4>
                                     <div className="flex items-center gap-2">
                                         <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-[10px] font-bold">Qty: {item.quantity}</span>
-                                        <span className="text-sm font-bold text-emerald-600">{(item.priceAtPurchase).toFixed(2)} ₪</span>
+                                        <span className="text-sm font-bold text-emerald-600">{(item.priceAtPurchase ?? 0).toFixed(2)} ₪</span>
                                     </div>
                                 </div>
                             </div>

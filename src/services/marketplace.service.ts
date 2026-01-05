@@ -1,6 +1,14 @@
 import { publicClient } from "../api/client";
 
 // ================= TYPES =================
+
+export enum ProductCategory {
+    PALESTINIAN_FOOD = "PALESTINIAN_FOOD",
+    PALESTINIAN_LIFESTYLE = "PALESTINIAN_LIFESTYLE",
+    HANDMADE = "HANDMADE",
+    PALESTINIAN_HERITAGE = "PALESTINIAN_HERITAGE",
+}
+
 export type StoreInfo = {
     id: number;
     name: string;
@@ -16,7 +24,7 @@ export type MarketplaceProduct = {
     price: number;
     image: string;
     stock: number;
-    category?: string;
+    category?: ProductCategory | string;
     badge?: string;
     badges?: string[];
     store: StoreInfo;
@@ -27,20 +35,46 @@ export type MarketplaceProduct = {
 };
 
 export type MarketplaceFilters = {
-    category?: string;
+    category?: ProductCategory | "ALL";
     minPrice?: number;
     maxPrice?: number;
     storeId?: number;
+    page?: number;
+    limit?: number;
+};
+
+export type MarketplaceResponse = {
+    products: MarketplaceProduct[];
+    totalPages: number;
+    totalProducts: number;
+    currentPage: number;
 };
 
 // ================= API =================
 
 export const getMarketplaceProducts = async (
     filters?: MarketplaceFilters
-): Promise<MarketplaceProduct[]> => {
-    const res = await publicClient.get<MarketplaceProduct[]>(
-        `/marketplace/products`, { params: filters }
+): Promise<MarketplaceResponse> => {
+    // Normalize category: If "ALL", don't send it to backend
+    const params = { ...filters };
+    if (params.category === "ALL") {
+        delete params.category;
+    }
+
+    const res = await publicClient.get<any>(
+        `/marketplace/products`, { params }
     );
+
+    // If backend returns array directly, wrap it in the expected response structure
+    if (Array.isArray(res.data)) {
+        return {
+            products: res.data,
+            totalPages: 1,
+            totalProducts: res.data.length,
+            currentPage: 1
+        };
+    }
+
     return res.data;
 };
 

@@ -20,6 +20,7 @@ export type User = {
   age?: number | null;
   gender?: "MALE" | "FEMALE";
   isAdmin?: boolean;
+  isSeller?: boolean;
   provider?: string;
   createdAt?: string;
   updatedAt?: string;

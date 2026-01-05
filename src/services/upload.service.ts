@@ -11,7 +11,7 @@ export const uploadImage = async (file: File): Promise<string> => {
 
     const res = await client.post<UploadResponse>("/uploads/image", formData, {
         headers: {
-            "Content-Type": "multipart/form-data",
+            "Content-Type": undefined, // Let browser set multipart/form-data + boundary
         },
     });
 

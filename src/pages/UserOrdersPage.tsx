@@ -82,7 +82,7 @@ export default function UserOrdersPage() {
                                             </span>
                                         </div>
                                         <p className="text-sm text-gray-500">
-                                            {order.items.length} item(s) • {order.total.toFixed(2)}₪
+                                            {order.items.length} item(s) • {(order.total ?? 0).toFixed(2)}₪
                                         </p>
                                         <p className="text-xs text-gray-400 mt-1">
                                             {order.city}, {order.address}

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiUser, FiCpu, FiShoppingBag, FiUsers, FiBook } from "react-icons/fi";
+import { FiUser, FiCpu, FiShoppingBag, FiUsers, FiBook, FiBarChart2 } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
@@ -126,7 +126,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                   className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
                 >
                   <FiShoppingBag className="w-5 h-5" />
-                  <span className="text-sm font-medium">Market Admin</span>
+                  <span className="text-sm font-medium">Admin Market</span>
                 </button>
                 <button
                   onClick={() => {
@@ -137,6 +137,16 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                 >
                   <FiUsers className="w-5 h-5" />
                   <span className="text-sm font-medium">Seller Requests</span>
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/admin/analytics");
+                    closeSidebar();
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
+                >
+                  <FiBarChart2 className="w-5 h-5" />
+                  <span className="text-sm font-medium">Analytics</span>
                 </button>
               </>
             )}

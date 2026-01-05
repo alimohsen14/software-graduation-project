@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { FiPackage, FiEdit2, FiTrash2 } from "react-icons/fi";
-import { SellerProduct, deleteProduct } from "../../services/seller.service";
+import { SellerProduct } from "../../services/seller.service";
 
 type Props = {
     products: SellerProduct[];
     onRefresh: () => void;
     onEdit: (product: SellerProduct) => void;
     onDelete?: (productId: number) => void;
+    deleteProductFn: (productId: number) => Promise<void>;
 };
 
-export default function SellerProductsTable({ products, onRefresh, onEdit, onDelete }: Props) {
+export default function SellerProductsTable({ products, onRefresh, onEdit, onDelete, deleteProductFn }: Props) {
     const [deletingId, setDeletingId] = useState<number | null>(null);
 
     const handleDelete = async (productId: number) => {
         if (!window.confirm("Are you sure you want to delete this product?")) return;
 
-        setDeletingId(productId);
         try {
-            await deleteProduct(productId);
+            await deleteProductFn(productId);
             if (onDelete) {
                 onDelete(productId);
             } else {

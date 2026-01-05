@@ -19,7 +19,11 @@ export default function MarketplacePage() {
     const { user } = useAuth(); // Global Auth
     const [products, setProducts] = useState<MarketplaceProduct[]>([]);
     const [loading, setLoading] = useState(true);
-    const [filters, setFilters] = useState<FiltersType>({});
+    const [filters, setFilters] = useState<FiltersType>({
+        page: 1,
+        limit: 12
+    });
+    const [totalPages, setTotalPages] = useState(1);
 
     // Social Lists State
     const [socialModalType, setSocialModalType] = useState<'followed' | 'favorite' | null>(null);
@@ -30,11 +34,13 @@ export default function MarketplacePage() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const productsData = await getMarketplaceProducts(filters);
-                const activeProducts = productsData.filter(p => p.isActive !== false);
-                // Shuffle products for random display
-                const shuffled = [...activeProducts].sort(() => Math.random() - 0.5);
-                setProducts(shuffled);
+                // Backend-driven pagination and filtering
+                const res = await getMarketplaceProducts(filters);
+
+                // Use products from the paginated response, handle potential undefined
+                const productsArray = res.products || (Array.isArray(res) ? res : []);
+                setProducts(productsArray);
+                setTotalPages(res.totalPages || 1);
             } catch (err) {
                 console.error("Failed to load marketplace", err);
             } finally {
@@ -47,6 +53,11 @@ export default function MarketplacePage() {
 
     const handleFilterChange = (newFilters: FiltersType) => {
         setFilters(newFilters);
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setFilters(prev => ({ ...prev, page: newPage }));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleOpenSocialModal = async (type: 'followed' | 'favorite') => {
@@ -62,10 +73,12 @@ export default function MarketplacePage() {
         }
     };
 
+
     // Logic for "Become a Seller" button
-    const isSeller = user?.store?.type === "SELLER";
+    // user.isSeller is now normalized in AuthContext to include Admins
+    const isSeller = !!user?.isSeller;
     const isPending = user?.sellerRequest?.status === "PENDING";
-    const showBecomeSeller = !isSeller && !isPending;
+    const showBecomeSeller = !isSeller && !isPending && !user?.isAdmin;
 
     return (
         <DashboardLayout>
@@ -74,9 +87,9 @@ export default function MarketplacePage() {
                     <div className="max-w-7xl mx-auto">
                         <MarketplaceHeader
                             onBecomeSeller={() => navigate("/become-seller")}
-                            onGoToDashboard={() => navigate("/seller")}
+                            onGoToDashboard={() => navigate(user?.isAdmin ? "/admin/market" : "/seller")}
                             showBecomeSeller={showBecomeSeller}
-                            showDashboard={isSeller}
+                            showDashboard={isSeller || !!user?.isAdmin}
                         />
 
                         {isPending && (
@@ -131,6 +144,42 @@ export default function MarketplacePage() {
                                         onStoreClick={() => navigate(`/store/${product.store.id}`)}
                                     />
                                 ))}
+                            </div>
+                        )}
+
+                        {/* Pagination Controls */}
+                        {!loading && products.length > 0 && totalPages > 1 && (
+                            <div className="mt-12 flex items-center justify-center gap-2">
+                                <button
+                                    onClick={() => handlePageChange(Math.max(1, (filters.page || 1) - 1))}
+                                    disabled={filters.page === 1}
+                                    className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                >
+                                    Previous
+                                </button>
+
+                                <div className="flex items-center gap-1">
+                                    {[...Array(totalPages)].map((_, i) => (
+                                        <button
+                                            key={i + 1}
+                                            onClick={() => handlePageChange(i + 1)}
+                                            className={`w-10 h-10 rounded-xl text-sm font-bold transition flex items-center justify-center ${(filters.page || 1) === i + 1
+                                                ? "bg-[#4A6F5D] text-white shadow-md"
+                                                : "bg-white text-gray-500 border border-gray-100 hover:bg-emerald-50 hover:text-[#4A6F5D]"
+                                                }`}
+                                        >
+                                            {i + 1}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <button
+                                    onClick={() => handlePageChange(Math.min(totalPages, (filters.page || 1) + 1))}
+                                    disabled={filters.page === totalPages}
+                                    className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                >
+                                    Next
+                                </button>
                             </div>
                         )}
                     </div>

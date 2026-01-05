@@ -51,10 +51,23 @@ export const getStoreProducts = async (
     storeId: number,
     filters?: { category?: string; minPrice?: number; maxPrice?: number }
 ): Promise<StoreProduct[]> => {
-    const res = await publicClient.get<StoreProduct[]>(`/marketplace/products`, {
+    // We reuse getMarketplaceProducts logic if we want, but let's keep it simple here.
+    // The endpoint is /marketplace/products?storeId=...
+    const res = await publicClient.get<any>(`/marketplace/products`, {
         params: { ...filters, storeId }
     });
-    return res.data;
+
+    // If backend returns paginated object { products: [...] }
+    if (res.data && res.data.products) {
+        return res.data.products;
+    }
+
+    // If backend returns array directly
+    if (Array.isArray(res.data)) {
+        return res.data;
+    }
+
+    return [];
 };
 
 export const getAllStores = async (): Promise<Store[]> => {
