@@ -79,8 +79,8 @@ export default function AddProductModal({
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!form.name || form.price <= 0 || !form.category || !form.image) {
-      alert("Please fill all required fields");
+    if (!form.image) {
+      alert("Product image is required");
       return;
     }
 
@@ -175,14 +175,19 @@ export default function AddProductModal({
             </div>
             <div>
               <label className="block text-xs font-bold mb-1">Category *</label>
-              <input
+              <select
                 name="category"
                 value={form.category}
-                onChange={handleChange}
-                placeholder="Category"
-                className="w-full px-3 py-2 text-sm border rounded-lg bg-gray-50"
+                onChange={handleChange as any}
+                className="w-full px-3 py-2 text-sm border rounded-lg bg-gray-50 focus:ring-2 focus:ring-[#4A6F5D]/20"
                 disabled={isBusy}
-              />
+              >
+                <option value="">Select Category</option>
+                <option value="PALESTINIAN_FOOD">Palestinian Food</option>
+                <option value="PALESTINIAN_LIFESTYLE">Palestinian Lifestyle</option>
+                <option value="HANDMADE">Handmade</option>
+                <option value="PALESTINIAN_HERITAGE">Palestinian Heritage</option>
+              </select>
             </div>
           </div>
 

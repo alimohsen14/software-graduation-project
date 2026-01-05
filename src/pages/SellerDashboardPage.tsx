@@ -11,9 +11,9 @@ import {
 } from "react-icons/fi";
 
 import {
-    getMyStore,
-    getMyProducts,
-    getMyOrders,
+    getStore,
+    getProducts,
+    getOrders,
     getStockAlerts,
     SellerStore,
 } from "../services/seller.service";
@@ -34,7 +34,7 @@ export default function SellerDashboardPage() {
     useEffect(() => {
         if (!user) return;
 
-        if (user.store?.type !== "SELLER") {
+        if (user.store?.type !== "SELLER" && !user.isAdmin) {
             navigate("/profile", {
                 replace: true,
                 state: { error: "Access denied. Seller account required." },
@@ -45,18 +45,18 @@ export default function SellerDashboardPage() {
         async function loadDashboard() {
             try {
                 // Ensure we have the full store data if context only has limited info
-                const storeData = await getMyStore();
+                const storeData = await getStore();
                 if (storeData) setStore(storeData);
 
                 const [products, orders, alerts] = await Promise.all([
-                    getMyProducts(),
-                    getMyOrders(),
+                    getProducts(),
+                    getOrders(),
                     getStockAlerts(),
                 ]);
 
                 // Calculate pending items count
-                const pendingItemsCount = orders.orders.reduce((acc, order) => {
-                    return acc + order.items.filter(item => item.status === "PENDING_APPROVAL").length;
+                const pendingItemsCount = orders.orders.reduce((acc: number, order: any) => {
+                    return acc + order.items.filter((item: any) => item.status === "PENDING_APPROVAL").length;
                 }, 0);
 
                 setStats({

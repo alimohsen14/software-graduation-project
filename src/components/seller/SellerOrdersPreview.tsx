@@ -49,16 +49,16 @@ export default function SellerOrdersPreview({ orders }: Props) {
                                     <td className="px-6 py-4 font-bold text-gray-900">#{order.id}</td>
                                     <td className="px-6 py-4 text-gray-600">{order.customerName || "Customer"}</td>
                                     <td className="px-6 py-4 text-gray-500">{order.itemCount || 1} items</td>
-                                    <td className="px-6 py-4 font-bold text-[#4A6F5D]">{order.total?.toFixed(2)}₪</td>
+                                    <td className="px-6 py-4 font-bold text-[#4A6F5D]">{(order.total ?? 0).toFixed(2)}₪</td>
                                     <td className="px-6 py-4">
                                         <span
                                             className={`px-2 py-1 rounded-full text-xs font-bold ${order.status === "PAID"
-                                                    ? "bg-blue-100 text-blue-700"
-                                                    : order.status === "SHIPPED"
-                                                        ? "bg-green-100 text-green-700"
-                                                        : order.status === "PENDING"
-                                                            ? "bg-amber-100 text-amber-700"
-                                                            : "bg-gray-100 text-gray-600"
+                                                ? "bg-blue-100 text-blue-700"
+                                                : order.status === "SHIPPED"
+                                                    ? "bg-green-100 text-green-700"
+                                                    : order.status === "PENDING"
+                                                        ? "bg-amber-100 text-amber-700"
+                                                        : "bg-gray-100 text-gray-600"
                                                 }`}
                                         >
                                             {order.status}

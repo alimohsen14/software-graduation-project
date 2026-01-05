@@ -98,7 +98,7 @@ export const applyToBeSeller = async (
     return res.data;
 };
 
-export const getMyStore = async (): Promise<SellerStore | null> => {
+export const getStore = async (): Promise<SellerStore | null> => {
     try {
         const res = await client.get<SellerStore>(
             "/seller/store"
@@ -136,7 +136,7 @@ export const uploadStoreLogo = async (
     return res.data;
 };
 
-export const getMyProducts = async (): Promise<SellerProduct[]> => {
+export const getProducts = async (): Promise<SellerProduct[]> => {
     const res = await client.get<SellerProduct[]>(
         "/seller/products"
     );
@@ -171,7 +171,7 @@ export const deleteProduct = async (
 };
 
 // Orders
-export const getMyOrders = async (): Promise<{ totalOrders: number; orders: SellerOrder[] }> => {
+export const getOrders = async (): Promise<{ totalOrders: number; orders: SellerOrder[] }> => {
     const res = await client.get<{ totalOrders: number; orders: SellerOrder[] }>(
         "/seller/orders"
     );

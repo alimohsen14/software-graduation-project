@@ -1,7 +1,6 @@
 import client from "../api/client";
+import { ProductCategory } from "./marketplace.service";
 
-// =========================
-// Types
 // =========================
 // Types
 // =========================
@@ -14,8 +13,8 @@ export type Product = {
   price: number;
   image: string;
   stock: number;
-  category: string;
-  badge?: string; // Keep for backward compat if needed, or remove? User said "Remove any outdated frontend logic". Let's keep it optional but prioritize badges array.
+  category: ProductCategory | string;
+  badge?: string;
   badges?: string[];
   avgRating?: number;
   reviewsCount?: number;
@@ -30,6 +29,20 @@ export type Product = {
   updatedAt: string;
 };
 
+export type ProductFilters = {
+  category?: ProductCategory | "ALL";
+  page?: number;
+  limit?: number;
+  search?: string;
+};
+
+export type ProductResponse = {
+  products: Product[];
+  totalPages: number;
+  totalProducts: number;
+  currentPage: number;
+};
+
 // Create payload (Admin)
 export type CreateProductPayload = {
   name: string;
@@ -38,7 +51,7 @@ export type CreateProductPayload = {
   price: number;
   image: string;
   stock: number;
-  category: string;
+  category: ProductCategory | string;
   badge?: string;
 };
 
@@ -48,8 +61,23 @@ export type UpdateProductPayload = Partial<CreateProductPayload>;
 // =========================
 // Public (Shop)
 // =========================
-export const getAllProducts = async (): Promise<Product[]> => {
-  const res = await client.get<Product[]>("/products");
+export const getAllProducts = async (filters?: ProductFilters): Promise<ProductResponse> => {
+  const params = { ...filters };
+  if (params.category === "ALL") {
+    delete params.category;
+  }
+  const res = await client.get<any>("/products", { params });
+
+  // Handle case where backend returns array directly
+  if (Array.isArray(res.data)) {
+    return {
+      products: res.data,
+      totalPages: 1,
+      totalProducts: res.data.length,
+      currentPage: 1
+    };
+  }
+
   return res.data;
 };
 

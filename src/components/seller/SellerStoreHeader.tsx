@@ -39,7 +39,7 @@ export default function SellerStoreHeader({
                             <h1 className="text-2xl font-bold text-[#1F2933]">{store.name}</h1>
                         </div>
                         <p className="text-gray-500 text-sm">
-                            {productCount} products • Seller Dashboard
+                            {productCount} products • Store Dashboard
                         </p>
                     </div>
                 </div>

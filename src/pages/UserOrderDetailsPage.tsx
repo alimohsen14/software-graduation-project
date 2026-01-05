@@ -127,7 +127,7 @@ export default function UserOrderDetailsPage() {
                                 Order #{order.id}
                             </h1>
                             <span className="text-2xl font-bold text-[#4A6F5D]">
-                                {order.total.toFixed(2)}₪
+                                {(order.total ?? 0).toFixed(2)}₪
                             </span>
                         </div>
 

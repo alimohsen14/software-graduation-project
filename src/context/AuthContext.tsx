@@ -39,6 +39,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const data: any = res.data;
             const newUser = data?.user || (data?.id ? data : null);
 
+            // ===================================
+            // ADMIN AS SELLER NORMALIZATION
+            // ===================================
+            if (newUser) {
+                // Ensure role flags are derived as per rules:
+                // isAdmin = response.isAdmin === true
+                // isSeller = response.store?.type === "SELLER"
+                newUser.isAdmin = newUser.isAdmin === true;
+                newUser.isSeller = newUser.store?.type === "SELLER";
+            }
+
             console.log("✅ refreshUser: Set User", newUser);
             setUser(newUser);
             return newUser;

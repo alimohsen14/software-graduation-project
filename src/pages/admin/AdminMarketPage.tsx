@@ -1,376 +1,201 @@
 import React, { useEffect, useState } from "react";
-import AdminMarketHeader from "../../components/admin/AdminMarketHeader";
-import LowStockAlerts from "../../components/admin/LowStockAlerts";
-import CustomerOrdersPreview from "../../components/admin/CustomerOrdersPreview";
-import ProductsManagementTable, {
-  MappedProduct,
-} from "../../components/admin/ProductsManagementTable";
-import AddProductModal from "../../components/admin/AddProductModal";
+import { useNavigate } from "react-router-dom";
+import DashboardLayout from "../../components/layout/DashboardLayout";
+import SellerStoreHeader from "../../components/seller/SellerStoreHeader";
+import {
+  FiPackage,
+  FiShoppingBag,
+  FiAlertTriangle,
+  FiArrowRight,
+  FiSettings,
+} from "react-icons/fi";
 
 import {
-  getAllProducts,
-  Product,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  CreateProductPayload,
-} from "../../services/shopService";
-import {
-  getAllOrders,
-  approveOrder,
-  rejectOrder,
-} from "../../services/order.service";
-import { getSellerRequests } from "../../services/admin.service";
+  getStore,
+  getProducts,
+  getOrders,
+  getStockAlerts,
+} from "../../services/admin.service";
+import { SellerStore } from "../../services/seller.service";
 
-type AdminStatus = "ADMIN_PENDING" | "ADMIN_APPROVED" | "ADMIN_REJECTED";
-
-type ProductStatus = "IN_STOCK" | "LOW_STOCK" | "OUT_OF_STOCK";
-
-type OrderItem = {
-  quantity: number;
-  product: {
-    name: string;
-  };
-};
-
-type AdminOrder = {
-  id: string;
-  customerName: string;
-  customerEmail?: string;
-  phone: string;
-  city: string;
-  address: string;
-  products: string;
-  items: OrderItem[];
-  total: number;
-  location: string;
-  status: "PENDING" | "PAID" | "CANCELED" | "SHIPPED" | "COMPLETED";
-  adminStatus: AdminStatus;
-  rejectionReason?: string;
-};
+import { useAuth } from "../../context/AuthContext";
 
 export default function AdminMarketPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [orders, setOrders] = useState<AdminOrder[]>([]);
-  const [loadingProducts, setLoadingProducts] = useState(true);
-  const [loadingOrders, setLoadingOrders] = useState(true);
-  const [ordersError, setOrdersError] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-  // Modal states
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  // =========================
-  // Fetch Products
-  // =========================
-  const fetchProducts = async () => {
-    try {
-      setLoadingProducts(true);
-      const data = await getAllProducts();
-      setProducts(data);
-    } catch (err) {
-      console.error("Failed to load products", err);
-    } finally {
-      setLoadingProducts(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  // =========================
-  // Fetch Seller Requests Count
-  // =========================
-  const [pendingRequestsCount, setPendingRequestsCount] = useState(0);
-
-  useEffect(() => {
-    const fetchRequests = async () => {
-      try {
-        const requests = await getSellerRequests();
-        setPendingRequestsCount(requests.filter(r => r.status === "PENDING").length);
-      } catch (err) {
-        console.error("Failed to load seller requests", err);
-      }
-    };
-    fetchRequests();
-  }, []);
-
-  // =========================
-  // Fetch Orders (Admin)
-  // =========================
-  const fetchOrders = async () => {
-    setLoadingOrders(true);
-    setOrdersError(null);
-
-    try {
-      const data = await getAllOrders();
-      console.log("Orders fetched:", data);
-
-      if (!data || !Array.isArray(data)) {
-        setOrdersError("Invalid response from server");
-        setOrders([]);
-        return;
-      }
-
-      const mappedOrders: AdminOrder[] = data.map((order) => ({
-        id: String(order.id),
-        customerName: order.user?.name || "Unknown",
-        customerEmail: order.user?.email,
-        phone: order.phone,
-        city: order.city,
-        address: order.address,
-        products: order.items
-          ?.map((item) => `${item.product?.name || "Product"} (x${item.quantity})`)
-          .join(", ") || "No items",
-        items: order.items || [],
-        total: order.total,
-        location: order.city,
-        status: order.status,
-        adminStatus: order.adminStatus || "ADMIN_PENDING",
-        rejectionReason: order.rejectionReason,
-      }));
-
-      setOrders(mappedOrders);
-    } catch (err) {
-      console.error("Failed to load orders", err);
-      setOrdersError("Failed to load orders. Please try again.");
-    } finally {
-      setLoadingOrders(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
-
-  // =========================
-  // Handle Add Product
-  // =========================
-  const handleOpenAddModal = () => {
-    setEditingProduct(null);
-    setIsModalOpen(true);
-  };
-
-  // =========================
-  // Handle Edit Product
-  // =========================
-  const handleOpenEditModal = (mappedProduct: MappedProduct) => {
-    const originalProduct = products.find(
-      (p) => String(p.id) === mappedProduct.id
-    );
-    if (originalProduct) {
-      setEditingProduct(originalProduct);
-      setIsModalOpen(true);
-    }
-  };
-
-  // =========================
-  // Handle Submit (Add/Edit)
-  // =========================
-  const handleSubmit = async (data: CreateProductPayload) => {
-    setIsSubmitting(true);
-    try {
-      if (editingProduct) {
-        await updateProduct(editingProduct.id, data);
-      } else {
-        await createProduct(data);
-      }
-
-      await fetchProducts();
-      setIsModalOpen(false);
-      setEditingProduct(null);
-    } catch (err) {
-      console.error("Failed to save product", err);
-      alert("Failed to save product. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // =========================
-  // Handle Delete Product
-  // =========================
-  const handleDelete = async (productId: string) => {
-    setIsDeleting(true);
-    try {
-      await deleteProduct(Number(productId));
-      await fetchProducts();
-    } catch (err) {
-      console.error("Failed to delete product", err);
-      alert("Failed to delete product. Please try again.");
-    } finally {
-      setIsDeleting(false);
-    }
-  };
-
-  // =========================
-  // Handle Approve Order
-  // =========================
-  const handleApproveOrder = async (orderId: string) => {
-    try {
-      await approveOrder(Number(orderId));
-      await fetchOrders();
-    } catch (err) {
-      console.error("Failed to approve order", err);
-      alert("Failed to approve order. Please try again.");
-    }
-  };
-
-  // =========================
-  // Handle Reject Order
-  // =========================
-  const handleRejectOrder = async (orderId: string, reason: string) => {
-    try {
-      await rejectOrder(Number(orderId), reason);
-      // Refetch both orders and products (stock restored after reject)
-      await Promise.all([fetchOrders(), fetchProducts()]);
-    } catch (err) {
-      console.error("Failed to reject order", err);
-      alert("Failed to reject order. Please try again.");
-    }
-  };
-
-  // =========================
-  // Low stock alerts
-  // =========================
-  const lowStockItems = products
-    .filter((p) => p.stock > 0 && p.stock <= 10)
-    .map((p) => ({
-      id: String(p.id),
-      name: p.name,
-      remaining: p.stock,
-    }));
-
-  // =========================
-  // Products table mapping
-  // =========================
-  const mappedProducts: MappedProduct[] = products.map((p) => {
-    let status: ProductStatus = "IN_STOCK";
-
-    if (p.stock === 0) status = "OUT_OF_STOCK";
-    else if (p.stock <= 10) status = "LOW_STOCK";
-
-    return {
-      id: String(p.id),
-      image: p.image,
-      name: p.name,
-      price: p.price,
-      stock: p.stock,
-      status,
-      shortDescription: p.shortDescription,
-      fullDescription: p.fullDescription,
-      category: p.category,
-      badge: p.badge,
-    };
+  const [store, setStore] = useState<SellerStore | null>(null);
+  const [stats, setStats] = useState({
+    products: 0,
+    orders: 0,
+    alerts: 0,
   });
 
-  // =========================
-  // Prepare edit data for modal
-  // =========================
-  const editFormData = editingProduct
-    ? {
-      name: editingProduct.name,
-      shortDescription: editingProduct.shortDescription || "",
-      fullDescription: editingProduct.fullDescription || "",
-      price: editingProduct.price,
-      image: editingProduct.image,
-      stock: editingProduct.stock,
-      category: editingProduct.category,
-      badge: editingProduct.badge || "",
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user === undefined) return;
+
+    if (!user || !user.isAdmin) {
+      navigate("/profile", {
+        replace: true,
+        state: { error: "Access denied. Admin account required." },
+      });
+      return;
     }
-    : null;
+
+    async function loadDashboard() {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // 2. GET /admin/store
+        const storeData = await getStore();
+        setStore(storeData);
+
+        // 3. GET /admin/store/products
+        const products = await getProducts();
+
+        // 4. GET /admin/store/orders
+        const orders = await getOrders();
+
+        // 5. GET /admin/store/products/stock-alerts
+        const alerts = await getStockAlerts();
+
+        // Calculate pending items count
+        const pendingItemsCount = orders.orders.reduce((acc: number, order: any) => {
+          return acc + order.items.filter((item: any) => item.status === "PENDING_APPROVAL").length;
+        }, 0);
+
+        setStats({
+          products: products.length,
+          orders: pendingItemsCount,
+          alerts: alerts.length,
+        });
+      } catch (err: any) {
+        console.error("Admin dashboard load failed:", err);
+        setError(err.response?.data?.message || "Failed to load Official Store data. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadDashboard();
+  }, [user, navigate]);
+
+  if (user === undefined || loading) return (
+    <DashboardLayout>
+      <div className="flex items-center justify-center min-h-[60vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4A6F5D]"></div>
+      </div>
+    </DashboardLayout>
+  );
+
+  if (error) return (
+    <DashboardLayout>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
+        <FiAlertTriangle className="text-red-500 text-5xl mb-4" />
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Dashboard Error</h2>
+        <p className="text-gray-600 mb-6 max-w-md">{error}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-6 py-2 bg-[#4A6F5D] text-white rounded-lg hover:bg-[#3d5c4d] transition"
+        >
+          Retry Loading
+        </button>
+      </div>
+    </DashboardLayout>
+  );
+
+  if (!user || !user.isAdmin || !store) return null;
 
   return (
-    <div className="min-h-screen w-full px-6 pt-6 pb-12 bg-[#eaf5ea]">
-      <div className="max-w-7xl mx-auto flex flex-col gap-6">
-        {/* Header */}
-        <AdminMarketHeader onAddProduct={handleOpenAddModal} />
-
-        {/* Dashboard Actions Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Seller Requests Card */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
-            <div>
-              <h3 className="text-gray-500 font-medium text-sm uppercase tracking-wider mb-2">Pending Seller Requests</h3>
-              <div className="text-3xl font-bold text-[#1d2d1f]">
-                {pendingRequestsCount}
-              </div>
-            </div>
-            <button
-              onClick={() => window.location.href = "/admin/seller-requests"}
-              className="px-4 py-2 bg-[#eaf5ea] text-[#2f5c3f] rounded-lg font-bold text-sm hover:bg-[#dff3e8] transition"
-            >
-              Review Requests
-            </button>
-          </div>
-
-          {/* Quick Stats or other cards can go here */}
-        </div>
-
-        {/* Low stock alerts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          {loadingProducts ? (
-            <div className="w-full bg-white rounded-xl shadow-sm px-6 py-5">
-              Loading low stock alerts...
-            </div>
-          ) : (
-            <LowStockAlerts items={lowStockItems} />
-          )}
-        </div>
-
-        {/* Orders */}
-        {loadingOrders ? (
-          <div className="w-full bg-white rounded-xl shadow-sm px-6 py-5">
-            Loading orders...
-          </div>
-        ) : ordersError ? (
-          <div className="w-full bg-white rounded-xl shadow-sm px-6 py-5">
-            <div className="text-red-600 mb-2">{ordersError}</div>
-            <button
-              onClick={fetchOrders}
-              className="text-sm text-[#4A6F5D] font-medium hover:underline"
-            >
-              Retry
-            </button>
-          </div>
-        ) : (
-          <CustomerOrdersPreview
-            orders={orders}
-            onApprove={handleApproveOrder}
-            onReject={handleRejectOrder}
+    <DashboardLayout>
+      <div className="w-full min-h-screen p-6 sm:p-8 lg:p-10">
+        <div className="max-w-7xl mx-auto space-y-8">
+          <SellerStoreHeader
+            store={store}
+            productCount={stats.products}
+            onAddProduct={() => navigate("/admin/products")}
           />
-        )}
 
-        {/* Products */}
-        {loadingProducts ? (
-          <div className="w-full bg-white rounded-xl shadow-sm px-6 py-5">
-            Loading products...
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <DashboardCard
+              title="Settings"
+              subtitle="Manage Store Info"
+              icon={<FiSettings />}
+              onClick={() => navigate("/admin/store")}
+              variant="purple"
+            />
+
+            <DashboardCard
+              title={String(stats.products)}
+              subtitle="Active Products"
+              icon={<FiPackage />}
+              onClick={() => navigate("/admin/products")}
+              variant="green"
+            />
+
+            <DashboardCard
+              title={String(stats.orders)}
+              subtitle="Pending Orders"
+              icon={<FiShoppingBag />}
+              onClick={() => navigate("/admin/orders")}
+              variant="blue"
+            />
+
+            <DashboardCard
+              title={String(stats.alerts)}
+              subtitle="Low Stock Alerts"
+              icon={<FiAlertTriangle />}
+              onClick={() => navigate("/admin/stock-alerts")}
+              variant="amber"
+            />
           </div>
-        ) : (
-          <ProductsManagementTable
-            products={mappedProducts}
-            onEdit={handleOpenEditModal}
-            onDelete={handleDelete}
-            isDeleting={isDeleting}
-          />
-        )}
+        </div>
       </div>
+    </DashboardLayout>
+  );
+}
 
-      {/* Add / Edit Product Modal */}
-      {isModalOpen && (
-        <AddProductModal
-          onClose={() => {
-            setIsModalOpen(false);
-            setEditingProduct(null);
-          }}
-          onSubmit={handleSubmit}
-          initialData={editFormData}
-          isLoading={isSubmitting}
-        />
-      )}
+/* ---------- CARD COMPONENT ---------- */
+
+type CardVariant = "purple" | "green" | "blue" | "amber";
+
+const VARIANT_STYLES: Record<CardVariant, string> = {
+  purple: "bg-purple-50 text-purple-600",
+  green: "bg-green-50 text-green-600",
+  blue: "bg-blue-50 text-blue-600",
+  amber: "bg-amber-50 text-amber-600",
+};
+
+function DashboardCard({
+  title,
+  subtitle,
+  icon,
+  onClick,
+  variant,
+}: {
+  title: string;
+  subtitle: string;
+  icon: React.ReactNode;
+  onClick: () => void;
+  variant: CardVariant;
+}) {
+  return (
+    <div
+      onClick={onClick}
+      className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
+    >
+      <div className="flex items-center justify-between mb-4">
+        <div className={`p-3 rounded-xl ${VARIANT_STYLES[variant]}`}>
+          {icon}
+        </div>
+        <FiArrowRight className="text-gray-300 group-hover:text-gray-700 transition" />
+      </div>
+      <h3 className="text-2xl font-bold text-[#1f2933]">{title}</h3>
+      <p className="text-gray-500 text-sm">{subtitle}</p>
     </div>
   );
 }

@@ -59,8 +59,8 @@ export default function MarketplaceHeader({
                         onClick={onGoToDashboard}
                         className="flex items-center gap-2 px-6 py-3 bg-[#21492f] text-white rounded-xl font-bold hover:bg-[#1a3a25] transition shadow-sm"
                     >
-                        <FiUserPlus size={18} />
-                        Seller Dashboard
+                        <FiShoppingBag size={18} />
+                        {window.location.pathname.startsWith('/admin') || (typeof window !== 'undefined' && (window as any).isAdminCheck) ? "Admin Dashboard" : "Seller Dashboard"}
                     </button>
                 )}
             </div>

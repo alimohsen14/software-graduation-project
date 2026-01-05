@@ -7,6 +7,8 @@ export default function MyOrders() {
     const [loading, setLoading] = useState(true);
     const [payingOrderId, setPayingOrderId] = useState<number | null>(null);
 
+    const safeNumber = (value?: number) => typeof value === "number" ? value : 0;
+
     const fetchOrders = async () => {
         try {
             const data = await getMyOrders();
@@ -70,7 +72,7 @@ export default function MyOrders() {
                             <div className="flex items-center gap-4">
                                 <div className="text-right">
                                     <p className="text-sm text-gray-500">Total Amount</p>
-                                    <p className="text-lg font-bold text-[#1F2933]">{order.total.toFixed(2)}₪</p>
+                                    <p className="text-lg font-bold text-[#1F2933]">{safeNumber(order.total).toFixed(2)}₪</p>
                                 </div>
 
                                 <div className={`px-3 py-1 rounded-full text-xs font-bold border ${getContentForStatus(order.status).class}`}>
@@ -114,7 +116,7 @@ export default function MyOrders() {
                                             <div className="flex items-center gap-2 mt-1">
                                                 <span className="text-sm font-medium">Qty: {item.quantity}</span>
                                                 <span className="text-sm text-gray-400">|</span>
-                                                <span className="text-sm font-bold text-[#4A6F5D]">{item.price.toFixed(2)}₪</span>
+                                                <span className="text-sm font-bold text-[#4A6F5D]">{safeNumber(item.price).toFixed(2)}₪</span>
                                             </div>
                                         </div>
                                     </div>
@@ -127,7 +129,7 @@ export default function MyOrders() {
                                         {item.refund && (
                                             <div className="mt-2 text-xs bg-red-50 text-red-700 px-2 py-1 rounded border border-red-100">
                                                 <p className="font-bold flex items-center gap-1">
-                                                    <FiAlertCircle size={10} /> Refunded: {item.refund.amount}₪
+                                                    <FiAlertCircle size={10} /> Refunded: {safeNumber(item.refund.amount).toFixed(2)}₪
                                                 </p>
                                                 <p className="opacity-75">{item.refund.reason}</p>
                                             </div>
@@ -145,7 +147,7 @@ export default function MyOrders() {
                                     <div key={p.id} className="flex justify-between max-w-sm">
                                         <span>{new Date(p.createdAt).toLocaleString()}</span>
                                         <span className={p.status === 'SUCCESS' ? 'text-green-600 font-medium' : 'text-red-600'}>
-                                            {p.status} ({p.amount}₪)
+                                            {p.status} ({safeNumber(p.amount).toFixed(2)}₪)
                                         </span>
                                     </div>
                                 ))}

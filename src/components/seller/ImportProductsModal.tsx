@@ -1,15 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { FiX, FiUploadCloud, FiFileText, FiAlertCircle, FiLoader, FiCheckCircle } from 'react-icons/fi';
 import { toast } from 'react-toastify';
-import { importProductsFromExcel } from '../../services/seller.service';
-
 interface ImportProductsModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
+    importProductsFn: (formData: FormData) => Promise<{ count: number; message: string }>;
 }
 
-export default function ImportProductsModal({ isOpen, onClose, onSuccess }: ImportProductsModalProps) {
+export default function ImportProductsModal({ isOpen, onClose, onSuccess, importProductsFn }: ImportProductsModalProps) {
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -39,7 +38,7 @@ export default function ImportProductsModal({ isOpen, onClose, onSuccess }: Impo
         formData.append('file', file);
 
         try {
-            const res = await importProductsFromExcel(formData);
+            const res = await importProductsFn(formData);
             toast.success(`Products imported successfully (${res.count} products)`);
             onSuccess();
             onClose();

@@ -3,19 +3,17 @@ import { useParams, useNavigate } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import {
     getPublicStoreById,
-    getStoreProducts,
     getStoreSocialStatus,
     followStore,
     unfollowStore,
     favoriteStore,
     unfavoriteStore,
-    Store,
-    StoreProduct
+    Store
 } from "../services/store.service";
 import { FiShoppingBag, FiPackage, FiArrowLeft, FiShield, FiUser, FiHeart, FiPlus, FiCheck } from "react-icons/fi";
 import MarketplaceProductCard from "../components/marketplace/MarketplaceProductCard";
 import MarketplaceFilters from "../components/marketplace/MarketplaceFilters";
-import { MarketplaceFilters as FiltersType } from "../services/marketplace.service";
+import { MarketplaceFilters as FiltersType, getMarketplaceProducts, MarketplaceProduct } from "../services/marketplace.service";
 import { useAuth } from "../context/AuthContext";
 
 /**
@@ -30,10 +28,14 @@ export default function StorePage() {
 
     // Core States
     const [store, setStore] = useState<Store | null>(null);
-    const [products, setProducts] = useState<StoreProduct[]>([]);
+    const [products, setProducts] = useState<MarketplaceProduct[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [filters, setFilters] = useState<FiltersType>({});
+    const [filters, setFilters] = useState<FiltersType>({
+        page: 1,
+        limit: 12
+    });
+    const [totalPages, setTotalPages] = useState(1);
 
     // Social States
     const [isFollowed, setIsFollowed] = useState(false);
@@ -49,11 +51,12 @@ export default function StorePage() {
             // 1. Fetch public store data and products (concurrently)
             const [storeData, productsData] = await Promise.all([
                 getPublicStoreById(id),
-                getStoreProducts(id, currentFilters),
+                getMarketplaceProducts({ ...currentFilters, storeId: id }),
             ]);
 
             setStore(storeData);
-            setProducts(productsData.filter(p => p.isActive !== false));
+            setProducts(productsData.products);
+            setTotalPages(productsData.totalPages);
             document.title = `${storeData.name} | Palestine 3D`;
 
             // 2. Fetch social status only if authenticated
@@ -64,7 +67,6 @@ export default function StorePage() {
                     setIsFavorited(social.isFavorited);
                 } catch (socialErr) {
                     console.warn("Failed to fetch social status:", socialErr);
-                    // Default to false if social status fails
                     setIsFollowed(false);
                     setIsFavorited(false);
                 }
@@ -101,7 +103,6 @@ export default function StorePage() {
         if (!store || togglingFollow) return;
 
         const previousState = isFollowed;
-        // Optimistic Update
         setIsFollowed(!previousState);
         setTogglingFollow(true);
 
@@ -113,7 +114,6 @@ export default function StorePage() {
             }
         } catch (err) {
             console.error("Follow toggle failed:", err);
-            // Revert on error
             setIsFollowed(previousState);
         } finally {
             setTogglingFollow(false);
@@ -125,7 +125,6 @@ export default function StorePage() {
         if (!store || togglingFavorite) return;
 
         const previousState = isFavorited;
-        // Optimistic Update
         setIsFavorited(!previousState);
         setTogglingFavorite(true);
 
@@ -137,10 +136,7 @@ export default function StorePage() {
             }
         } catch (err: any) {
             console.error("Favorite toggle failed:", err);
-            // Revert on error
             setIsFavorited(previousState);
-
-            // Handle specific 400 error (limit reached)
             if (err.response?.status === 400) {
                 alert("You can favorite up to 10 stores only");
             }
@@ -151,6 +147,11 @@ export default function StorePage() {
 
     const handleFilterChange = (newFilters: FiltersType) => {
         setFilters(newFilters);
+    };
+
+    const handlePageChange = (newPage: number) => {
+        setFilters(prev => ({ ...prev, page: newPage }));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     // Error State
@@ -285,7 +286,6 @@ export default function StorePage() {
                                 <FiPackage className="text-[#4A6F5D]" />
                             </div>
                             <h2 className="text-2xl font-bold text-[#1F2933]">Available Products</h2>
-                            <span className="text-gray-400 font-medium ml-2">({products.length})</span>
                         </div>
                     </div>
 
@@ -306,25 +306,54 @@ export default function StorePage() {
                             <p className="text-gray-400 max-w-xs">No products match your current price filter. Please try a different range.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                            {products.map((product) => (
-                                <MarketplaceProductCard
-                                    key={product.id}
-                                    product={{
-                                        ...product,
-                                        store: {
-                                            id: store!.id,
-                                            name: store!.name,
-                                            logo: store?.logo || null,
-                                            isOfficial: store?.isOfficial || false,
-                                        },
-                                        isActive: product.isActive
-                                    }}
-                                    onClick={() => navigate(`/marketplace/product/${product.id}`)}
-                                    onStoreClick={() => { }}
-                                />
-                            ))}
-                        </div>
+                        <>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                                {products.map((product) => (
+                                    <MarketplaceProductCard
+                                        key={product.id}
+                                        product={product}
+                                        onClick={() => navigate(`/marketplace/product/${product.id}`)}
+                                        onStoreClick={() => { }}
+                                    />
+                                ))}
+                            </div>
+
+                            {/* Pagination Controls */}
+                            {totalPages > 1 && (
+                                <div className="mt-12 flex items-center justify-center gap-2">
+                                    <button
+                                        onClick={() => handlePageChange(Math.max(1, (filters.page || 1) - 1))}
+                                        disabled={filters.page === 1}
+                                        className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                    >
+                                        Previous
+                                    </button>
+
+                                    <div className="flex items-center gap-1">
+                                        {[...Array(totalPages)].map((_, i) => (
+                                            <button
+                                                key={i + 1}
+                                                onClick={() => handlePageChange(i + 1)}
+                                                className={`w-10 h-10 rounded-xl text-sm font-bold transition flex items-center justify-center ${(filters.page || 1) === i + 1
+                                                    ? "bg-[#4A6F5D] text-white shadow-md"
+                                                    : "bg-white text-gray-500 border border-gray-100 hover:bg-emerald-50 hover:text-[#4A6F5D]"
+                                                    }`}
+                                            >
+                                                {i + 1}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <button
+                                        onClick={() => handlePageChange(Math.min(totalPages, (filters.page || 1) + 1))}
+                                        disabled={filters.page === totalPages}
+                                        className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                    >
+                                        Next
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </div>
