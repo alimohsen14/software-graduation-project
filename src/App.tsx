@@ -19,6 +19,9 @@ import AdminStockAlertsPage from "./pages/admin/AdminStockAlertsPage";
 import AdminStorePage from "./pages/admin/AdminStorePage";
 import SellerRequestsPage from "./pages/admin/SellerRequestsPage";
 import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
+import AdminSupervisionDashboard from "./pages/admin/AdminSupervisionDashboard";
+import AdminStoresListPage from "./pages/admin/AdminStoresListPage";
+import AdminStoreDetailsPage from "./pages/admin/AdminStoreDetailsPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserOrderDetailsPage from "./pages/UserOrderDetailsPage";
 import MarketplacePage from "./pages/MarketplacePage";
@@ -70,6 +73,11 @@ export default function App() {
             <Route path="/admin/store" element={<RequireAuth><AdminStorePage /></RequireAuth>} />
             <Route path="/admin/seller-requests" element={<RequireAuth><SellerRequestsPage /></RequireAuth>} />
             <Route path="/admin/analytics" element={<RequireAuth><AdminAnalyticsPage /></RequireAuth>} />
+
+            {/* ADMIN SUPERVISION */}
+            <Route path="/admin/supervision" element={<RequireAuth><AdminSupervisionDashboard /></RequireAuth>} />
+            <Route path="/admin/supervision/stores" element={<RequireAuth><AdminStoresListPage /></RequireAuth>} />
+            <Route path="/admin/supervision/stores/:id" element={<RequireAuth><AdminStoreDetailsPage /></RequireAuth>} />
 
             {/* SELLER */}
             <Route path="/seller" element={<RequireAuth><SellerDashboardPage /></RequireAuth>} />
