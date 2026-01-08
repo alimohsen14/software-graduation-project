@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiUser, FiCpu, FiShoppingBag, FiUsers, FiBook, FiBarChart2 } from "react-icons/fi";
+import { FiUser, FiCpu, FiShoppingBag, FiUsers, FiBook, FiBarChart2, FiActivity } from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
@@ -147,6 +147,16 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                 >
                   <FiBarChart2 className="w-5 h-5" />
                   <span className="text-sm font-medium">Analytics</span>
+                </button>
+                <button
+                  onClick={() => {
+                    navigate("/admin/supervision");
+                    closeSidebar();
+                  }}
+                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
+                >
+                  <FiActivity className="w-5 h-5" />
+                  <span className="text-sm font-medium">Supervision</span>
                 </button>
               </>
             )}
