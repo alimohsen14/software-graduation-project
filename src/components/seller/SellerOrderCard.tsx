@@ -34,106 +34,105 @@ export default function SellerOrderCard({ order, onApprove, onReject, onShowDeta
     });
 
     return (
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow duration-300">
+        <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl group transition-all duration-500 hover:border-emerald-500/20">
             {/* Header */}
-            <div className="px-6 py-5 bg-gray-50/50 border-b border-gray-100 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                    <div className="p-2.5 bg-[#4A6F5D]/10 rounded-xl">
-                        <FiPackage className="text-[#4A6F5D] w-5 h-5" />
+            <div className="px-8 py-6 bg-white/5 border-b border-white/5 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="flex items-center gap-5">
+                    <div className="p-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20">
+                        <FiPackage className="text-emerald-400 w-6 h-6" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-[#1d2d1f]">
-                            Order #{order.orderId}
+                        <h3 className="text-lg font-black text-white tracking-tight uppercase">
+                            Package Request <span className="text-emerald-400/50 ml-2">#{order.orderId}</span>
                         </h3>
-                        <div className="flex items-center gap-3 mt-1">
-                            <span className="flex items-center gap-1 text-[11px] text-gray-400 font-medium">
-                                <FiCalendar size={13} /> {formattedDate}
+                        <div className="flex items-center gap-4 mt-1.5">
+                            <span className="flex items-center gap-1.5 text-[10px] text-white/30 font-black uppercase tracking-widest">
+                                <FiCalendar size={14} className="opacity-50" /> {formattedDate}
                             </span>
-                            <span className="flex items-center gap-1 text-[11px] text-gray-400 font-medium">
-                                <FiClock size={13} /> {formattedTime}
+                            <span className="flex items-center gap-1.5 text-[10px] text-white/30 font-black uppercase tracking-widest">
+                                <FiClock size={14} className="opacity-50" /> {formattedTime}
                             </span>
                         </div>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-4">
                     <button
                         onClick={onShowDetails}
-                        className="flex items-center gap-2 px-4 py-2 bg-white text-xs font-bold text-[#1d2d1f] rounded-xl border border-gray-200 hover:border-[#1d2d1f] transition-all hover:bg-gray-50"
+                        className="flex items-center gap-2 px-5 py-2.5 bg-white/5 text-[10px] font-black text-white/70 uppercase tracking-widest rounded-xl border border-white/10 hover:bg-white/10 hover:text-white transition-all shadow-lg"
                     >
-                        <FiEye size={14} />
-                        View Details
+                        <FiEye size={16} />
+                        Audit Trail
                     </button>
-                    <div className="flex flex-col items-end border-l border-gray-200 pl-4">
-                        <span className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-1">Status</span>
+                    <div className="flex flex-col items-end border-l border-white/5 pl-6">
+                        <span className="text-[9px] text-white/20 uppercase tracking-[0.2em] font-black mb-1.5">Consignment Status</span>
                         <OrderItemStatusBadge status={(order.orderStatus as any) || 'PENDING'} />
                     </div>
                 </div>
             </div>
 
             {/* Items */}
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-white/5">
                 {order.items.map((item) => {
                     // SELLERS ONLY SEE PENDING_APPROVAL ITEMS
                     if (item.status !== 'PENDING_APPROVAL') return null;
 
                     // Defensive check for missing ID
-                    if (!item.id) {
-                        console.warn(`OrderItem missing ID for product: ${item.productName}`);
-                        return null;
-                    }
+                    if (!item.id) return null;
 
                     return (
-                        <div key={item.id} className="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:bg-gray-50/30 transition-colors">
-                            <div className="flex items-center gap-5">
-                                <div className="w-20 h-20 bg-gray-100 rounded-2xl flex-shrink-0 overflow-hidden shadow-inner border border-gray-50">
+                        <div key={item.id} className="p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-8 hover:bg-white/5 transition-all duration-300">
+                            <div className="flex items-center gap-6">
+                                <div className="w-24 h-24 bg-stone-900/40 rounded-3xl flex-shrink-0 overflow-hidden shadow-inner border border-white/5 group-hover:border-emerald-500/30 transition-colors">
                                     {item.productImage ? (
                                         <img
                                             src={item.productImage}
                                             alt={item.productName}
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
                                     ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-gray-300">
-                                            <FiPackage size={28} />
+                                        <div className="w-full h-full flex items-center justify-center text-white/5">
+                                            <FiPackage size={32} />
                                         </div>
                                     )}
                                 </div>
-                                <div className="space-y-1">
-                                    <h4 className="text-sm font-bold text-[#1d2d1f] tracking-tight">{item.productName}</h4>
-                                    <div className="flex items-center gap-2">
-                                        <span className="px-2 py-0.5 bg-gray-100 text-gray-500 rounded text-[10px] font-bold">Qty: {item.quantity}</span>
-                                        <span className="text-sm font-bold text-emerald-600">{(item.priceAtPurchase ?? 0).toFixed(2)} ₪</span>
+                                <div className="space-y-2">
+                                    <h4 className="text-base font-black text-white/90 tracking-tight uppercase leading-tight">{item.productName}</h4>
+                                    <div className="flex items-center gap-3">
+                                        <span className="px-3 py-1 bg-white/5 text-white/40 rounded-lg text-[9px] font-black uppercase tracking-widest border border-white/5">VOL: {item.quantity} units</span>
+                                        <span className="text-lg font-black text-emerald-400 tracking-tighter">{(item.priceAtPurchase ?? 0).toFixed(2)} ₪</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 self-end sm:self-auto">
+                            <div className="flex items-center gap-6 self-end lg:self-auto">
                                 {/* Delivery Info */}
-                                <div className="text-right text-xs pr-4 border-r border-gray-100 hidden md:block">
-                                    <p className="font-bold text-gray-700">Delivery To</p>
-                                    <p className="text-gray-500">{order.city || (order as any).order?.city || order.customer?.city || "N/A"}</p>
-                                    <p className="text-gray-400">{order.address || (order as any).order?.address || order.customer?.address || "No address"}</p>
-                                    <p className="text-gray-400 font-mono mt-1">{order.phone || (order as any).order?.phone || order.customer?.phone || "No phone"}</p>
+                                <div className="text-right text-[10px] pr-6 border-r border-white/5 hidden md:block">
+                                    <p className="font-black text-white/40 uppercase tracking-widest mb-1.5">Destination Data</p>
+                                    <p className="text-white font-bold mb-0.5">{order.city || (order as any).order?.city || order.customer?.city || "Unknown City"}</p>
+                                    <p className="text-white/40 font-medium truncate max-w-[150px]">{order.address || (order as any).order?.address || order.customer?.address || "No Address"}</p>
+                                    <p className="text-emerald-400/40 font-mono mt-1 font-bold">{order.phone || (order as any).order?.phone || order.customer?.phone || "NO_TEL"}</p>
                                 </div>
 
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-3">
                                     <button
                                         onClick={() => handleApproveClick(item.id)}
                                         disabled={processingItems.includes(item.id)}
-                                        className="h-10 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition-all shadow-lg shadow-emerald-100 flex items-center gap-2 disabled:opacity-50 text-xs font-bold"
-                                        title="Approve"
+                                        className="h-12 px-6 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 rounded-2xl transition-all shadow-xl flex items-center gap-2.5 disabled:opacity-30 text-[10px] font-black uppercase tracking-widest"
                                     >
-                                        <FiCheck size={16} />
-                                        Approve
+                                        {processingItems.includes(item.id) ? (
+                                            <div className="w-4 h-4 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+                                        ) : (
+                                            <FiCheck size={18} />
+                                        )}
+                                        Authorize
                                     </button>
                                     <button
                                         onClick={() => onReject(item.id)}
                                         disabled={processingItems.includes(item.id)}
-                                        className="h-10 px-4 bg-white text-rose-600 border border-rose-100 hover:bg-rose-50 rounded-xl transition-all flex items-center gap-2 disabled:opacity-50 text-xs font-bold"
-                                        title="Reject"
+                                        className="h-12 px-6 bg-red-500/10 hover:bg-red-500/20 text-red-500 border border-red-500/20 rounded-2xl transition-all flex items-center gap-2.5 disabled:opacity-30 text-[10px] font-black uppercase tracking-widest"
                                     >
-                                        <FiX size={16} />
-                                        Reject
+                                        <FiX size={18} />
+                                        Inhibit
                                     </button>
                                 </div>
                             </div>

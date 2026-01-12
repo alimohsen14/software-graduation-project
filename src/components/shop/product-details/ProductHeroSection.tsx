@@ -52,43 +52,46 @@ export default function ProductHeroSection({
   const disabled = stock === 0 || isSoldOut;
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start animate-in fade-in duration-700">
       <ProductImage image={image} badge={badge} badges={badges} name={name} />
 
-      <div className="flex flex-col gap-4">
-        <h1 className="text-2xl lg:text-3xl font-bold text-[#1F2933] leading-tight">
-          {name}
-        </h1>
-
-        {shortDescription && (
-          <p className="text-[#6B7280] text-sm leading-relaxed max-w-md">
-            {shortDescription}
-          </p>
-        )}
-
-        <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={16} />
-
-        <ProductPrice price={price} />
-
-        <StockStatus stock={stock} />
-
-        {/* Stock Warning Box */}
-        <StockWarningBox stock={stock} badges={badges} />
-
-        <div className="flex items-center gap-4 mt-2">
-          <QuantitySelector
-            quantity={quantity}
-            onIncrease={handleIncrease}
-            onDecrease={handleDecrease}
-          />
+      <div className="flex flex-col gap-8">
+        <div className="space-y-3">
+          <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[0.9]">
+            {name}
+          </h1>
+          {shortDescription && (
+            <p className="text-white/30 text-[11px] font-black uppercase tracking-[0.3em] leading-relaxed max-w-lg">
+              {shortDescription}
+            </p>
+          )}
         </div>
 
-        <AddToCartActions
-          disabled={disabled}
-          isSoldOut={isSoldOut}
-          onAddToCart={() => onAddToCart(quantity)}
-          onBuyNow={() => onBuyNow(quantity)}
-        />
+        <div className="flex items-center gap-6">
+          <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={18} />
+          <div className="h-4 w-px bg-white/10" />
+          <ProductPrice price={price} />
+        </div>
+
+        <div className="space-y-6 bg-white/5 rounded-[2rem] p-8 border border-white/5 shadow-inner">
+          <div className="flex items-center justify-between">
+            <StockStatus stock={stock} />
+            <QuantitySelector
+              quantity={quantity}
+              onIncrease={handleIncrease}
+              onDecrease={handleDecrease}
+            />
+          </div>
+
+          <StockWarningBox stock={stock} badges={badges} />
+
+          <AddToCartActions
+            disabled={disabled}
+            isSoldOut={isSoldOut}
+            onAddToCart={() => onAddToCart(quantity)}
+            onBuyNow={() => onBuyNow(quantity)}
+          />
+        </div>
       </div>
     </section>
   );

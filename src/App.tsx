@@ -33,6 +33,12 @@ import SellerOrdersPage from "./pages/SellerOrdersPage";
 import SellerStockAlertsPage from "./pages/SellerStockAlertsPage";
 import ManageMyShopPage from "./pages/seller/ManageMyShopPage";
 
+import HeritageHomePage from "./pages/heritage/HeritageHomePage";
+import CitiesPage from "./pages/heritage/CitiesPage";
+import CityDetailsPage from "./pages/heritage/CityDetailsPage";
+import IndustriesPage from "./pages/heritage/IndustriesPage";
+import IndustryDetailsPage from "./pages/heritage/IndustryDetailsPage";
+
 import RequireAuth from "./components/auth/RequireAuth";
 import PublicOnly from "./components/auth/PublicOnly";
 import { CartProvider } from "./context/CartContext";
@@ -90,6 +96,13 @@ export default function App() {
             <Route path="/marketplace" element={<MarketplacePage />} />
             <Route path="/marketplace/product/:id" element={<ProductDetailsPage />} />
             <Route path="/store/:storeId" element={<StorePage />} />
+
+            {/* HERITAGE LIBRARY (PUBLIC) */}
+            <Route path="/heritage" element={<HeritageHomePage />} />
+            <Route path="/heritage/cities" element={<CitiesPage />} />
+            <Route path="/heritage/cities/:id" element={<CityDetailsPage />} />
+            <Route path="/heritage/industries" element={<IndustriesPage />} />
+            <Route path="/heritage/industries/:id" element={<IndustryDetailsPage />} />
           </Routes>
         </CartProvider>
       </AuthProvider>

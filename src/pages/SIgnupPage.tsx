@@ -1,8 +1,9 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { signup, completeGoogleSignup } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import AuthLayout from "../components/auth/AuthLayout";
+import { FiUser, FiMail, FiMapPin, FiCalendar, FiLock, FiArrowRight } from "react-icons/fi";
 
 export function SignupPage() {
   const navigate = useNavigate();
@@ -60,7 +61,6 @@ export function SignupPage() {
         await completeGoogleSignup(payload);
       }
 
-      // Update global auth state
       const userData = await refreshUser();
 
       if (userData) {
@@ -78,114 +78,174 @@ export function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-      <div className="relative z-10 w-full max-w-md">
-        <header className="text-center mb-6">
-          <h1 className="text-2xl font-extrabold text-gray-800">
-            {isGoogleUser
-              ? "Complete Your Google Account"
-              : "Create New Account"}
-          </h1>
-        </header>
+    <AuthLayout>
+      <div className="flex flex-col">
+        {/* Tabs */}
+        {!isGoogleUser && (
+          <div className="flex border-b border-white/10 mb-8">
+            <button
+              onClick={() => navigate("/login")}
+              className="flex-1 pb-4 text-center border-b-2 border-transparent font-semibold text-white/40 hover:text-white/70 transition-colors"
+            >
+              Login
+            </button>
+            <button
+              className="flex-1 pb-4 text-center border-b-2 border-emerald-500 font-bold text-emerald-500"
+            >
+              Sign Up
+            </button>
+          </div>
+        )}
 
-        <div className="rounded-2xl p-1 bg-gradient-to-r from-green-200/60 via-transparent to-red-200/40 shadow-xl">
-          <div className="bg-white rounded-2xl shadow-lg p-6 space-y-4">
-            {error && (
-              <div className="text-red-500 text-sm text-center font-medium">
-                {error}
-              </div>
-            )}
+        {isGoogleUser && (
+          <div className="mb-8 text-center px-4">
+            <h2 className="text-xl font-bold text-emerald-400">Complete Your Account</h2>
+            <p className="text-sm text-white/40 mt-1">Fill in the remaining details to get started.</p>
+          </div>
+        )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+        {error && (
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-200 text-sm rounded-2xl text-center font-medium">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-5">
+          <div className="relative group">
+            <FiUser className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+            <input
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              className="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              placeholder="Full Name"
+              required
+            />
+          </div>
+
+          {!isGoogleUser && (
+            <div className="relative group">
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
               <input
-                name="name"
-                value={form.name}
+                name="email"
+                value={form.email}
                 onChange={handleChange}
-                placeholder="Full Name"
-                className="w-full px-4 py-2 border rounded-md bg-gray-50"
+                className="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+                placeholder="Email Address"
+                required
               />
+            </div>
+          )}
 
-              {!isGoogleUser && (
-                <input
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  className="w-full px-4 py-2 border rounded-md bg-gray-50"
-                />
-              )}
+          {isGoogleUser && (
+            <div className="relative opacity-60">
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+              <input
+                value={googleEmail}
+                disabled
+                className="w-full pl-12 pr-4 py-3.5 bg-white/10 border border-white/10 rounded-2xl cursor-not-allowed text-white/70"
+              />
+            </div>
+          )}
 
-              {isGoogleUser && (
-                <input
-                  value={googleEmail}
-                  disabled
-                  className="w-full px-4 py-2 border rounded-md bg-gray-100"
-                />
-              )}
-
+          <div className="grid grid-cols-2 gap-5">
+            <div className="relative group">
+              <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
               <input
                 name="country"
                 value={form.country}
                 onChange={handleChange}
+                className="w-full pl-11 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
                 placeholder="Country"
-                className="w-full px-4 py-2 border rounded-md bg-gray-50"
+                required
               />
-
+            </div>
+            <div className="relative group">
+              <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
               <input
                 type="number"
                 name="age"
                 value={form.age}
                 onChange={handleChange}
+                className="w-full pl-11 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
                 placeholder="Age"
-                className="w-full px-4 py-2 border rounded-md bg-gray-50"
+                required
               />
-
-              <select
-                name="gender"
-                value={form.gender}
-                onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-md bg-gray-50"
-              >
-                <option value="MALE">Male</option>
-                <option value="FEMALE">Female</option>
-              </select>
-
-              {!isGoogleUser && (
-                <>
-                  <input
-                    type="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    placeholder="Password"
-                    className="w-full px-4 py-2 border rounded-md bg-gray-50"
-                  />
-                  <input
-                    type="password"
-                    name="confirmPassword"
-                    value={form.confirmPassword}
-                    onChange={handleChange}
-                    placeholder="Confirm Password"
-                    className="w-full px-4 py-2 border rounded-md bg-gray-50"
-                  />
-                </>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700"
-              >
-                {loading
-                  ? "Creating Account..."
-                  : isGoogleUser
-                    ? "Complete Signup"
-                    : "Create Account"}
-              </button>
-            </form>
+            </div>
           </div>
-        </div>
+
+          <div className="relative">
+            <select
+              name="gender"
+              value={form.gender}
+              onChange={handleChange}
+              className="w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all appearance-none cursor-pointer text-white"
+            >
+              <option value="MALE" className="bg-[#1a130f]">Male</option>
+              <option value="FEMALE" className="bg-[#1a130f]">Female</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center px-2 text-white/30">
+              <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+            </div>
+          </div>
+
+          {!isGoogleUser && (
+            <div className="grid grid-cols-1 gap-5">
+              <div className="relative group">
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+                <input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+                  placeholder="Password"
+                  required
+                />
+              </div>
+              <div className="relative group">
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
+                  className="w-full pl-12 pr-4 py-3.5 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+                  placeholder="Confirm Password"
+                  required
+                />
+              </div>
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 py-4 bg-[#CE1126] text-white rounded-2xl font-bold shadow-xl shadow-red-900/40 hover:bg-[#e6122a] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed group mt-2"
+          >
+            <span className="text-lg">
+              {loading
+                ? "Processing..."
+                : isGoogleUser
+                  ? "Complete Signup"
+                  : "Create Account"}
+            </span>
+            {!loading && <FiArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
+          </button>
+        </form>
+
+        {!isGoogleUser && (
+          <p className="mt-10 text-center text-sm text-white/40">
+            Already have an account?{" "}
+            <button
+              onClick={() => navigate("/login")}
+              className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors"
+            >
+              Login
+            </button>
+          </p>
+        )}
       </div>
-    </div>
+    </AuthLayout>
   );
 }

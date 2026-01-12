@@ -36,54 +36,65 @@ export default function RejectOrderItemModal({
     };
 
     return (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-                <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-                    <h3 className="text-lg font-bold text-gray-900">Reject Order Item</h3>
-                    <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-md animate-in fade-in duration-300">
+            <div className="bg-zinc-950/40 backdrop-blur-2xl rounded-[3rem] border border-white/10 w-full max-w-md shadow-2xl shadow-black/50 overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col relative">
+                {/* Decorative Background Glow */}
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-red-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+                {/* Header */}
+                <div className="px-10 py-8 bg-white/5 border-b border-white/5 flex items-center justify-between z-10 shrink-0">
+                    <div>
+                        <h3 className="text-2xl font-black text-white tracking-tighter uppercase leading-none">Authorization Void</h3>
+                        <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-2">Inventory rejection protocol</p>
+                    </div>
+                    <button
+                        onClick={onClose}
+                        className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 hover:text-white hover:bg-white/10 transition-all border border-white/5 hover:border-white/20"
+                    >
                         <FiX size={20} />
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
-                    <div className="flex items-start gap-4 p-4 bg-amber-50 rounded-xl border border-amber-100 mb-4">
-                        <FiAlertCircle className="text-amber-600 w-5 h-5 flex-shrink-0 mt-0.5" />
+                <form onSubmit={handleSubmit} className="p-10 space-y-8 relative z-10">
+                    <div className="flex gap-4 p-6 bg-red-500/5 rounded-2xl border border-red-500/10">
+                        <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/10 shrink-0">
+                            <FiAlertCircle className="text-red-500" size={20} />
+                        </div>
                         <div>
-                            <p className="text-sm font-medium text-amber-900">Confirm Rejection</p>
-                            <p className="text-xs text-amber-700 mt-1">
-                                You are about to reject <span className="font-bold">{productName}</span>.
-                                Please provide a reason to notify the buyer.
+                            <p className="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1.5">Action Critical</p>
+                            <p className="text-[11px] text-white/40 leading-relaxed font-bold uppercase tracking-widest">
+                                Initiating rejection of <span className="text-white">{productName}</span>.
                             </p>
                         </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Rejection Reason <span className="text-red-500">*</span>
+                    <div className="space-y-4">
+                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">
+                            Substantiation Protocol <span className="text-red-500/50 ml-1">*</span>
                         </label>
                         <textarea
                             required
                             value={reason}
                             onChange={(e) => setReason(e.target.value)}
-                            placeholder="e.g., Item out of stock, shipping issues..."
-                            className="w-full min-h-[120px] px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-all outline-none resize-vertical text-sm overflow-y-auto"
+                            placeholder="Specify rejection rationale..."
+                            className="w-full min-h-[140px] px-6 py-4 bg-white/5 border border-white/10 rounded-[2rem] text-white/60 font-medium placeholder:text-white/10 focus:bg-white/10 focus:border-red-500/30 outline-none transition-all resize-none shadow-inner leading-relaxed text-sm"
                         />
                     </div>
 
-                    <div className="flex items-center gap-3 pt-2">
+                    <div className="flex items-center gap-4">
                         <button
                             type="button"
                             onClick={onClose}
-                            className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-xl transition"
+                            className="flex-1 py-4 text-[10px] font-black text-white/30 uppercase tracking-widest bg-white/5 hover:bg-white/10 hover:text-white border border-white/10 rounded-2xl transition-all active:scale-95"
                         >
-                            Cancel
+                            Abort
                         </button>
                         <button
                             type="submit"
                             disabled={!reason.trim() || isSubmitting}
-                            className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition shadow-lg shadow-red-200"
+                            className="flex-[2] py-4 bg-red-600/20 text-red-500 border border-red-500/20 rounded-2xl font-black uppercase tracking-widest hover:bg-red-600/30 transition-all shadow-xl shadow-red-500/5 active:scale-[0.98] disabled:opacity-20 text-[10px]"
                         >
-                            {isSubmitting ? 'Processing...' : 'Confirm Reject'}
+                            {isSubmitting ? 'Verifying Protocol...' : 'Finalize Rejection'}
                         </button>
                     </div>
                 </form>

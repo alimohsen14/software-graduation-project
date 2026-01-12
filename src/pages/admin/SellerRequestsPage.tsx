@@ -6,7 +6,8 @@ import {
     rejectSellerRequest,
     UpgradeRequest,
 } from "../../services/admin.service";
-import Navbar from "../../components/navbar/Navbar";
+import DashboardLayout from "../../components/layout/DashboardLayout";
+import { FiShoppingBag } from "react-icons/fi";
 
 export default function SellerRequestsPage() {
     const [requests, setRequests] = useState<UpgradeRequest[]>([]);
@@ -77,65 +78,79 @@ export default function SellerRequestsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 pb-12">
-            <Navbar onMenuClick={() => { }} />
-            <div className="max-w-6xl mx-auto px-6 py-8">
-                <h1 className="text-3xl font-bold text-[#1d2d1f] mb-6">Seller Requests</h1>
+        <DashboardLayout>
+            <div className="py-10">
+                <div className="mb-12">
+                    <h1 className="text-4xl font-black text-white tracking-tighter uppercase mb-2">Seller Requests</h1>
+                    <p className="text-white/40 font-bold uppercase tracking-widest text-[10px]">Review and moderate vendor application requests</p>
+                </div>
 
                 {loading ? (
-                    <div className="p-8 text-center text-gray-500">Loading requests...</div>
+                    <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl">
+                        <div className="w-12 h-12 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin"></div>
+                        <p className="mt-6 font-black text-white/20 uppercase tracking-widest text-[10px]">Awaiting Data...</p>
+                    </div>
                 ) : error ? (
-                    <div className="p-6 bg-red-50 text-red-600 rounded-lg">{error}</div>
+                    <div className="p-8 bg-red-500/10 backdrop-blur-md border border-red-500/20 text-red-400 rounded-[2rem] font-bold text-center">
+                        {error}
+                    </div>
                 ) : requests.length === 0 ? (
-                    <div className="p-8 text-center text-gray-500 bg-white rounded-lg shadow-sm">
-                        No pending seller requests.
+                    <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl text-center">
+                        <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mb-6 text-white/5 border border-white/5">
+                            <FiShoppingBag size={32} />
+                        </div>
+                        <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">Queue is Empty</h3>
+                        <p className="mt-2 font-bold text-white/20 uppercase tracking-widest text-[10px]">No pending seller requests at this time</p>
                     </div>
                 ) : (
-                    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+                    <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
                         <div className="overflow-x-auto">
-                            <table className="w-full text-left border-collapse">
-                                <thead>
-                                    <tr className="bg-gray-100/50 border-b">
-                                        <th className="p-4 text-xs font-bold text-gray-600 uppercase">User</th>
-                                        <th className="p-4 text-xs font-bold text-gray-600 uppercase">Store Name</th>
-                                        <th className="p-4 text-xs font-bold text-gray-600 uppercase">Type</th>
-                                        <th className="p-4 text-xs font-bold text-gray-600 uppercase">Region</th>
-                                        <th className="p-4 text-xs font-bold text-gray-600 uppercase">Description</th>
-                                        <th className="p-4 text-xs font-bold text-gray-600 uppercase">Status</th>
-                                        <th className="p-4 text-xs font-bold text-gray-600 uppercase text-right">Actions</th>
+                            <table className="w-full text-left">
+                                <thead className="bg-white/5 border-b border-white/5">
+                                    <tr>
+                                        <th className="px-8 py-6 text-[10px] font-black text-white/30 uppercase tracking-widest">Applicant User</th>
+                                        <th className="px-8 py-6 text-[10px] font-black text-white/30 uppercase tracking-widest">Proposed Store</th>
+                                        <th className="px-8 py-6 text-[10px] font-black text-white/30 uppercase tracking-widest">Niche & Region</th>
+                                        <th className="px-8 py-6 text-[10px] font-black text-white/30 uppercase tracking-widest">Description</th>
+                                        <th className="px-8 py-6 text-[10px] font-black text-white/30 uppercase tracking-widest text-right">Decision</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y">
+                                <tbody className="divide-y divide-white/5">
                                     {requests.map((req) => (
-                                        <tr key={req.id} className="hover:bg-gray-50 transition">
-                                            <td className="p-4">
-                                                <div className="font-medium text-[#1d2d1f]">{req.user.name}</div>
-                                                <div className="text-xs text-gray-500">{req.user.email}</div>
+                                        <tr key={req.id} className="hover:bg-white/5 transition-all group">
+                                            <td className="px-8 py-6">
+                                                <div className="flex flex-col">
+                                                    <span className="text-sm font-black text-white tracking-tight uppercase group-hover:text-emerald-400 transition-colors">{req.user.name}</span>
+                                                    <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">{req.user.email}</span>
+                                                </div>
                                             </td>
-                                            <td className="p-4 text-sm font-medium">{req.storeName}</td>
-                                            <td className="p-4 text-sm text-gray-600">{req.productType}</td>
-                                            <td className="p-4 text-sm text-gray-600">{req.region}</td>
-                                            <td className="p-4 text-sm text-gray-600 max-w-xs truncate" title={req.description}>
-                                                {req.description}
+                                            <td className="px-8 py-6">
+                                                <span className="text-xs font-black text-white/70 tracking-widest uppercase">{req.storeName}</span>
                                             </td>
-                                            <td className="p-4">
-                                                <span className="px-2 py-1 text-xs font-bold bg-yellow-100 text-yellow-700 rounded-full">
-                                                    {req.status}
-                                                </span>
+                                            <td className="px-8 py-6">
+                                                <div className="flex flex-col gap-1">
+                                                    <span className="px-2 py-1 rounded bg-white/5 text-white/40 text-[9px] font-black uppercase tracking-widest w-fit border border-white/5">{req.productType}</span>
+                                                    <span className="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[9px] font-black uppercase tracking-widest w-fit border border-emerald-500/10">{req.region}</span>
+                                                </div>
                                             </td>
-                                            <td className="p-4 text-right">
-                                                <div className="flex items-center justify-end gap-2">
+                                            <td className="px-8 py-6">
+                                                <p className="text-xs text-white/30 font-bold max-w-xs line-clamp-2 leading-relaxed" title={req.description}>
+                                                    {req.description}
+                                                </p>
+                                            </td>
+                                            <td className="px-8 py-6 text-right">
+                                                <div className="flex items-center justify-end gap-3">
                                                     <button
                                                         onClick={() => handleApprove(req.id)}
                                                         disabled={processingId === req.id}
-                                                        className="px-3 py-1.5 text-xs font-bold text-white bg-green-600 rounded-md hover:bg-green-700 disabled:opacity-50"
+                                                        className="px-5 py-2.5 text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-xl hover:bg-emerald-500/20 transition-all disabled:opacity-30 shadow-lg"
                                                     >
                                                         Approve
                                                     </button>
                                                     <button
                                                         onClick={() => handleReject(req.id)}
                                                         disabled={processingId === req.id}
-                                                        className="px-3 py-1.5 text-xs font-bold text-red-600 bg-red-50 rounded-md hover:bg-red-100 disabled:opacity-50"
+                                                        className="px-5 py-2.5 text-[10px] font-black uppercase tracking-widest text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl hover:bg-red-500/20 transition-all disabled:opacity-30 shadow-lg"
                                                     >
                                                         Reject
                                                     </button>
@@ -149,6 +164,6 @@ export default function SellerRequestsPage() {
                     </div>
                 )}
             </div>
-        </div>
+        </DashboardLayout>
     );
 }

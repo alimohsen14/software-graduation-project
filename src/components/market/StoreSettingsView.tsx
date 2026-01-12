@@ -115,107 +115,117 @@ export default function StoreSettingsView() {
     };
 
     return (
-        <div className="p-6 sm:p-10 min-h-screen">
-            <div className="max-w-3xl mx-auto space-y-8">
-                <div>
-                    <h1 className="text-2xl font-bold text-[#1d2d1f]">{window.location.pathname.startsWith('/admin') ? 'Official Store Settings' : 'Store Settings'}</h1>
-                    <p className="text-gray-500 mt-1">Update store identity and details.</p>
+        <div className="py-10 px-6 max-w-3xl mx-auto">
+            <div className="mb-12">
+                <h1 className="text-4xl font-black text-white tracking-tighter uppercase mb-2">
+                    {window.location.pathname.startsWith('/admin') ? 'Official Store' : 'Vendor Profile'}
+                </h1>
+                <p className="text-white/40 font-bold uppercase tracking-widest text-[10px]">Customize your platform identity and storefront</p>
+            </div>
+
+            {loading ? (
+                <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl">
+                    <div className="w-12 h-12 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin"></div>
+                    <p className="mt-6 font-black text-white/20 uppercase tracking-widest text-[10px]">Awaiting Store Data...</p>
                 </div>
+            ) : (
+                <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 p-10 space-y-12 shadow-2xl relative overflow-hidden">
+                    {/* Decorative Background Glow */}
+                    <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
 
-                {loading ? (
-                    <div className="py-20 text-center text-gray-500">Loading store details...</div>
-                ) : (
-                    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sm:p-8 space-y-8">
+                    {/* Logo Section */}
+                    <div>
+                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-6">Store Brandmark</label>
+                        <div className="flex flex-col sm:flex-row items-center gap-10">
+                            <div
+                                className="relative w-32 h-32 rounded-[2.5rem] bg-white/5 border-2 border-dashed border-white/10 flex items-center justify-center overflow-hidden group cursor-pointer hover:border-emerald-500/30 hover:bg-white/10 transition-all duration-500 shadow-inner"
+                                onClick={handleLogoClick}
+                            >
+                                {logoPreview ? (
+                                    <img src={logoPreview} alt="Store Logo" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                ) : (
+                                    <FiCamera className="text-white/20 w-10 h-10 group-hover:text-emerald-400/50 transition-colors" />
+                                )}
 
-                        {/* Logo Section */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-4">Store Logo</label>
-                            <div className="flex items-center gap-6">
-                                <div
-                                    className="relative w-24 h-24 rounded-full bg-gray-100 border-2 border-dashed border-gray-300 flex items-center justify-center overflow-hidden group cursor-pointer hover:border-[#4A6F5D] transition"
-                                    onClick={handleLogoClick}
-                                >
-                                    {logoPreview ? (
-                                        <img src={logoPreview} alt="Store Logo" className="w-full h-full object-cover" />
-                                    ) : (
-                                        <FiCamera className="text-gray-400 w-8 h-8 group-hover:text-[#4A6F5D] transition" />
-                                    )}
-
-                                    {isUploading && (
-                                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <button
-                                        type="button"
-                                        onClick={handleLogoClick}
-                                        disabled={isUploading}
-                                        className="px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4A6F5D] disabled:opacity-50"
-                                    >
-                                        {isUploading ? 'Uploading...' : 'Change Logo'}
-                                    </button>
-                                    <p className="text-xs text-gray-500 mt-2">
-                                        Recommended size: 400x400px. JPG, PNG.
-                                    </p>
-                                </div>
-                                <input
-                                    type="file"
-                                    ref={fileInputRef}
-                                    className="hidden"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                />
+                                {isUploading && (
+                                    <div className="absolute inset-0 bg-stone-900/80 backdrop-blur-sm flex flex-col items-center justify-center gap-3">
+                                        <div className="w-6 h-6 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                                        <span className="text-[8px] font-black text-emerald-400 uppercase tracking-widest">Uploading</span>
+                                    </div>
+                                )}
                             </div>
+
+                            <div className="flex flex-col items-center sm:items-start text-center sm:text-left">
+                                <button
+                                    type="button"
+                                    onClick={handleLogoClick}
+                                    disabled={isUploading}
+                                    className="px-8 py-3 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black text-white uppercase tracking-widest hover:bg-white/10 hover:border-white/20 transition-all disabled:opacity-30 shadow-lg"
+                                >
+                                    {isUploading ? 'Processing...' : 'Upload New Logo'}
+                                </button>
+                                <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest mt-4 leading-relaxed">
+                                    Square ratio recommended.<br />Maximum 5MB file size.
+                                </p>
+                            </div>
+                            <input
+                                type="file"
+                                ref={fileInputRef}
+                                className="hidden"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                            />
                         </div>
+                    </div>
 
-                        <hr className="border-gray-100" />
+                    <div className="h-px bg-white/5" />
 
-                        {/* Details Form */}
-                        <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Details Form */}
+                    <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
+                        <div className="grid grid-cols-1 gap-8">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Store Name</label>
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">Store Display Name</label>
                                 <input
                                     type="text"
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4A6F5D] focus:border-transparent outline-none transition"
-                                    placeholder="Enter store name"
+                                    className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white font-bold placeholder:text-white/10 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all shadow-inner"
+                                    placeholder="Enter store name..."
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">Store Biography</label>
                                 <textarea
-                                    rows={4}
+                                    rows={5}
                                     name="description"
                                     value={formData.description}
                                     onChange={handleChange}
                                     maxLength={500}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#4A6F5D] focus:border-transparent outline-none transition resize-none"
-                                    placeholder="Describe your store..."
+                                    className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-[1.5rem] text-white/70 font-medium placeholder:text-white/10 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all resize-none shadow-inner leading-relaxed"
+                                    placeholder="Tell the community about your craft..."
                                 />
-                                <p className="text-xs text-gray-400 mt-1 text-right">{formData.description.length}/500</p>
+                                <div className="flex justify-end mt-2">
+                                    <span className="text-[9px] font-black text-white/10 uppercase tracking-widest">{formData.description.length} / 500</span>
+                                </div>
                             </div>
+                        </div>
 
-                            <div className="flex items-center justify-end">
-                                <button
-                                    type="submit"
-                                    disabled={isSaving || isUploading}
-                                    className="flex items-center gap-2 px-6 py-2.5 bg-[#4A6F5D] text-white font-medium rounded-xl hover:bg-[#3d5c4d] focus:ring-4 focus:ring-[#4A6F5D]/20 disabled:opacity-50 transition shadow-sm"
-                                >
-                                    <FiSave className="w-4 h-4" />
-                                    {isSaving ? 'Saving...' : 'Save Changes'}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                )}
-            </div>
+                        <div className="flex items-center justify-end pt-4">
+                            <button
+                                type="submit"
+                                disabled={isSaving || isUploading}
+                                className="flex items-center gap-3 px-10 py-4 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-emerald-600/30 hover:shadow-emerald-500/10 transition-all disabled:opacity-30 shadow-xl"
+                            >
+                                <FiSave size={18} />
+                                {isSaving ? 'Syncing Changes...' : 'Save Configuration'}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            )}
         </div>
     );
 }

@@ -87,23 +87,25 @@ export default function AdminMarketPage() {
   if (user === undefined || loading) return (
     <DashboardLayout>
       <div className="flex items-center justify-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4A6F5D]"></div>
+        <div className="w-12 h-12 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin"></div>
       </div>
     </DashboardLayout>
   );
 
   if (error) return (
     <DashboardLayout>
-      <div className="flex flex-col items-center justify-center min-h-[60vh] p-4 text-center">
-        <FiAlertTriangle className="text-red-500 text-5xl mb-4" />
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">Dashboard Error</h2>
-        <p className="text-gray-600 mb-6 max-w-md">{error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="px-6 py-2 bg-[#4A6F5D] text-white rounded-lg hover:bg-[#3d5c4d] transition"
-        >
-          Retry Loading
-        </button>
+      <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 text-center">
+        <div className="bg-white/5 backdrop-blur-xl rounded-[2.5rem] border border-white/10 p-12 max-w-lg shadow-2xl">
+          <FiAlertTriangle className="text-red-500 text-6xl mb-6 mx-auto" />
+          <h2 className="text-2xl font-black text-white uppercase tracking-tight mb-4">Dashboard Error</h2>
+          <p className="text-white/60 mb-8 font-medium">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-10 py-4 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-emerald-600/30 transition shadow-lg"
+          >
+            Retry Loading
+          </button>
+        </div>
       </div>
     </DashboardLayout>
   );
@@ -113,42 +115,42 @@ export default function AdminMarketPage() {
   return (
     <DashboardLayout>
       <div className="w-full min-h-screen p-6 sm:p-8 lg:p-10">
-        <div className="max-w-7xl mx-auto space-y-8">
+        <div className="max-w-7xl mx-auto space-y-10">
           <SellerStoreHeader
             store={store}
             productCount={stats.products}
             onAddProduct={() => navigate("/admin/products")}
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <DashboardCard
               title="Settings"
-              subtitle="Manage Store Info"
-              icon={<FiSettings />}
+              subtitle="MANAGE STORE INFO"
+              icon={<FiSettings size={22} />}
               onClick={() => navigate("/admin/store")}
               variant="purple"
             />
 
             <DashboardCard
               title={String(stats.products)}
-              subtitle="Active Products"
-              icon={<FiPackage />}
+              subtitle="ACTIVE PRODUCTS"
+              icon={<FiPackage size={22} />}
               onClick={() => navigate("/admin/products")}
               variant="green"
             />
 
             <DashboardCard
               title={String(stats.orders)}
-              subtitle="Pending Orders"
-              icon={<FiShoppingBag />}
+              subtitle="PENDING ORDERS"
+              icon={<FiShoppingBag size={22} />}
               onClick={() => navigate("/admin/orders")}
               variant="blue"
             />
 
             <DashboardCard
               title={String(stats.alerts)}
-              subtitle="Low Stock Alerts"
-              icon={<FiAlertTriangle />}
+              subtitle="LOW STOCK ALERTS"
+              icon={<FiAlertTriangle size={22} />}
               onClick={() => navigate("/admin/stock-alerts")}
               variant="amber"
             />
@@ -164,10 +166,10 @@ export default function AdminMarketPage() {
 type CardVariant = "purple" | "green" | "blue" | "amber";
 
 const VARIANT_STYLES: Record<CardVariant, string> = {
-  purple: "bg-purple-50 text-purple-600",
-  green: "bg-green-50 text-green-600",
-  blue: "bg-blue-50 text-blue-600",
-  amber: "bg-amber-50 text-amber-600",
+  purple: "bg-purple-500/20 text-purple-400 border-purple-500/20",
+  green: "bg-emerald-500/20 text-emerald-400 border-emerald-500/20",
+  blue: "bg-blue-500/20 text-blue-400 border-blue-500/20",
+  amber: "bg-amber-500/20 text-amber-400 border-amber-500/20",
 };
 
 function DashboardCard({
@@ -186,16 +188,19 @@ function DashboardCard({
   return (
     <div
       onClick={onClick}
-      className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
+      className="bg-white/5 backdrop-blur-md p-8 rounded-[2rem] border border-white/5 cursor-pointer hover:bg-white/10 hover:border-white/20 transition-all duration-300 group relative overflow-hidden shadow-xl"
     >
-      <div className="flex items-center justify-between mb-4">
-        <div className={`p-3 rounded-xl ${VARIANT_STYLES[variant]}`}>
+      <div className="flex items-center justify-between mb-8">
+        <div className={`p-4 rounded-2xl border ${VARIANT_STYLES[variant]} shadow-inner`}>
           {icon}
         </div>
-        <FiArrowRight className="text-gray-300 group-hover:text-gray-700 transition" />
+        <FiArrowRight className="text-white/20 group-hover:text-white group-hover:translate-x-1 transition-all" />
       </div>
-      <h3 className="text-2xl font-bold text-[#1f2933]">{title}</h3>
-      <p className="text-gray-500 text-sm">{subtitle}</p>
+      <h3 className="text-4xl font-black text-white mb-2 tracking-tighter">{title}</h3>
+      <p className="text-[10px] font-black text-white/30 uppercase tracking-widest">{subtitle}</p>
+
+      {/* Decorative gradient blur */}
+      <div className={`absolute -bottom-10 -right-10 w-24 h-24 rounded-full blur-3xl opacity-0 group-hover:opacity-20 transition-opacity ${VARIANT_STYLES[variant].split(' ')[0]}`}></div>
     </div>
   );
 }

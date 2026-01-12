@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { resetPassword } from "../services/authService";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import AuthLayout from "../components/auth/AuthLayout";
+import { FiLock, FiArrowRight } from "react-icons/fi";
 
 export function ResetPasswordPage() {
   const [token, setToken] = useState("");
@@ -12,7 +14,6 @@ export function ResetPasswordPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // ✅ تلقائيًا يسحب التوكن من الرابط بعد ?token=
   useEffect(() => {
     const urlToken = searchParams.get("token");
     if (urlToken) setToken(urlToken);
@@ -51,69 +52,69 @@ export function ResetPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-center text-red-600 mb-4">
-          Reset Your Password 🔒
-        </h2>
+    <AuthLayout>
+      <div className="flex flex-col">
+        <div className="mb-10 text-center">
+          <h2 className="text-2xl font-bold text-emerald-400">Reset Password</h2>
+          <p className="text-sm text-white/40 mt-2">Enter your new password below.</p>
+        </div>
 
         {error && (
-          <div className="text-red-500 text-center text-sm font-medium mb-3">
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-200 text-sm rounded-2xl text-center font-medium">
             {error}
           </div>
         )}
         {message && (
-          <div className="text-green-600 text-center text-sm font-medium mb-3">
+          <div className="mb-6 p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm rounded-2xl text-center font-medium">
             {message}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block text-sm font-medium text-gray-700">
-            New Password
-          </label>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            placeholder="Enter new password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-200 bg-gray-50"
-          />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative group">
+            <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+            <input
+              type="password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              placeholder="New Password"
+              required
+            />
+          </div>
 
-          <label className="block text-sm font-medium text-gray-700">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-200 bg-gray-50"
-          />
+          <div className="relative group">
+            <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+            <input
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              placeholder="Confirm Password"
+              required
+            />
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 text-white rounded-lg font-semibold shadow-sm transition-transform hover:scale-[1.01] ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-red-600 hover:bg-red-700"
-            }`}
+            className="w-full flex items-center justify-center gap-2 py-4 bg-[#CE1126] text-white rounded-2xl font-bold shadow-xl shadow-red-900/40 hover:bg-[#e6122a] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed group"
           >
-            {loading ? "Resetting..." : "Reset Password"}
+            <span className="text-lg">{loading ? "Resetting..." : "Reset Password"}</span>
+            {!loading && <FiArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-600 mt-4">
+        <p className="mt-10 text-center text-sm text-white/40 font-medium">
           Go back to{" "}
-          <span
-            className="text-red-600 hover:underline cursor-pointer"
+          <button
             onClick={() => navigate("/login")}
+            className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors"
           >
             Login
-          </span>
+          </button>
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

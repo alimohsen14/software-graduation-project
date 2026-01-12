@@ -14,18 +14,20 @@ export default function AIMessageBubble({
 
   return (
     <div
-      className={`w-full flex ${isUser ? "justify-end" : "justify-start"} mb-4`}
+      className={`w-full flex ${isUser ? "justify-end" : "justify-start"} mb-6 animate-in fade-in slide-in-from-bottom-2 duration-300`}
       dir="rtl"
     >
       <div
-        className={`max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-md 
-        ${
-          isUser
-            ? "bg-[#587f63] text-white rounded-br-none"
-            : "bg-[#f7f5e8] text-[#1f2f25] rounded-bl-none"
-        }`}
+        className={`max-w-[85%] sm:max-w-[75%] px-6 py-4 rounded-[2rem] text-sm leading-relaxed shadow-xl backdrop-blur-md transition-all hover:scale-[1.01]
+        ${isUser
+            ? "bg-emerald-500/10 text-white/90 border border-emerald-500/20 rounded-br-none shadow-emerald-500/10"
+            : "bg-indigo-500/10 text-white/80 border border-indigo-500/20 rounded-bl-none shadow-indigo-500/10"
+          }`}
       >
-        {message}
+        <p className="whitespace-pre-wrap">{message}</p>
+
+        {/* Subtle decorative glow */}
+        <div className={`absolute -inset-1 rounded-[2rem] blur-xl opacity-20 pointer-events-none ${isUser ? 'bg-emerald-500' : 'bg-indigo-500'}`} />
       </div>
     </div>
   );

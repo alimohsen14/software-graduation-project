@@ -32,81 +32,98 @@ export default function SellerProductsTable({ products, onRefresh, onEdit, onDel
     };
 
     return (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-                <FiPackage className="w-5 h-5 text-[#4A6F5D]" />
-                <h2 className="text-lg font-bold text-gray-800">Your Products</h2>
-                <span className="bg-[#4A6F5D] text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                    {products.length}
+        <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
+            <div className="px-10 py-6 bg-white/5 border-b border-white/5 flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                    <div className="p-2.5 bg-emerald-500/10 rounded-xl border border-emerald-500/20">
+                        <FiPackage className="w-5 h-5 text-emerald-400" />
+                    </div>
+                    <div>
+                        <h2 className="text-lg font-black text-white uppercase tracking-tight">Active Consignments</h2>
+                        <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-0.5">Real-time inventory synchronization</p>
+                    </div>
+                </div>
+                <span className="bg-white/5 text-white/40 border border-white/10 text-[10px] font-black px-4 py-1.5 rounded-xl uppercase tracking-widest">
+                    {products.length} Total SKUs
                 </span>
             </div>
 
             {products.length === 0 ? (
-                <div className="px-6 py-12 text-center">
-                    <FiPackage className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                    <p className="text-gray-500 font-medium">No products yet</p>
-                    <p className="text-gray-400 text-sm">Add your first product to start selling</p>
+                <div className="px-10 py-32 text-center">
+                    <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mb-6 mx-auto border border-white/5 shadow-inner">
+                        <FiPackage size={40} className="text-white/10" />
+                    </div>
+                    <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">Depleted Inventory</h3>
+                    <p className="mt-2 font-bold text-white/20 uppercase tracking-widest text-[10px] max-w-xs mx-auto leading-relaxed">
+                        Your catalog is currently empty. Initialize items to start distribution.
+                    </p>
                 </div>
             ) : (
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left">
-                        <thead className="bg-gray-50">
-                            <tr className="text-gray-400 text-xs font-bold uppercase">
-                                <th className="px-6 py-3">Product</th>
-                                <th className="px-6 py-3">Price</th>
-                                <th className="px-6 py-3">Stock</th>
-                                <th className="px-6 py-3">Category</th>
-                                <th className="px-6 py-3 text-right">Actions</th>
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="text-white/30 text-[9px] font-black uppercase tracking-[0.2em] bg-white/5">
+                                <th className="px-10 py-5">Product Metadata</th>
+                                <th className="px-10 py-5">Current Pricing</th>
+                                <th className="px-10 py-5">Consignment Stock</th>
+                                <th className="px-10 py-5">Classification</th>
+                                <th className="px-10 py-5 text-right">Administrative Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100 text-sm">
+                        <tbody className="divide-y divide-white/5 text-sm">
                             {products.map((product) => (
-                                <tr key={product.id} className="hover:bg-gray-50/50 transition-colors">
-                                    <td className="px-6 py-4">
-                                        <div className="flex items-center gap-3">
-                                            <img
-                                                src={product.image}
-                                                alt={product.name}
-                                                className="w-10 h-10 rounded-lg object-cover"
-                                            />
+                                <tr key={product.id} className="hover:bg-white/5 transition-all duration-300 group">
+                                    <td className="px-10 py-6">
+                                        <div className="flex items-center gap-5">
+                                            <div className="relative w-14 h-14 rounded-2xl bg-stone-900 border border-white/5 overflow-hidden shadow-inner group-hover:border-emerald-500/30 transition-colors">
+                                                <img
+                                                    src={product.image}
+                                                    alt={product.name}
+                                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                                />
+                                            </div>
                                             <div>
-                                                <p className="font-medium text-gray-900">{product.name}</p>
-                                                <p className="text-xs text-gray-400 line-clamp-1">
-                                                    {product.shortDescription}
+                                                <p className="font-black text-white group-hover:text-emerald-400 transition-colors uppercase tracking-tight">{product.name}</p>
+                                                <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest mt-0.5 line-clamp-1">
+                                                    {product.shortDescription || "No metadata available"}
                                                 </p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 font-bold text-[#4A6F5D]">
-                                        {product.price}₪
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <span
-                                            className={`px-2 py-1 rounded-full text-xs font-bold ${product.stock === 0
-                                                ? "bg-red-100 text-red-700"
-                                                : product.stock <= 10
-                                                    ? "bg-amber-100 text-amber-700"
-                                                    : "bg-green-100 text-green-700"
-                                                }`}
-                                        >
-                                            {product.stock}
+                                    <td className="px-10 py-6">
+                                        <span className="text-lg font-black text-emerald-400 tracking-tighter">
+                                            {product.price}₪
                                         </span>
                                     </td>
-                                    <td className="px-6 py-4 text-gray-500">
-                                        {product.category || "-"}
+                                    <td className="px-10 py-6">
+                                        <span
+                                            className={`inline-flex items-center px-4 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest border backdrop-blur-md transition-all duration-300 ${product.stock === 0
+                                                ? "bg-red-500/10 text-red-500 border-red-500/20"
+                                                : product.stock <= 10
+                                                    ? "bg-amber-500/10 text-amber-500 border-amber-500/20"
+                                                    : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                                }`}
+                                        >
+                                            {product.stock === 0 ? 'Depleted' : `${product.stock} Units`}
+                                        </span>
                                     </td>
-                                    <td className="px-6 py-4 text-right">
-                                        <div className="flex items-center justify-end gap-2">
+                                    <td className="px-10 py-6">
+                                        <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest px-3 py-1 bg-white/5 rounded-lg border border-white/5">
+                                            {product.category || "General"}
+                                        </span>
+                                    </td>
+                                    <td className="px-10 py-6 text-right">
+                                        <div className="flex items-center justify-end gap-3">
                                             <button
                                                 onClick={() => onEdit(product)}
-                                                className="p-2 text-gray-400 hover:text-[#4A6F5D] hover:bg-gray-100 rounded-lg transition"
+                                                className="p-3 bg-white/5 text-white/40 border border-white/10 rounded-xl hover:text-white hover:bg-white/10 hover:border-white/20 transition-all shadow-lg"
                                             >
                                                 <FiEdit2 size={16} />
                                             </button>
                                             <button
                                                 onClick={() => handleDelete(product.id)}
                                                 disabled={deletingId === product.id}
-                                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition disabled:opacity-50"
+                                                className="p-3 bg-red-500/5 text-red-500/40 border border-red-500/10 rounded-xl hover:text-red-500 hover:bg-red-500/10 hover:border-red-500/20 transition-all shadow-lg disabled:opacity-30"
                                             >
                                                 <FiTrash2 size={16} />
                                             </button>

@@ -1,29 +1,156 @@
-import React from "react";
+import React, { useState } from "react";
 import DashboardLayout from "../components/layout/DashboardLayout";
-import WelcomeCard from "../components/home/WelcomeCard";
-import QuickActions from "../components/home/QuickActions";
-import SectionTitle from "../components/home/SectionTitle";
-import FeaturedModelsSection from "../components/home/FeaturedModelsSection";
-import StoreSection from "../components/home/StoreSection";
-import HeritageSection from "../components/home/HeritageSection";
 import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FiArrowRight } from "react-icons/fi";
+import DiscoverMoreModal from "../components/home/DiscoverMoreModal";
+import Palestine3DLogo from "../components/common/Palestine3DLogo";
 
 export function HomePage() {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Guard ensures user exists, but for TS safety:
   if (!user) return null;
+
+  const mainCards = [
+    {
+      title: "السوق الفلسطيني",
+      subtitle: "تسوق منتجات تراثية أصلية",
+      buttonText: "تصفح السوق",
+      image: "/assets/home/card-marketplace.jpeg",
+      path: "/marketplace",
+      accentColor: "amber",
+    },
+    {
+      title: "صناعة الصابون",
+      subtitle: "قصة صناعة الصابون النابلسي التراثية",
+      buttonText: "قريبًا",
+      image: "/assets/home/card-soap-story.jpeg",
+      path: "/heritage/industries/soap",
+      accentColor: "stone",
+    },
+    {
+      title: "جولة ثلاثية الأبعاد",
+      subtitle: "تجول داخل المعالم الأثرية الفلسطينية",
+      buttonText: "ابدأ الجولة",
+      image: "/assets/home/card-3d-tour.jpeg",
+      path: "/3d-module",
+      accentColor: "olive",
+    },
+  ];
+
 
   return (
     <DashboardLayout>
-      <>
-        <WelcomeCard name={user.name} />
-        <QuickActions />
-        <SectionTitle text="Featured 3D Models" />
-        <FeaturedModelsSection />
-        <StoreSection />
-        <HeritageSection />
-      </>
+      <div className="flex flex-col min-h-[calc(100vh-160px)] pb-10">
+        <section className="flex-1 flex flex-col items-center justify-center text-center py-12 md:py-20 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="z-10"
+          >
+            <Palestine3DLogo />
+            <div className="max-w-4xl mx-auto mb-10 mt-8 text-center" dir="rtl">
+              {/* السطر الأول: نرحّب بك + الاسم */}
+              <p className="text-2xl md:text-3xl text-white/85 font-medium mb-3">
+                نرحّب بك{" "}
+                <span className="text-white font-semibold">
+                  {user.name}
+                </span>
+              </p>
+
+              {/* السطر الثاني: الوصف */}
+              <p className="text-lg md:text-xl text-white/70 leading-relaxed">
+                هنا تبدأ رحلتك داخل الذاكرة الفلسطينية في مساحة رقمية تحكي قصة فلسطينة
+              </p>
+              <p className="text-lg md:text-xl text-white/70 leading-relaxed">
+                حيث
+                يلتقي التراث العريق بتجربة ثلاثية الأبعاد نابضة بالحياة
+              </p>
+            </div>
+
+
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="group relative px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full font-bold text-lg text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 active:scale-95 overflow-hidden"
+            >
+              <div className="relative z-10 flex items-center gap-3">
+                <span className="tracking-wide">اكتشف المزيد</span>
+                <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </button>
+          </motion.div>
+
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-10">
+          {mainCards.map((card, idx) => {
+            const styles = ({
+              amber: {
+                bg: "bg-amber-950/20 backdrop-blur-md border-amber-500/10",
+                btn: "bg-amber-600/20 hover:bg-amber-600/40 border-amber-500/20",
+              },
+              stone: {
+                bg: "bg-stone-900/20 backdrop-blur-md border-stone-500/10",
+                btn: "bg-stone-600/20 hover:bg-stone-600/40 border-stone-500/20",
+              },
+              olive: {
+                bg: "bg-emerald-950/20 backdrop-blur-md border-emerald-900/10",
+                btn: "bg-emerald-600/20 hover:bg-emerald-600/40 border-emerald-500/20",
+              }
+            } as Record<string, { bg: string; btn: string }>)[card.accentColor || "stone"];
+
+            return (
+              <motion.div
+                key={card.title}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + idx * 0.15, duration: 0.8 }}
+                onClick={() => navigate(card.path)}
+                className="group relative h-[480px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-xl border border-white/5 bg-black/20"
+              >
+                {/* Background Image */}
+                <img
+                  src={card.image}
+                  alt={card.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+
+                {/* Inner Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
+
+                {/* Glass Info Container */}
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className={`p-5 rounded-[1.75rem] border transition-all duration-500 ${styles.bg}`}>
+                    <div className="text-right" dir="rtl">
+                      <h3 className="text-xl font-medium text-white mb-1 tracking-tight">
+                        {card.title}
+                      </h3>
+                      <p className="text-[13px] text-white/40 font-normal mb-4 leading-relaxed">
+                        {card.subtitle}
+                      </p>
+
+                      <button className={`px-5 py-1.5 rounded-full text-[11px] font-bold text-white border transition-all duration-300 active:scale-95 ${styles.btn}`}>
+                        {card.buttonText}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </section>
+
+        <DiscoverMoreModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+      </div>
     </DashboardLayout>
   );
 }

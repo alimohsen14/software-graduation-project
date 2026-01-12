@@ -45,25 +45,47 @@ export default function StarRating({
     };
 
     return (
-        <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
+        <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 p-2 bg-white/5 rounded-xl border border-white/5 shadow-inner">
                 {Array.from({ length: 5 }).map((_, i) => {
-                    if (i < fullStars) return renderStar(i, "full");
-                    if (i === fullStars && hasHalf) return (
-                        <div key={`half-${i}`} className="relative">
-                            <FiStar size={size} className="text-gray-300" />
-                            <div className="absolute inset-0 overflow-hidden w-1/2">
-                                <FiStar size={size} fill="currentColor" className="text-yellow-400" />
-                            </div>
+                    const isFull = i < fullStars;
+                    const isHalf = i === fullStars && hasHalf;
+                    const isInteractive = interactive && onRatingChange;
+
+                    return (
+                        <div
+                            key={i}
+                            onClick={() => isInteractive && onRatingChange(i + 1)}
+                            className={`relative ${isInteractive ? "cursor-pointer hover:scale-125 transition-transform duration-300" : ""}`}
+                        >
+                            <FiStar
+                                size={size}
+                                fill={isFull ? "currentColor" : "none"}
+                                className={`${isFull ? "text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.3)]" : "text-white/10"}`}
+                            />
+                            {isHalf && (
+                                <div className="absolute inset-0 overflow-hidden w-1/2">
+                                    <FiStar size={size} fill="currentColor" className="text-amber-500" />
+                                </div>
+                            )}
                         </div>
                     );
-                    return renderStar(i, "empty");
                 })}
             </div>
             {showText && (
-                <span className="text-sm text-gray-500 font-medium whitespace-nowrap">
-                    {rating.toFixed(1)} {reviewsCount > 0 && `(${reviewsCount} reviews)`}
-                </span>
+                <div className="flex flex-col">
+                    <div className="flex items-center gap-2">
+                        <span className="text-xl font-black text-white leading-none">{rating.toFixed(1)}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-white/20 whitespace-nowrap">
+                            Reliability Metric
+                        </span>
+                    </div>
+                    {reviewsCount > 0 && (
+                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-emerald-500/40">
+                            {reviewsCount} Qualitative Verifications
+                        </span>
+                    )}
+                </div>
             )}
         </div>
     );

@@ -98,46 +98,52 @@ export default function AddSellerProductModal({ onClose, onSuccess, initialData,
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto relative">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-md animate-in fade-in duration-300">
+            <div className="bg-zinc-950/40 backdrop-blur-2xl rounded-[3rem] border border-white/10 w-full max-w-xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl shadow-black/50 relative">
+                {/* Decorative Background Glow */}
+                <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
                 {/* Header */}
-                <div className="sticky top-0 bg-white px-6 py-4 border-b border-gray-100 flex items-center justify-between z-10">
-                    <h2 className="text-lg font-bold text-gray-900">
-                        {initialData ? "Edit Product" : "Add New Product"}
-                    </h2>
+                <div className="px-10 py-8 bg-white/5 border-b border-white/5 flex items-center justify-between z-10 shrink-0">
+                    <div>
+                        <h2 className="text-2xl font-black text-white tracking-tighter uppercase">
+                            {initialData ? "Refine Product" : "Archive New SKU"}
+                        </h2>
+                        <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-1">Specify consortium inventory parameters</p>
+                    </div>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-gray-600 transition"
+                        className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 hover:text-white hover:bg-white/10 transition-all border border-white/5 hover:border-white/20"
                     >
                         <FiX size={20} />
                     </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <form onSubmit={handleSubmit} className="p-10 space-y-8 overflow-y-auto custom-scrollbar relative z-10">
                     {error && (
-                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+                        <div className="bg-red-500/10 border border-red-500/20 text-red-500 px-6 py-4 rounded-2xl text-[11px] font-bold uppercase tracking-widest animate-in slide-in-from-top-4 duration-300">
                             {error}
                         </div>
                     )}
 
                     {/* Image Upload */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Product Image <span className="text-red-500">*</span>
+                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">
+                            Consignment Visualization <span className="text-emerald-500/50 ml-1">*</span>
                         </label>
-                        <div className="flex items-start gap-4">
-                            <div className="w-24 h-24 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
+                        <div className="flex flex-col sm:flex-row items-start gap-8">
+                            <div className="w-32 h-32 bg-white/5 border-2 border-dashed border-white/10 rounded-[2rem] flex items-center justify-center overflow-hidden shrink-0 shadow-inner group transition-all hover:border-emerald-500/30">
                                 {formData.image ? (
                                     <img
                                         src={formData.image}
                                         alt="Preview"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
                                 ) : (
-                                    <FiImage className="text-gray-300" size={24} />
+                                    <FiImage className="text-white/10 group-hover:text-emerald-500/30 transition-colors" size={32} />
                                 )}
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1 w-full">
                                 <input
                                     type="file"
                                     ref={fileInputRef}
@@ -149,20 +155,20 @@ export default function AddSellerProductModal({ onClose, onSuccess, initialData,
                                     type="button"
                                     onClick={() => fileInputRef.current?.click()}
                                     disabled={uploading}
-                                    className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition disabled:opacity-50"
+                                    className="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-3 bg-white/5 text-white/50 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all shadow-lg active:scale-95 disabled:opacity-30"
                                 >
                                     {uploading ? (
                                         <>
-                                            <FiLoader className="animate-spin" /> Uploading...
+                                            <FiLoader className="animate-spin" /> Transmitting...
                                         </>
                                     ) : (
                                         <>
-                                            <FiUpload /> Upload Image
+                                            <FiUpload /> Interface Asset
                                         </>
                                     )}
                                 </button>
-                                <p className="text-xs text-gray-400 mt-2">
-                                    Recommended: Square image, max 2MB.
+                                <p className="text-[10px] text-white/20 font-bold uppercase tracking-widest mt-4">
+                                    Square aspect ratio.<br />Maximum threshold: 2MB.
                                 </p>
                             </div>
                         </div>
@@ -170,108 +176,113 @@ export default function AddSellerProductModal({ onClose, onSuccess, initialData,
 
                     {/* Name */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Product Name <span className="text-red-500">*</span>
+                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">
+                            Inventory Title <span className="text-emerald-500/50 ml-1">*</span>
                         </label>
                         <input
                             type="text"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                            placeholder="Enter consensus title..."
+                            className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white font-bold placeholder:text-white/10 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all shadow-inner"
                         />
                     </div>
 
                     {/* Short Description */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Short Description
+                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">
+                            Brief Metadata
                         </label>
                         <input
                             type="text"
                             name="shortDescription"
                             value={formData.shortDescription}
                             onChange={handleChange}
-                            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                            placeholder="Primary characteristics summary..."
+                            className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white/60 font-medium placeholder:text-white/10 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all shadow-inner"
                         />
                     </div>
 
                     {/* Price and Stock */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Price <span className="text-red-500">*</span>
+                            <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">
+                                Unit Valuation <span className="text-emerald-500/50 ml-1">*</span> (₪)
                             </label>
                             <input
                                 type="number"
                                 name="price"
                                 value={formData.price || ""}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                                placeholder="0.00"
+                                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white font-black placeholder:text-white/10 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all shadow-inner text-lg tracking-tighter"
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Stock
+                            <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">
+                                Residual Stock
                             </label>
                             <input
                                 type="number"
                                 name="stock"
                                 value={formData.stock || ""}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                                placeholder="0"
+                                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white font-black placeholder:text-white/10 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all shadow-inner text-lg tracking-tighter"
                             />
                         </div>
                     </div>
 
                     {/* Category and Badge */}
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Category <span className="text-red-500">*</span>
+                            <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">
+                                Consortium Type <span className="text-emerald-500/50 ml-1">*</span>
                             </label>
                             <select
                                 name="category"
                                 value={formData.category}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white/70 font-bold focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all shadow-inner appearance-none custom-select"
                             >
-                                <option value="">Select Category</option>
-                                <option value="PALESTINIAN_FOOD">Palestinian Food</option>
-                                <option value="PALESTINIAN_LIFESTYLE">Palestinian Lifestyle</option>
-                                <option value="HANDMADE">Handmade</option>
-                                <option value="PALESTINIAN_HERITAGE">Palestinian Heritage</option>
+                                <option value="" className="bg-zinc-900">Select Category</option>
+                                <option value="PALESTINIAN_FOOD" className="bg-zinc-900">Palestinian Food</option>
+                                <option value="PALESTINIAN_LIFESTYLE" className="bg-zinc-900">Lifestyle Objects</option>
+                                <option value="HANDMADE" className="bg-zinc-900">Handcrafted Artisanal</option>
+                                <option value="PALESTINIAN_HERITAGE" className="bg-zinc-900">Heritage Preservation</option>
                             </select>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                Badge
+                            <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">
+                                Highlighting Protocol
                             </label>
                             <select
                                 name="badge"
                                 value={formData.badge}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-2xl text-white/70 font-bold focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all shadow-inner appearance-none custom-select"
                             >
-                                <option value="">None</option>
-                                <option value="NEW">New</option>
-                                <option value="HOT">Hot</option>
-                                <option value="SALE">Sale</option>
+                                <option value="" className="bg-zinc-900">None</option>
+                                <option value="NEW" className="bg-zinc-900">NEW_DEPLOYMENT</option>
+                                <option value="HOT" className="bg-zinc-900">PRIORITY_ITEM</option>
+                                <option value="SALE" className="bg-zinc-900">LIQUIDATION_PROTOCOL</option>
                             </select>
                         </div>
                     </div>
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Full Description
+                        <label className="block text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">
+                            Comprehensive Narrative
                         </label>
                         <textarea
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
-                            rows={3}
-                            className="w-full px-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition resize-none"
+                            rows={4}
+                            placeholder="Articulate the consensus story behind this SKU..."
+                            className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-[2rem] text-white/50 font-medium placeholder:text-white/10 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition-all resize-none shadow-inner leading-relaxed"
                         />
                     </div>
 
@@ -279,15 +290,17 @@ export default function AddSellerProductModal({ onClose, onSuccess, initialData,
                     <button
                         type="submit"
                         disabled={loading || uploading}
-                        className="w-full px-4 py-3 bg-[#4A6F5D] text-white rounded-lg font-bold hover:bg-[#3d5c4d] transition disabled:opacity-50 flex items-center justify-center gap-2"
+                        className="w-full px-8 py-5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-[1.5rem] font-black uppercase tracking-[0.2em] hover:bg-emerald-600/30 hover:shadow-emerald-500/10 transition-all shadow-xl active:scale-[0.98] disabled:opacity-30 flex items-center justify-center gap-3 text-xs"
                     >
                         {loading ? (
                             <>
-                                <FiLoader className="animate-spin" size={18} />
-                                {initialData ? "Saving..." : "Creating..."}
+                                <FiLoader className="animate-spin" size={20} />
+                                {initialData ? "Synchronizing Matrix..." : "Initializing Consensus..."}
                             </>
                         ) : (
-                            initialData ? "Save Changes" : "Create Product"
+                            <>
+                                {initialData ? "Apply Refined Parameters" : "Deploy Inventory Unit"}
+                            </>
                         )}
                     </button>
                 </form>

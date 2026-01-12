@@ -37,12 +37,10 @@ export default function AIChatInput({
   return (
     <div
       dir={direction}
-      className="fixed left-1/2 transform -translate-x-1/2 bottom-5 w-full px-4 z-50"
-      style={{ maxWidth: "700px" }}
+      className="w-full relative z-10"
     >
       <div
-        className="flex items-center gap-3 px-3 py-2 rounded-[22px] shadow-lg"
-        style={{ background: "#456a53" }}
+        className="flex items-end gap-3 px-6 py-4 bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-2xl transition-all focus-within:border-emerald-500/30 group"
       >
         <textarea
           ref={taRef}
@@ -50,8 +48,7 @@ export default function AIChatInput({
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={t("ai.chatPlaceholder")}
-          aria-label={t("ai.chatPlaceholder")}
-          className="flex-1 resize-none bg-transparent text-white placeholder-white/70 text-sm md:text-base leading-snug outline-none border-none min-h-[36px] max-h-[180px] p-1"
+          className="flex-1 resize-none bg-transparent text-white placeholder-white/20 text-sm md:text-base leading-relaxed outline-none border-none min-h-[44px] max-h-[180px] p-2 custom-scrollbar"
           style={{ direction }}
           rows={1}
         />
@@ -60,21 +57,24 @@ export default function AIChatInput({
           type="button"
           onClick={onSend}
           disabled={isLoading || value.trim().length === 0}
-          aria-label={t("ai.send")}
-          className={`w-10 h-10 rounded-full flex items-center justify-center transition-shadow ${
-            isLoading || value.trim().length === 0
-              ? "opacity-60 cursor-not-allowed"
-              : "hover:brightness-110"
-          }`}
-          style={{ background: "#3e6347" }}
+          className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 relative group/btn overflow-hidden ${isLoading || value.trim().length === 0
+            ? "opacity-20 cursor-not-allowed bg-white/5"
+            : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/30 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95"
+            }`}
         >
           {isLoading ? (
-            <div className="w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin" />
+            <div className="w-5 h-5 border-2 border-emerald-400/30 border-t-emerald-400 rounded-full animate-spin" />
           ) : (
-            <FiSend className="w-4 h-4 text-white" />
+            <FiSend className="w-5 h-5 relative z-10 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
           )}
+
+          {/* Animated Glow Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/0 via-emerald-500/10 to-emerald-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
         </button>
       </div>
+
+      {/* Heritage Focus Indicator */}
+      <div className="absolute -inset-[1px] bg-gradient-to-r from-emerald-500/0 via-emerald-500/20 to-emerald-500/0 rounded-[2.5rem] opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none" />
     </div>
   );
 }

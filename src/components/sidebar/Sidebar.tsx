@@ -1,6 +1,18 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiUser, FiCpu, FiShoppingBag, FiUsers, FiBook, FiBarChart2, FiActivity } from "react-icons/fi";
+import {
+  FiUser,
+  FiCpu,
+  FiShoppingBag,
+  FiBook,
+  FiHome,
+  FiLogOut,
+  FiBox,
+  FiShield,
+  FiPieChart,
+  FiBriefcase,
+  FiCheckCircle,
+} from "react-icons/fi";
 import type { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
@@ -14,21 +26,30 @@ type SidebarItem = {
   key: string;
   label: string;
   Icon: IconType;
+  path: string;
 };
 
 export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
-  const { t, i18n } = useTranslation();
-  const { user } = useAuth();
-  const [active, setActive] = useState("Profile");
+  const { i18n } = useTranslation();
+  const { user, logout } = useAuth();
+  const [active, setActive] = useState("Home");
   const touchStartX = useRef<number | null>(null);
   const navigate = useNavigate();
 
   const items: SidebarItem[] = [
-    { key: "Profile", label: t("sidebar.profile"), Icon: FiUser },
-    { key: "AI", label: t("sidebar.aiSystem"), Icon: FiCpu },
-    { key: "Official", label: t("sidebar.officialStore"), Icon: FiShoppingBag },
-    { key: "Community", label: t("sidebar.communityForum"), Icon: FiUsers },
-    { key: "Library", label: t("sidebar.heritageLibrary"), Icon: FiBook },
+    { key: "Home", label: "Home", Icon: FiHome, path: "/" },
+    { key: "Profile", label: "Profile", Icon: FiUser, path: "/profile" },
+    { key: "AI", label: "AI System", Icon: FiCpu, path: "/palestine-ai" },
+    { key: "Library", label: "Heritage Library", Icon: FiBook, path: "/heritage" },
+    { key: "Marketplace", label: "Marketplace", Icon: FiShoppingBag, path: "/marketplace" },
+    { key: "3D", label: "3D Module", Icon: FiBox, path: "/3d-module" },
+  ];
+
+  const adminItems: SidebarItem[] = [
+    { key: "AdminMarket", label: "Admin Market", Icon: FiBriefcase, path: "/admin/market" },
+    { key: "Supervision", label: "Supervision Dashboard", Icon: FiShield, path: "/admin/supervision" },
+    { key: "Analytics", label: "Platform Analytics", Icon: FiPieChart, path: "/admin/analytics" },
+    { key: "Requests", label: "Seller Requests", Icon: FiCheckCircle, path: "/admin/seller-requests" },
   ];
 
   const direction = i18n.dir();
@@ -45,127 +66,98 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
     touchStartX.current = null;
   }
 
+  const handleNavigation = (key: string, path: string) => {
+    setActive(key);
+    navigate(path);
+    closeSidebar();
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+    closeSidebar();
+  };
+
   return (
     <>
-      {isOpen && (
-        <div
-          onClick={closeSidebar}
-          className="fixed inset-0 bg-black/30 z-30"
-        />
-      )}
-
       <aside
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         className={`
-          fixed top-0
-          ${direction === "rtl" ? "right-0" : "left-0"}
-          h-screen w-60 z-40 transform transition-transform duration-300
-          ${isOpen
+            fixed top-16 bottom-0
+            ${direction === "rtl" ? "right-0" : "left-0"}
+            w-64 z-40
+            transform transition-transform duration-500 ease-in-out
+            ${isOpen
             ? "translate-x-0"
             : direction === "rtl"
               ? "translate-x-full"
               : "-translate-x-full"
           }
-          bg-[#eaf5ea] shadow-lg
-        `}
+            bg-white/5 backdrop-blur-sm
+            border-r border-white/10
+            shadow-md shadow-black/20
+            flex flex-col
+            pointer-events-auto
+          `}
         dir={direction}
       >
-        {/* Flag stripe */}
-        <div
-          className={`
-            absolute ${direction === "rtl" ? "right-0 rounded-l-2xl" : "left-0 rounded-r-2xl"}
-            top-0 bottom-4 w-2
-          `}
-          style={{
-            background:
-              "linear-gradient(to bottom, black 0%, white 33%, #007A3D 66%, #CE1126 100%)",
-          }}
-        />
-
-        <div className="h-full px-5 py-6 flex flex-col">
-          <div className="text-xl font-extrabold text-[#2f5c3f] mb-6">
-            Palestine3D
-          </div>
-
-          <nav className="flex flex-col gap-2">
-            {items.map(({ key, label, Icon }) => {
+        <div className="flex-1 overflow-y-auto px-4 py-12 scrollbar-hide">
+          <nav className="space-y-1.5">
+            {/* Main Items */}
+            {items.map(({ key, label, Icon, path }) => {
               const isActive = active === key;
-
               return (
                 <button
                   key={key}
-                  onClick={() => {
-                    if (key === "Profile") navigate("/profile");
-                    if (key === "AI") navigate("/palestine-ai");
-                    if (key === "Official") navigate("/shop"); // Assuming Official Store is Shop
-                    setActive(key);
-                    closeSidebar();
-                  }}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg ${isActive
-                    ? "bg-[#dff3e8] text-[#21492f]"
-                    : "text-[#2f5c3f] hover:bg-[#f1fbf4]"
+                  onClick={() => handleNavigation(key, path)}
+                  className={`w-full flex items-center gap-3.5 px-5 py-3 rounded-xl transition-all duration-300 group ${isActive
+                    ? "bg-white/10 text-white shadow-lg"
+                    : "text-white/60 hover:text-white/90 hover:bg-white/5"
                     }`}
                 >
-                  <Icon className="w-5 h-5" />
-                  <span className="text-sm font-medium">{label}</span>
+                  <Icon className={`w-4.5 h-4.5 ${isActive ? "text-white" : "text-white/40 group-hover:text-white/80"}`} />
+                  <span className={`text-[13px] tracking-wide font-medium`}>{label}</span>
                 </button>
               );
             })}
 
-            {/* Admin Links */}
+            {/* Admin Section */}
             {user?.isAdmin && (
-              <>
-                <div className="my-2 border-t border-[#2f5c3f]/10"></div>
-                <div className="px-3 text-xs font-bold text-[#2f5c3f]/60 uppercase tracking-wider mb-1">Admin</div>
-                <button
-                  onClick={() => {
-                    navigate("/admin/market");
-                    closeSidebar();
-                  }}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
-                >
-                  <FiShoppingBag className="w-5 h-5" />
-                  <span className="text-sm font-medium">Admin Market</span>
-                </button>
-                <button
-                  onClick={() => {
-                    navigate("/admin/seller-requests");
-                    closeSidebar();
-                  }}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
-                >
-                  <FiUsers className="w-5 h-5" />
-                  <span className="text-sm font-medium">Seller Requests</span>
-                </button>
-                <button
-                  onClick={() => {
-                    navigate("/admin/analytics");
-                    closeSidebar();
-                  }}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
-                >
-                  <FiBarChart2 className="w-5 h-5" />
-                  <span className="text-sm font-medium">Analytics</span>
-                </button>
-                <button
-                  onClick={() => {
-                    navigate("/admin/supervision");
-                    closeSidebar();
-                  }}
-                  className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-[#2f5c3f] hover:bg-[#f1fbf4]"
-                >
-                  <FiActivity className="w-5 h-5" />
-                  <span className="text-sm font-medium">Supervision</span>
-                </button>
-              </>
+              <div className="pt-6 mt-6 border-t border-white/5 space-y-1.5">
+                <p className="px-5 mb-3 text-[10px] font-bold uppercase tracking-widest text-white/20">Admin Management</p>
+                {adminItems.map(({ key, label, Icon, path }) => {
+                  const isActive = active === key;
+                  return (
+                    <button
+                      key={key}
+                      onClick={() => handleNavigation(key, path)}
+                      className={`w-full flex items-center gap-3.5 px-5 py-3 rounded-xl transition-all duration-300 group ${isActive
+                        ? "bg-white/10 text-white shadow-lg"
+                        : "text-white/60 hover:text-white/90 hover:bg-white/5"
+                        }`}
+                    >
+                      <Icon className={`w-4.5 h-4.5 ${isActive ? "text-white" : "text-white/40 group-hover:text-white/80"}`} />
+                      <span className={`text-[13px] tracking-wide font-medium`}>{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
             )}
           </nav>
-
-          <div className="mt-auto text-xs text-[#2f5c3f] opacity-80">
-            © Palestine3D
-          </div>
         </div>
+
+        {user && (
+          <div className="p-6 border-t border-white/5">
+            <button
+              onClick={handleLogout}
+              className="w-full flex items-center gap-3.5 px-5 py-3 text-red-500/80 hover:text-red-400 text-[13px] font-bold transition-all duration-300 rounded-xl hover:bg-red-500/5 group"
+            >
+              <FiLogOut className="w-4.5 h-4.5" />
+              <span>Logout</span>
+            </button>
+          </div>
+        )}
       </aside>
     </>
   );

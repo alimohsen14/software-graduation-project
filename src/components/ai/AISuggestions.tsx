@@ -27,40 +27,40 @@ export default function AISuggestions({ onSelect }: Props): React.ReactElement {
   return (
     <div
       dir={direction}
-      className="fixed left-1/2 transform -translate-x-1/2 bottom-28 w-full px-4 z-40 max-w-[700px]"
+      className="w-full relative z-40"
     >
-      <div className="relative flex items-center gap-2">
+      <div className="relative flex items-center gap-4">
         {/* Arrow based on direction */}
         <button
           onClick={() => scroll(direction === "rtl" ? "right" : "left")}
-          className="flex items-center justify-center w-9 h-9 rounded-full bg-[#3e6347] text-white/80 hover:text-white hover:brightness-110 transition"
+          className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-white/20 hover:text-emerald-400 hover:border-emerald-500/30 transition-all shadow-xl group"
           aria-label="Scroll"
         >
           {direction === "rtl" ? (
-            <FiChevronRight className="w-5 h-5" />
+            <FiChevronRight className="w-6 h-6 transition-transform group-active:translate-x-1" />
           ) : (
-            <FiChevronLeft className="w-5 h-5" />
+            <FiChevronLeft className="w-6 h-6 transition-transform group-active:-translate-x-1" />
           )}
         </button>
 
         {/* Suggestions */}
         <div
           ref={scrollRef}
-          className="flex-1 overflow-x-scroll"
+          className="flex-1 overflow-x-scroll no-scrollbar"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
           }}
         >
           <div
-            className="flex gap-3 py-1"
+            className="flex gap-4 py-2"
             style={{ WebkitOverflowScrolling: "touch" }}
           >
             {SUGGESTIONS.map((text) => (
               <button
                 key={text}
                 onClick={() => onSelect(text)}
-                className="whitespace-nowrap rounded-full px-4 py-2 bg-[#4f7b61] text-white text-sm shadow-md hover:brightness-110 active:scale-[0.98] transition"
+                className="whitespace-nowrap rounded-full px-6 py-3 bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-[0.2em] text-white/40 shadow-lg hover:bg-emerald-500/10 hover:border-emerald-500/20 hover:text-white transition-all active:scale-[0.98] animate-in fade-in zoom-in duration-300"
               >
                 {text}
               </button>
@@ -71,13 +71,13 @@ export default function AISuggestions({ onSelect }: Props): React.ReactElement {
         {/* Opposite Arrow */}
         <button
           onClick={() => scroll(direction === "rtl" ? "left" : "right")}
-          className="flex items-center justify-center w-9 h-9 rounded-full bg-[#3e6347] text-white/80 hover:text-white hover:brightness-110 transition"
+          className="flex items-center justify-center w-12 h-12 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 text-white/20 hover:text-emerald-400 hover:border-emerald-500/30 transition-all shadow-xl group"
           aria-label="Scroll"
         >
           {direction === "rtl" ? (
-            <FiChevronLeft className="w-5 h-5" />
+            <FiChevronLeft className="w-6 h-6 transition-transform group-active:-translate-x-1" />
           ) : (
-            <FiChevronRight className="w-5 h-5" />
+            <FiChevronRight className="w-6 h-6 transition-transform group-active:translate-x-1" />
           )}
         </button>
       </div>
