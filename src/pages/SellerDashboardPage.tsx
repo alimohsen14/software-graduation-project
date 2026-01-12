@@ -127,11 +127,27 @@ export default function SellerDashboardPage() {
 
 type CardVariant = "purple" | "green" | "blue" | "amber";
 
-const VARIANT_STYLES: Record<CardVariant, string> = {
-    purple: "bg-purple-50 text-purple-600",
-    green: "bg-green-50 text-green-600",
-    blue: "bg-blue-50 text-blue-600",
-    amber: "bg-amber-50 text-amber-600",
+const VARIANT_STYLES: Record<CardVariant, { bg: string, text: string, decoration: string }> = {
+    purple: {
+        bg: "bg-indigo-500/10",
+        text: "text-indigo-400",
+        decoration: "bg-indigo-500/5"
+    },
+    green: {
+        bg: "bg-emerald-500/10",
+        text: "text-emerald-400",
+        decoration: "bg-emerald-500/5"
+    },
+    blue: {
+        bg: "bg-sky-500/10",
+        text: "text-sky-400",
+        decoration: "bg-sky-500/5"
+    },
+    amber: {
+        bg: "bg-amber-500/10",
+        text: "text-amber-400",
+        decoration: "bg-amber-500/5"
+    },
 };
 
 function DashboardCard({
@@ -147,19 +163,29 @@ function DashboardCard({
     onClick: () => void;
     variant: CardVariant;
 }) {
+    const style = VARIANT_STYLES[variant];
+
     return (
         <div
             onClick={onClick}
-            className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 cursor-pointer hover:shadow-md transition group"
+            className="bg-white/5 backdrop-blur-md p-8 rounded-[2.5rem] border border-white/10 cursor-pointer transition-all duration-500 group relative overflow-hidden shadow-2xl hover:border-white/20 hover:bg-white/10 active:scale-95"
         >
-            <div className="flex items-center justify-between mb-4">
-                <div className={`p-3 rounded-xl ${VARIANT_STYLES[variant]}`}>
+            {/* Decorative Background Glow */}
+            <div className={`absolute -top-10 -right-10 w-32 h-32 rounded-full blur-3xl transition-opacity duration-700 opacity-20 group-hover:opacity-40 ${style.decoration}`}></div>
+
+            <div className="flex items-center justify-between mb-8 relative z-10">
+                <div className={`w-14 h-14 rounded-2xl border border-white/5 shadow-inner transition-transform duration-500 group-hover:scale-110 flex items-center justify-center text-2xl ${style.bg} ${style.text}`}>
                     {icon}
                 </div>
-                <FiArrowRight className="text-gray-300 group-hover:text-gray-700 transition" />
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/5 transition-all duration-500 group-hover:bg-white/10 group-hover:border-white/20">
+                    <FiArrowRight className="text-white/20 group-hover:text-white transition-colors" size={20} />
+                </div>
             </div>
-            <h3 className="text-2xl font-bold text-[#1f2933]">{title}</h3>
-            <p className="text-gray-500 text-sm">{subtitle}</p>
+
+            <div className="relative z-10">
+                <h3 className="text-4xl font-black text-white tracking-tighter mb-1 uppercase group-hover:text-emerald-400 transition-colors duration-500">{title}</h3>
+                <p className="text-white/30 font-bold uppercase tracking-[0.2em] text-[10px]">{subtitle}</p>
+            </div>
         </div>
     );
 }

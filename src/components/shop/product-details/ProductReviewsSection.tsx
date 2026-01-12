@@ -78,31 +78,36 @@ export default function ProductReviewsSection({
   };
 
   return (
-    <section className="mt-12 pt-10 border-t border-gray-100">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+    <section className="mt-16 animate-in fade-in duration-700">
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-8 mb-12">
         <div>
-          <h3 className="text-2xl font-black text-gray-900 mb-2 flex items-center gap-3">
-            Customer Reviews
-            <span className="bg-gray-100 text-gray-500 text-sm font-bold px-3 py-1 rounded-full">
-              {reviews.length}
+          <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 mb-6 border-l-2 border-emerald-500/30 pl-4 flex items-center gap-4">
+            User Experience Registry
+            <span className="bg-white/5 text-white/40 text-[9px] font-black px-3 py-1 rounded-full border border-white/5">
+              {String(reviews.length).padStart(2, '0')} ENTRIES
             </span>
           </h3>
-          <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={20} />
+          <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={22} />
         </div>
 
         {!isAuthenticated && (
-          <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-2xl flex items-center gap-3">
-            <FiMessageSquare className="text-[#4A6F5D]" />
-            <p className="text-sm font-medium text-[#4A6F5D]">
-              Log in to share your review!
-            </p>
+          <div className="bg-amber-500/5 border border-amber-500/10 p-6 rounded-[2rem] flex items-center gap-4 backdrop-blur-md">
+            <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20 text-amber-500">
+              <FiMessageSquare size={20} />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[9px] font-black uppercase tracking-widest text-amber-500/40">Credential Required</span>
+              <p className="text-sm font-bold text-amber-500/80">
+                Authenticate to contribute to this manifest.
+              </p>
+            </div>
           </div>
         )}
       </div>
 
       {/* Review Form Area */}
       {isAuthenticated && (
-        <div className="mb-12">
+        <div className="mb-16">
           {isEditing ? (
             <ReviewForm
               isEditing
@@ -115,16 +120,18 @@ export default function ProductReviewsSection({
           ) : !myReview ? (
             <ReviewForm onSubmit={handleCreateReview} />
           ) : (
-            <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div>
-                <h4 className="font-bold text-[#4A6F5D] mb-1">You've reviewed this product</h4>
-                <p className="text-[#4A6F5D]/70 text-sm">Thank you for your feedback! You can update or remove your review anytime.</p>
+            <div className="bg-emerald-500/5 border border-emerald-500/10 p-10 rounded-[3rem] flex flex-col md:flex-row md:items-center justify-between gap-8 backdrop-blur-md group/myreview relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 via-emerald-500/5 to-transparent opacity-0 group-hover/myreview:opacity-100 transition-opacity duration-1000" />
+              <div className="relative z-10">
+                <span className="text-[9px] font-black uppercase tracking-widest text-emerald-500/40 mb-2 block">Personal Contribution Verified</span>
+                <h4 className="text-xl font-black text-white uppercase tracking-tighter mb-1">Your review is live</h4>
+                <p className="text-white/40 text-sm font-medium">Manifest entries can be recalibrated or purged at your discretion.</p>
               </div>
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-[#4A6F5D] text-white px-6 py-2 rounded-xl font-bold hover:bg-[#3d5c4d] transition-all"
+                className="relative z-10 bg-emerald-600/20 text-emerald-400 px-10 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest border border-emerald-500/20 hover:bg-emerald-600/30 transition-all active:scale-95 shadow-xl"
               >
-                Edit Review
+                Modify Entry
               </button>
             </div>
           )}
@@ -133,18 +140,18 @@ export default function ProductReviewsSection({
 
       {/* Reviews List Area */}
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 gap-3 text-gray-400">
-          <FiLoader className="animate-spin" size={32} />
-          <p className="font-medium">Loading reviews...</p>
+        <div className="flex flex-col items-center justify-center py-32 gap-6">
+          <div className="w-12 h-12 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin" />
+          <p className="text-[10px] font-black uppercase tracking-widest text-white/20">Syncing Manifest Segments</p>
         </div>
       ) : reviews.length === 0 ? (
-        <div className="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
-          <FiMessageSquare className="mx-auto text-gray-300 mb-4" size={48} />
-          <h4 className="text-gray-500 font-bold text-lg">No reviews yet</h4>
-          <p className="text-gray-400 text-sm">Be the first to share your experience with this item!</p>
+        <div className="text-center py-32 bg-white/5 rounded-[4rem] border-2 border-dashed border-white/10 flex flex-col items-center justify-center group/null">
+          <FiMessageSquare className="text-white/5 mb-8 group-hover:scale-110 transition-transform duration-1000" size={64} />
+          <h4 className="text-2xl font-black text-white uppercase tracking-tighter mb-2">Null manifest</h4>
+          <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">No qualitative data captured for this unit.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {reviews.map((review) => (
             <ReviewCard
               key={review.id}

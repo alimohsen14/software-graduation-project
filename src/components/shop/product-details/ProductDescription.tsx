@@ -8,14 +8,16 @@ export default function ProductDescription({ description }: Props) {
   if (!description) return null;
 
   return (
-    <section className="mt-10 pt-8 border-t border-[#E5E7EB]">
-      <h3 className="text-lg font-bold text-[#1F2933] mb-3">
-        Product Description
+    <section className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
+      <h3 className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 mb-8 border-l-2 border-emerald-500/30 pl-4">
+        Archive Documentation
       </h3>
 
-      <p className="text-[#6B7280] text-sm leading-relaxed max-w-2xl">
-        {description}
-      </p>
+      <div className="prose prose-invert max-w-none">
+        <p className="text-white/50 text-lg md:text-xl leading-[1.8] font-medium max-w-4xl italic">
+          {description}
+        </p>
+      </div>
     </section>
   );
 }

@@ -84,7 +84,7 @@ export default function MarketplacePage() {
         <DashboardLayout>
             <div className="relative">
                 <div className="w-full min-h-screen p-6 sm:p-8 lg:p-10">
-                    <div className="max-w-7xl mx-auto">
+                    <div className="max-w-7xl mx-auto" dir="rtl">
                         <MarketplaceHeader
                             onBecomeSeller={() => navigate("/become-seller")}
                             onGoToDashboard={() => navigate(user?.isAdmin ? "/admin/market" : "/seller")}
@@ -93,28 +93,33 @@ export default function MarketplacePage() {
                         />
 
                         {isPending && (
-                            <div className="mb-6 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-xl flex items-center gap-2">
-                                <FiPackage className="w-5 h-5" />
-                                <span>Your seller application is currently under review.</span>
+                            <div className="mb-8 bg-amber-500/10 border border-amber-500/20 text-amber-400 px-6 py-4 rounded-3xl flex items-center gap-4 animate-in fade-in slide-in-from-right-4 duration-500 backdrop-blur-md">
+                                <div className="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center border border-amber-500/20">
+                                    <FiPackage className="w-5 h-5" />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[9px] font-black uppercase tracking-widest opacity-50 mb-0.5">الحالة: قيد الانتظار</span>
+                                    <span className="text-xs font-bold">طلبك للانضمام كبائع قيد المراجعة حالياً.</span>
+                                </div>
                             </div>
                         )}
 
                         {/* Social Stats Quick Links */}
                         {user && (
-                            <div className="flex items-center gap-3 mb-6">
+                            <div className="flex items-center gap-3 mb-8 overflow-x-auto pb-4 no-scrollbar">
                                 <button
                                     onClick={() => handleOpenSocialModal('followed')}
-                                    className="flex items-center gap-2 px-4 py-2.5 bg-white border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] hover:bg-emerald-50 transition shadow-sm"
+                                    className="flex items-center gap-3 px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-wide text-white/40 hover:bg-white/10 hover:text-white transition-all shadow-xl group"
                                 >
-                                    <FiUsers size={18} />
-                                    Followed Stores
+                                    <FiUsers size={16} className="group-hover:scale-110 transition-transform" />
+                                    المتاجر المتابعة
                                 </button>
                                 <button
                                     onClick={() => handleOpenSocialModal('favorite')}
-                                    className="flex items-center gap-2 px-4 py-2.5 bg-white border border-red-100 rounded-xl text-sm font-bold text-red-600 hover:bg-red-50 transition shadow-sm"
+                                    className="flex items-center gap-3 px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-wide text-white/40 hover:bg-white/10 hover:text-red-400 transition-all shadow-xl group"
                                 >
-                                    <FiHeart size={18} />
-                                    Favorite Stores
+                                    <FiHeart size={16} className="group-hover:scale-110 transition-transform" />
+                                    المتاجر المفضلة
                                 </button>
                             </div>
                         )}
@@ -125,14 +130,15 @@ export default function MarketplacePage() {
                         />
 
                         {loading ? (
-                            <div className="flex items-center justify-center py-20">
-                                <p className="text-gray-500">Loading products...</p>
+                            <div className="flex flex-col items-center justify-center py-32 animate-pulse">
+                                <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-4" />
+                                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">جاري تحميل المنتجات...</p>
                             </div>
                         ) : products.length === 0 ? (
-                            <div className="flex flex-col items-center justify-center py-20">
-                                <FiPackage className="w-16 h-16 text-gray-300 mb-4" />
-                                <p className="text-gray-500 font-medium">No products found</p>
-                                <p className="text-gray-400 text-sm">Try adjusting your filters</p>
+                            <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-2xl animate-in zoom-in duration-500">
+                                <FiPackage className="w-16 h-16 text-white/10 mb-4" />
+                                <p className="text-xl font-black text-white uppercase tracking-tighter mb-1">لا يوجد منتجات</p>
+                                <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">لم نجد أي منتجات تطابق بحثك حالياً</p>
                             </div>
                         ) : (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -149,26 +155,26 @@ export default function MarketplacePage() {
 
                         {/* Pagination Controls */}
                         {!loading && products.length > 0 && totalPages > 1 && (
-                            <div className="mt-12 flex items-center justify-center gap-2">
+                            <div className="mt-16 flex items-center justify-center gap-4">
                                 <button
                                     onClick={() => handlePageChange(Math.max(1, (filters.page || 1) - 1))}
                                     disabled={filters.page === 1}
-                                    className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                    className="px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white/30 hover:bg-white/10 hover:text-white disabled:opacity-20 transition-all shadow-xl active:scale-95"
                                 >
-                                    Previous
+                                    السابق
                                 </button>
 
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-2">
                                     {[...Array(totalPages)].map((_, i) => (
                                         <button
                                             key={i + 1}
                                             onClick={() => handlePageChange(i + 1)}
-                                            className={`w-10 h-10 rounded-xl text-sm font-bold transition flex items-center justify-center ${(filters.page || 1) === i + 1
-                                                ? "bg-[#4A6F5D] text-white shadow-md"
-                                                : "bg-white text-gray-500 border border-gray-100 hover:bg-emerald-50 hover:text-[#4A6F5D]"
+                                            className={`w-10 h-10 rounded-2xl text-[10px] font-black transition-all flex items-center justify-center border ${(filters.page || 1) === i + 1
+                                                ? "bg-emerald-600/20 text-emerald-400 border-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                                                : "bg-white/5 text-white/30 border-white/10 hover:bg-white/10 hover:text-white"
                                                 }`}
                                         >
-                                            {i + 1}
+                                            {String(i + 1).padStart(2, '0')}
                                         </button>
                                     ))}
                                 </div>
@@ -176,9 +182,9 @@ export default function MarketplacePage() {
                                 <button
                                     onClick={() => handlePageChange(Math.min(totalPages, (filters.page || 1) + 1))}
                                     disabled={filters.page === totalPages}
-                                    className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                    className="px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white/30 hover:bg-white/10 hover:text-white disabled:opacity-20 transition-all shadow-xl active:scale-95"
                                 >
-                                    Next
+                                    التالي
                                 </button>
                             </div>
                         )}

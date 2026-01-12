@@ -33,13 +33,13 @@ interface KPICardProps {
 }
 
 const KPICard = ({ title, value, icon, color }: KPICardProps) => (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-4">
-        <div className={`p-4 rounded-xl ${color}`}>
-            {icon}
+    <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/10 flex items-center gap-4 transition-all hover:bg-white/10 hover:-translate-y-0.5">
+        <div className={`p-4 rounded-xl shadow-sm border ${color.replace("bg-", "bg-opacity-20 bg-").replace("text-", "border-opacity-20 border-")}`}>
+            <span className={color.split(" ")[1]}>{icon}</span>
         </div>
         <div>
-            <p className="text-sm font-medium text-gray-500 uppercase tracking-wider">{title}</p>
-            <h3 className="text-2xl font-extrabold text-[#1F2933] mt-1">{value}</h3>
+            <p className="text-[10px] font-black uppercase tracking-widest text-white/30">{title}</p>
+            <h3 className="text-2xl font-black text-white mt-1">{value}</h3>
         </div>
     </div>
 );
@@ -126,15 +126,15 @@ export default function AdminAnalyticsPage() {
         return (
             <DashboardLayout>
                 <div className="p-8 space-y-8 animate-pulse">
-                    <div className="h-8 w-64 bg-gray-200 rounded-lg"></div>
+                    <div className="h-8 w-64 bg-white/5 rounded-lg"></div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {[1, 2, 3, 4].map((i) => (
-                            <div key={i} className="h-32 bg-white rounded-2xl shadow-sm"></div>
+                            <div key={i} className="h-32 bg-white/5 rounded-2xl border border-white/10"></div>
                         ))}
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="h-80 bg-white rounded-2xl shadow-sm"></div>
-                        <div className="h-80 bg-white rounded-2xl shadow-sm"></div>
+                        <div className="h-80 bg-white/5 rounded-2xl border border-white/10"></div>
+                        <div className="h-80 bg-white/5 rounded-2xl border border-white/10"></div>
                     </div>
                 </div>
             </DashboardLayout>
@@ -145,15 +145,17 @@ export default function AdminAnalyticsPage() {
         return (
             <DashboardLayout>
                 <div className="p-8 flex flex-col items-center justify-center min-h-[60vh] text-center">
-                    <FiAlertCircle className="text-red-500 text-6xl mb-4" />
-                    <h2 className="text-2xl font-bold text-gray-800">Analytics Error</h2>
-                    <p className="text-gray-600 mt-2">{error}</p>
-                    <button
-                        onClick={() => fetchData()}
-                        className="mt-6 px-6 py-2 bg-[#4A6F5D] text-white rounded-lg hover:bg-[#3d5c4d] transition"
-                    >
-                        Retry
-                    </button>
+                    <div className="p-8 bg-white/5 backdrop-blur-xl rounded-[2rem] border border-white/10 max-w-lg shadow-2xl">
+                        <FiAlertCircle className="text-red-500 text-6xl mb-6 mx-auto" />
+                        <h2 className="text-2xl font-black text-white">Analytics Error</h2>
+                        <p className="text-white/60 mt-4 px-6">{error}</p>
+                        <button
+                            onClick={() => fetchData()}
+                            className="mt-8 px-10 py-4 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-emerald-600/30 transition shadow-lg"
+                        >
+                            Retry
+                        </button>
+                    </div>
                 </div>
             </DashboardLayout>
         );
@@ -164,7 +166,7 @@ export default function AdminAnalyticsPage() {
         { name: "Sellers", value: globalData.sellersCount || 0 },
         { name: "Regular Users", value: globalData.regularUsersCount || 0 }
     ];
-    const COLORS = ["#4A6F5D", "#A3B18A"];
+    const COLORS = ["#10b981", "#8b5cf6"]; // Emerald and Purple for roles
 
     const countryData = (Array.isArray(globalData.usersByCountry) ? globalData.usersByCountry : []).map(c => ({
         name: c.country,
@@ -185,8 +187,8 @@ export default function AdminAnalyticsPage() {
 
                     {/* Header */}
                     <div>
-                        <h1 className="text-3xl font-extrabold text-[#1F2933]">Platform Analytics</h1>
-                        <p className="text-gray-500 mt-1">Global user trends and distribution demographics.</p>
+                        <h1 className="text-3xl font-black text-white tracking-tight">Platform Analytics</h1>
+                        <p className="text-white/50 mt-1 font-medium">Global user trends and distribution demographics.</p>
                     </div>
 
                     {/* KPI Section */}
@@ -195,36 +197,36 @@ export default function AdminAnalyticsPage() {
                             title="Total Users"
                             value={globalData.totalUsers || 0}
                             icon={<FiUsers size={24} />}
-                            color="bg-blue-50 text-blue-600"
+                            color="bg-blue-400 text-blue-400"
                         />
                         <KPICard
                             title="Sellers Count"
                             value={globalData.sellersCount || 0}
                             icon={<FiUserCheck size={24} />}
-                            color="bg-emerald-50 text-emerald-600"
+                            color="bg-emerald-400 text-emerald-400"
                         />
                         <KPICard
                             title="Regular Users"
                             value={globalData.regularUsersCount || 0}
                             icon={<FiUserPlus size={24} />}
-                            color="bg-purple-50 text-purple-600"
+                            color="bg-purple-400 text-purple-400"
                         />
                         <KPICard
                             title="Seller Ratio"
                             value={`${((globalData.sellerRatio || 0) * 100).toFixed(1)}%`}
                             icon={<FiActivity size={24} />}
-                            color="bg-amber-50 text-amber-600"
+                            color="bg-amber-400 text-amber-400"
                         />
                     </div>
 
                     {/* Charts Section */}
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Donut Chart */}
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <h3 className="text-lg font-bold text-gray-800 mb-6">User Role Distribution</h3>
+                        <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-xl">
+                            <h3 className="text-lg font-black text-white mb-6">User Role Distribution</h3>
                             <div className="h-64 flex flex-col items-center justify-center">
                                 {donutData.every(d => d.value === 0) ? (
-                                    <div className="text-gray-400 text-sm">No distribution data available</div>
+                                    <div className="text-white/20 text-sm italic">No distribution data available</div>
                                 ) : (
                                     <ResponsiveContainer width="100%" height="100%">
                                         <PieChart>
@@ -234,13 +236,14 @@ export default function AdminAnalyticsPage() {
                                                 outerRadius={80}
                                                 paddingAngle={5}
                                                 dataKey="value"
+                                                stroke="none"
                                             >
                                                 {donutData.map((entry, index) => (
-                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} fillOpacity={0.6} />
                                                 ))}
                                             </Pie>
-                                            <Tooltip />
-                                            <Legend verticalAlign="bottom" height={36} />
+                                            <Tooltip contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff' }} />
+                                            <Legend verticalAlign="bottom" height={36} formatter={(value) => <span className="text-white/60 text-xs font-bold uppercase tracking-wider">{value}</span>} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 )}
@@ -248,19 +251,19 @@ export default function AdminAnalyticsPage() {
                         </div>
 
                         {/* Age Ranges (Bar) */}
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <h3 className="text-lg font-bold text-gray-800 mb-6">Users by Age Range</h3>
+                        <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-xl">
+                            <h3 className="text-lg font-black text-white mb-6">Users by Age Range</h3>
                             <div className="h-64 flex flex-col items-center justify-center">
                                 {ageData.length === 0 ? (
-                                    <div className="text-gray-400 text-sm">No age data recorded</div>
+                                    <div className="text-white/20 text-sm italic">No age data recorded</div>
                                 ) : (
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart data={ageData}>
-                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F3F4F6" />
-                                            <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{ fill: '#9CA3AF', fontSize: 12 }} />
-                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: '#9CA3AF', fontSize: 12 }} />
-                                            <Tooltip cursor={{ fill: '#F9FAFB' }} />
-                                            <Bar dataKey="count" fill="#4A6F5D" radius={[4, 4, 0, 0]} />
+                                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                                            <XAxis dataKey="range" axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 700 }} />
+                                            <YAxis axisLine={false} tickLine={false} tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10, fontWeight: 700 }} />
+                                            <Tooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px' }} />
+                                            <Bar dataKey="count" fill="#10b981" fillOpacity={0.4} radius={[4, 4, 0, 0]} />
                                         </BarChart>
                                     </ResponsiveContainer>
                                 )}
@@ -268,19 +271,19 @@ export default function AdminAnalyticsPage() {
                         </div>
 
                         {/* Country Chart (Bar) */}
-                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 lg:col-span-2">
-                            <h3 className="text-lg font-bold text-gray-800 mb-6">Users by Country</h3>
+                        <div className="bg-white/5 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-xl lg:col-span-2">
+                            <h3 className="text-lg font-black text-white mb-6">Users by Country</h3>
                             <div className="h-80 flex flex-col items-center justify-center">
                                 {countryData.length === 0 ? (
-                                    <div className="text-gray-400 text-sm">No geographic data available</div>
+                                    <div className="text-white/20 text-sm italic">No geographic data available</div>
                                 ) : (
                                     <ResponsiveContainer width="100%" height="100%">
                                         <BarChart data={countryData} layout="vertical">
-                                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#F3F4F6" />
+                                            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="rgba(255,255,255,0.05)" />
                                             <XAxis type="number" hide />
-                                            <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} width={120} tick={{ fill: '#4B5563', fontSize: 13, fontWeight: 500 }} />
-                                            <Tooltip cursor={{ fill: '#F9FAFB' }} />
-                                            <Bar dataKey="value" fill="#6B7280" radius={[0, 6, 6, 0]} barSize={24} />
+                                            <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} width={120} tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 11, fontWeight: 700 }} />
+                                            <Tooltip cursor={{ fill: 'rgba(255,255,255,0.05)' }} contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px' }} />
+                                            <Bar dataKey="value" fill="#ffffff" fillOpacity={0.1} radius={[0, 6, 6, 0]} barSize={24} />
                                         </BarChart>
                                     </ResponsiveContainer>
                                 )}
@@ -289,38 +292,38 @@ export default function AdminAnalyticsPage() {
                     </div>
 
                     {/* Users Table Section */}
-                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="p-6 sm:p-8 border-b border-gray-50 bg-gray-50/30">
+                    <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl overflow-hidden">
+                        <div className="p-6 sm:p-8 border-b border-white/5 bg-white/5">
                             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                                 <div>
-                                    <h3 className="text-xl font-bold text-gray-800">Platform Users</h3>
-                                    <p className="text-gray-500 text-sm mt-1">Detailed directory for analysis.</p>
+                                    <h3 className="text-xl font-black text-white uppercase tracking-tight">Platform Users</h3>
+                                    <p className="text-white/40 text-[11px] font-bold uppercase tracking-widest mt-1">Detailed directory for analysis</p>
                                 </div>
 
                                 <div className="flex flex-wrap items-center gap-4">
                                     {/* Search */}
-                                    <div className="relative">
-                                        <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                    <div className="relative group">
+                                        <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
                                         <input
                                             type="text"
                                             placeholder="Search name/email..."
                                             value={searchTerm}
                                             onChange={(e) => { setSearchTerm(e.target.value); setPage(1); }}
-                                            className="pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#4A6F5D] outline-none transition w-full sm:w-64"
+                                            className="pl-12 pr-6 py-3.5 bg-white/5 border border-transparent rounded-2xl text-sm font-medium text-white placeholder:text-white/20 focus:bg-white/10 focus:border-emerald-500/30 outline-none transition w-full sm:w-72"
                                         />
                                     </div>
 
                                     {/* Role Filter */}
                                     <div className="relative">
-                                        <FiFilter className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                                        <FiFilter className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
                                         <select
                                             value={roleFilter}
                                             onChange={(e) => { setRoleFilter(e.target.value); setPage(1); }}
-                                            className="pl-10 pr-8 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#4A6F5D] outline-none appearance-none transition"
+                                            className="pl-12 pr-10 py-3.5 bg-white/5 border border-transparent rounded-2xl text-sm font-bold text-white/70 focus:bg-white/10 focus:border-emerald-500/30 outline-none appearance-none transition cursor-pointer"
                                         >
-                                            <option value="">All Roles</option>
-                                            <option value="user">USER</option>
-                                            <option value="seller">SELLER</option>
+                                            <option value="" className="bg-stone-900">All Roles</option>
+                                            <option value="user" className="bg-stone-900">USER</option>
+                                            <option value="seller" className="bg-stone-900">SELLER</option>
                                         </select>
                                     </div>
                                 </div>
@@ -330,47 +333,57 @@ export default function AdminAnalyticsPage() {
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead>
-                                    <tr className="bg-gray-50/50 border-b border-gray-100">
-                                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">User</th>
-                                        <th className="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Region</th>
-                                        <th className="px-6 py-4 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Age</th>
-                                        <th className="px-6 py-4 text-center text-xs font-bold text-gray-400 uppercase tracking-wider">Role</th>
-                                        <th className="px-6 py-4 text-right text-xs font-bold text-gray-400 uppercase tracking-wider">Joined At</th>
+                                    <tr className="bg-white/5 border-b border-white/5">
+                                        <th className="px-8 py-5 text-left text-[10px] font-black text-white/30 uppercase tracking-widest">User</th>
+                                        <th className="px-8 py-5 text-left text-[10px] font-black text-white/30 uppercase tracking-widest">Region</th>
+                                        <th className="px-8 py-5 text-center text-[10px] font-black text-white/30 uppercase tracking-widest">Age</th>
+                                        <th className="px-8 py-5 text-center text-[10px] font-black text-white/30 uppercase tracking-widest">Role</th>
+                                        <th className="px-8 py-5 text-right text-[10px] font-black text-white/30 uppercase tracking-widest">Joined At</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-50">
+                                <tbody className="divide-y divide-white/5">
                                     {tableLoading ? (
                                         <tr>
-                                            <td colSpan={5} className="px-6 py-12 text-center text-gray-400">Loading user rows...</td>
+                                            <td colSpan={5} className="px-8 py-24 text-center">
+                                                <div className="flex flex-col items-center gap-4">
+                                                    <div className="w-10 h-10 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin"></div>
+                                                    <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Syncing directory...</span>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ) : (Array.isArray(usersList.data) ? usersList.data : []).length === 0 ? (
                                         <tr>
-                                            <td colSpan={5} className="px-6 py-12 text-center text-gray-400">No users found match the criteria.</td>
+                                            <td colSpan={5} className="px-8 py-24 text-center">
+                                                <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-4 text-white/10">
+                                                    <FiUsers size={32} />
+                                                </div>
+                                                <p className="text-white/20 text-sm font-medium">No matches in current directory</p>
+                                            </td>
                                         </tr>
                                     ) : (Array.isArray(usersList.data) ? usersList.data : []).map((u: any) => (
-                                        <tr key={u.id} className="hover:bg-gray-50/50 transition">
-                                            <td className="px-6 py-4">
+                                        <tr key={u.id} className="hover:bg-white/5 transition-all group">
+                                            <td className="px-8 py-5">
                                                 <div>
-                                                    <div className="font-bold text-gray-800">{u.name}</div>
-                                                    <div className="text-xs text-gray-500">{u.email}</div>
+                                                    <div className="font-bold text-white group-hover:text-emerald-400 transition-colors uppercase tracking-tight">{u.name}</div>
+                                                    <div className="text-[11px] text-white/30 font-medium">{u.email}</div>
                                                 </div>
                                             </td>
-                                            <td className="px-6 py-4">
-                                                <div className="text-sm text-gray-600 font-medium">{u.country || "Unknown"}</div>
+                                            <td className="px-8 py-5">
+                                                <div className="text-xs text-white/60 font-medium uppercase tracking-wide">{u.country || "Unknown"}</div>
                                             </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <div className="text-sm text-gray-600">{u.age || "N/A"}</div>
+                                            <td className="px-8 py-5 text-center">
+                                                <div className="text-xs text-white/60 font-bold">{u.age || "-"}</div>
                                             </td>
-                                            <td className="px-6 py-4 text-center">
-                                                <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wide uppercase ${u.role === "SELLER"
-                                                    ? "bg-emerald-100 text-emerald-700"
-                                                    : "bg-blue-100 text-blue-700"
+                                            <td className="px-8 py-5 text-center">
+                                                <span className={`px-2.5 py-1 rounded-lg text-[9px] font-black tracking-widest uppercase border ${u.role === "SELLER"
+                                                    ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                                    : "bg-blue-500/10 text-blue-400 border-blue-500/20"
                                                     }`}>
                                                     {u.role}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 text-right">
-                                                <div className="text-xs text-gray-400 font-medium">
+                                            <td className="px-8 py-5 text-right">
+                                                <div className="text-[10px] text-white/30 font-bold uppercase tracking-widest">
                                                     {u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "N/A"}
                                                 </div>
                                             </td>
@@ -382,25 +395,24 @@ export default function AdminAnalyticsPage() {
 
                         {/* Pagination */}
                         {totalPages > 1 && (
-                            <div className="px-6 py-4 bg-gray-50/30 border-t border-gray-50 flex items-center justify-between">
-                                <div className="text-xs text-gray-400 font-medium">
-                                    Showing {(Array.isArray(usersList.data) ? usersList.data : []).length} of {usersList.meta?.total || 0} users
+                            <div className="px-8 py-6 bg-white/5 border-t border-white/5 flex items-center justify-between">
+                                <div className="text-[10px] text-white/20 font-black uppercase tracking-widest">
+                                    Page <span className="text-white/60">{page}</span> of {totalPages}
                                 </div>
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-4">
                                     <button
                                         onClick={() => setPage(p => Math.max(1, p - 1))}
                                         disabled={page === 1}
-                                        className="p-2 bg-white border border-gray-200 rounded-lg shadow-sm disabled:opacity-50 hover:bg-gray-50 transition"
+                                        className="p-3 bg-white/5 border border-white/10 rounded-xl text-white/40 shadow-sm disabled:opacity-20 hover:text-white hover:border-emerald-500/50 transition-all"
                                     >
-                                        <FiChevronLeft size={16} />
+                                        <FiChevronLeft size={18} />
                                     </button>
-                                    <span className="text-sm font-bold text-gray-600 px-2">{page} / {totalPages}</span>
                                     <button
                                         onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                         disabled={page === totalPages}
-                                        className="p-2 bg-white border border-gray-200 rounded-lg shadow-sm disabled:opacity-50 hover:bg-gray-50 transition"
+                                        className="p-3 bg-white/5 border border-white/10 rounded-xl text-white/40 shadow-sm disabled:opacity-20 hover:text-white hover:border-emerald-500/50 transition-all"
                                     >
-                                        <FiChevronRight size={16} />
+                                        <FiChevronRight size={18} />
                                     </button>
                                 </div>
                             </div>

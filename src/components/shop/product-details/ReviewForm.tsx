@@ -67,73 +67,79 @@ export default function ReviewForm({
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm space-y-4">
-            <h4 className="font-bold text-gray-900 text-lg">
-                {isEditing ? "Edit Your Review" : "Share Your Experience"}
+        <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-2xl rounded-[3rem] p-10 border border-white/10 shadow-2xl space-y-8 animate-in zoom-in duration-500">
+            <h4 className="text-2xl font-black text-white uppercase tracking-tighter mb-4">
+                {isEditing ? "Modify Narrative" : "Register experience"}
             </h4>
 
-            <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-500">How would you rate this product?</label>
-                <StarRating
-                    rating={rating}
-                    interactive
-                    onRatingChange={setRating}
-                    size={28}
-                />
+            <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">How would you calibrate this unit?</label>
+                <div className="p-4 bg-white/5 rounded-2xl border border-white/5 shadow-inner inline-block">
+                    <StarRating
+                        rating={rating}
+                        interactive
+                        onRatingChange={setRating}
+                        size={32}
+                    />
+                </div>
             </div>
 
-            <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-500">Your Comment (Optional)</label>
+            <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Qualitative Assessment (Optional)</label>
                 <textarea
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    placeholder="Tell us what you liked or disliked..."
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#4A6F5D] focus:border-transparent transition-all outline-none min-h-[100px] resize-none text-gray-700"
+                    placeholder="Document your experience with this artifact..."
+                    className="w-full px-6 py-5 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-white/10 focus:border-emerald-500/30 focus:bg-white/[0.08] transition-all outline-none min-h-[140px] resize-none text-base"
                 />
             </div>
 
-            <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-500">Attach a photo (Optional)</label>
-                <div className="flex items-center gap-4">
+            <div className="space-y-4">
+                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Visual Evidence (Optional)</label>
+                <div className="flex items-center gap-6">
                     {imageUrl ? (
-                        <div className="relative group w-20 h-20">
-                            <img src={imageUrl} alt="Review" className="w-full h-full object-cover rounded-lg border border-gray-200" />
+                        <div className="relative group w-24 h-24">
+                            <img src={imageUrl} alt="Review" className="w-full h-full object-cover rounded-2xl border border-white/10 shadow-2xl transition-transform group-hover:scale-105" />
                             <button
                                 type="button"
                                 onClick={() => setImageUrl("")}
-                                className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+                                className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full p-1.5 shadow-xl opacity-0 group-hover:opacity-100 transition-opacity z-10"
                             >
-                                <FiX size={12} />
+                                <FiX size={14} />
                             </button>
                         </div>
                     ) : (
-                        <label className="cursor-pointer w-20 h-20 rounded-lg border-2 border-dashed border-gray-200 flex flex-col items-center justify-center hover:border-[#4A6F5D] hover:bg-gray-50 transition-all text-gray-400">
+                        <label className="cursor-pointer w-24 h-24 rounded-2xl border-2 border-dashed border-white/10 flex flex-col items-center justify-center hover:border-emerald-500/30 hover:bg-white/5 transition-all text-white/20 group">
                             <input type="file" className="hidden" accept="image/*" onChange={handleImageChange} disabled={uploading} />
-                            {uploading ? <FiLoader className="animate-spin" size={20} /> : <FiCamera size={20} />}
-                            <span className="text-[10px] font-medium mt-1">{uploading ? "Uploading..." : "Add Photo"}</span>
+                            {uploading ? <FiLoader className="animate-spin" size={24} /> : <FiCamera size={24} className="group-hover:scale-110 transition-transform" />}
+                            <span className="text-[9px] font-black uppercase tracking-widest mt-2">{uploading ? "TRANSF..." : "ADD VISUAL"}</span>
                         </label>
                     )}
                 </div>
             </div>
 
-            {error && <p className="text-red-500 text-xs font-medium">{error}</p>}
+            {error && (
+                <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest px-4 py-3 rounded-xl animate-bounce">
+                    Error: {error}
+                </div>
+            )}
 
-            <div className="flex gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <button
                     type="submit"
                     disabled={submitting || uploading || rating === 0}
-                    className="flex-1 bg-[#4A6F5D] text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#3d5c4d] disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md active:scale-95"
+                    className="flex-1 bg-emerald-600/20 text-emerald-400 py-5 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-3 border border-emerald-500/20 hover:bg-emerald-600/30 disabled:opacity-20 transition-all shadow-2xl active:scale-[0.98]"
                 >
                     {submitting ? <FiLoader className="animate-spin" /> : <FiSend />}
-                    {isEditing ? "Update Review" : "Post Review"}
+                    {isEditing ? "Sync Modified Narrative" : "Commit to Global Manifest"}
                 </button>
                 {onCancel && (
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="px-6 py-3 rounded-xl font-bold text-gray-500 hover:bg-gray-100 transition-all"
+                        className="px-10 py-5 rounded-2xl text-[11px] font-black uppercase tracking-[0.2em] text-white/20 hover:text-white hover:bg-white/5 transition-all active:scale-95"
                     >
-                        Cancel
+                        Abort Modification
                     </button>
                 )}
             </div>

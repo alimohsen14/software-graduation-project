@@ -1,11 +1,11 @@
-/* eslint-disable */
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import AuthLayout from "../components/auth/AuthLayout";
+import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 
 export function LoginPage() {
-  const [tab, setTab] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -27,7 +27,6 @@ export function LoginPage() {
 
       await login({ email, password });
 
-      // Update global auth state before navigating
       const userData = await refreshUser();
 
       if (userData) {
@@ -45,7 +44,6 @@ export function LoginPage() {
     }
   };
 
-  // 🟢 Google Login
   const handleGoogleLogin = () => {
     const GOOGLE_CLIENT_ID =
       "553195983261-00uvqi0ur841q0urmjakc87abu40ql0r.apps.googleusercontent.com";
@@ -61,90 +59,105 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-      <div className="relative z-10 w-full max-w-md">
-        <header className="text-center mb-6">
-          <h1 className="text-2xl font-extrabold text-gray-800">
-            Palestine 3D | فلسطين ثلاثية الأبعاد
-          </h1>
-        </header>
+    <AuthLayout>
+      <div className="flex flex-col">
+        {/* Tabs */}
+        <div className="flex border-b border-white/10 mb-8">
+          <button
+            className="flex-1 pb-4 text-center border-b-2 border-emerald-500 font-bold text-emerald-500"
+          >
+            Login
+          </button>
+          <button
+            onClick={() => navigate("/signup")}
+            className="flex-1 pb-4 text-center border-b-2 border-transparent font-semibold text-white/40 hover:text-white/70 transition-colors"
+          >
+            Sign Up
+          </button>
+        </div>
 
-        <div className="rounded-2xl p-1 bg-gradient-to-r from-green-200/60 via-transparent to-red-200/40 shadow-xl">
-          <div className="bg-white rounded-2xl shadow-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex gap-1 bg-gray-100 rounded-full p-1">
-                <button
-                  onClick={() => setTab("login")}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${tab === "login"
-                    ? "bg-white text-red-600 shadow-sm"
-                    : "text-gray-500 hover:text-gray-700"
-                    }`}
-                >
-                  Login
-                </button>
-                <button
-                  onClick={() => navigate("/signup")}
-                  className="px-4 py-2 rounded-full text-sm font-medium text-gray-500 hover:text-gray-700"
-                >
-                  Sign Up
-                </button>
-              </div>
-            </div>
+        {error && (
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-200 text-sm rounded-2xl text-center font-medium">
+            {error}
+          </div>
+        )}
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && <div className="text-red-500 text-sm">{error}</div>}
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative group">
+            <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              placeholder="Email Address"
+              required
+            />
+          </div>
 
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md bg-gray-50"
-                placeholder="you@example.com"
-              />
+          <div className="relative group">
+            <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              placeholder="Password"
+              required
+            />
+          </div>
 
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border rounded-md bg-gray-50"
-                placeholder="********"
-              />
+          <div className="flex justify-end">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-sm text-white/40 hover:text-emerald-400 font-medium transition-colors"
+            >
+              Forgot Password?
+            </button>
+          </div>
 
-              <div className="flex justify-end -mt-2">
-                <button
-                  type="button"
-                  onClick={() => navigate("/forgot-password")}
-                  className="text-sm text-red-600 hover:text-red-700 font-medium"
-                >
-                  Forgot Password?
-                </button>
-              </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 py-4 bg-[#CE1126] text-white rounded-2xl font-bold shadow-xl shadow-red-900/40 hover:bg-[#e6122a] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed group"
+          >
+            <span className="text-lg">{loading ? "Logging in..." : "Login"}</span>
+            {!loading && <FiArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
+          </button>
+        </form>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors"
-              >
-                {loading ? "Logging in..." : "Login"}
-              </button>
-            </form>
-
-            <div className="mt-6">
-              <button
-                onClick={handleGoogleLogin}
-                className="w-full flex items-center justify-center gap-3 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition-all shadow-sm"
-              >
-                <img
-                  src="https://developers.google.com/identity/images/g-logo.png"
-                  alt="Google Logo"
-                  className="w-5 h-5"
-                />
-                <span>Log in with Google</span>
-              </button>
-            </div>
+        <div className="relative my-10">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-white/10"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-4 bg-[#1a130f] text-white/30 font-bold tracking-widest uppercase">or</span>
           </div>
         </div>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="w-full flex items-center justify-center gap-3 py-4 bg-white/5 border border-white/10 text-white rounded-2xl font-bold hover:bg-white/10 hover:border-white/20 active:scale-[0.98] transition-all"
+        >
+          <img
+            src="https://developers.google.com/identity/images/g-logo.png"
+            alt="Google Logo"
+            className="w-5 h-5 opacity-90"
+          />
+          <span>Continue with Google</span>
+        </button>
+
+        <p className="mt-10 text-center text-sm text-white/40">
+          Don't have an account?{" "}
+          <button
+            onClick={() => navigate("/signup")}
+            className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors"
+          >
+            Sign up
+          </button>
+        </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

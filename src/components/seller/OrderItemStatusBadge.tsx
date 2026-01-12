@@ -9,26 +9,26 @@ export default function OrderItemStatusBadge({ status }: OrderItemStatusBadgePro
     const getStatusStyles = (status: OrderItemStatus) => {
         switch (status) {
             case 'PENDING_APPROVAL':
-                return 'bg-amber-100 text-amber-800 border-amber-200';
+                return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
             case 'APPROVED':
-                return 'bg-green-100 text-green-800 border-green-200';
+                return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
             case 'SHIPPED':
-                return 'bg-blue-100 text-blue-800 border-blue-200';
+                return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
             case 'DELIVERED':
-                return 'bg-gray-100 text-gray-800 border-gray-200';
+                return 'bg-white/5 text-white/40 border-white/10';
             case 'REJECTED':
-                return 'bg-red-100 text-red-800 border-red-200';
+                return 'bg-red-500/10 text-red-500 border-red-500/20';
             default:
-                return 'bg-gray-100 text-gray-800 border-gray-200';
+                return 'bg-white/5 text-white/40 border-white/10';
         }
     };
 
     const formatStatus = (status: string) => {
-        return status.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+        return status.replace(/_/g, ' ').toUpperCase();
     };
 
     return (
-        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border transition-colors duration-200 ${getStatusStyles(status)}`}>
+        <span className={`inline-flex items-center px-4 py-1.5 rounded-xl text-[9px] font-black tracking-widest border backdrop-blur-md transition-all duration-300 ${getStatusStyles(status)}`}>
             {formatStatus(status)}
         </span>
     );

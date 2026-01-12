@@ -190,102 +190,108 @@ export default function StorePage() {
 
     return (
         <DashboardLayout>
-            <div className="w-full min-h-screen p-4 sm:p-8 lg:p-10">
+            <div className="w-full min-h-screen p-6 sm:p-12 lg:p-20 animate-in fade-in duration-700">
                 <div className="max-w-7xl mx-auto">
                     {/* Back Navigation */}
                     <button
                         onClick={() => navigate("/marketplace")}
-                        className="flex items-center gap-2 text-gray-500 hover:text-[#4A6F5D] mb-8 font-semibold text-sm transition group"
+                        className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-white mb-12 transition-all group"
                     >
                         <FiArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                        Explore Marketplace
+                        Marketplace Exit Terminal
                     </button>
 
                     {/* Store Branding Header */}
-                    <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-6 sm:p-10 mb-10 overflow-hidden relative">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-[#4A6F5D]/5 rounded-bl-[5rem] -mr-10 -mt-10"></div>
+                    <div className="bg-white/5 backdrop-blur-2xl rounded-[4rem] border border-white/10 shadow-2xl p-10 md:p-16 mb-16 overflow-hidden relative group">
+                        {/* Background decorative glows */}
+                        <div className="absolute -top-40 -left-40 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-emerald-500/10 transition-all duration-1000" />
+                        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-indigo-500/10 transition-all duration-1000" />
 
-                        <div className="flex flex-col md:flex-row items-center md:items-start gap-8 relative z-10">
+                        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 relative z-10">
                             {/* Logo Wrapper */}
-                            <div className="w-28 h-28 bg-[#f8faf9] rounded-3xl flex items-center justify-center overflow-hidden border-2 border-white shadow-xl rotate-3 hover:rotate-0 transition-transform duration-500 shrink-0">
+                            <div className="w-40 h-40 bg-zinc-900 rounded-[3rem] flex items-center justify-center overflow-hidden border border-white/10 shadow-2xl transition-transform duration-700 group-hover:scale-105 shrink-0 relative">
                                 {store?.logo ? (
                                     <img src={store.logo} alt={store.name} className="w-full h-full object-cover" />
                                 ) : (
-                                    <FiShoppingBag className="w-12 h-12 text-[#4A6F5D]/30" />
+                                    <FiShoppingBag className="w-16 h-16 text-white/10" />
                                 )}
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                             </div>
 
                             {/* Store Details Info */}
-                            <div className="flex-1 w-full text-center md:text-left">
-                                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
+                            <div className="flex-1 w-full text-center lg:text-left">
+                                <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-10 mb-10">
                                     <div>
-                                        <div className="flex items-center justify-center md:justify-start flex-wrap gap-3 mb-2">
-                                            <h1 className="text-4xl font-black text-[#1F2933] tracking-tight">{store?.name}</h1>
+                                        <div className="flex items-center justify-center lg:justify-start flex-wrap gap-5 mb-4">
+                                            <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter uppercase leading-none">{store?.name}</h1>
                                             {store?.isOfficial && (
-                                                <div className="bg-[#4A6F5D] text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1 shadow-sm">
-                                                    <FiShield size={12} />
-                                                    Official
+                                                <div className="bg-indigo-600/20 text-indigo-400 border border-indigo-500/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2 shadow-lg shadow-indigo-500/5">
+                                                    <FiShield size={14} />
+                                                    Verified Custodian
                                                 </div>
                                             )}
                                         </div>
                                         {store?.ownerName && (
-                                            <div className="flex items-center justify-center md:justify-start gap-2 text-gray-500 font-medium">
-                                                <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center">
-                                                    <FiUser size={12} className="text-[#4A6F5D]" />
+                                            <div className="flex items-center justify-center lg:justify-start gap-3">
+                                                <div className="w-8 h-8 bg-white/5 rounded-full flex items-center justify-center border border-white/5 shadow-inner">
+                                                    <FiUser size={14} className="text-emerald-500" />
                                                 </div>
-                                                <span>Curated by <span className="text-gray-900 font-bold">{store.ownerName}</span></span>
+                                                <span className="text-[11px] font-black uppercase tracking-widest text-white/30">Registry Lead: <span className="text-white">{store.ownerName}</span></span>
                                             </div>
                                         )}
                                     </div>
 
                                     {/* Interaction Buttons */}
-                                    <div className="flex items-center justify-center gap-3">
+                                    <div className="flex items-center justify-center gap-4">
                                         <button
                                             onClick={handleToggleFavorite}
                                             disabled={togglingFavorite}
-                                            className={`p-3 rounded-2xl border transition-all duration-300 ${isFavorited
-                                                ? "bg-red-50 border-red-100 text-red-500 shadow-sm"
-                                                : "bg-white border-gray-100 text-gray-400 hover:border-red-200 hover:text-red-400"
+                                            className={`w-14 h-14 rounded-2xl border transition-all duration-300 flex items-center justify-center shadow-xl ${isFavorited
+                                                ? "bg-red-500/20 border-red-500/30 text-red-500 shadow-red-500/5"
+                                                : "bg-white/5 border-white/10 text-white/20 hover:border-red-500/40 hover:text-red-400"
                                                 }`}
-                                            title={isFavorited ? "Remove from favorites" : "Add to favorites"}
+                                            title={isFavorited ? "Remove priority" : "Mark priority"}
                                         >
-                                            <FiHeart size={20} fill={isFavorited ? "currentColor" : "none"} />
+                                            <FiHeart size={22} fill={isFavorited ? "currentColor" : "none"} className={togglingFavorite ? "animate-pulse" : ""} />
                                         </button>
                                         <button
                                             onClick={handleToggleFollow}
                                             disabled={togglingFollow}
-                                            className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-bold transition-all duration-300 ${isFollowed
-                                                ? "bg-emerald-50 text-emerald-600 border border-emerald-100"
-                                                : "bg-[#4A6F5D] text-white shadow-lg shadow-[#4A6F5D]/20 hover:-translate-y-0.5"
+                                            className={`flex items-center gap-3 px-10 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all duration-300 shadow-2xl border ${isFollowed
+                                                ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-emerald-500/5"
+                                                : "bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-600/30 active:scale-95"
                                                 }`}
                                         >
                                             {isFollowed ? (
-                                                <><FiCheck size={18} /> Following</>
+                                                <><FiCheck size={18} /> Established</>
                                             ) : (
-                                                <><FiPlus size={18} /> Follow Store</>
+                                                <><FiPlus size={18} /> Establish Link</>
                                             )}
                                         </button>
                                     </div>
                                 </div>
 
                                 {store?.description ? (
-                                    <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto md:mx-0 text-sm md:text-base">
+                                    <p className="text-white/40 leading-relaxed max-w-3xl mx-auto lg:mx-0 text-base md:text-lg font-medium">
                                         {store.description}
                                     </p>
                                 ) : (
-                                    <p className="text-gray-400 italic text-sm">Welcome to our official store page on Palestine 3D.</p>
+                                    <p className="text-white/20 uppercase tracking-widest text-xs italic">Registry entry pending detailed documentation.</p>
                                 )}
                             </div>
                         </div>
                     </div>
 
-                    {/* Products Section */}
-                    <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-[#4A6F5D]/10 rounded-xl flex items-center justify-center">
-                                <FiPackage className="text-[#4A6F5D]" />
+                    {/* Products Section Header */}
+                    <div className="mb-12 flex flex-col md:flex-row md:items-center justify-between gap-8 relative z-10">
+                        <div className="flex items-center gap-5">
+                            <div className="w-14 h-14 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 flex items-center justify-center text-emerald-400 shadow-xl shadow-emerald-500/5">
+                                <FiPackage className="w-6 h-6" />
                             </div>
-                            <h2 className="text-2xl font-bold text-[#1F2933]">Available Products</h2>
+                            <div>
+                                <h2 className="text-3xl font-black text-white tracking-tighter uppercase leading-none mb-2">Unit Inventory</h2>
+                                <p className="text-white/30 text-[10px] font-black uppercase tracking-[0.2em] leading-none">Catalog Manifest</p>
+                            </div>
                         </div>
                     </div>
 
@@ -296,18 +302,19 @@ export default function StorePage() {
                     />
 
                     {loading ? (
-                        <div className="min-h-[200px] flex items-center justify-center">
-                            <div className="w-8 h-8 border-4 border-[#4A6F5D]/20 border-t-[#4A6F5D] rounded-full animate-spin"></div>
+                        <div className="min-h-[400px] flex flex-col items-center justify-center animate-pulse">
+                            <div className="w-12 h-12 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin mb-6"></div>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-white/20">Syncing Catalog...</span>
                         </div>
                     ) : products.length === 0 ? (
-                        <div className="bg-white rounded-[2rem] border-2 border-dashed border-gray-100 flex flex-col items-center justify-center py-20 px-4 text-center">
-                            <FiPackage className="w-16 h-16 text-gray-200 mb-6" />
-                            <h3 className="text-xl font-bold text-gray-500 mb-2">No Products Found</h3>
-                            <p className="text-gray-400 max-w-xs">No products match your current price filter. Please try a different range.</p>
+                        <div className="bg-white/5 backdrop-blur-md rounded-[3rem] border border-white/10 flex flex-col items-center justify-center py-32 px-10 text-center animate-in zoom-in duration-500 shadow-2xl">
+                            <FiPackage className="w-20 h-20 text-white/10 mb-8" />
+                            <h3 className="text-2xl font-black text-white uppercase tracking-tighter mb-2">Null Manifest</h3>
+                            <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">No units available in current segment.</p>
                         </div>
                     ) : (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
                                 {products.map((product) => (
                                     <MarketplaceProductCard
                                         key={product.id}
@@ -320,26 +327,26 @@ export default function StorePage() {
 
                             {/* Pagination Controls */}
                             {totalPages > 1 && (
-                                <div className="mt-12 flex items-center justify-center gap-2">
+                                <div className="mt-20 flex items-center justify-center gap-4">
                                     <button
                                         onClick={() => handlePageChange(Math.max(1, (filters.page || 1) - 1))}
                                         disabled={filters.page === 1}
-                                        className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                        className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white/30 hover:bg-white/10 hover:text-white disabled:opacity-20 transition-all shadow-xl active:scale-95"
                                     >
-                                        Previous
+                                        Previous Segment
                                     </button>
 
-                                    <div className="flex items-center gap-1">
+                                    <div className="flex items-center gap-2">
                                         {[...Array(totalPages)].map((_, i) => (
                                             <button
                                                 key={i + 1}
                                                 onClick={() => handlePageChange(i + 1)}
-                                                className={`w-10 h-10 rounded-xl text-sm font-bold transition flex items-center justify-center ${(filters.page || 1) === i + 1
-                                                    ? "bg-[#4A6F5D] text-white shadow-md"
-                                                    : "bg-white text-gray-500 border border-gray-100 hover:bg-emerald-50 hover:text-[#4A6F5D]"
+                                                className={`w-12 h-12 rounded-2xl text-[10px] font-black transition-all flex items-center justify-center border ${(filters.page || 1) === i + 1
+                                                        ? "bg-emerald-600/20 text-emerald-400 border-emerald-500/20 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                                                        : "bg-white/5 text-white/30 border-white/10 hover:bg-white/10 hover:text-white"
                                                     }`}
                                             >
-                                                {i + 1}
+                                                {String(i + 1).padStart(2, '0')}
                                             </button>
                                         ))}
                                     </div>
@@ -347,9 +354,9 @@ export default function StorePage() {
                                     <button
                                         onClick={() => handlePageChange(Math.min(totalPages, (filters.page || 1) + 1))}
                                         disabled={filters.page === totalPages}
-                                        className="px-4 py-2 border border-emerald-100 rounded-xl text-sm font-bold text-[#4A6F5D] bg-white hover:bg-emerald-50 disabled:opacity-50 transition shadow-sm"
+                                        className="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white/30 hover:bg-white/10 hover:text-white disabled:opacity-20 transition-all shadow-xl active:scale-95"
                                     >
-                                        Next
+                                        Next Segment
                                     </button>
                                 </div>
                             )}

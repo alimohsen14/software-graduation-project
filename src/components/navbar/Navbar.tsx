@@ -1,9 +1,9 @@
-// src/components/Navbar/Navbar.tsx
 import React, { useState, useRef, useEffect } from "react";
 import { FiMenu, FiUser, FiGlobe } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import NotificationBell from "./NotificationBell";
 import { useAuth } from "../../context/AuthContext";
+import Palestine3DLogo from "../common/Palestine3DLogo";
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -30,7 +30,6 @@ export default function Navbar({
     setShowLanguageMenu(false);
   };
 
-  // closes dropdown if clicked outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -45,72 +44,70 @@ export default function Navbar({
   }, []);
 
   return (
-    <header className="w-full bg-[#eaf5ea] border-b-2 border-emerald-700/30 shadow-sm">
-      <div className="w-full px-6">
+    <header className="w-full border-b border-white/15 shadow-md shadow-black/20 backdrop-blur-sm">
+
+
+
+      <div className="w-full px-6 md:px-10">
         <div className="h-16 flex items-center justify-between">
 
-          {/* Menu + Brand */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <button
               onClick={onMenuClick}
-              className="p-2 rounded-md hover:bg-emerald-100 transition"
+              className="p-2 rounded-xl text-white/60 hover:text-white/90 hover:bg-white/5 transition-all active:scale-95"
             >
-              <FiMenu className="w-6 h-6 text-[#2f5c3f]" />
+              <FiMenu className="w-5 h-5" />
             </button>
 
-            <span className="text-2xl sm:text-3xl font-extrabold text-[#2f5c3f]">
-              Palestine3D
-            </span>
+            <div className="flex flex-col">
+              <Palestine3DLogo size="sm" className="!items-start" />
+            </div>
           </div>
 
-          {/* Icons */}
-          <div className="flex items-center gap-3 relative" ref={dropdownRef}>
-            {/* Notifications */}
+          <div className="flex items-center gap-3 md:gap-5 relative" ref={dropdownRef}>
             <NotificationBell />
 
-            {/* Language Selector */}
-            <button
-              onClick={toggleLanguageMenu}
-              aria-label={t("navbar.changeLanguage")}
-              className="p-2 hover:bg-emerald-100 rounded-full transition focus:ring-2 focus:ring-emerald-300"
-            >
-              <span className="inline-flex items-center justify-center w-9 h-9 bg-white/60 border border-emerald-200 rounded-full">
-                <FiGlobe className="w-5 h-5 text-[#2f5c3f]" />
-              </span>
-            </button>
-
-            {/* Dropdown Menu */}
-            {showLanguageMenu && (
-              <div
-                className={`absolute mt-12 ${i18n.language === "ar" ? "left-0" : "right-0"
-                  } bg-white shadow-lg border rounded-lg w-32 p-2 z-50`}
+            <div className="relative">
+              <button
+                onClick={toggleLanguageMenu}
+                aria-label={t("navbar.changeLanguage")}
+                className="p-2 text-white/60 hover:text-white/90 hover:bg-white/5 rounded-xl transition-all active:scale-95 group"
               >
-                <button
-                  onClick={() => changeLanguage("en")}
-                  className={`block w-full text-left px-3 py-2 rounded ${i18n.language === "en"
-                    ? "bg-emerald-100 font-semibold"
-                    : "hover:bg-gray-100"
-                    }`}
-                >
-                  English
-                </button>
-                <button
-                  onClick={() => changeLanguage("ar")}
-                  className={`block w-full text-left px-3 py-2 rounded ${i18n.language === "ar"
-                    ? "bg-emerald-100 font-semibold"
-                    : "hover:bg-gray-100"
-                    }`}
-                >
-                  العربية
-                </button>
-              </div>
-            )}
+                <FiGlobe className="w-5 h-5" />
+              </button>
 
-            {/* Profile */}
-            <button className="p-2 hover:bg-emerald-100 rounded-full transition">
-              <span className="inline-flex items-center justify-center w-9 h-9 bg-white/60 border border-emerald-200 rounded-full">
-                <FiUser className="w-5 h-5 text-[#2f5c3f]" />
-              </span>
+              {showLanguageMenu && (
+                <div
+                  className={`absolute mt-3 ${i18n.language === "ar" ? "left-0" : "right-0"
+                    } bg-[#1a130f]/90 backdrop-blur-xl shadow-2xl border border-white/10 rounded-xl w-40 p-1.5 z-[60] overflow-hidden`}
+                >
+                  <button
+                    onClick={() => changeLanguage("en")}
+                    className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-lg transition-all ${i18n.language === "en"
+                      ? "bg-emerald-600/20 text-emerald-400 font-bold"
+                      : "text-white/60 hover:bg-white/5 hover:text-white"
+                      }`}
+                  >
+                    <span className="text-xs font-bold uppercase tracking-wider">English</span>
+                  </button>
+                  <button
+                    onClick={() => changeLanguage("ar")}
+                    className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-lg transition-all ${i18n.language === "ar"
+                      ? "bg-emerald-600/20 text-emerald-400 font-bold"
+                      : "text-white/60 hover:bg-white/5 hover:text-white"
+                      }`}
+                  >
+                    <span className="text-xs font-bold uppercase tracking-wider font-arabic">العربية</span>
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <button className="relative group">
+              <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white/90 group-hover:border-white/20 transition-all overflow-hidden">
+                <FiUser className="w-5 h-5" />
+              </div>
+              <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#1a130f] rounded-full shadow-sm" />
             </button>
           </div>
         </div>

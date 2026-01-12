@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { forgotPassword } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import AuthLayout from "../components/auth/AuthLayout";
+import { FiMail, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -38,58 +40,57 @@ export function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-center text-red-600 mb-4">
-          Forgot Password 🔑
-        </h2>
+    <AuthLayout>
+      <div className="flex flex-col">
+        <div className="mb-10 text-center">
+          <h2 className="text-2xl font-bold text-emerald-400">Forgot Password?</h2>
+          <p className="text-sm text-white/40 mt-2 leading-relaxed">Enter your email to receive a password reset link.</p>
+        </div>
 
         {error && (
-          <div className="text-red-500 text-center text-sm font-medium mb-3">
+          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-200 text-sm rounded-2xl text-center font-medium">
             {error}
           </div>
         )}
         {message && (
-          <div className="text-green-600 text-sm font-medium whitespace-pre-line text-center mb-3">
+          <div className="mb-6 p-5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm rounded-2xl text-center font-medium whitespace-pre-line leading-relaxed">
             {message}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Enter your email
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@example.com"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-200 bg-gray-50"
-          />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="relative group">
+            <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-3 text-white rounded-lg font-semibold shadow-sm transition-transform hover:scale-[1.01] ${
-              loading
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-red-600 hover:bg-red-700"
-            }`}
+            className="w-full flex items-center justify-center gap-2 py-4 bg-[#CE1126] text-white rounded-2xl font-bold shadow-xl shadow-red-900/40 hover:bg-[#e6122a] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed group"
           >
-            {loading ? "Sending..." : "Send Reset Link"}
+            <span className="text-lg">{loading ? "Sending..." : "Send Reset Link"}</span>
+            {!loading && <FiArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-600 mt-4">
+        <p className="mt-10 text-center text-sm text-white/40">
           Remember your password?{" "}
-          <span
-            className="text-red-600 hover:underline cursor-pointer"
+          <button
             onClick={() => navigate("/login")}
+            className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors inline-flex items-center gap-1"
           >
-            Back to Login
-          </span>
+            <FiArrowLeft size={16} /> Back to Login
+          </button>
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 }

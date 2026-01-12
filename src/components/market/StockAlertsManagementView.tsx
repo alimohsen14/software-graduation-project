@@ -25,43 +25,59 @@ export default function StockAlertsManagementView() {
     }, []);
 
     return (
-        <div className="p-6 sm:p-10 min-h-screen">
-            <div className="max-w-7xl mx-auto space-y-6">
-                <h1 className="text-2xl font-bold text-[#1d2d1f]">Stock Alerts</h1>
+        <div className="py-10 px-6 max-w-5xl mx-auto space-y-12">
+            <div>
+                <h1 className="text-4xl font-black text-white tracking-tighter uppercase mb-2">Critical Alerts</h1>
+                <p className="text-white/40 font-bold uppercase tracking-widest text-[10px]">Strategic monitoring of depleted distribution units</p>
+            </div>
 
-                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-                    <div className="px-6 py-4 border-b border-gray-100 bg-amber-50">
-                        <div className="flex items-center gap-2 text-amber-800">
-                            <FiAlertTriangle />
-                            <span className="font-bold">Low Stock Items (≤ 5)</span>
-                        </div>
+            <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl">
+                <div className="px-10 py-6 bg-amber-500/10 border-b border-amber-500/10">
+                    <div className="flex items-center gap-3 text-amber-500 uppercase tracking-widest font-black text-xs">
+                        <FiAlertTriangle size={18} />
+                        Priority Depletion (Threshold ≤ 5 Units)
                     </div>
+                </div>
 
-                    {loading ? (
-                        <div className="p-10 text-center text-gray-500">Loading alerts...</div>
-                    ) : products.length === 0 ? (
-                        <div className="p-10 text-center text-gray-500">Good news! No stock alerts.</div>
-                    ) : (
-                        <table className="w-full text-left">
-                            <thead className="bg-gray-50">
-                                <tr className="text-gray-400 text-xs font-bold uppercase">
-                                    <th className="px-6 py-3">Product</th>
-                                    <th className="px-6 py-3">Stock</th>
-                                    <th className="px-6 py-3">Price</th>
+                {loading ? (
+                    <div className="p-20 text-center">
+                        <div className="w-10 h-10 border-4 border-amber-500/10 border-t-amber-500 rounded-full animate-spin mx-auto mb-6"></div>
+                        <p className="font-black text-white/20 uppercase tracking-widest text-[10px]">Scanning Inventory Matrix...</p>
+                    </div>
+                ) : products.length === 0 ? (
+                    <div className="p-20 text-center">
+                        <div className="w-16 h-16 bg-emerald-500/10 rounded-3xl flex items-center justify-center mb-6 mx-auto border border-emerald-500/20">
+                            <FiAlertTriangle className="text-emerald-400" size={32} />
+                        </div>
+                        <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">System Optimized</h3>
+                        <p className="mt-2 font-bold text-white/20 uppercase tracking-widest text-[10px]">All SKU stock levels are currently within safe parameters.</p>
+                    </div>
+                ) : (
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="text-white/30 text-[9px] font-black uppercase tracking-[0.2em] bg-white/5">
+                                    <th className="px-10 py-5">Consignment Descriptor</th>
+                                    <th className="px-10 py-5">Residual Stock</th>
+                                    <th className="px-10 py-5">Consignment Value</th>
                                 </tr>
                             </thead>
-                            <tbody className="divide-y divide-gray-100 text-sm">
+                            <tbody className="divide-y divide-white/5 text-sm font-medium">
                                 {products.map((p) => (
-                                    <tr key={p.id}>
-                                        <td className="px-6 py-4 font-medium">{p.name}</td>
-                                        <td className="px-6 py-4 text-red-600 font-bold">{p.stock}</td>
-                                        <td className="px-6 py-4">{p.price}₪</td>
+                                    <tr key={p.id} className="hover:bg-white/5 transition-all group">
+                                        <td className="px-10 py-6 text-white font-black uppercase tracking-tight group-hover:text-amber-500 transition-colors">{p.name}</td>
+                                        <td className="px-10 py-6 text-red-500 font-black tracking-widest">
+                                            <span className="px-3 py-1 bg-red-500/10 rounded-lg border border-red-500/20">
+                                                {p.stock} Units
+                                            </span>
+                                        </td>
+                                        <td className="px-10 py-6 text-white/40 font-bold">{p.price} ₪</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     );

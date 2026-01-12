@@ -126,63 +126,61 @@ export default function OrdersManagementView() {
     };
 
     return (
-        <div className="p-6 sm:p-10 min-h-screen bg-[#FDFCFB]">
-            <div className="max-w-4xl mx-auto space-y-6">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h1 className="text-2xl font-bold text-[#1d2d1f]">Manage Orders</h1>
-                        <p className="text-sm text-gray-500 mt-1">Review and approve incoming requests from customers.</p>
-                    </div>
-                    <button
-                        onClick={fetchOrders}
-                        className="px-4 py-2 text-sm font-medium text-[#4A6F5D] hover:bg-emerald-50 rounded-xl transition border border-emerald-100"
-                    >
-                        Refresh List
-                    </button>
+        <div className="py-10 px-6 max-w-4xl mx-auto space-y-12">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+                <div>
+                    <h1 className="text-4xl font-black text-white tracking-tighter uppercase mb-2">Order Management</h1>
+                    <p className="text-white/40 font-bold uppercase tracking-widest text-[10px]">Review and fulfill incoming specialized inventory requests</p>
                 </div>
-
-                {loading ? (
-                    <div className="flex flex-col items-center justify-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                        <FiLoader className="w-12 h-12 text-[#4A6F5D] animate-spin mb-4 opacity-20" />
-                        <p className="text-gray-400 font-medium tracking-tight">Syncing orders...</p>
-                    </div>
-                ) : visibleOrders.length === 0 ? (
-                    <div className="text-center py-24 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                        <div className="mx-auto w-20 h-20 bg-gray-50 rounded-2xl flex items-center justify-center mb-6 text-gray-300">
-                            <FiInbox size={40} />
-                        </div>
-                        <h3 className="text-lg font-bold text-[#1d2d1f]">All clear!</h3>
-                        <p className="text-sm text-gray-500 mt-2 max-w-xs mx-auto">
-                            No pending items waiting for approval right now.
-                        </p>
-                    </div>
-                ) : (
-                    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                        {visibleOrders.map((order) => (
-                            <SellerOrderCard
-                                key={order.orderId}
-                                order={order}
-                                onApprove={handleApprove}
-                                onReject={handleRejectRequest}
-                                onShowDetails={() => handleShowDetails(order)}
-                            />
-                        ))}
-                    </div>
-                )}
-
-                <RejectOrderItemModal
-                    isOpen={isRejectModalOpen}
-                    onClose={() => setIsRejectModalOpen(false)}
-                    onConfirm={handleRejectConfirm}
-                    productName={itemToReject?.name || ""}
-                />
-
-                <OrderDetailsModal
-                    isOpen={isDetailsModalOpen}
-                    onClose={() => setIsDetailsModalOpen(false)}
-                    order={selectedOrder}
-                />
+                <button
+                    onClick={fetchOrders}
+                    className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black text-white uppercase tracking-widest hover:bg-white/10 transition-all shadow-lg backdrop-blur-md"
+                >
+                    Synchronize Queue
+                </button>
             </div>
+
+            {loading ? (
+                <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl">
+                    <div className="w-12 h-12 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin"></div>
+                    <p className="mt-6 font-black text-white/20 uppercase tracking-widest text-[10px]">Accessing Secure Records...</p>
+                </div>
+            ) : visibleOrders.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl text-center">
+                    <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mb-6 text-white/5 border border-white/5 shadow-inner">
+                        <FiInbox size={32} />
+                    </div>
+                    <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">System Optimized</h3>
+                    <p className="mt-2 font-bold text-white/20 uppercase tracking-widest text-[10px] max-w-xs leading-relaxed">
+                        No pending approvals found in your distribution network.
+                    </p>
+                </div>
+            ) : (
+                <div className="space-y-10 animate-in fade-in slide-in-from-bottom-8 duration-700">
+                    {visibleOrders.map((order) => (
+                        <SellerOrderCard
+                            key={order.orderId}
+                            order={order}
+                            onApprove={handleApprove}
+                            onReject={handleRejectRequest}
+                            onShowDetails={() => handleShowDetails(order)}
+                        />
+                    ))}
+                </div>
+            )}
+
+            <RejectOrderItemModal
+                isOpen={isRejectModalOpen}
+                onClose={() => setIsRejectModalOpen(false)}
+                onConfirm={handleRejectConfirm}
+                productName={itemToReject?.name || ""}
+            />
+
+            <OrderDetailsModal
+                isOpen={isDetailsModalOpen}
+                onClose={() => setIsDetailsModalOpen(false)}
+                order={selectedOrder}
+            />
         </div>
     );
 }
