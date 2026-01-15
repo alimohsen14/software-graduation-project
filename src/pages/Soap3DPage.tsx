@@ -1,20 +1,13 @@
 import React from "react";
-import Soap3DHero from "../components/sope3d/hero/Soap3DHero";
-import Soap3DAbout from "../components/sope3d/about/Soap3DAbout";
-import Soap3DMethod from "../components/sope3d/method/Soap3DMethod";
-import Soap3DTimeline from "../components/sope3d/timeline/Soap3DTimeline";
-import Soap3DQuote from "../components/sope3d/quote/Soap3DQuote";
+import Soap3DModelViewer from "../components/soap3d/hero/Soap3DModelViewer";
+import DashboardLayout from "../components/layout/DashboardLayout";
 
-function Soap3DPage() {
+export default function Soap3DPage() {
   return (
-    <>
-      <Soap3DHero />
-      <Soap3DAbout />
-      <Soap3DMethod />
-      <Soap3DTimeline />
-      <Soap3DQuote />
-    </>
+    <DashboardLayout>
+      <div className="w-full min-h-screen bg-neutral-900 flex items-center justify-center p-4">
+        <Soap3DModelViewer />
+      </div>
+    </DashboardLayout>
   );
 }
-
-export default Soap3DPage;

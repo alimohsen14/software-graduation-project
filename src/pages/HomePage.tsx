@@ -36,7 +36,7 @@ export function HomePage() {
       subtitle: "تجول داخل المعالم الأثرية الفلسطينية",
       buttonText: "ابدأ الجولة",
       image: "/assets/home/card-3d-tour.jpeg",
-      path: "/3d-module",
+      path: "/soap-3d",
       accentColor: "olive",
     },
   ];

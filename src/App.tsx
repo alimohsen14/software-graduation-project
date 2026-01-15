@@ -11,7 +11,7 @@ import PalestineAIPage from "./pages/PalestineAIPage";
 import ProfilePage from "./pages/ProfilePage";
 import ShopPage from "./pages/ShopPage";
 import ProductDetailsPage from "./pages/ProductDetailsPage";
-import Sop3DPage from "./pages/Soap3DPage";
+
 import AdminMarketPage from "./pages/admin/AdminMarketPage";
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import AdminOrdersPage from "./pages/admin/AdminOrdersPage";
@@ -22,6 +22,7 @@ import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
 import AdminSupervisionDashboard from "./pages/admin/AdminSupervisionDashboard";
 import AdminStoresListPage from "./pages/admin/AdminStoresListPage";
 import AdminStoreDetailsPage from "./pages/admin/AdminStoreDetailsPage";
+import Soap3DPage from "./pages/Soap3DPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserOrderDetailsPage from "./pages/UserOrderDetailsPage";
 import MarketplacePage from "./pages/MarketplacePage";
@@ -65,10 +66,11 @@ export default function App() {
             <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
             <Route path="/shop" element={<RequireAuth><ShopPage /></RequireAuth>} />
             <Route path="/shop/product/:id" element={<RequireAuth><ProductDetailsPage /></RequireAuth>} />
-            <Route path="/soap3d" element={<RequireAuth><Sop3DPage /></RequireAuth>} />
+
             <Route path="/orders" element={<RequireAuth><UserOrdersPage /></RequireAuth>} />
             <Route path="/orders/:id" element={<RequireAuth><UserOrderDetailsPage /></RequireAuth>} />
             <Route path="/palestine-ai" element={<RequireAuth><PalestineAIPage /></RequireAuth>} />
+            <Route path="/soap-3d" element={<RequireAuth><Soap3DPage /></RequireAuth>} />
             <Route path="/become-seller" element={<RequireAuth><BecomeSellerPage /></RequireAuth>} />
 
             {/* ADMIN */}

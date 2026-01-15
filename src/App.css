@@ -1,38 +1,151 @@
-.App {
-  text-align: center;
+.hotspot-pot {
+  all: unset;
+  /* 🔥 هذا السطر مهم جدًا */
+  box-sizing: border-box;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.95);
+
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+
+  display: grid;
+  place-items: center;
+
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.15),
+    0 8px 20px rgba(0, 0, 0, 0.4);
+
+  cursor: pointer;
+  pointer-events: auto;
+
+  transform: translate(-50%, -50%) scale(1);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.App-logo {
-  height: 40vmin;
+
+.hotspot-faded {
+  opacity: 0.25 !important;
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+.hotspot-pot.active {
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) scale(1.05);
+  z-index: 10;
+}
+
+/* منطقة النص القابلة للتمرير */
+.hotspot-scroll {
+  max-height: 110px;
+  /* ارتفاع النص */
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+/* إخفاء scrollbar الافتراضي */
+.hotspot-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hotspot-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.hotspot-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* مؤشر التمرير */
+.scroll-indicator {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  opacity: 0.5;
+  animation: scrollHint 1.4s infinite;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* حركة المؤشر */
+@keyframes scrollHint {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(-50%, 6px);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 0.3;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+.image-hotspot {
+  position: absolute;
+  /* 🔴 هذا أهم سطر */
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.75);
+  border: 2px solid white;
+  color: white;
+
+  font-size: 13px;
+  font-weight: bold;
+
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+  cursor: pointer;
+  user-select: none;
+
+  transform: translate(-50%, -50%);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+
+  z-index: 10;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
+@keyframes scaleIn {
   from {
-    transform: rotate(0deg);
+    transform: scale(0.95);
+    opacity: 0;
   }
+
   to {
-    transform: rotate(360deg);
+    transform: scale(1);
+    opacity: 1;
   }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.25s ease-out;
+}
+
+
+.hotspot-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.hotspot-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 4px;
 }

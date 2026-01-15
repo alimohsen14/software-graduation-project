@@ -243,7 +243,7 @@ export default function AdminAnalyticsPage() {
                                                 ))}
                                             </Pie>
                                             <Tooltip contentStyle={{ backgroundColor: 'rgba(0,0,0,0.8)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff' }} />
-                                            <Legend verticalAlign="bottom" height={36} formatter={(value) => <span className="text-white/60 text-xs font-bold uppercase tracking-wider">{value}</span>} />
+                                            <Legend verticalAlign="bottom" height={36} formatter={(value: string) => <span className="text-white/60 text-xs font-bold uppercase tracking-wider">{value}</span>} />
                                         </PieChart>
                                     </ResponsiveContainer>
                                 )}

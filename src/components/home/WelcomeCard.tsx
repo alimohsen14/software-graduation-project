@@ -43,7 +43,7 @@ export default function WelcomeCard({ name }: WelcomeCardProps) {
               <button
                 type="button"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#2f5c3f] text-[#FBF7EF] text-sm md:text-base font-semibold shadow-md hover:bg-[#274b34] focus:outline-none focus:ring-2 focus:ring-[#CDA15A]/30 transition"
-                onClick={() => navigate("/soap3d")}
+                onClick={() => navigate("/sope3d")}
               >
                 {t("home.exploreButton")}
               </button>
