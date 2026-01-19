@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 
 export interface GlobalMetrics {
     totalRevenue: number;
@@ -21,7 +21,7 @@ export interface CategoryMetric {
 }
 
 export const getGlobalAnalytics = async (): Promise<GlobalMetrics> => {
-    const res = await client.get<GlobalMetrics>("/admin/analytics/global");
+    const res = await api.get<GlobalMetrics>("/admin/analytics/global");
     return {
         totalRevenue: res.data?.totalRevenue ?? 0,
         totalOrders: res.data?.totalOrders ?? 0,
@@ -31,7 +31,7 @@ export const getGlobalAnalytics = async (): Promise<GlobalMetrics> => {
 };
 
 export const getRevenueTrends = async (granularity: "daily" | "monthly" = "daily"): Promise<RevenueTrend[]> => {
-    const res = await client.get<RevenueTrend[]>(`/admin/analytics/trends?granularity=${granularity}`);
+    const res = await api.get<RevenueTrend[]>(`/admin/analytics/trends?granularity=${granularity}`);
     return (res.data ?? []).map((trend) => ({
         date: trend.date ?? "-",
         revenue: trend.revenue ?? 0,
@@ -40,7 +40,7 @@ export const getRevenueTrends = async (granularity: "daily" | "monthly" = "daily
 };
 
 export const getCategoryAnalytics = async (): Promise<CategoryMetric[]> => {
-    const res = await client.get<CategoryMetric[]>("/admin/analytics/categories");
+    const res = await api.get<CategoryMetric[]>("/admin/analytics/categories");
     return (res.data ?? []).map((cat) => ({
         category: cat.category ?? "-",
         revenue: cat.revenue ?? 0,

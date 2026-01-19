@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 
 // --- Interfaces ---
 
@@ -77,7 +77,7 @@ export interface SupervisionStoresResponse {
 
 export const getOverview = async (): Promise<SupervisionOverview> => {
     try {
-        const res = await client.get<SupervisionOverview>("/admin/supervision/overview");
+        const res = await api.get<SupervisionOverview>("/admin/supervision/overview");
         return {
             totalStores: res.data?.totalStores ?? 0,
             activeStores: res.data?.activeStores ?? 0,
@@ -103,7 +103,7 @@ export const getStores = async (
     search: string = ""
 ): Promise<SupervisionStoresResponse> => {
     try {
-        const res = await client.get<BackendStoresResponse>("/admin/supervision/stores", {
+        const res = await api.get<BackendStoresResponse>("/admin/supervision/stores", {
             params: { page, limit, status, category, search }
         });
 
@@ -111,7 +111,7 @@ export const getStores = async (
         const rawStores = res.data?.data ?? [];
         const meta = res.data?.meta ?? { page: 1, limit: 10, total: 0, totalPages: 1 };
 
-        const stores: StoreListItem[] = rawStores.map(s => ({
+        const stores: StoreListItem[] = rawStores.map((s: BackendStoresResponse['data'][number]) => ({
             id: s.id,
             name: s.name ?? "Unknown Store",
             // Map nested owner fields
@@ -139,7 +139,7 @@ export const getStores = async (
 export async function getStoreDetails(
     id: string
 ): Promise<StrictStoreDetails> {
-    const res = await client.get<any>(`/admin/supervision/stores/${id}`);
+    const res = await api.get<any>(`/admin/supervision/stores/${id}`);
 
     console.log("STORE DETAILS RAW RESPONSE:", res.data);
     console.log("ORDERS FROM BACKEND:", res.data.orders);
@@ -154,14 +154,14 @@ export async function getStoreDetails(
 // --- Store Actions ---
 
 export const sendWarning = async (id: string, message: string): Promise<void> => {
-    await client.post(`/admin/supervision/stores/${id}/warning`, { message });
+    await api.post(`/admin/supervision/stores/${id}/warning`, { message });
 };
 
 export const deactivateStore = async (id: string | number, reason: string): Promise<void> => {
     // User requested POST for deactivate in this task scope
-    await client.post(`/admin/supervision/stores/${id}/deactivate`, { reason });
+    await api.post(`/admin/supervision/stores/${id}/deactivate`, { reason });
 };
 
 export const activateStore = async (id: string | number): Promise<void> => {
-    await client.post(`/admin/supervision/stores/${id}/activate`, {});
+    await api.post(`/admin/supervision/stores/${id}/activate`, {});
 };

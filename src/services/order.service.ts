@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 
 const API_URL = "/orders";
 
@@ -72,14 +72,14 @@ export type OrderResponse = {
 
 // ================= ADMIN =================
 export const getAllOrders = async (): Promise<OrderResponse[]> => {
-  const res = await client.get<OrderResponse[]>(API_URL);
+  const res = await api.get<OrderResponse[]>(API_URL);
   return res.data;
 };
 
 export const approveOrder = async (
   orderId: number
 ): Promise<OrderResponse> => {
-  const res = await client.post<OrderResponse>(
+  const res = await api.post<OrderResponse>(
     `${API_URL}/${orderId}/approve`,
     {}
   );
@@ -90,7 +90,7 @@ export const rejectOrder = async (
   orderId: number,
   rejectionReason: string
 ): Promise<OrderResponse> => {
-  const res = await client.post<OrderResponse>(
+  const res = await api.post<OrderResponse>(
     `${API_URL}/${orderId}/reject`,
     { rejectionReason }
   );
@@ -101,26 +101,26 @@ export const rejectOrder = async (
 export const createOrder = async (
   payload: CreateOrderPayload
 ): Promise<OrderResponse> => {
-  const res = await client.post<OrderResponse>(API_URL, payload);
+  const res = await api.post<OrderResponse>(API_URL, payload);
   return res.data;
 };
 
 export const mockPayment = async (
   orderId: number
 ): Promise<OrderResponse> => {
-  const res = await client.post<OrderResponse>(`/payments/mock`, { orderId });
+  const res = await api.post<OrderResponse>(`/payments/mock`, { orderId });
   return res.data;
 };
 
 export const getMyOrders = async (): Promise<OrderResponse[]> => {
-  const res = await client.get<OrderResponse[]>(`${API_URL}/my`);
+  const res = await api.get<OrderResponse[]>(`${API_URL}/my`);
   return res.data;
 };
 
 export const getOrderById = async (
   orderId: number
 ): Promise<OrderResponse> => {
-  const res = await client.get<OrderResponse>(`${API_URL}/${orderId}`);
+  const res = await api.get<OrderResponse>(`${API_URL}/${orderId}`);
   return res.data;
 };
 

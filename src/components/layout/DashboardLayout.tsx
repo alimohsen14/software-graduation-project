@@ -27,10 +27,18 @@ export default function DashboardLayout({
         closeSidebar={() => setIsSidebarOpen(false)}
       />
 
+      {/* Mobile Overlay */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Main content */}
-      <div className="relative z-20 flex-1 flex flex-col min-h-screen">
+      <div className="relative z-20 flex-1 flex flex-col min-h-screen w-full">
         {/* Navbar */}
-        <div className="fixed top-0 left-0 right-0 z-50">
+        <div className="fixed top-0 left-0 right-0 z-50 w-full h-14 md:h-20">
           <Navbar
             onMenuClick={() => setIsSidebarOpen((prev) => !prev)}
             onToggleAISidebar={onToggleAISidebar}
@@ -38,9 +46,9 @@ export default function DashboardLayout({
         </div>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto mt-16 scrollbar-hide">
-          <div className="px-4 md:px-8 lg:px-10 py-6">
-            <div className="max-w-[1400px] mx-auto">
+        <main className="flex-1 overflow-y-auto mt-14 md:mt-20 scrollbar-hide w-full">
+          <div className="px-3 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-6">
+            <div className="max-w-[1400px] mx-auto w-full">
               {React.isValidElement(children) && typeof children.type !== "string"
                 ? React.cloneElement(children as React.ReactElement<any>, {
                   setIsSidebarOpen,

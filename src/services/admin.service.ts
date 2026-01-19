@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 import { SellerProduct, SellerOrder, UpdateStorePayload } from "./seller.service";
 
 export interface UpgradeRequest {
@@ -52,17 +52,17 @@ export interface UsersListResponse {
  */
 
 export const getStore = async (): Promise<any> => {
-    const res = await client.get("/admin/store");
+    const res = await api.get("/admin/store");
     return res.data;
 };
 
 export const updateStoreDetails = async (data: UpdateStorePayload): Promise<any> => {
-    const res = await client.patch("/admin/store", data);
+    const res = await api.patch("/admin/store", data);
     return res.data;
 };
 
 export const uploadStoreLogo = async (formData: FormData): Promise<{ logo: string }> => {
-    const res = await client.post<{ logo: string }>(
+    const res = await api.post<{ logo: string }>(
         "/admin/store/logo",
         formData,
         {
@@ -75,26 +75,26 @@ export const uploadStoreLogo = async (formData: FormData): Promise<{ logo: strin
 };
 
 export const getProducts = async (): Promise<SellerProduct[]> => {
-    const res = await client.get<SellerProduct[]>("/admin/store/products");
+    const res = await api.get<SellerProduct[]>("/admin/store/products");
     return res.data;
 };
 
 export const createProduct = async (data: any): Promise<SellerProduct> => {
-    const res = await client.post<SellerProduct>("/admin/store/products", data);
+    const res = await api.post<SellerProduct>("/admin/store/products", data);
     return res.data;
 };
 
 export const updateProduct = async (productId: number, data: any): Promise<SellerProduct> => {
-    const res = await client.patch<SellerProduct>(`/admin/store/products/${productId}`, data);
+    const res = await api.patch<SellerProduct>(`/admin/store/products/${productId}`, data);
     return res.data;
 };
 
 export const deleteProduct = async (productId: number): Promise<void> => {
-    await client.delete(`/admin/store/products/${productId}`);
+    await api.delete(`/admin/store/products/${productId}`);
 };
 
 export const getOrders = async (): Promise<{ totalOrders: number; orders: SellerOrder[] }> => {
-    const res = await client.get<{ orders: SellerOrder[] }>("/admin/store/orders");
+    const res = await api.get<{ orders: SellerOrder[] }>("/admin/store/orders");
     // Ensure response shape matches { totalOrders, orders }
     return {
         totalOrders: res.data.orders.length,
@@ -103,20 +103,20 @@ export const getOrders = async (): Promise<{ totalOrders: number; orders: Seller
 };
 
 export const approveOrderItem = async (itemId: number): Promise<void> => {
-    await client.patch(`/admin/store/orders/items/${itemId}/approve`, {});
+    await api.patch(`/admin/store/orders/items/${itemId}/approve`, {});
 };
 
 export const rejectOrderItem = async (itemId: number, reason: string): Promise<void> => {
-    await client.patch(`/admin/store/orders/items/${itemId}/reject`, { reason });
+    await api.patch(`/admin/store/orders/items/${itemId}/reject`, { reason });
 };
 
 export const getStockAlerts = async (): Promise<SellerProduct[]> => {
-    const res = await client.get<SellerProduct[]>("/admin/store/products/stock-alerts");
+    const res = await api.get<SellerProduct[]>("/admin/store/products/stock-alerts");
     return res.data;
 };
 
 export const importProductsFromExcel = async (formData: FormData): Promise<{ count: number; message: string }> => {
-    const res = await client.post<{ count: number; message: string }>(
+    const res = await api.post<{ count: number; message: string }>(
         "/admin/store/products/import",
         formData,
         {
@@ -131,22 +131,22 @@ export const importProductsFromExcel = async (formData: FormData): Promise<{ cou
 // ================= ORIGINAL ADMIN FUNCTIONS =================
 
 export const getSellerRequests = async (): Promise<UpgradeRequest[]> => {
-    const res = await client.get<UpgradeRequest[]>("/seller-requests");
+    const res = await api.get<UpgradeRequest[]>("/seller-requests");
     return res.data;
 };
 
 export const approveSellerRequest = async (requestId: number) => {
-    await client.post(`/seller-requests/${requestId}/approve`);
+    await api.post(`/seller-requests/${requestId}/approve`);
 };
 
 export const rejectSellerRequest = async (requestId: number, reason: string) => {
-    await client.post(`/seller-requests/${requestId}/reject`, { reason });
+    await api.post(`/seller-requests/${requestId}/reject`, { reason });
 };
 
 // ================= ANALYTICS FUNCTIONS =================
 
 export const getAnalyticsGlobal = async (): Promise<GlobalAnalytics> => {
-    const res = await client.get<GlobalAnalytics>("/admin/analytics/users");
+    const res = await api.get<GlobalAnalytics>("/admin/analytics/users");
     return res.data;
 };
 
@@ -157,6 +157,6 @@ export const getAnalyticsUsersList = async (params: {
     country?: string;
     search?: string;
 }): Promise<UsersListResponse> => {
-    const res = await client.get<UsersListResponse>("/admin/analytics/users/list", { params });
+    const res = await api.get<UsersListResponse>("/admin/analytics/users/list", { params });
     return res.data;
 };

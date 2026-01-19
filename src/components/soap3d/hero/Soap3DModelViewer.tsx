@@ -313,11 +313,11 @@ function Soap3DModelViewer() {
 
 
     return (
-        <div className="w-full max-w-6xl mx-auto">
+        <div className="w-full max-w-6xl mx-auto px-2 sm:px-4">
             <div
                 ref={wrapRef}
                 className={
-                    "relative rounded-2xl overflow-hidden shadow-lg h-[82vh] min-h-[560px] border " +
+                    "relative rounded-2xl overflow-hidden shadow-lg h-[60vh] sm:h-[82vh] min-h-[400px] sm:min-h-[560px] border " +
                     (isDarkBox
                         ? "bg-black/70 border-white/10"
                         : "bg-black/5 border-gray-200")
@@ -355,30 +355,30 @@ function Soap3DModelViewer() {
                         </div>
 
                         {/* Controls */}
-                        <div className="flex gap-24 text-white text-center">
+                        <div className="flex flex-col md:flex-row gap-8 md:gap-24 text-white text-center">
 
                             <div>
-                                <div className="text-4xl mb-4">🔄</div>
-                                <h4 className="font-semibold mb-2">Orbit</h4>
-                                <p className="text-xs opacity-70">
+                                <div className="text-3xl md:text-4xl mb-2 md:mb-4">🔄</div>
+                                <h4 className="font-semibold mb-1 md:mb-2 text-sm md:text-base">Orbit</h4>
+                                <p className="text-[10px] md:text-xs opacity-70">
                                     Left click + drag<br />
                                     One finger drag (touch)
                                 </p>
                             </div>
 
                             <div>
-                                <div className="text-4xl mb-4">🔍</div>
-                                <h4 className="font-semibold mb-2">Zoom</h4>
-                                <p className="text-xs opacity-70">
+                                <div className="text-3xl md:text-4xl mb-2 md:mb-4">🔍</div>
+                                <h4 className="font-semibold mb-1 md:mb-2 text-sm md:text-base">Zoom</h4>
+                                <p className="text-[10px] md:text-xs opacity-70">
                                     Scroll wheel<br />
                                     Pinch (touch)
                                 </p>
                             </div>
 
                             <div>
-                                <div className="text-4xl mb-4">✋</div>
-                                <h4 className="font-semibold mb-2">Pan</h4>
-                                <p className="text-xs opacity-70">
+                                <div className="text-3xl md:text-4xl mb-2 md:mb-4">✋</div>
+                                <h4 className="font-semibold mb-1 md:mb-2 text-sm md:text-base">Pan</h4>
+                                <p className="text-[10px] md:text-xs opacity-70">
                                     Right click + drag<br />
                                     Two fingers (touch)
                                 </p>
@@ -779,7 +779,7 @@ function Soap3DModelViewer() {
 
 
                 {/* Bottom buttons */}
-                <div className="absolute z-30 bottom-3 left-1/2 -translate-x-1/2 flex gap-2 items-center">
+                <div className="absolute z-30 bottom-3 left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-2 items-center w-full px-4">
 
                     {/* Help */}
                     <button

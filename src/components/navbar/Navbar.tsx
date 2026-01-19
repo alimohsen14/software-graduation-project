@@ -48,32 +48,32 @@ export default function Navbar({
 
 
 
-      <div className="w-full px-6 md:px-10">
-        <div className="h-16 flex items-center justify-between">
+      <div className="w-full px-4 md:px-10">
+        <div className="h-14 md:h-20 flex items-center justify-between">
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
             <button
               onClick={onMenuClick}
-              className="p-2 rounded-xl text-white/60 hover:text-white/90 hover:bg-white/5 transition-all active:scale-95"
+              className="p-1.5 md:p-2 rounded-xl text-white/60 hover:text-white/90 hover:bg-white/5 transition-all active:scale-95"
             >
-              <FiMenu className="w-5 h-5" />
+              <FiMenu className="w-5 h-5 md:w-6 md:h-6" />
             </button>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col scale-90 md:scale-100 origin-left">
               <Palestine3DLogo size="sm" className="!items-start" />
             </div>
           </div>
 
-          <div className="flex items-center gap-3 md:gap-5 relative" ref={dropdownRef}>
+          <div className="flex items-center gap-2 md:gap-5 relative" ref={dropdownRef}>
             <NotificationBell />
 
             <div className="relative">
               <button
                 onClick={toggleLanguageMenu}
                 aria-label={t("navbar.changeLanguage")}
-                className="p-2 text-white/60 hover:text-white/90 hover:bg-white/5 rounded-xl transition-all active:scale-95 group"
+                className="p-1.5 md:p-2 text-white/60 hover:text-white/90 hover:bg-white/5 rounded-xl transition-all active:scale-95 group"
               >
-                <FiGlobe className="w-5 h-5" />
+                <FiGlobe className="w-5 h-5 md:w-6 md:h-6" />
               </button>
 
               {showLanguageMenu && (
@@ -104,10 +104,10 @@ export default function Navbar({
             </div>
 
             <button className="relative group">
-              <div className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white/90 group-hover:border-white/20 transition-all overflow-hidden">
-                <FiUser className="w-5 h-5" />
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white/90 group-hover:border-white/20 transition-all overflow-hidden">
+                <FiUser className="w-4 h-4 md:w-5 md:h-5" />
               </div>
-              <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-[#1a130f] rounded-full shadow-sm" />
+              <div className="absolute bottom-0 right-0 w-2 h-2 md:w-2.5 md:h-2.5 bg-emerald-500 border-2 border-[#1a130f] rounded-full shadow-sm" />
             </button>
           </div>
         </div>

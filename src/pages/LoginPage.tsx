@@ -62,34 +62,34 @@ export function LoginPage() {
     <AuthLayout>
       <div className="flex flex-col">
         {/* Tabs */}
-        <div className="flex border-b border-white/10 mb-8">
+        <div className="flex border-b border-white/10 mb-6 md:mb-8">
           <button
-            className="flex-1 pb-4 text-center border-b-2 border-emerald-500 font-bold text-emerald-500"
+            className="flex-1 pb-3 md:pb-4 text-center border-b-2 border-emerald-500 font-bold text-emerald-500"
           >
             Login
           </button>
           <button
             onClick={() => navigate("/signup")}
-            className="flex-1 pb-4 text-center border-b-2 border-transparent font-semibold text-white/40 hover:text-white/70 transition-colors"
+            className="flex-1 pb-3 md:pb-4 text-center border-b-2 border-transparent font-semibold text-white/40 hover:text-white/70 transition-colors"
           >
             Sign Up
           </button>
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 text-red-200 text-sm rounded-2xl text-center font-medium">
+          <div className="mb-4 md:mb-6 p-3 md:p-4 bg-red-500/10 border border-red-500/20 text-red-200 text-sm rounded-xl md:rounded-2xl text-center font-medium">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
           <div className="relative group">
             <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              className="w-full pl-11 pr-4 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
               placeholder="Email Address"
               required
             />
@@ -101,7 +101,7 @@ export function LoginPage() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 bg-white/5 border border-white/10 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white"
+              className="w-full pl-11 pr-4 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
               placeholder="Password"
               required
             />
@@ -111,7 +111,7 @@ export function LoginPage() {
             <button
               type="button"
               onClick={() => navigate("/forgot-password")}
-              className="text-sm text-white/40 hover:text-emerald-400 font-medium transition-colors"
+              className="text-xs md:text-sm text-white/40 hover:text-emerald-400 font-medium transition-colors"
             >
               Forgot Password?
             </button>
@@ -120,35 +120,35 @@ export function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 py-4 bg-[#CE1126] text-white rounded-2xl font-bold shadow-xl shadow-red-900/40 hover:bg-[#e6122a] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed group"
+            className="w-full flex items-center justify-center gap-2 py-3.5 md:py-4 bg-[#CE1126] text-white rounded-xl md:rounded-2xl font-bold shadow-xl shadow-red-900/40 hover:bg-[#e6122a] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed group min-h-[44px]"
           >
-            <span className="text-lg">{loading ? "Logging in..." : "Login"}</span>
-            {!loading && <FiArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />}
+            <span className="text-base md:text-lg">{loading ? "Logging in..." : "Login"}</span>
+            {!loading && <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />}
           </button>
         </form>
 
-        <div className="relative my-10">
+        <div className="relative my-6 md:my-10">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-white/10"></div>
           </div>
-          <div className="relative flex justify-center text-sm">
+          <div className="relative flex justify-center text-[10px] md:text-xs">
             <span className="px-4 bg-[#1a130f] text-white/30 font-bold tracking-widest uppercase">or</span>
           </div>
         </div>
 
         <button
           onClick={handleGoogleLogin}
-          className="w-full flex items-center justify-center gap-3 py-4 bg-white/5 border border-white/10 text-white rounded-2xl font-bold hover:bg-white/10 hover:border-white/20 active:scale-[0.98] transition-all"
+          className="w-full flex items-center justify-center gap-3 py-3 md:py-4 bg-white/5 border border-white/10 text-white rounded-xl md:rounded-2xl font-bold hover:bg-white/10 hover:border-white/20 active:scale-[0.98] transition-all min-h-[44px]"
         >
           <img
             src="https://developers.google.com/identity/images/g-logo.png"
             alt="Google Logo"
-            className="w-5 h-5 opacity-90"
+            className="w-4 h-4 md:w-5 md:h-5 opacity-90"
           />
-          <span>Continue with Google</span>
+          <span className="text-sm md:text-base">Continue with Google</span>
         </button>
 
-        <p className="mt-10 text-center text-sm text-white/40">
+        <p className="mt-8 md:mt-10 text-center text-xs md:text-sm text-white/40">
           Don't have an account?{" "}
           <button
             onClick={() => navigate("/signup")}

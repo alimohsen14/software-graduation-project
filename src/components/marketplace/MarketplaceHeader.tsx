@@ -18,24 +18,21 @@ export default function MarketplaceHeader({
 }: Props) {
     const { toggleCart, cartItems } = useCart();
     return (
-        <div className="flex flex-col xl:flex-row items-center justify-between gap-8 mb-12 animate-in fade-in slide-in-from-top-4 duration-700" dir="rtl">
-            <div className="flex items-center gap-6 group">
-                <div className="shrink-0 w-16 h-16 bg-emerald-500/5 backdrop-blur-3xl rounded-[1.5rem] border border-emerald-500/10 flex items-center justify-center text-emerald-400 shadow-xl transition-transform duration-700 group-hover:scale-110 group-hover:rotate-[5deg] relative overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-8 mb-6 md:mb-12 animate-in fade-in slide-in-from-top-4 duration-700" dir="rtl">
+            <div className="flex items-center gap-3 md:gap-6 group w-full lg:w-auto">
+                <div className="shrink-0 w-10 h-10 md:w-16 md:h-16 bg-emerald-500/5 backdrop-blur-3xl rounded-xl md:rounded-[1.5rem] border border-emerald-500/10 flex items-center justify-center text-emerald-400 shadow-xl transition-transform duration-700 group-hover:scale-110 group-hover:rotate-[5deg] relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                    <FiShoppingBag className="w-8 h-8 relative z-10" />
+                    <FiShoppingBag className="w-5 h-5 md:w-8 md:h-8 relative z-10" />
                 </div>
                 <div>
-                    <div className="flex flex-col mb-2">
-                        <span className="text-emerald-500/40 text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] mb-1 pr-3 border-r-2 border-emerald-500/30 leading-none">
+                    <div className="flex flex-col mb-1 text-right">
+                        <span className="text-emerald-500/40 text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] mb-0.5 pr-2 md:pr-3 border-r-2 border-emerald-500/30 leading-none">
                             سوق التراث
                         </span>
-                        <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.9] transition-all group-hover:tracking-tight duration-700">
+                        <h1 className="text-xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.9] transition-all group-hover:tracking-tight duration-700">
                             المتجر
                         </h1>
                     </div>
-                    <p className="text-white/20 text-[9px] font-black uppercase tracking-[0.2em] pr-[2px]">
-                        جميع المنتجات المختارة في مكان واحد
-                    </p>
                 </div>
             </div>
 

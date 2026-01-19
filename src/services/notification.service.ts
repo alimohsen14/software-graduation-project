@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 
 const API_URL = "/notifications";
 
@@ -20,12 +20,12 @@ export type UnreadCountResponse = {
 
 // ================= API =================
 export const getNotifications = async (): Promise<Notification[]> => {
-    const res = await client.get<Notification[]>(API_URL);
+    const res = await api.get<Notification[]>(API_URL);
     return res.data;
 };
 
 export const getUnreadCount = async (): Promise<number> => {
-    const res = await client.get<UnreadCountResponse>(
+    const res = await api.get<UnreadCountResponse>(
         `${API_URL}/unread`
     );
     return res.data.count;
@@ -34,7 +34,7 @@ export const getUnreadCount = async (): Promise<number> => {
 export const markAsRead = async (
     notificationId: number
 ): Promise<Notification> => {
-    const res = await client.patch<Notification>(
+    const res = await api.patch<Notification>(
         `${API_URL}/${notificationId}/read`,
         {}
     );
@@ -42,5 +42,5 @@ export const markAsRead = async (
 };
 
 export const markAllAsRead = async (): Promise<void> => {
-    await client.patch(`${API_URL}/read-all`, {});
+    await api.patch(`${API_URL}/read-all`, {});
 };

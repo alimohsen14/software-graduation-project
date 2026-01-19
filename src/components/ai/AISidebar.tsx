@@ -60,17 +60,17 @@ export default function AISidebar({
           md:translate-x-0 md:z-30
         `}
       >
-        <div className="h-full px-6 py-8 flex flex-col text-white relative overflow-hidden">
+        <div className="h-full px-4 md:px-6 py-5 md:py-8 flex flex-col text-white relative overflow-hidden">
           {/* Decorative background glow */}
           <div className="absolute -top-24 -left-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
-          <div className="flex items-center justify-between mb-8 relative z-10">
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-white/30">{t("ai.sidebarTitle")}</span>
+          <div className="flex items-center justify-between mb-6 md:mb-8 relative z-10">
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/30">{t("ai.sidebarTitle")}</span>
             <button
               onClick={toggle}
-              className="md:hidden w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 hover:text-white hover:bg-white/10 transition-all border border-white/5"
+              className="md:hidden w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 hover:text-white hover:bg-white/10 transition-all border border-white/5"
             >
-              <FiX className="w-5 h-5" />
+              <FiX className="w-4 h-4 md:w-5 md:h-5" />
             </button>
           </div>
 
@@ -79,32 +79,32 @@ export default function AISidebar({
               onNewChat();
               if (window.innerWidth < 768) toggle();
             }}
-            className="w-full mb-8 flex items-center justify-center gap-3 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 py-4 rounded-2xl transition-all hover:bg-emerald-600/30 hover:shadow-lg hover:shadow-emerald-500/10 active:scale-95 group relative overflow-hidden"
+            className="w-full mb-6 md:mb-8 flex items-center justify-center gap-2 md:gap-3 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all hover:bg-emerald-600/30 hover:shadow-lg hover:shadow-emerald-500/10 active:scale-95 group relative overflow-hidden"
           >
-            <FiPlus className="w-5 h-5 transition-transform group-hover:rotate-90" />
-            <span className="text-[10px] font-black uppercase tracking-widest">{t("ai.newChat")}</span>
+            <FiPlus className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:rotate-90" />
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">{t("ai.newChat")}</span>
           </button>
 
-          <div className="w-full h-px bg-white/5 mb-6" />
+          <div className="w-full h-px bg-white/5 mb-4 md:mb-6" />
 
-          <nav className="flex-1 overflow-y-auto custom-scrollbar pr-2 pb-6 relative z-10">
-            <ul className="flex flex-col gap-3">
+          <nav className="flex-1 overflow-y-auto custom-scrollbar pr-1 pb-4 md:pb-6 relative z-10">
+            <ul className="flex flex-col gap-2 md:gap-3">
               {chats.map((chat) => (
                 <li key={chat.id} className="relative group/item">
                   <div
                     onClick={() => onSelectChat(chat.id)}
-                    className="cursor-pointer w-full px-4 py-3 rounded-2xl bg-white/0 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all flex items-center justify-between group"
+                    className="cursor-pointer w-full px-3 md:px-4 py-2.5 md:py-3 rounded-xl md:rounded-2xl bg-white/0 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all flex items-center justify-between group"
                   >
-                    <span className="text-[11px] font-bold truncate block text-white/30 group-hover:text-white transition-colors max-w-[140px] uppercase tracking-tighter">
+                    <span className="text-[10px] md:text-[11px] font-bold truncate block text-white/30 group-hover:text-white transition-colors max-w-[140px] md:max-w-[140px] uppercase tracking-tighter">
                       {chat.title}
                     </span>
 
                     <button
                       onClick={(e) => handleDeleteRequest(e, chat.id)}
-                      className="opacity-0 group-hover:opacity-100 text-white/10 hover:text-red-400 transition-all p-2 bg-white/0 hover:bg-white/5 rounded-xl border border-transparent hover:border-white/10"
+                      className="opacity-0 group-hover:opacity-100 text-white/10 hover:text-red-400 transition-all p-1.5 md:p-2 bg-white/0 hover:bg-white/5 rounded-lg md:rounded-xl border border-transparent hover:border-white/10"
                       title={t("ai.deleteChat")}
                     >
-                      <FiTrash2 className="w-3.5 h-3.5" />
+                      <FiTrash2 className="w-3 md:w-3.5 h-3 md:h-3.5" />
                     </button>
                   </div>
                 </li>

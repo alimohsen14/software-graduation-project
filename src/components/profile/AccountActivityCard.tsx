@@ -28,35 +28,37 @@ export default function AccountActivityCard({
   };
 
   return (
-    <div className="bg-white shadow-lg rounded-xl overflow-hidden">
-      <div className="px-6 py-6 border-b border-gray-100">
-        <h3 className="text-xl font-bold text-[#21492f]">
+    <div className="bg-white/5 backdrop-blur-3xl rounded-[2rem] border border-white/10 shadow-2xl overflow-hidden group animate-in slide-in-from-right-4 duration-700 delay-300" dir={i18n.dir()}>
+      <div className="px-6 py-5 sm:px-8 sm:py-6 border-b border-white/5 flex items-center gap-4">
+        <div className="w-10 h-10 bg-indigo-500/5 rounded-xl border border-indigo-500/10 flex items-center justify-center text-indigo-400 shadow-xl">
+          <FiCalendar className="w-5 h-5" />
+        </div>
+        <h3 className="text-xl font-black text-white tracking-tighter uppercase leading-none">
           {t("profile.accountActivity")}
         </h3>
       </div>
 
-      <div className="px-6 py-6">
+      <div className="px-6 py-6 sm:px-8 sm:py-8">
         <div
           className="grid grid-cols-1 gap-6 sm:grid-cols-2"
-          dir={i18n.dir()}
         >
-          <div className="flex flex-col">
-            <span className="text-sm text-gray-500 mb-1">
+          <div className="flex flex-col gap-2">
+            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20">
               {t("profile.createdAt")}
             </span>
-            <div className="flex items-center text-[#21492f] font-medium gap-2">
-              <FiCalendar className="w-5 h-5 text-[#2f5c3f]" />
-              {formatDate(createdAt)}
+            <div className="flex items-center text-white/80 font-bold gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+              <FiCalendar className="w-5 h-5 text-indigo-400" />
+              <span className="text-sm tracking-tight">{formatDate(createdAt)}</span>
             </div>
           </div>
 
-          <div className="flex flex-col sm:text-right">
-            <span className="text-sm text-gray-500 mb-1">
+          <div className="flex flex-col gap-2">
+            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/20">
               {t("profile.updatedAt")}
             </span>
-            <div className="flex items-center sm:justify-end text-[#21492f] font-medium gap-2">
-              <FiClock className="w-5 h-5 text-[#2f5c3f]" />
-              {formatDate(updatedAt)}
+            <div className="flex items-center text-white/80 font-bold gap-3 bg-white/5 border border-white/10 rounded-2xl px-5 py-4">
+              <FiClock className="w-5 h-5 text-indigo-400" />
+              <span className="text-sm tracking-tight">{formatDate(updatedAt)}</span>
             </div>
           </div>
         </div>

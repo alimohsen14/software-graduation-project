@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 import { SellerStore } from "./authService";
 
 // ================= TYPES =================
@@ -91,7 +91,7 @@ export const applyToBeSeller = async (
     // OR assuming backend was updated to accept these.
     // User request said POST /seller-requests. 
     // Assuming keys: storeName, productType, region, description.
-    const res = await client.post<SellerStore>(
+    const res = await api.post<SellerStore>(
         "/seller-requests",
         application
     );
@@ -100,7 +100,7 @@ export const applyToBeSeller = async (
 
 export const getStore = async (): Promise<SellerStore | null> => {
     try {
-        const res = await client.get<SellerStore>(
+        const res = await api.get<SellerStore>(
             "/seller/store"
         );
         return res.data;
@@ -112,7 +112,7 @@ export const getStore = async (): Promise<SellerStore | null> => {
 export const updateStoreDetails = async (
     data: UpdateStorePayload
 ): Promise<SellerStore> => {
-    const res = await client.patch<SellerStore>(
+    const res = await api.patch<SellerStore>(
         "/seller/store",
         data
     );
@@ -124,7 +124,7 @@ export const uploadStoreLogo = async (
 ): Promise<{ logo: string }> => {
     // client interceptor handles Auth token
     // Axios automatically sets Content-Type: multipart/form-data with boundary
-    const res = await client.post<{ logo: string }>(
+    const res = await api.post<{ logo: string }>(
         "/seller/store/logo",
         formData,
         {
@@ -137,7 +137,7 @@ export const uploadStoreLogo = async (
 };
 
 export const getProducts = async (): Promise<SellerProduct[]> => {
-    const res = await client.get<SellerProduct[]>(
+    const res = await api.get<SellerProduct[]>(
         "/seller/products"
     );
     return res.data;
@@ -146,7 +146,7 @@ export const getProducts = async (): Promise<SellerProduct[]> => {
 export const createProduct = async (
     product: CreateProductPayload
 ): Promise<SellerProduct> => {
-    const res = await client.post<SellerProduct>(
+    const res = await api.post<SellerProduct>(
         "/seller/products",
         product
     );
@@ -157,7 +157,7 @@ export const updateProduct = async (
     productId: number,
     product: Partial<CreateProductPayload>
 ): Promise<SellerProduct> => {
-    const res = await client.patch<SellerProduct>(
+    const res = await api.patch<SellerProduct>(
         `/seller/products/${productId}`,
         product
     );
@@ -167,12 +167,12 @@ export const updateProduct = async (
 export const deleteProduct = async (
     productId: number
 ): Promise<void> => {
-    await client.delete(`/seller/products/${productId}`);
+    await api.delete(`/seller/products/${productId}`);
 };
 
 // Orders
 export const getOrders = async (): Promise<{ totalOrders: number; orders: SellerOrder[] }> => {
-    const res = await client.get<{ totalOrders: number; orders: SellerOrder[] }>(
+    const res = await api.get<{ totalOrders: number; orders: SellerOrder[] }>(
         "/seller/orders"
     );
     return res.data;
@@ -185,7 +185,7 @@ export const approveOrderItem = async (itemId: number): Promise<void> => {
         throw new Error("Invalid item ID");
     }
 
-    await client.patch(
+    await api.patch(
         `/seller/orders/items/${id}/approve`,
         {}
     );
@@ -198,14 +198,14 @@ export const rejectOrderItem = async (itemId: number, reason: string): Promise<v
         throw new Error("Invalid item ID or missing reason");
     }
 
-    await client.patch(
+    await api.patch(
         `/seller/orders/items/${id}/reject`,
         { reason: reason.trim() }
     );
 };
 
 export const getStockAlerts = async (): Promise<SellerProduct[]> => {
-    const res = await client.get<SellerProduct[]>(
+    const res = await api.get<SellerProduct[]>(
         "/seller/stock-alerts"
     );
     return res.data;
@@ -213,14 +213,14 @@ export const getStockAlerts = async (): Promise<SellerProduct[]> => {
 
 // Notifications
 export const getNotifications = async (): Promise<SellerNotification[]> => {
-    const res = await client.get<SellerNotification[]>(
+    const res = await api.get<SellerNotification[]>(
         "/seller/notifications"
     );
     return res.data;
 };
 
 export const markNotificationRead = async (id: number): Promise<void> => {
-    await client.patch(
+    await api.patch(
         `/seller/notifications/${id}/read`,
         {}
     );
@@ -229,7 +229,7 @@ export const markNotificationRead = async (id: number): Promise<void> => {
 export const importProductsFromExcel = async (
     formData: FormData
 ): Promise<{ count: number; message: string }> => {
-    const res = await client.post<{ count: number; message: string }>(
+    const res = await api.post<{ count: number; message: string }>(
         "/seller/products/import",
         formData,
         {

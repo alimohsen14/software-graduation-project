@@ -35,30 +35,31 @@ export default function ProfilePage() {
   return (
     <>
       <DashboardLayout>
-        <div className="min-h-screen bg-[#3e6347] py-10 px-4">
-          <div className="max-w-4xl mx-auto space-y-6">
-
+        <div className="w-full min-h-screen py-6 sm:py-10 px-4 sm:px-6 lg:px-10 animate-in fade-in duration-700">
+          <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
             <ProfileHeaderCard {...user} />
 
-            <ProfileInfoCard
-              user={user}
-              onEditClick={() => setIsEditModalOpen(true)}
-              onChangePasswordClick={() => setIsPasswordModalOpen(true)}
-            />
+            <div className="grid grid-cols-1 gap-6 sm:gap-8">
+              <ProfileInfoCard
+                user={user}
+                onEditClick={() => setIsEditModalOpen(true)}
+                onChangePasswordClick={() => setIsPasswordModalOpen(true)}
+              />
 
-            <SecurityCard provider={user.provider} />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+                <SecurityCard provider={user.provider} />
+                <AccountActivityCard
+                  createdAt={user.createdAt}
+                  updatedAt={user.updatedAt}
+                />
+              </div>
 
+              {/* Orders Section */}
+              <div className="pt-8 md:pt-12 border-t border-white/5 mx-2">
+                <MyOrders />
+              </div>
 
-            <AccountActivityCard
-              createdAt={user.createdAt}
-              updatedAt={user.updatedAt}
-            />
-
-            <LogoutButton onLogout={logout} />
-
-            {/* Orders Section */}
-            <div className="pt-6 border-t border-white/20">
-              <MyOrders />
+              <LogoutButton onLogout={logout} />
             </div>
           </div>
         </div>

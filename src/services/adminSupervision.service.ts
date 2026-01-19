@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 
 export interface StoreAdminMetrics {
     revenue: number;
@@ -36,7 +36,7 @@ export interface StoresListResponse {
 }
 
 export const getStoresList = async (page: number = 1, limit: number = 10, status: string = "all"): Promise<StoresListResponse> => {
-    const res = await client.get<StoresListResponse>("/admin/stores", {
+    const res = await api.get<StoresListResponse>("/admin/stores", {
         params: { page, limit, status },
     });
 
@@ -56,7 +56,7 @@ export const getStoresList = async (page: number = 1, limit: number = 10, status
 };
 
 export const getStoreById = async (id: number): Promise<StoreAdminDetails> => {
-    const res = await client.get<StoreAdminDetails>(`/admin/stores/${id}`);
+    const res = await api.get<StoreAdminDetails>(`/admin/stores/${id}`);
     const data = res.data;
 
     return {
@@ -71,5 +71,5 @@ export const getStoreById = async (id: number): Promise<StoreAdminDetails> => {
 };
 
 export const deactivateStore = async (id: number, reason: string): Promise<void> => {
-    await client.patch(`/admin/stores/${id}/deactivate`, { reason });
+    await api.patch(`/admin/stores/${id}/deactivate`, { reason });
 };

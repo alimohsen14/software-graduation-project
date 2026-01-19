@@ -1,4 +1,4 @@
-import { publicClient } from "../api/client";
+import { publicApi } from "../lib/api";
 
 // ================= TYPES =================
 
@@ -61,7 +61,7 @@ export const getMarketplaceProducts = async (
         delete params.category;
     }
 
-    const res = await publicClient.get<any>(
+    const res = await publicApi.get<any>(
         `/marketplace/products`, { params }
     );
 
@@ -79,6 +79,6 @@ export const getMarketplaceProducts = async (
 };
 
 export const getMarketplaceCategories = async (): Promise<string[]> => {
-    const res = await publicClient.get<string[]>("/marketplace/categories");
+    const res = await publicApi.get<string[]>("/marketplace/categories");
     return res.data;
 };

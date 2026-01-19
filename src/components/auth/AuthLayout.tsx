@@ -41,7 +41,7 @@ export default function AuthLayout({ children, title, subtitle }: AuthLayoutProp
 
                 {/* glassmorphism Card - No White Background */}
                 <div className="bg-[#1a130f]/60 backdrop-blur-xl rounded-[2rem] shadow-[0_0_50px_rgba(0,0,0,0.5)] border border-white/10 overflow-hidden ring-1 ring-white/5">
-                    <div className="px-8 pt-10 pb-12">
+                    <div className="px-5 sm:px-8 pt-8 sm:pt-10 pb-10 sm:pb-12">
                         {children}
                     </div>
                 </div>

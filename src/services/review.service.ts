@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 
 export type Review = {
     id: number;
@@ -22,7 +22,7 @@ export type CreateReviewPayload = {
  * GET /products/:productId/reviews
  */
 export const getProductReviews = async (productId: number): Promise<Review[]> => {
-    const res = await client.get<Review[]>(`/products/${productId}/reviews`);
+    const res = await api.get<Review[]>(`/products/${productId}/reviews`);
     return res.data;
 };
 
@@ -31,7 +31,7 @@ export const getProductReviews = async (productId: number): Promise<Review[]> =>
  * POST /products/:productId/reviews
  */
 export const createReview = async (productId: number, data: CreateReviewPayload): Promise<Review> => {
-    const res = await client.post<Review>(`/products/${productId}/reviews`, data);
+    const res = await api.post<Review>(`/products/${productId}/reviews`, data);
     return res.data;
 };
 
@@ -40,7 +40,7 @@ export const createReview = async (productId: number, data: CreateReviewPayload)
  * PATCH /products/:productId/reviews/my
  */
 export const updateMyReview = async (productId: number, data: CreateReviewPayload): Promise<Review> => {
-    const res = await client.patch<Review>(`/products/${productId}/reviews/my`, data);
+    const res = await api.patch<Review>(`/products/${productId}/reviews/my`, data);
     return res.data;
 };
 
@@ -49,5 +49,5 @@ export const updateMyReview = async (productId: number, data: CreateReviewPayloa
  * DELETE /products/:productId/reviews/my
  */
 export const deleteMyReview = async (productId: number): Promise<void> => {
-    await client.delete(`/products/${productId}/reviews/my`);
+    await api.delete(`/products/${productId}/reviews/my`);
 };

@@ -1,4 +1,4 @@
-import client, { publicClient } from "../api/client";
+import api, { publicApi } from "../lib/api";
 
 // ================= TYPES =================
 export type Store = {
@@ -34,12 +34,12 @@ export type StoreProduct = {
  * Endpoint: GET /stores/:id
  */
 export const getPublicStoreById = async (storeId: number): Promise<Store> => {
-    const res = await publicClient.get<Store>(`/stores/${storeId}`);
+    const res = await publicApi.get<Store>(`/stores/${storeId}`);
     return res.data;
 };
 
 export const getStoreById = async (storeId: number): Promise<Store> => {
-    const res = await client.get<Store>(`/store/${storeId}`);
+    const res = await api.get<Store>(`/store/${storeId}`);
     return res.data;
 };
 
@@ -53,7 +53,7 @@ export const getStoreProducts = async (
 ): Promise<StoreProduct[]> => {
     // We reuse getMarketplaceProducts logic if we want, but let's keep it simple here.
     // The endpoint is /marketplace/products?storeId=...
-    const res = await publicClient.get<any>(`/marketplace/products`, {
+    const res = await publicApi.get<any>(`/marketplace/products`, {
         params: { ...filters, storeId }
     });
 
@@ -71,7 +71,7 @@ export const getStoreProducts = async (
 };
 
 export const getAllStores = async (): Promise<Store[]> => {
-    const res = await client.get<Store[]>("/store");
+    const res = await api.get<Store[]>("/store");
     return res.data;
 };
 
@@ -87,32 +87,32 @@ export type StoreSocialStatus = {
  * Auth required
  */
 export const getStoreSocialStatus = async (storeId: number): Promise<StoreSocialStatus> => {
-    const res = await client.get<StoreSocialStatus>(`/stores/${storeId}/social-status`);
+    const res = await api.get<StoreSocialStatus>(`/stores/${storeId}/social-status`);
     return res.data;
 };
 
 export const followStore = async (storeId: number): Promise<void> => {
-    await client.post(`/stores/${storeId}/follow`);
+    await api.post(`/stores/${storeId}/follow`);
 };
 
 export const unfollowStore = async (storeId: number): Promise<void> => {
-    await client.delete(`/stores/${storeId}/follow`);
+    await api.delete(`/stores/${storeId}/follow`);
 };
 
 export const favoriteStore = async (storeId: number): Promise<void> => {
-    await client.post(`/stores/${storeId}/favorite`);
+    await api.post(`/stores/${storeId}/favorite`);
 };
 
 export const unfavoriteStore = async (storeId: number): Promise<void> => {
-    await client.delete(`/stores/${storeId}/favorite`);
+    await api.delete(`/stores/${storeId}/favorite`);
 };
 
 export const getFollowedStores = async (): Promise<Store[]> => {
-    const res = await client.get<{ stores: Store[] }>("/me/followed-stores");
+    const res = await api.get<{ stores: Store[] }>("/me/followed-stores");
     return res.data.stores;
 };
 
 export const getFavoriteStores = async (): Promise<Store[]> => {
-    const res = await client.get<{ stores: Store[] }>("/me/favorite-stores");
+    const res = await api.get<{ stores: Store[] }>("/me/favorite-stores");
     return res.data.stores;
 };

@@ -1,6 +1,6 @@
 // services/aiService.ts
 // @ts-ignore
-import client from "../api/client";
+import api from "../lib/api";
 
 const API_URL = "/ai";
 
@@ -31,7 +31,7 @@ export const askAI = async (
   chatId?: number | null
 ): Promise<AIResponse> => {
   // نرسل chatId ضمن الـ body
-  const res = await client.post<AIResponse>(
+  const res = await api.post<AIResponse>(
     `${API_URL}/ask`,
     { message, lang, chatId }
   );
@@ -40,7 +40,7 @@ export const askAI = async (
 };
 
 export const getChats = async (): Promise<Chat[]> => {
-  const res = await client.get<Chat[]>(`${API_URL}/chats`);
+  const res = await api.get<Chat[]>(`${API_URL}/chats`);
 
   return res.data;
 };
@@ -48,13 +48,13 @@ export const getChats = async (): Promise<Chat[]> => {
 export const getChatMessages = async (
   chatId: number
 ): Promise<AIMessage[]> => {
-  const res = await client.get<AIMessage[]>(`${API_URL}/${chatId}/messages`);
+  const res = await api.get<AIMessage[]>(`${API_URL}/${chatId}/messages`);
 
   return res.data;
 };
 
 export const deleteChat = async (chatId: number) => {
-  const res = await client.delete(`${API_URL}/${chatId}`);
+  const res = await api.delete(`${API_URL}/${chatId}`);
 
   return res.data;
 };

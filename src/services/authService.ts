@@ -1,5 +1,5 @@
 // @ts-ignore
-import client from "../api/client";
+import api, { publicApi } from "../lib/api";
 
 // ===== Types =====
 export type SellerStore = {
@@ -59,15 +59,15 @@ export const signup = async (data: {
   gender: "MALE" | "FEMALE";
   isSeller?: boolean;
 }) => {
-  return client.post<AuthEnvelope>("/auth/signup", data);
+  return api.post<AuthEnvelope>("/auth/signup", data);
 };
 
 export const login = async (data: { email: string; password: string }) => {
-  return client.post<AuthEnvelope>("/auth/login", data);
+  return api.post<AuthEnvelope>("/auth/login", data);
 };
 
 export const logout = async () => {
-  return client.post("/auth/logout");
+  return api.post("/auth/logout");
 };
 
 export const completeGoogleSignup = async (data: {
@@ -78,11 +78,11 @@ export const completeGoogleSignup = async (data: {
   gender: "MALE" | "FEMALE";
   token: string;
 }) => {
-  return client.post<AuthEnvelope>("/auth/complete-google-signup", data);
+  return api.post<AuthEnvelope>("/auth/complete-google-signup", data);
 };
 
 export const getMe = async () => {
-  return client.get<ProfileEnvelope>("/auth/me");
+  return api.get<ProfileEnvelope>("/auth/me");
 };
 
 // Kept if some components still use getProfile name, but pointing to /auth/me
@@ -91,13 +91,13 @@ export const getProfile = async () => {
 };
 
 export const forgotPassword = async (email: string) => {
-  return client.post<ForgotPasswordEnvelope>("/auth/forgot-password", {
+  return api.post<ForgotPasswordEnvelope>("/auth/forgot-password", {
     email,
   });
 };
 
 export const resetPassword = async (token: string, newPassword: string) => {
-  return client.post<ResetPasswordEnvelope>("/auth/reset-password", {
+  return api.post<ResetPasswordEnvelope>("/auth/reset-password", {
     token,
     newPassword,
   });

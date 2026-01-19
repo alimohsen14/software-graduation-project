@@ -52,38 +52,42 @@ export default function ProductHeroSection({
   const disabled = stock === 0 || isSoldOut;
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start animate-in fade-in duration-700">
+    <section className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-start animate-in fade-in duration-700">
       <ProductImage image={image} badge={badge} badges={badges} name={name} />
 
-      <div className="flex flex-col gap-8">
-        <div className="space-y-3">
-          <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[0.9]">
+      <div className="flex flex-col gap-5 md:gap-8">
+        <div className="space-y-2 md:space-y-3">
+          <h1 className="text-2xl md:text-5xl lg:text-6xl font-black text-white tracking-tighter uppercase leading-[0.9]">
             {name}
           </h1>
           {shortDescription && (
-            <p className="text-white/30 text-[11px] font-black uppercase tracking-[0.3em] leading-relaxed max-w-lg">
+            <p className="text-white/30 text-[10px] md:text-[11px] font-black uppercase tracking-[0.3em] leading-relaxed max-w-lg">
               {shortDescription}
             </p>
           )}
         </div>
 
-        <div className="flex items-center gap-6">
-          <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={18} />
-          <div className="h-4 w-px bg-white/10" />
+        <div className="flex items-center gap-4 md:gap-6">
+          <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={16} />
+          <div className="h-3 w-px bg-white/10" />
           <ProductPrice price={price} />
         </div>
 
-        <div className="space-y-6 bg-white/5 rounded-[2rem] p-8 border border-white/5 shadow-inner">
+        <div className="space-y-4 md:space-y-6 bg-white/5 rounded-2xl md:rounded-[2rem] p-5 md:p-8 border border-white/5 shadow-inner">
           <div className="flex items-center justify-between">
             <StockStatus stock={stock} />
-            <QuantitySelector
-              quantity={quantity}
-              onIncrease={handleIncrease}
-              onDecrease={handleDecrease}
-            />
+            <div className="scale-90 md:scale-100 origin-right">
+              <QuantitySelector
+                quantity={quantity}
+                onIncrease={handleIncrease}
+                onDecrease={handleDecrease}
+              />
+            </div>
           </div>
 
-          <StockWarningBox stock={stock} badges={badges} />
+          <div className="scale-95 md:scale-100 origin-left">
+            <StockWarningBox stock={stock} badges={badges} />
+          </div>
 
           <AddToCartActions
             disabled={disabled}

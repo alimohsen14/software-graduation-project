@@ -1,22 +1,22 @@
 // @ts-ignore
-import client from '../api/client';
+import api from '../lib/api';
 import { User } from './authService';
 
 export const profileService = {
   async getProfile(): Promise<User> {
-    const res = await client.get<{ user: User }>('/auth/profile');
+    const res = await api.get<{ user: User }>('/auth/profile');
     return res.data.user;
   },
 
   async updateProfile(data: Partial<User>): Promise<User> {
     // Assuming the backend endpoint is actually /auth/profile/update or similar, based on previous context.
     // The original file used '/profile/update' with baseURL '.../auth'. So full path was '/auth/profile/update'.
-    const res = await client.patch<{ user: User }>('/auth/profile/update', data);
+    const res = await api.patch<{ user: User }>('/auth/profile/update', data);
     return res.data.user;
   },
 
   async changePassword(currentPassword: string, newPassword: string) {
-    const res = await client.patch<{ message: string }>(
+    const res = await api.patch<{ message: string }>(
       '/auth/profile/password',
       { currentPassword, newPassword }
     );

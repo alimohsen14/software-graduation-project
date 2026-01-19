@@ -62,24 +62,24 @@ export default function MarketplaceFilters({
     );
 
     return (
-        <div className="bg-[#0d0d0d]/40 backdrop-blur-3xl rounded-[2.5rem] border border-white/5 shadow-2xl p-8 md:p-10 mb-12 relative overflow-hidden group" dir="rtl">
+        <div className="bg-[#0d0d0d]/40 backdrop-blur-3xl rounded-2xl md:rounded-[2.5rem] border border-white/5 shadow-2xl p-4 sm:p-8 md:p-10 mb-6 md:mb-12 relative overflow-hidden group" dir="rtl">
             {/* Background decorative glow */}
             <div className="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-emerald-500/10 transition-all duration-1000" />
 
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10 relative z-10">
-                <div className="flex items-center gap-5">
-                    <div className="w-14 h-14 bg-emerald-500/5 rounded-2xl border border-emerald-500/10 flex items-center justify-center text-emerald-400 shadow-xl transition-transform duration-500 group-hover:scale-105">
-                        <FiFilter className="w-6 h-6" />
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-10 mb-6 md:mb-10 relative z-10">
+                <div className="flex items-center gap-3 md:gap-5">
+                    <div className="w-10 h-10 md:w-14 md:h-14 bg-emerald-500/5 rounded-xl border border-emerald-500/10 flex items-center justify-center text-emerald-400 shadow-xl transition-transform duration-500 group-hover:scale-105">
+                        <FiFilter className="w-4 h-4 md:w-6 md:h-6" />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-emerald-500/40 text-[9px] font-black uppercase tracking-[0.4em] mb-1 leading-none">بحث متقدم</span>
-                        <h3 className="text-2xl font-black text-white tracking-tighter uppercase leading-none">تصفية النتائج</h3>
+                        <span className="text-emerald-500/40 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] mb-0.5 leading-none">بحث متقدم</span>
+                        <h3 className="text-lg md:text-2xl font-black text-white tracking-tighter uppercase leading-none">تصفية النتائج</h3>
                     </div>
                 </div>
 
                 <button
                     onClick={clearFilters}
-                    className="px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-white/20 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:text-white hover:border-white/10 transition-all active:scale-95 shadow-lg"
+                    className="w-full md:w-auto px-6 md:px-8 py-3 md:py-4 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 bg-white/5 border border-white/5 rounded-xl md:rounded-2xl hover:bg-white/10 hover:text-white hover:border-white/10 transition-all active:scale-95 shadow-lg min-h-[44px] flex items-center justify-center"
                 >
                     إعادة ضبط
                 </button>

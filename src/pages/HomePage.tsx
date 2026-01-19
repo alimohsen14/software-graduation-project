@@ -38,24 +38,28 @@ export function HomePage() {
       image: "/assets/home/card-3d-tour.jpeg",
       path: "/soap-3d",
       accentColor: "olive",
+      is3D: true,
     },
   ];
 
+  const handleCardClick = (card: typeof mainCards[0]) => {
+    navigate(card.path);
+  };
 
   return (
     <DashboardLayout>
-      <div className="flex flex-col min-h-[calc(100vh-160px)] pb-10">
-        <section className="flex-1 flex flex-col items-center justify-center text-center py-12 md:py-20 relative">
+      <div className="flex flex-col min-h-screen pb-6 md:pb-10 space-y-6 sm:space-y-8">
+        <section className="flex-1 flex flex-col items-center justify-center text-center py-4 sm:py-8 md:py-20 relative min-h-[40vh] md:min-h-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="z-10"
+            className="z-10 w-full"
           >
-            <Palestine3DLogo />
-            <div className="max-w-4xl mx-auto mb-10 mt-8 text-center" dir="rtl">
+            <Palestine3DLogo size="lg" className="scale-[0.6] sm:scale-90 md:scale-100 transition-transform" />
+            <div className="max-w-4xl mx-auto mb-6 mt-2 text-center px-4" dir="rtl">
               {/* السطر الأول: نرحّب بك + الاسم */}
-              <p className="text-2xl md:text-3xl text-white/85 font-medium mb-3">
+              <p className="text-lg sm:text-2xl md:text-3xl text-white/85 font-medium mb-1">
                 نرحّب بك{" "}
                 <span className="text-white font-semibold">
                   {user.name}
@@ -63,19 +67,17 @@ export function HomePage() {
               </p>
 
               {/* السطر الثاني: الوصف */}
-              <p className="text-lg md:text-xl text-white/70 leading-relaxed">
+              <p className="text-sm sm:text-lg md:text-xl text-white/60 leading-tight md:leading-relaxed">
                 هنا تبدأ رحلتك داخل الذاكرة الفلسطينية في مساحة رقمية تحكي قصة فلسطينة
               </p>
-              <p className="text-lg md:text-xl text-white/70 leading-relaxed">
-                حيث
-                يلتقي التراث العريق بتجربة ثلاثية الأبعاد نابضة بالحياة
+              <p className="text-sm sm:text-lg md:text-xl text-white/60 leading-tight md:leading-relaxed">
+                حيث يلتقي التراث العريق بتجربة ثلاثية الأبعاد نابضة بالحياة
               </p>
             </div>
 
-
             <button
               onClick={() => setIsModalOpen(true)}
-              className="group relative px-10 py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full font-bold text-lg text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 active:scale-95 overflow-hidden"
+              className="group relative px-6 sm:px-10 py-2.5 sm:py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full font-bold text-sm sm:text-lg text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 active:scale-95 overflow-hidden min-h-[44px]"
             >
               <div className="relative z-10 flex items-center gap-3">
                 <span className="tracking-wide">اكتشف المزيد</span>
@@ -85,10 +87,10 @@ export function HomePage() {
             </button>
           </motion.div>
 
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-emerald-500/5 blur-[80px] md:blur-[120px] rounded-full pointer-events-none" />
         </section>
 
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-10">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 pb-4 md:pb-10">
           {mainCards.map((card, idx) => {
             const styles = ({
               amber: {
@@ -111,8 +113,8 @@ export function HomePage() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 + idx * 0.15, duration: 0.8 }}
-                onClick={() => navigate(card.path)}
-                className="group relative h-[480px] rounded-[2.5rem] overflow-hidden cursor-pointer shadow-xl border border-white/5 bg-black/20"
+                onClick={() => handleCardClick(card)}
+                className="group relative h-[380px] sm:h-[480px] rounded-3xl sm:rounded-[2.5rem] overflow-hidden cursor-pointer shadow-xl border border-white/5 bg-black/20"
               >
                 {/* Background Image */}
                 <img
@@ -125,17 +127,17 @@ export function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
 
                 {/* Glass Info Container */}
-                <div className="absolute bottom-4 left-4 right-4">
-                  <div className={`p-5 rounded-[1.75rem] border transition-all duration-500 ${styles.bg}`}>
+                <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
+                  <div className={`p-4 sm:p-5 rounded-2xl sm:rounded-[1.75rem] border transition-all duration-500 ${styles.bg}`}>
                     <div className="text-right" dir="rtl">
-                      <h3 className="text-xl font-medium text-white mb-1 tracking-tight">
+                      <h3 className="text-lg sm:text-xl font-medium text-white mb-0.5 sm:mb-1 tracking-tight">
                         {card.title}
                       </h3>
-                      <p className="text-[13px] text-white/40 font-normal mb-4 leading-relaxed">
+                      <p className="text-[11px] sm:text-[13px] text-white/40 font-normal mb-3 sm:mb-4 leading-relaxed">
                         {card.subtitle}
                       </p>
 
-                      <button className={`px-5 py-1.5 rounded-full text-[11px] font-bold text-white border transition-all duration-300 active:scale-95 ${styles.btn}`}>
+                      <button className={`px-4 sm:px-5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold text-white border transition-all duration-300 active:scale-95 ${styles.btn}`}>
                         {card.buttonText}
                       </button>
                     </div>

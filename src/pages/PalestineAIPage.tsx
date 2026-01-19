@@ -155,16 +155,16 @@ function AIPageContent({
 
       <main className="flex-1 flex flex-col relative md:pr-[190px]">
         {/* Main Content Glass Container */}
-        <div className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 pb-40 relative z-10">
-          <div className="bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col min-h-full min-w-full">
-            <div className="p-8 md:p-12 flex-1">
+        <div className="flex-1 max-w-4xl mx-auto w-full px-3 md:px-8 py-5 md:py-10 pb-40 relative z-10">
+          <div className="bg-white/5 backdrop-blur-2xl rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col min-h-full min-w-full">
+            <div className="p-5 md:p-12 flex-1">
               {messages.length === 0 && (
                 <div className="h-full flex flex-col items-center justify-center animate-in fade-in zoom-in duration-500">
                   <AIWelcomeBox userName={user?.name} />
                 </div>
               )}
 
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 {messages.map((m) => (
                   <AIMessageBubble
                     key={m.id}
@@ -179,7 +179,7 @@ function AIPageContent({
 
         {/* Floating Interactions Overlay */}
         <div className="fixed bottom-0 left-0 right-0 z-40 md:pr-[190px]">
-          <div className="max-w-4xl mx-auto px-6 pb-10">
+          <div className="max-w-4xl mx-auto px-4 md:px-6 pb-6 md:pb-10">
             {messages.length === 0 && (
               <div className="mb-6 animate-in slide-in-from-bottom-4 duration-500">
                 <AISuggestions onSelect={performSend} />

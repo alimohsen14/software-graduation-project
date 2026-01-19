@@ -1,4 +1,4 @@
-import client from "../api/client";
+import api from "../lib/api";
 import { ProductCategory } from "./marketplace.service";
 
 // =========================
@@ -66,7 +66,7 @@ export const getAllProducts = async (filters?: ProductFilters): Promise<ProductR
   if (params.category === "ALL") {
     delete params.category;
   }
-  const res = await client.get<any>("/products", { params });
+  const res = await api.get<any>("/products", { params });
 
   // Handle case where backend returns array directly
   if (Array.isArray(res.data)) {
@@ -82,7 +82,7 @@ export const getAllProducts = async (filters?: ProductFilters): Promise<ProductR
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
-  const res = await client.get<Product>(`/products/${id}`);
+  const res = await api.get<Product>(`/products/${id}`);
   return res.data;
 };
 
@@ -93,7 +93,7 @@ export const getProductById = async (id: number): Promise<Product> => {
 export const createProduct = async (
   data: CreateProductPayload
 ): Promise<Product> => {
-  const res = await client.post<Product>("/products", data);
+  const res = await api.post<Product>("/products", data);
   return res.data;
 };
 
@@ -101,7 +101,7 @@ export const updateProduct = async (
   id: number,
   data: UpdateProductPayload
 ): Promise<Product> => {
-  const res = await client.patch<Product>(
+  const res = await api.patch<Product>(
     `/products/${id}`,
     data
   );
@@ -111,7 +111,7 @@ export const updateProduct = async (
 export const deleteProduct = async (
   id: number
 ): Promise<Product> => {
-  const res = await client.delete<Product>(
+  const res = await api.delete<Product>(
     `/products/${id}`
   );
   return res.data;

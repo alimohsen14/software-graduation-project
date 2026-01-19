@@ -40,7 +40,7 @@ export default function AIChatInput({
       className="w-full relative z-10"
     >
       <div
-        className="flex items-end gap-3 px-6 py-4 bg-white/5 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-2xl transition-all focus-within:border-emerald-500/30 group"
+        className="flex items-end gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 bg-white/5 backdrop-blur-2xl rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl transition-all focus-within:border-emerald-500/30 group"
       >
         <textarea
           ref={taRef}
@@ -48,7 +48,7 @@ export default function AIChatInput({
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={t("ai.chatPlaceholder")}
-          className="flex-1 resize-none bg-transparent text-white placeholder-white/20 text-sm md:text-base leading-relaxed outline-none border-none min-h-[44px] max-h-[180px] p-2 custom-scrollbar"
+          className="flex-1 resize-none bg-transparent text-white placeholder-white/20 text-sm md:text-base leading-relaxed outline-none border-none min-h-[40px] md:min-h-[44px] max-h-[180px] p-2 custom-scrollbar"
           style={{ direction }}
           rows={1}
         />
@@ -57,15 +57,15 @@ export default function AIChatInput({
           type="button"
           onClick={onSend}
           disabled={isLoading || value.trim().length === 0}
-          className={`shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 relative group/btn overflow-hidden ${isLoading || value.trim().length === 0
+          className={`shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300 relative group/btn overflow-hidden ${isLoading || value.trim().length === 0
             ? "opacity-20 cursor-not-allowed bg-white/5"
             : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/30 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95"
             }`}
         >
           {isLoading ? (
-            <div className="w-5 h-5 border-2 border-emerald-400/30 border-t-emerald-400 rounded-full animate-spin" />
+            <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-emerald-400/30 border-t-emerald-400 rounded-full animate-spin" />
           ) : (
-            <FiSend className="w-5 h-5 relative z-10 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+            <FiSend className="w-4 h-4 md:w-5 md:h-5 relative z-10 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
           )}
 
           {/* Animated Glow Overlay */}
