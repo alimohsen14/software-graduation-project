@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/auth/AuthLayout";
 import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 
@@ -12,14 +13,15 @@ export function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { refreshUser } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email.includes("@")) return setError("❌ Invalid email");
+    if (!email.includes("@")) return setError(t("auth.invalidEmail"));
     if (password.length < 6)
-      return setError("❌ Password must be at least 6 characters");
+      return setError(t("auth.passwordMinLength"));
 
     try {
       setLoading(true);
@@ -30,14 +32,14 @@ export function LoginPage() {
       const userData = await refreshUser();
 
       if (userData) {
-        navigate("/home", { replace: true });
+        navigate("/", { replace: true });
       } else {
-        setError("Login successful, but session failing. Please ensure cookies are enabled.");
+        setError(t("auth.sessionFailing") || "Login successful, but session failing. Please ensure cookies are enabled.");
       }
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ||
-        "❌ Invalid credentials or server error.";
+        t("auth.invalidCredentials");
       setError(msg);
     } finally {
       setLoading(false);
@@ -66,13 +68,13 @@ export function LoginPage() {
           <button
             className="flex-1 pb-3 md:pb-4 text-center border-b-2 border-emerald-500 font-bold text-emerald-500"
           >
-            Login
+            {t("auth.login")}
           </button>
           <button
             onClick={() => navigate("/signup")}
             className="flex-1 pb-3 md:pb-4 text-center border-b-2 border-transparent font-semibold text-white/40 hover:text-white/70 transition-colors"
           >
-            Sign Up
+            {t("auth.signup")}
           </button>
         </div>
 
@@ -90,7 +92,7 @@ export function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-11 pr-4 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-              placeholder="Email Address"
+              placeholder={t("auth.email")}
               required
             />
           </div>
@@ -102,7 +104,7 @@ export function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="w-full pl-11 pr-4 py-3 md:py-4 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-              placeholder="Password"
+              placeholder={t("auth.password")}
               required
             />
           </div>
@@ -113,7 +115,7 @@ export function LoginPage() {
               onClick={() => navigate("/forgot-password")}
               className="text-xs md:text-sm text-white/40 hover:text-emerald-400 font-medium transition-colors"
             >
-              Forgot Password?
+              {t("auth.forgotPassword")}
             </button>
           </div>
 
@@ -122,7 +124,7 @@ export function LoginPage() {
             disabled={loading}
             className="w-full flex items-center justify-center gap-2 py-3.5 md:py-4 bg-[#CE1126] text-white rounded-xl md:rounded-2xl font-bold shadow-xl shadow-red-900/40 hover:bg-[#e6122a] active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed group min-h-[44px]"
           >
-            <span className="text-base md:text-lg">{loading ? "Logging in..." : "Login"}</span>
+            <span className="text-base md:text-lg">{loading ? t("auth.loggingIn") : t("auth.login")}</span>
             {!loading && <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />}
           </button>
         </form>
@@ -132,7 +134,7 @@ export function LoginPage() {
             <div className="w-full border-t border-white/10"></div>
           </div>
           <div className="relative flex justify-center text-[10px] md:text-xs">
-            <span className="px-4 bg-[#1a130f] text-white/30 font-bold tracking-widest uppercase">or</span>
+            <span className="px-4 bg-[#1a130f] text-white/30 font-bold tracking-widest uppercase">{t("auth.or") || "or"}</span>
           </div>
         </div>
 
@@ -145,16 +147,16 @@ export function LoginPage() {
             alt="Google Logo"
             className="w-4 h-4 md:w-5 md:h-5 opacity-90"
           />
-          <span className="text-sm md:text-base">Continue with Google</span>
+          <span className="text-sm md:text-base">{t("auth.continueWithGoogle")}</span>
         </button>
 
         <p className="mt-8 md:mt-10 text-center text-xs md:text-sm text-white/40">
-          Don't have an account?{" "}
+          {t("auth.noAccount")}{" "}
           <button
             onClick={() => navigate("/signup")}
             className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors"
           >
-            Sign up
+            {t("auth.signup")}
           </button>
         </p>
       </div>

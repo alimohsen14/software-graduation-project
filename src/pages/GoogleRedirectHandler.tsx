@@ -14,7 +14,7 @@ export function GoogleRedirectHandler() {
       // We just need to refresh our local state.
       try {
         await refreshUser();
-        navigate("/home");
+        navigate("/");
       } catch (error) {
         console.error("Google Auth Refresh failed:", error);
         navigate("/login");

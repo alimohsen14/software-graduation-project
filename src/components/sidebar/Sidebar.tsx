@@ -30,26 +30,26 @@ type SidebarItem = {
 };
 
 export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
-  const { i18n } = useTranslation();
-  const { user, logout } = useAuth();
+  const { t, i18n } = useTranslation("sidebar");
+  const { user, logout } = useAuth(); // Assuming useAuth is correct
   const [active, setActive] = useState("Home");
   const touchStartX = useRef<number | null>(null);
   const navigate = useNavigate();
 
   const items: SidebarItem[] = [
-    { key: "Home", label: "Home", Icon: FiHome, path: "/" },
-    { key: "Profile", label: "Profile", Icon: FiUser, path: "/profile" },
-    { key: "AI", label: "AI System", Icon: FiCpu, path: "/palestine-ai" },
-    { key: "Library", label: "Heritage Library", Icon: FiBook, path: "/heritage" },
-    { key: "Marketplace", label: "Marketplace", Icon: FiShoppingBag, path: "/marketplace" },
-    { key: "3D", label: "3D Module", Icon: FiBox, path: "/3d-module" },
+    { key: "Home", label: t("home"), Icon: FiHome, path: "/" },
+    { key: "Profile", label: t("profile"), Icon: FiUser, path: "/profile" },
+    { key: "AI", label: t("aiSystem"), Icon: FiCpu, path: "/palestine-ai" },
+    { key: "Library", label: t("heritageLibrary"), Icon: FiBook, path: "/heritage" },
+    { key: "Marketplace", label: t("marketplace"), Icon: FiShoppingBag, path: "/marketplace" },
+    { key: "3D", label: t("module3d"), Icon: FiBox, path: "/3d-module" },
   ];
 
   const adminItems: SidebarItem[] = [
-    { key: "AdminMarket", label: "Admin Market", Icon: FiBriefcase, path: "/admin/market" },
-    { key: "Supervision", label: "Supervision Dashboard", Icon: FiShield, path: "/admin/supervision" },
-    { key: "Analytics", label: "Platform Analytics", Icon: FiPieChart, path: "/admin/analytics" },
-    { key: "Requests", label: "Seller Requests", Icon: FiCheckCircle, path: "/admin/seller-requests" },
+    { key: "AdminMarket", label: t("adminMarket"), Icon: FiBriefcase, path: "/admin/market" },
+    { key: "Supervision", label: t("supervision"), Icon: FiShield, path: "/admin/supervision" },
+    { key: "Analytics", label: t("analytics"), Icon: FiPieChart, path: "/admin/analytics" },
+    { key: "Requests", label: t("requests"), Icon: FiCheckCircle, path: "/admin/seller-requests" },
   ];
 
   const direction = i18n.dir();
@@ -116,7 +116,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                     : "text-white/60 hover:text-white/90 hover:bg-white/5"
                     }`}
                 >
-                  <Icon className={`w-4.5 h-4.5 ${isActive ? "text-white" : "text-white/40 group-hover:text-white/80"}`} />
+                  <Icon className={`w-4.5 h-4.5 ${isActive ? "text-white" : "text-white/40 group-hover:text-white/80"} ${direction === "rtl" ? "ml-0" : ""}`} />
                   <span className={`text-[13px] tracking-wide font-medium`}>{label}</span>
                 </button>
               );
@@ -125,7 +125,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
             {/* Admin Section */}
             {user?.isAdmin && (
               <div className="pt-6 mt-6 border-t border-white/5 space-y-1.5">
-                <p className="px-5 mb-3 text-[10px] font-bold uppercase tracking-widest text-white/20">Admin Management</p>
+                <p className="px-5 mb-3 text-[10px] font-bold uppercase tracking-widest text-white/20">{t("adminSection")}</p>
                 {adminItems.map(({ key, label, Icon, path }) => {
                   const isActive = active === key;
                   return (
@@ -137,7 +137,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
                         : "text-white/60 hover:text-white/90 hover:bg-white/5"
                         }`}
                     >
-                      <Icon className={`w-4.5 h-4.5 ${isActive ? "text-white" : "text-white/40 group-hover:text-white/80"}`} />
+                      <Icon className={`w-4.5 h-4.5 ${isActive ? "text-white" : "text-white/40 group-hover:text-white/80"} ${direction === "rtl" ? "ml-0" : ""}`} />
                       <span className={`text-[13px] tracking-wide font-medium`}>{label}</span>
                     </button>
                   );
@@ -153,8 +153,8 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
               onClick={handleLogout}
               className="w-full flex items-center gap-3.5 px-5 py-3 text-red-500/80 hover:text-red-400 text-[13px] font-bold transition-all duration-300 rounded-xl hover:bg-red-500/5 group"
             >
-              <FiLogOut className="w-4.5 h-4.5" />
-              <span>Logout</span>
+              <FiLogOut className={`w-4.5 h-4.5 ${direction === "rtl" ? "ml-0" : ""}`} />
+              <span>{t("logout")}</span>
             </button>
           </div>
         )}

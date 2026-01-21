@@ -1,45 +1,57 @@
 .hotspot-pot {
   all: unset;
-  /* 🔥 هذا السطر مهم جدًا */
   box-sizing: border-box;
 
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  /* ⬅ أصغر شوي */
+  height: 26px;
   border-radius: 50%;
 
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid rgba(255, 255, 255, 0.95);
+  background: rgba(0, 0, 0, 0.55);
+  /* أبهت */
+  border: 1px solid rgba(255, 255, 255, 0.5);
 
   color: white;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12px;
+  /* ⬅ الرقم أصغر شوي */
+  font-weight: 600;
 
   display: grid;
   place-items: center;
 
   box-shadow:
-    0 0 0 2px rgba(255, 255, 255, 0.15),
-    0 8px 20px rgba(0, 0, 0, 0.4);
+    0 0 0 1px rgba(255, 255, 255, 0.12),
+    0 6px 16px rgba(0, 0, 0, 0.35);
+  /* أخف شوي */
 
   cursor: pointer;
   pointer-events: auto;
 
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(0.92);
   transition:
     opacity 0.25s ease,
     transform 0.25s ease,
-    box-shadow 0.25s ease;
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
+
 
 
 .hotspot-faded {
-  opacity: 0.25 !important;
-  transform: translate(-50%, -50%) scale(0.9);
+  opacity: 0.18 !important;
+  /* ⬅ أخف شوي */
+  transform: translate(-50%, -50%) scale(0.88);
 }
+
+
 
 .hotspot-pot.active {
   opacity: 1 !important;
-  transform: translate(-50%, -50%) scale(1.05);
+  background: rgba(25, 25, 25, 0.9);
+  transform: translate(-50%, -50%) scale(1.08);
+  box-shadow:
+    0 0 0 2px rgba(16, 185, 129, 0.35),
+    0 10px 22px rgba(0, 0, 0, 0.45);
   z-index: 10;
 }
 
@@ -132,7 +144,7 @@
 
   to {
     transform: scale(1);
-    opacity: 1;
+    opacity: 0.7;
   }
 }
 
@@ -148,4 +160,280 @@
 .hotspot-scroll::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.35);
   border-radius: 4px;
+}
+
+
+.ui-btn {
+  all: unset;
+  cursor: pointer;
+
+  padding: 6px 14px;
+  border-radius: 999px;
+
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45);
+
+  backdrop-filter: blur(6px);
+
+  transition: all 0.2s ease;
+}
+
+.ui-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-1px);
+}
+
+.ui-btn:active {
+  transform: scale(0.95);
+}
+
+.ui-nav {
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 999px;
+  padding: 4px 10px;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.ui-nav-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: white;
+  transition: 0.2s;
+}
+
+.ui-nav-btn:hover {
+  color: #6ee7b7;
+  /* أخضر خفيف جدًا */
+  transform: scale(1.15);
+}
+
+.ui-nav-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  min-width: 40px;
+  text-align: center;
+}
+
+
+.mv-settings-row {
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mv-settings-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mv-settings-value {
+  opacity: 0.6;
+  font-size: 12px;
+}
+
+.mv-settings-panel {
+  position: absolute;
+  bottom: 52px;
+  right: 10;
+
+  width: 150px;
+
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(14px);
+
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+
+  color: white;
+  font-size: 13px;
+
+  animation: fadeIn 0.15s ease;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.mv-settings-sub-row {
+  padding: 11px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  cursor: pointer;
+  opacity: 0.75;
+  font-size: 12px;
+}
+
+.mv-settings-sub-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 1;
+}
+
+.mv-settings-sub-row.active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.ui-menu {
+  position: absolute;
+  bottom: 44px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+
+  min-width: 110px;
+  z-index: 50;
+}
+
+.ui-menu-item {
+  all: unset;
+  display: block;
+  width: 100%;
+
+  padding: .5px 1px;
+  /* ⬅ أقل من فوق وتحت */
+  text-align: center;
+
+  color: white;
+  font-size: 12px;
+  /* ⬅ أصغر شوي */
+  line-height: 1.9;
+  /* ⬅ يقلل الفراغ العمودي */
+  cursor: pointer;
+
+  transition: background 0.2s;
+}
+
+
+.ui-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+
+.mv-gear-btn {
+  all: unset;
+  cursor: pointer;
+
+  padding: 4px 12px;
+  border-radius: 999px;
+
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(0, 0, 0, 0.55);
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45);
+
+  backdrop-filter: blur(6px);
+
+  transition: all 0.2s ease;
+}
+
+
+.mv-icon {
+  font-size: 20px;
+  /* كبّري الأيقونة */
+  line-height: 1;
+  /* عشان ما يكبر الزر */
+  display: block;
+}
+
+.annotation-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+
+  border-radius: 999px;
+  padding: 2px 25px;
+  /* ⬅ أصغر */
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+
+  color: white;
+}
+
+
+/* الأسهم */
+.annotation-arrow {
+  all: unset;
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  padding: 4px 6px;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.annotation-arrow:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* النص بالوسط */
+.annotation-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  /* ⬅ أصغر */
+}
+
+
+.annotation-title {
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.annotation-count {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-top: 2px;
 }

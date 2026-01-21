@@ -6,35 +6,36 @@ import { motion } from "framer-motion";
 import { FiArrowRight } from "react-icons/fi";
 import DiscoverMoreModal from "../components/home/DiscoverMoreModal";
 import Palestine3DLogo from "../components/common/Palestine3DLogo";
+import { useTranslation } from "react-i18next";
 
 export function HomePage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  if (!user) return null;
+  const { t, i18n } = useTranslation("home");
+  const direction = i18n.dir();
 
   const mainCards = [
     {
-      title: "السوق الفلسطيني",
-      subtitle: "تسوق منتجات تراثية أصلية",
-      buttonText: "تصفح السوق",
+      title: t("cards.marketplace_title"),
+      subtitle: t("cards.marketplace_desc"),
+      buttonText: t("cards.marketplace_btn"),
       image: "/assets/home/card-marketplace.jpeg",
       path: "/marketplace",
       accentColor: "amber",
     },
     {
-      title: "صناعة الصابون",
-      subtitle: "قصة صناعة الصابون النابلسي التراثية",
-      buttonText: "قريبًا",
+      title: t("cards.soap_title"),
+      subtitle: t("cards.soap_desc"),
+      buttonText: t("cards.soap_btn"),
       image: "/assets/home/card-soap-story.jpeg",
       path: "/heritage/industries/soap",
       accentColor: "stone",
     },
     {
-      title: "جولة ثلاثية الأبعاد",
-      subtitle: "تجول داخل المعالم الأثرية الفلسطينية",
-      buttonText: "ابدأ الجولة",
+      title: t("cards.tour_title"),
+      subtitle: t("cards.tour_desc"),
+      buttonText: t("cards.tour_btn"),
       image: "/assets/home/card-3d-tour.jpeg",
       path: "/soap-3d",
       accentColor: "olive",
@@ -57,21 +58,27 @@ export function HomePage() {
             className="z-10 w-full"
           >
             <Palestine3DLogo size="lg" className="scale-[0.6] sm:scale-90 md:scale-100 transition-transform" />
-            <div className="max-w-4xl mx-auto mb-6 mt-2 text-center px-4" dir="rtl">
+            <div className="max-w-4xl mx-auto mb-6 mt-2 text-center px-4" dir={direction}>
               {/* السطر الأول: نرحّب بك + الاسم */}
               <p className="text-lg sm:text-2xl md:text-3xl text-white/85 font-medium mb-1">
-                نرحّب بك{" "}
-                <span className="text-white font-semibold">
-                  {user.name}
-                </span>
+                {user ? (
+                  <>
+                    {t("welcome")}{" "}
+                    <span className="text-white font-semibold">
+                      {user.name}
+                    </span>
+                  </>
+                ) : (
+                  t("welcome_guest")
+                )}
               </p>
 
               {/* السطر الثاني: الوصف */}
               <p className="text-sm sm:text-lg md:text-xl text-white/60 leading-tight md:leading-relaxed">
-                هنا تبدأ رحلتك داخل الذاكرة الفلسطينية في مساحة رقمية تحكي قصة فلسطينة
+                {t("hero_subtitle_1")}
               </p>
               <p className="text-sm sm:text-lg md:text-xl text-white/60 leading-tight md:leading-relaxed">
-                حيث يلتقي التراث العريق بتجربة ثلاثية الأبعاد نابضة بالحياة
+                {t("hero_subtitle_2")}
               </p>
             </div>
 
@@ -80,8 +87,8 @@ export function HomePage() {
               className="group relative px-6 sm:px-10 py-2.5 sm:py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full font-bold text-sm sm:text-lg text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 active:scale-95 overflow-hidden min-h-[44px]"
             >
               <div className="relative z-10 flex items-center gap-3">
-                <span className="tracking-wide">اكتشف المزيد</span>
-                <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
+                <span className="tracking-wide">{t("discover_more")}</span>
+                <FiArrowRight className={`group-hover:${direction === 'rtl' ? '-translate-x-1' : 'translate-x-1'} transition-transform ${direction === 'rtl' ? 'rotate-180' : ''}`} />
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
@@ -129,7 +136,7 @@ export function HomePage() {
                 {/* Glass Info Container */}
                 <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
                   <div className={`p-4 sm:p-5 rounded-2xl sm:rounded-[1.75rem] border transition-all duration-500 ${styles.bg}`}>
-                    <div className="text-right" dir="rtl">
+                    <div className={direction === 'rtl' ? "text-right" : "text-left"} dir={direction}>
                       <h3 className="text-lg sm:text-xl font-medium text-white mb-0.5 sm:mb-1 tracking-tight">
                         {card.title}
                       </h3>

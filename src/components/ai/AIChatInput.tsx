@@ -4,77 +4,80 @@ import { FiSend } from "react-icons/fi";
 
 type Props = {
   value: string;
-  onChange: (v: string) => void;
+  onChange: (value: string) => void;
   onSend: () => void;
-  isLoading?: boolean;
+  isLoading: boolean;
 };
 
-export default function AIChatInput({
-  value,
-  onChange,
-  onSend,
-  isLoading = false,
-}: Props): React.ReactElement {
-  const taRef = useRef<HTMLTextAreaElement | null>(null);
+export default function AIChatInput({ value, onChange, onSend, isLoading }: Props): React.ReactElement {
   const { t, i18n } = useTranslation();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const direction = i18n.dir();
 
+  const adjustHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 120)}px`;
+    }
+  };
+
   useEffect(() => {
-    const ta = taRef.current;
-    if (!ta) return;
-    ta.style.height = "36px";
-    const maxH = 180;
-    ta.style.height = Math.min(ta.scrollHeight, maxH) + "px";
+    adjustHeight();
   }, [value]);
 
-  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  const handleSubmit = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (value.trim() && !isLoading) {
+      onSend();
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto";
+      }
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      if (!isLoading && value.trim().length > 0) onSend();
+      handleSubmit();
     }
-  }
+  };
 
   return (
-    <div
+    <form
+      onSubmit={handleSubmit}
+      className="relative flex items-end gap-2 p-3 bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl transition-all focus-within:border-emerald-500/50 shadow-inner"
       dir={direction}
-      className="w-full relative z-10"
     >
-      <div
-        className="flex items-end gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 bg-white/5 backdrop-blur-2xl rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl transition-all focus-within:border-emerald-500/30 group"
+      <textarea
+        ref={textareaRef}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder={t("ai.chatPlaceholder")}
+        rows={1}
+        disabled={isLoading}
+        className="w-full bg-transparent border-none text-white placeholder-white/40 resize-none py-2 px-3 max-h-[160px] focus:ring-0 text-base font-normal leading-relaxed scrollbar-hide disabled:opacity-50"
+        style={{ minHeight: "44px" }}
+      />
+
+      <button
+        type="submit"
+        disabled={!value.trim() || isLoading}
+        className={`
+          flex-shrink-0 p-2.5 rounded-xl flex items-center justify-center transition-all duration-200
+          ${value.trim() && !isLoading
+            ? "bg-emerald-500 text-white hover:bg-emerald-400 active:scale-95 shadow-lg shadow-emerald-500/20"
+            : "bg-white/5 text-white/30 cursor-not-allowed"
+          }
+        `}
       >
-        <textarea
-          ref={taRef}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={t("ai.chatPlaceholder")}
-          className="flex-1 resize-none bg-transparent text-white placeholder-white/20 text-sm md:text-base leading-relaxed outline-none border-none min-h-[40px] md:min-h-[44px] max-h-[180px] p-2 custom-scrollbar"
-          style={{ direction }}
-          rows={1}
-        />
-
-        <button
-          type="button"
-          onClick={onSend}
-          disabled={isLoading || value.trim().length === 0}
-          className={`shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl flex items-center justify-center transition-all duration-300 relative group/btn overflow-hidden ${isLoading || value.trim().length === 0
-            ? "opacity-20 cursor-not-allowed bg-white/5"
-            : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/30 hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95"
-            }`}
-        >
-          {isLoading ? (
-            <div className="w-4 h-4 md:w-5 md:h-5 border-2 border-emerald-400/30 border-t-emerald-400 rounded-full animate-spin" />
-          ) : (
-            <FiSend className="w-4 h-4 md:w-5 md:h-5 relative z-10 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
-          )}
-
-          {/* Animated Glow Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/0 via-emerald-500/10 to-emerald-500/0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
-        </button>
-      </div>
-
-      {/* Heritage Focus Indicator */}
-      <div className="absolute -inset-[1px] bg-gradient-to-r from-emerald-500/0 via-emerald-500/20 to-emerald-500/0 rounded-[2.5rem] opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none" />
-    </div>
+        {isLoading ? (
+          <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+        ) : (
+          <FiSend className={`w-5 h-5 ${direction === 'rtl' ? 'rotate-180' : ''}`} />
+        )}
+      </button>
+    </form>
   );
 }

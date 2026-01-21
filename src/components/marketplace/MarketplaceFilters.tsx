@@ -1,32 +1,52 @@
 import React from "react";
-import { FiFilter, FiTag, FiDollarSign } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
+import { FiFilter, FiSearch, FiChevronDown } from "react-icons/fi";
 import { MarketplaceFilters as FiltersType, ProductCategory } from "../../services/marketplace.service";
 import { PRICE_RANGES } from "../../constants/filters";
 
 const CATEGORIES = [
-    { label: "مأكولات فلسطينية", value: ProductCategory.PALESTINIAN_FOOD },
-    { label: "نمط حياة فلسطيني", value: ProductCategory.PALESTINIAN_LIFESTYLE },
-    { label: "صناعة يدوية", value: ProductCategory.HANDMADE },
-    { label: "تراث فلسطيني", value: ProductCategory.PALESTINIAN_HERITAGE },
+    { label: "marketplace.categories.food", value: ProductCategory.PALESTINIAN_FOOD },
+    { label: "marketplace.categories.lifestyle", value: ProductCategory.PALESTINIAN_LIFESTYLE },
+    { label: "marketplace.categories.handmade", value: ProductCategory.HANDMADE },
+    { label: "marketplace.categories.heritage", value: ProductCategory.PALESTINIAN_HERITAGE },
 ];
 
 type Props = {
     filters: FiltersType;
     onFilterChange: (filters: FiltersType) => void;
+    onSearchChange?: (value: string) => void;
+    onResetFilters?: () => void;
     hideCategory?: boolean;
 };
 
 export default function MarketplaceFilters({
     filters,
     onFilterChange,
+    onSearchChange,
+    onResetFilters,
     hideCategory = false,
 }: Props) {
+    const { t, i18n } = useTranslation();
+    const direction = i18n.dir();
+
     const handleCategoryChange = (val: string) => {
         onFilterChange({
             ...filters,
             category: (val as ProductCategory) || undefined,
-            page: 1, // Reset page on category change
+            page: 1,
         });
+    };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (onSearchChange) {
+            onSearchChange(e.target.value);
+        } else {
+            onFilterChange({
+                ...filters,
+                name: e.target.value || undefined,
+                page: 1,
+            });
+        }
     };
 
     const handlePriceRangeChange = (rangeId: string) => {
@@ -51,91 +71,94 @@ export default function MarketplaceFilters({
         }
     };
 
-    const clearFilters = () => {
-        onFilterChange({ page: 1 });
-    };
-
-    // Determine which range is currently selected
     const activeRange = PRICE_RANGES.find(r =>
         r.min === filters.minPrice &&
         (r.max === filters.maxPrice || (r.max === null && filters.maxPrice === undefined && filters.minPrice !== undefined))
     );
 
-    return (
-        <div className="bg-[#0d0d0d]/40 backdrop-blur-3xl rounded-2xl md:rounded-[2.5rem] border border-white/5 shadow-2xl p-4 sm:p-8 md:p-10 mb-6 md:mb-12 relative overflow-hidden group" dir="rtl">
-            {/* Background decorative glow */}
-            <div className="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-emerald-500/10 transition-all duration-1000" />
+    const isFiltered = !!(filters.name || filters.category || filters.minPrice !== undefined || filters.maxPrice !== undefined);
 
-            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-10 mb-6 md:mb-10 relative z-10">
-                <div className="flex items-center gap-3 md:gap-5">
-                    <div className="w-10 h-10 md:w-14 md:h-14 bg-emerald-500/5 rounded-xl border border-emerald-500/10 flex items-center justify-center text-emerald-400 shadow-xl transition-transform duration-500 group-hover:scale-105">
-                        <FiFilter className="w-4 h-4 md:w-6 md:h-6" />
-                    </div>
-                    <div className="flex flex-col">
-                        <span className="text-emerald-500/40 text-[7px] md:text-[9px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] mb-0.5 leading-none">بحث متقدم</span>
-                        <h3 className="text-lg md:text-2xl font-black text-white tracking-tighter uppercase leading-none">تصفية النتائج</h3>
-                    </div>
+    return (
+        <div className="relative z-30 -mt-8 mb-12" dir={direction}>
+            <div className="bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl md:rounded-full shadow-2xl px-4 md:px-8 py-4 md:h-24 flex flex-col md:flex-row items-center gap-4 md:gap-6">
+
+                {/* 1. Search Bar */}
+                <div className="relative flex-1 w-full group">
+                    <FiSearch className={`absolute ${direction === 'rtl' ? 'left-4' : 'right-4'} top-1/2 -translate-y-1/2 text-white/40 group-focus-within:text-emerald-400 transition-colors`} />
+                    <input
+                        type="text"
+                        placeholder={t("marketplace.searchPlaceholder")}
+                        value={filters.name || ""}
+                        onChange={handleSearchChange}
+                        className={`w-full h-12 md:h-14 bg-white/5 border border-white/10 rounded-xl md:rounded-full ${direction === 'rtl' ? 'pl-12 pr-4' : 'pr-12 pl-4'} text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/10 transition-all placeholder:text-white/20`}
+                    />
                 </div>
 
-                <button
-                    onClick={clearFilters}
-                    className="w-full md:w-auto px-6 md:px-8 py-3 md:py-4 text-[8px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/20 bg-white/5 border border-white/5 rounded-xl md:rounded-2xl hover:bg-white/10 hover:text-white hover:border-white/10 transition-all active:scale-95 shadow-lg min-h-[44px] flex items-center justify-center"
-                >
-                    إعادة ضبط
-                </button>
-            </div>
+                {/* Vertical Divider */}
+                <div className="hidden md:block w-px h-8 bg-white/10" />
 
-            <div className={`grid grid-cols-1 sm:grid-cols-2 ${hideCategory ? 'lg:grid-cols-1' : 'lg:grid-cols-2'} gap-8 relative z-10`}>
-                {/* Category */}
+                {/* 2. Category Dropdown */}
                 {!hideCategory && (
-                    <div className="space-y-3">
-                        <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/10 mr-3">
-                            <FiTag className="text-emerald-500/30" />
-                            تصنيف المنتجات
-                        </label>
-                        <div className="relative group/select">
-                            <select
-                                value={filters.category || ""}
-                                onChange={(e) => handleCategoryChange(e.target.value)}
-                                className="w-full px-6 py-4 bg-white/[0.03] border border-white/5 rounded-2xl text-[12px] font-bold text-white/40 focus:bg-white/10 focus:border-emerald-500/20 focus:text-white transition-all appearance-none cursor-pointer outline-none hover:border-white/10 shadow-inner"
-                            >
-                                <option value="" className="bg-zinc-900">جميع التصنيفات</option>
-                                {CATEGORIES.map((cat) => (
-                                    <option key={cat.value} value={cat.value} className="bg-zinc-900">
-                                        {cat.label}
-                                    </option>
-                                ))}
-                            </select>
-                            <div className="absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/10 group-hover/select:text-emerald-500/40 transition-colors">
-                                <FiFilter size={14} />
-                            </div>
-                        </div>
-                    </div>
-                )}
-
-                {/* Price Range */}
-                <div className="space-y-3">
-                    <label className="flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.3em] text-white/10 mr-3">
-                        <FiDollarSign className="text-emerald-500/30" />
-                        نطاق السعر
-                    </label>
-                    <div className="relative group/select">
+                    <div className="relative w-full md:w-56 group">
                         <select
-                            value={activeRange?.id || "ALL"}
-                            onChange={(e) => handlePriceRangeChange(e.target.value)}
-                            className="w-full px-6 py-4 bg-white/[0.03] border border-white/5 rounded-2xl text-[12px] font-bold text-white/40 focus:bg-white/10 focus:border-emerald-500/20 focus:text-white transition-all appearance-none cursor-pointer outline-none hover:border-white/10 shadow-inner"
+                            value={filters.category || ""}
+                            onChange={(e) => handleCategoryChange(e.target.value)}
+                            className="w-full h-12 md:h-14 bg-white/5 border border-white/10 rounded-xl md:rounded-full px-6 text-white text-sm appearance-none cursor-pointer outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all"
                         >
-                            <option value="ALL" className="bg-zinc-900">جميع الأسعار</option>
-                            {PRICE_RANGES.map((range) => (
-                                <option key={range.id} value={range.id} className="bg-zinc-900">
-                                    {range.label}
+                            <option value="" className="bg-zinc-900">{t("marketplace.allCategories")}</option>
+                            {CATEGORIES.map((cat) => (
+                                <option key={cat.value} value={cat.value} className="bg-zinc-900">
+                                    {t(cat.label)}
                                 </option>
                             ))}
                         </select>
-                        <div className="absolute left-6 top-1/2 -translate-y-1/2 pointer-events-none text-white/10 group-hover/select:text-emerald-500/40 transition-colors">
-                            <FiFilter size={14} />
-                        </div>
+                        <FiChevronDown className={`absolute ${direction === 'rtl' ? 'left-6' : 'right-6'} top-1/2 -translate-y-1/2 text-white/40 pointer-events-none`} />
                     </div>
+                )}
+
+                {/* Vertical Divider */}
+                <div className="hidden md:block w-px h-8 bg-white/10" />
+
+                {/* 3. Price Dropdown */}
+                <div className="relative w-full md:w-56 group">
+                    <select
+                        value={activeRange?.id || "ALL"}
+                        onChange={(e) => handlePriceRangeChange(e.target.value)}
+                        className="w-full h-12 md:h-14 bg-white/5 border border-white/10 rounded-xl md:rounded-full px-6 text-white text-sm appearance-none cursor-pointer outline-none focus:ring-2 focus:ring-emerald-500/30 transition-all"
+                    >
+                        <option value="ALL" className="bg-zinc-900">{t("marketplace.allPrices")}</option>
+                        {PRICE_RANGES.map((range) => (
+                            <option key={range.id} value={range.id} className="bg-zinc-900">
+                                {t(range.label)}
+                            </option>
+                        ))}
+                    </select>
+                    <FiChevronDown className={`absolute ${direction === 'rtl' ? 'left-6' : 'right-6'} top-1/2 -translate-y-1/2 text-white/40 pointer-events-none`} />
+                </div>
+
+                {/* 4. Actions: Reset & Filter */}
+                <div className="flex items-center gap-3 w-full md:w-auto">
+                    <button
+                        onClick={onResetFilters}
+                        className={`flex-1 md:flex-none h-12 md:h-14 px-6 rounded-xl md:rounded-full text-xs font-bold transition-all border ${isFiltered && onResetFilters
+                            ? "bg-white/10 text-white border-white/20 hover:bg-white/20"
+                            : "bg-transparent text-white/20 border-white/5 cursor-default"
+                            }`}
+                        disabled={!isFiltered || !onResetFilters}
+                    >
+                        {t("marketplace.reset")}
+                    </button>
+
+                    <button
+                        className={`w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-full flex items-center justify-center transition-all shadow-lg active:scale-90 relative ${isFiltered ? "bg-emerald-600 hover:bg-emerald-500 text-white" : "bg-white/5 text-white/20 hover:text-white/40"
+                            }`}
+                        title={t("marketplace.advancedFilter")}
+                    >
+                        <FiFilter size={18} />
+                        {isFiltered && (
+                            <span className={`absolute top-0 ${direction === 'rtl' ? 'left-0' : 'right-0'} w-3 h-3 bg-red-500 border-2 border-black rounded-full animate-pulse`} />
+                        )}
+                    </button>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { signup, completeGoogleSignup } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/auth/AuthLayout";
 import { FiUser, FiMail, FiMapPin, FiCalendar, FiLock, FiArrowRight } from "react-icons/fi";
 
@@ -25,6 +26,7 @@ export function SignupPage() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
   const { refreshUser } = useAuth();
 
   const handleChange = (
@@ -64,7 +66,7 @@ export function SignupPage() {
       const userData = await refreshUser();
 
       if (userData) {
-        navigate("/home", { replace: true });
+        navigate("/", { replace: true });
       } else {
         setError("Signup successful, but session failing (cookies blocked?).");
       }
@@ -87,20 +89,20 @@ export function SignupPage() {
               onClick={() => navigate("/login")}
               className="flex-1 pb-3 md:pb-4 text-center border-b-2 border-transparent font-semibold text-white/40 hover:text-white/70 transition-colors"
             >
-              Login
+              {t("auth.login")}
             </button>
             <button
               className="flex-1 pb-3 md:pb-4 text-center border-b-2 border-emerald-500 font-bold text-emerald-500"
             >
-              Sign Up
+              {t("auth.signup")}
             </button>
           </div>
         )}
 
         {isGoogleUser && (
           <div className="mb-6 md:mb-8 text-center px-4">
-            <h2 className="text-lg md:text-xl font-bold text-emerald-400">Complete Your Account</h2>
-            <p className="text-xs md:text-sm text-white/40 mt-1">Fill in the remaining details to get started.</p>
+            <h2 className="text-lg md:text-xl font-bold text-emerald-400">{t("auth.completeAccount")}</h2>
+            <p className="text-xs md:text-sm text-white/40 mt-1">{t("auth.fillRemainingDetails")}</p>
           </div>
         )}
 
@@ -118,7 +120,7 @@ export function SignupPage() {
               value={form.name}
               onChange={handleChange}
               className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-              placeholder="Full Name"
+              placeholder={t("auth.fullName")}
               required
             />
           </div>
@@ -131,7 +133,7 @@ export function SignupPage() {
                 value={form.email}
                 onChange={handleChange}
                 className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-                placeholder="Email Address"
+                placeholder={t("auth.email")}
                 required
               />
             </div>
@@ -156,7 +158,7 @@ export function SignupPage() {
                 value={form.country}
                 onChange={handleChange}
                 className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-                placeholder="Country"
+                placeholder={t("auth.country")}
                 required
               />
             </div>
@@ -168,7 +170,7 @@ export function SignupPage() {
                 value={form.age}
                 onChange={handleChange}
                 className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-                placeholder="Age"
+                placeholder={t("auth.age")}
                 required
               />
             </div>
@@ -181,8 +183,8 @@ export function SignupPage() {
               onChange={handleChange}
               className="w-full px-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all appearance-none cursor-pointer text-white min-h-[44px]"
             >
-              <option value="MALE" className="bg-[#1a130f]">Male</option>
-              <option value="FEMALE" className="bg-[#1a130f]">Female</option>
+              <option value="MALE" className="bg-[#1a130f]">{t("auth.male")}</option>
+              <option value="FEMALE" className="bg-[#1a130f]">{t("auth.female")}</option>
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center px-2 text-white/30">
               <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
@@ -199,7 +201,7 @@ export function SignupPage() {
                   value={form.password}
                   onChange={handleChange}
                   className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-                  placeholder="Password"
+                  placeholder={t("auth.password")}
                   required
                 />
               </div>
@@ -211,7 +213,7 @@ export function SignupPage() {
                   value={form.confirmPassword}
                   onChange={handleChange}
                   className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-                  placeholder="Confirm Password"
+                  placeholder={t("auth.confirmPassword")}
                   required
                 />
               </div>
@@ -225,10 +227,10 @@ export function SignupPage() {
           >
             <span className="text-base md:text-lg">
               {loading
-                ? "Processing..."
+                ? t("auth.processing") || "Processing..."
                 : isGoogleUser
-                  ? "Complete Signup"
-                  : "Create Account"}
+                  ? t("auth.completeSignup")
+                  : t("auth.createAccount")}
             </span>
             {!loading && <FiArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />}
           </button>
@@ -236,12 +238,12 @@ export function SignupPage() {
 
         {!isGoogleUser && (
           <p className="mt-8 md:mt-10 text-center text-xs md:text-sm text-white/40">
-            Already have an account?{" "}
+            {t("auth.alreadyHaveAccount")}{" "}
             <button
               onClick={() => navigate("/login")}
               className="text-emerald-400 font-bold hover:text-emerald-300 transition-colors"
             >
-              Login
+              {t("auth.login")}
             </button>
           </p>
         )}

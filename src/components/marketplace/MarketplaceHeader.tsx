@@ -45,11 +45,11 @@ export default function MarketplaceHeader({
 
                 <button
                     onClick={toggleCart}
-                    className="relative w-14 h-14 bg-white/5 backdrop-blur-3xl border border-white/10 text-white/20 rounded-2xl hover:text-white hover:bg-white/10 hover:border-white/30 transition-all duration-500 shadow-xl flex items-center justify-center group/cart active:scale-90"
+                    className="relative w-14 h-14 bg-emerald-600/20 hover:bg-emerald-600/40 border border-emerald-500/20 text-emerald-400 rounded-full transition-all duration-500 shadow-xl flex items-center justify-center group/cart active:scale-90"
                 >
                     <FiShoppingCart size={22} className="group-hover/cart:scale-110 transition-transform duration-500" />
                     {cartItems.length > 0 && (
-                        <span className="absolute -top-1 -right-1 w-6 h-6 bg-emerald-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-[#0a0a0a] shadow-[0_0_20px_rgba(16,185,129,0.5)] animate-in zoom-in duration-500">
+                        <span className="absolute -top-1.5 -right-1.5 w-6 h-6 bg-red-500 text-white text-[10px] font-black rounded-full flex items-center justify-center border-2 border-[#1a1a1a] shadow-[0_0_20px_rgba(239,68,68,0.5)] animate-in zoom-in duration-500">
                             {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
                         </span>
                     )}
@@ -60,22 +60,20 @@ export default function MarketplaceHeader({
                 {showBecomeSeller && (
                     <button
                         onClick={onBecomeSeller}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-6 py-3.5 bg-emerald-600/10 text-emerald-400 border border-emerald-500/10 rounded-2xl font-black text-[10px] uppercase tracking-[0.1em] hover:bg-emerald-600/20 hover:border-emerald-500/30 transition-all active:scale-95 group/btn relative overflow-hidden"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-6 py-3.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-full font-black text-[10px] uppercase tracking-[0.1em] hover:bg-emerald-600/30 transition-all active:scale-95 group/btn shadow-xl"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
-                        <FiUserPlus size={18} className="group-hover/btn:rotate-12 transition-transform duration-500 relative z-10" />
-                        <span className="relative z-10">انضم كبائع</span>
+                        <FiUserPlus size={18} className="group-hover/btn:rotate-12 transition-transform duration-500" />
+                        <span>انضم كبائع</span>
                     </button>
                 )}
 
                 {showDashboard && (
                     <button
                         onClick={onGoToDashboard}
-                        className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-6 py-3.5 bg-indigo-600/10 text-indigo-400 border border-indigo-500/10 rounded-2xl font-black text-[10px] uppercase tracking-[0.1em] hover:bg-indigo-600/20 hover:border-indigo-500/30 transition-all active:scale-95 group/btn relative overflow-hidden"
+                        className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-6 py-3.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-full font-black text-[10px] uppercase tracking-[0.1em] hover:bg-emerald-600/30 transition-all active:scale-95 group/btn shadow-xl"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000" />
-                        <FiShoppingBag size={18} className="group-hover/btn:-translate-y-1 transition-transform duration-500 relative z-10" />
-                        <span className="relative z-10">
+                        <FiShoppingBag size={18} className="group-hover/btn:-translate-y-1 transition-transform duration-500" />
+                        <span>
                             {window.location.pathname.startsWith('/admin') || (typeof window !== 'undefined' && (window as any).isAdminCheck) ? "لوحة التحكم" : "حساب التاجر"}
                         </span>
                     </button>

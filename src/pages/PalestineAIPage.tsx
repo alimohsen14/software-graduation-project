@@ -15,12 +15,13 @@ import {
 } from "../services/aiService";
 
 import { useAuth } from "../context/AuthContext";
+import { useTranslation } from "react-i18next";
 
 // ===== Types =====
-type Message = {
+type AIMessage = {
   id: string;
-  text: string;
   role: "user" | "assistant";
+  text: string;
   createdAt: number;
 };
 
@@ -41,13 +42,25 @@ function AIPageContent({
   isAISidebarOpen = false,
   toggleAISidebar,
 }: AIPageProps) {
-  const { user, refreshUser } = useAuth();
+  const { user } = useAuth();
+  const { i18n, t } = useTranslation();
+  const direction = i18n.dir();
 
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<AIMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [chats, setChats] = useState<Chat[]>([]);
   const [activeChatId, setActiveChatId] = useState<number | null>(null);
+
+  // Global overflow control for AI page
+  useEffect(() => {
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.documentElement.style.overflow = "auto";
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   useEffect(() => {
     if (setIsSidebarOpen) setIsSidebarOpen(false);
@@ -76,7 +89,7 @@ function AIPageContent({
   async function performSend(text: string) {
     if (!text.trim()) return;
 
-    const userMsg: Message = {
+    const userMsg: AIMessage = {
       id: String(Date.now()),
       text,
       role: "user",
@@ -87,12 +100,13 @@ function AIPageContent({
     setIsLoading(true);
 
     try {
-      const res = await askAI(text, "ar", activeChatId);
+      const lang = i18n.language.startsWith("en") ? "en" : "ar";
+      const res = await askAI(text, lang, activeChatId);
 
-      const aiMsg: Message = {
+      const aiMsg: AIMessage = {
         id: String(Date.now() + 1),
-        text: res.answer,
         role: "assistant",
+        text: res.answer,
         createdAt: Date.now(),
       };
 
@@ -110,6 +124,13 @@ function AIPageContent({
         ]);
       }
     } catch {
+      const errorMsg: AIMessage = {
+        id: String(Date.now() + 1),
+        role: "assistant",
+        text: "حدث خطأ، حاول مرة أخرى 🍉",
+        createdAt: Date.now(),
+      };
+      setMessages((prev) => [...prev, errorMsg]);
     } finally {
       setIsLoading(false);
     }
@@ -130,7 +151,7 @@ function AIPageContent({
         }))
       );
 
-      if (window.innerWidth < 768 && toggleAISidebar) toggleAISidebar();
+      if (window.innerWidth < 1024 && toggleAISidebar) toggleAISidebar();
     } catch {
     } finally {
       setIsLoading(false);
@@ -140,10 +161,8 @@ function AIPageContent({
   if (!user) return null;
 
   return (
-    <div
-      dir="rtl"
-      className="min-h-[calc(100vh-120px)] flex flex-col relative"
-    >
+    <div dir={direction} className="flex h-full w-full overflow-hidden bg-transparent">
+      {/* Sidebar - Positioned fixed within AISidebar */}
       <AISidebar
         isOpen={isAISidebarOpen}
         toggle={toggleAISidebar || (() => { })}
@@ -153,40 +172,49 @@ function AIPageContent({
         onDeleteChat={handleDeleteChatLogic}
       />
 
-      <main className="flex-1 flex flex-col relative md:pr-[190px]">
-        {/* Main Content Glass Container */}
-        <div className="flex-1 max-w-4xl mx-auto w-full px-3 md:px-8 py-5 md:py-10 pb-40 relative z-10">
-          <div className="bg-white/5 backdrop-blur-2xl rounded-3xl md:rounded-[2.5rem] border border-white/10 shadow-2xl overflow-hidden flex flex-col min-h-full min-w-full">
-            <div className="p-5 md:p-12 flex-1">
-              {messages.length === 0 && (
-                <div className="h-full flex flex-col items-center justify-center animate-in fade-in zoom-in duration-500">
+      {/* Main Chat Area - Occupies full width, content is centered */}
+      <main className="flex-1 flex flex-col h-full relative overflow-hidden">
+        {/* Hamburger Button - Mobile/Tablet Only */}
+        <button
+          onClick={toggleAISidebar}
+          className={`lg:hidden fixed top-24 z-30 p-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white/90 hover:text-white hover:bg-white/20 transition-all shadow-2xl active:scale-95
+            ${direction === "rtl" ? "left-6" : "right-6"}
+          `}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+
+        {/* Scrollable Messages Container */}
+        <div className="flex-1 overflow-y-auto scrollbar-hide scroll-smooth">
+          <div className="max-w-[760px] w-full mx-auto px-4 pt-12 pb-10">
+            {messages.length === 0 ? (
+              // Welcome State
+              <div className="space-y-8 py-10">
+                <div className="animate-in fade-in zoom-in duration-700">
                   <AIWelcomeBox userName={user?.name} />
                 </div>
-              )}
 
-              <div className="space-y-4 md:space-y-6">
+                <div className="animate-in slide-in-from-bottom-8 duration-700 delay-100">
+                  <AISuggestions onSelect={performSend} />
+                </div>
+              </div>
+            ) : (
+              // Messages
+              <div className="space-y-6">
                 {messages.map((m) => (
-                  <AIMessageBubble
-                    key={m.id}
-                    message={m.text}
-                    sender={m.role === "user" ? "user" : "ai"}
-                  />
+                  <AIMessageBubble key={m.id} message={m} />
                 ))}
               </div>
-            </div>
+            )}
           </div>
         </div>
 
-        {/* Floating Interactions Overlay */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 md:pr-[190px]">
-          <div className="max-w-4xl mx-auto px-4 md:px-6 pb-6 md:pb-10">
-            {messages.length === 0 && (
-              <div className="mb-6 animate-in slide-in-from-bottom-4 duration-500">
-                <AISuggestions onSelect={performSend} />
-              </div>
-            )}
-
-            <div className="relative">
+        {/* Input Bar - Always visible at bottom, flex-none to prevent shrinking */}
+        <div className="flex-none p-4 pb-8 bg-gradient-to-t from-black/60 to-transparent">
+          <div className="max-w-[760px] w-full mx-auto">
+            <div className="bg-white/5 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)] overflow-hidden focus-within:border-emerald-500/50 transition-all">
               <AIChatInput
                 value={input}
                 onChange={setInput}
@@ -197,6 +225,10 @@ function AIPageContent({
                 isLoading={isLoading}
               />
             </div>
+            {/* Disclaimer */}
+            <p className="text-[10px] text-white/20 text-center mt-3 uppercase tracking-[0.2em] font-bold">
+              Palestine3D AI Assistant • v1.0 • 🍉
+            </p>
           </div>
         </div>
       </main>
@@ -209,6 +241,7 @@ export default function PalestineAIPage() {
 
   return (
     <DashboardLayout
+      isFullWidth
       onToggleAISidebar={() => setAiSidebarOpen((prev) => !prev)}
     >
       <AIPageContent

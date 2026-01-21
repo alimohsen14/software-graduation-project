@@ -1,5 +1,5 @@
-import React from "react";
 import { FiStar } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     rating: number;
@@ -20,6 +20,7 @@ export default function StarRating({
     showText = false,
     reviewsCount = 0
 }: Props) {
+    const { t } = useTranslation();
     const fullStars = Math.floor(rating);
     const hasHalf = !interactive && rating - fullStars >= 0.5;
     const emptyStars = max - fullStars - (hasHalf ? 1 : 0);
@@ -77,12 +78,12 @@ export default function StarRating({
                     <div className="flex items-center gap-2">
                         <span className="text-xl font-black text-white leading-none">{rating.toFixed(1)}</span>
                         <span className="text-[10px] font-black uppercase tracking-widest text-white/20 whitespace-nowrap">
-                            Reliability Metric
+                            {t("marketplace.reliabilityMetric")}
                         </span>
                     </div>
                     {reviewsCount > 0 && (
                         <span className="text-[8px] font-black uppercase tracking-[0.2em] text-emerald-500/40">
-                            {reviewsCount} Qualitative Verifications
+                            {reviewsCount} {t("marketplace.qualitativeVerifications")}
                         </span>
                     )}
                 </div>

@@ -33,7 +33,7 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
 
     // Non-Admin hitting Admin routes (security guard)
     if (!user.isAdmin && path.startsWith("/admin")) {
-        return <Navigate to="/home" replace />;
+        return <Navigate to="/" replace />;
     }
 
     // Non-Seller hitting Seller routes (security guard)

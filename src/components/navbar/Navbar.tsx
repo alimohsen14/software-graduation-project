@@ -3,6 +3,7 @@ import { FiMenu, FiUser, FiGlobe } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import NotificationBell from "./NotificationBell";
 import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import Palestine3DLogo from "../common/Palestine3DLogo";
 
 interface NavbarProps {
@@ -16,6 +17,7 @@ export default function Navbar({
 }: NavbarProps) {
   const { t, i18n } = useTranslation();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -65,7 +67,7 @@ export default function Navbar({
           </div>
 
           <div className="flex items-center gap-2 md:gap-5 relative" ref={dropdownRef}>
-            <NotificationBell />
+            {user && <NotificationBell />}
 
             <div className="relative">
               <button
@@ -99,16 +101,45 @@ export default function Navbar({
                   >
                     <span className="text-xs font-bold uppercase tracking-wider font-arabic">العربية</span>
                   </button>
+                  <button
+                    onClick={() => changeLanguage("fr")}
+                    className={`flex items-center gap-3 w-full px-4 py-2.5 rounded-lg transition-all ${i18n.language === "fr"
+                      ? "bg-emerald-600/20 text-emerald-400 font-bold"
+                      : "text-white/60 hover:bg-white/5 hover:text-white"
+                      }`}
+                  >
+                    <span className="text-xs font-bold uppercase tracking-wider">Français</span>
+                  </button>
                 </div>
               )}
             </div>
 
-            <button className="relative group">
-              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white/90 group-hover:border-white/20 transition-all overflow-hidden">
-                <FiUser className="w-4 h-4 md:w-5 md:h-5" />
+            {user ? (
+              <button
+                onClick={() => navigate("/profile")}
+                className="relative group transition-transform active:scale-95"
+              >
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60 group-hover:text-white/90 group-hover:border-white/20 transition-all overflow-hidden">
+                  <FiUser className="w-4 h-4 md:w-5 md:h-5" />
+                </div>
+                <div className="absolute bottom-0 right-0 w-2 h-2 md:w-2.5 md:h-2.5 bg-emerald-500 border-2 border-[#1a130f] rounded-full shadow-sm" />
+              </button>
+            ) : (
+              <div className="flex items-center gap-2 md:gap-3" dir="rtl">
+                <button
+                  onClick={() => navigate("/login")}
+                  className="px-3 md:px-5 py-1.5 md:py-2 text-[10px] md:text-xs font-black uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+                >
+                  {t("auth.login") || "تسجيل دخول"}
+                </button>
+                <button
+                  onClick={() => navigate("/signup")}
+                  className="px-3 md:px-5 py-1.5 md:py-2 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-xl text-[10px] md:text-xs font-black uppercase tracking-widest hover:bg-emerald-600/30 transition-all active:scale-95"
+                >
+                  {t("auth.signup") || "إنشاء حساب"}
+                </button>
               </div>
-              <div className="absolute bottom-0 right-0 w-2 h-2 md:w-2.5 md:h-2.5 bg-emerald-500 border-2 border-[#1a130f] rounded-full shadow-sm" />
-            </button>
+            )}
           </div>
         </div>
       </div>

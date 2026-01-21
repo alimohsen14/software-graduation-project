@@ -46,15 +46,21 @@ import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
 import CartDrawer from "./components/cart/CartDrawer";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <ToastContainer theme="dark" position="top-right" autoClose={3000} />
         <CartProvider>
           <CartDrawer />
           <Routes>
+            {/* PUBLIC ROUTES */}
+            <Route path="/" element={<HomePage />} />
+
             {/* PUBLIC ONLY (Redirect to home if logged in) */}
-            <Route path="/" element={<PublicOnly><LoginPage /></PublicOnly>} />
             <Route path="/login" element={<PublicOnly><LoginPage /></PublicOnly>} />
             <Route path="/signup" element={<PublicOnly><SignupPage /></PublicOnly>} />
             <Route path="/forgot-password" element={<PublicOnly><ForgotPasswordPage /></PublicOnly>} />
@@ -62,7 +68,6 @@ export default function App() {
             <Route path="/google-redirect" element={<PublicOnly><GoogleRedirectHandler /></PublicOnly>} />
 
             {/* PROTECTED ROUTES */}
-            <Route path="/home" element={<RequireAuth><HomePage /></RequireAuth>} />
             <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
             <Route path="/shop" element={<RequireAuth><ShopPage /></RequireAuth>} />
             <Route path="/shop/product/:id" element={<RequireAuth><ProductDetailsPage /></RequireAuth>} />

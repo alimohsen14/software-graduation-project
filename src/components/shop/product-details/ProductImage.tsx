@@ -12,21 +12,21 @@ export default function ProductImage({ image, badge, badges, name }: Props) {
   const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
 
   return (
-    <div className="relative w-full aspect-square lg:h-[600px] rounded-[3rem] overflow-hidden bg-zinc-900 border border-white/10 shadow-2xl group/img">
+    <div className="relative w-full max-h-[240px] md:max-h-[400px] rounded-xl md:rounded-2xl overflow-hidden bg-zinc-900/50 border border-white/10 shadow-2xl group/img flex items-center justify-center">
       <img
         src={image}
         alt={name}
-        className={`w-full h-full object-cover transition-transform duration-1000 group-hover/img:scale-110 ${isSoldOut ? "grayscale opacity-50" : ""}`}
+        className={`max-w-full max-h-full object-contain transition-transform duration-1000 group-hover/img:scale-105 ${isSoldOut ? "grayscale opacity-50" : ""}`}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-40 pointer-events-none" />
 
       {badges ? (
-        <div className="absolute top-6 left-6 z-10">
+        <div className="absolute top-4 left-4 z-10">
           <ProductBadges badges={badges} />
         </div>
       ) : (
         badge && (
-          <span className="absolute top-6 left-6 z-10 bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full shadow-lg">
+          <span className="absolute top-4 left-4 z-10 bg-emerald-500 text-white text-[9px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-lg">
             {badge}
           </span>
         )

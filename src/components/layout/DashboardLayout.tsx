@@ -5,16 +5,18 @@ import Sidebar from "../sidebar/Sidebar";
 interface DashboardLayoutProps {
   children: React.ReactNode;
   onToggleAISidebar?: () => void;
+  isFullWidth?: boolean;
 }
 
 export default function DashboardLayout({
   children,
   onToggleAISidebar,
+  isFullWidth = false,
 }: DashboardLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="relative min-h-screen flex">
+    <div className="relative min-h-screen flex overflow-x-hidden">
       {/* Background image only – NO overlay */}
       <div
         className="fixed inset-0 z-0 bg-cover bg-center bg-no-repeat pointer-events-none"
@@ -36,7 +38,7 @@ export default function DashboardLayout({
       )}
 
       {/* Main content */}
-      <div className="relative z-20 flex-1 flex flex-col min-h-screen w-full">
+      <div className="relative z-20 flex-1 flex flex-col min-h-screen w-full overflow-x-hidden">
         {/* Navbar */}
         <div className="fixed top-0 left-0 right-0 z-50 w-full h-14 md:h-20">
           <Navbar
@@ -46,16 +48,26 @@ export default function DashboardLayout({
         </div>
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto mt-14 md:mt-20 scrollbar-hide w-full">
-          <div className="px-3 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-6">
-            <div className="max-w-[1400px] mx-auto w-full">
+        <main className={`flex-1 mt-14 md:mt-20 scrollbar-hide w-full ${isFullWidth ? "h-[calc(100vh-3.5rem)] md:h-[calc(100vh-5rem)] overflow-hidden" : ""}`}>
+          {isFullWidth ? (
+            <div className="h-full w-full relative">
               {React.isValidElement(children) && typeof children.type !== "string"
                 ? React.cloneElement(children as React.ReactElement<any>, {
                   setIsSidebarOpen,
                 })
                 : children}
             </div>
-          </div>
+          ) : (
+            <div className="px-3 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-6">
+              <div className="max-w-[1400px] mx-auto w-full">
+                {React.isValidElement(children) && typeof children.type !== "string"
+                  ? React.cloneElement(children as React.ReactElement<any>, {
+                    setIsSidebarOpen,
+                  })
+                  : children}
+              </div>
+            </div>
+          )}
         </main>
       </div>
     </div>

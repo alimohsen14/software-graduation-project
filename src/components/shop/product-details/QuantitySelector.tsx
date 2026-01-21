@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   quantity: number;
@@ -11,26 +12,27 @@ export default function QuantitySelector({
   onIncrease,
   onDecrease,
 }: Props) {
+  const { t } = useTranslation();
   return (
-    <div className="inline-flex items-center gap-5 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-5 py-2.5 shadow-xl">
+    <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 shadow-lg">
       <button
         onClick={onDecrease}
         disabled={quantity <= 1}
-        className="w-10 h-10 flex items-center justify-center text-xl font-bold text-white/30 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 rounded-xl disabled:opacity-20 transition-all active:scale-90"
+        className="w-8 h-8 flex items-center justify-center text-lg font-bold text-white/30 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 rounded-lg disabled:opacity-20 transition-all active:scale-90"
       >
         −
       </button>
 
       <div className="flex flex-col items-center">
-        <span className="text-[8px] font-black text-white/20 uppercase tracking-widest mb-0.5">Qty</span>
-        <span className="text-sm font-black text-white w-6 text-center tabular-nums">
+        <span className="text-[7px] font-black text-white/20 uppercase tracking-widest">{t("marketplace.control") || "Control"}</span>
+        <span className="text-xs font-black text-white w-5 text-center tabular-nums">
           {quantity}
         </span>
       </div>
 
       <button
         onClick={onIncrease}
-        className="w-10 h-10 flex items-center justify-center text-xl font-bold text-white/30 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 rounded-xl transition-all active:scale-90"
+        className="w-8 h-8 flex items-center justify-center text-lg font-bold text-white/30 hover:text-white hover:bg-white/5 border border-transparent hover:border-white/10 rounded-lg transition-all active:scale-90"
       >
         +
       </button>

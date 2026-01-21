@@ -17,25 +17,25 @@ export default function ReviewCard({ review, isOwnReview, onEdit, onDelete }: Pr
   });
 
   return (
-    <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] p-8 border border-white/10 shadow-2xl hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-all group relative overflow-hidden">
+    <div className="bg-white/5 backdrop-blur-md rounded-2xl p-5 md:p-6 border border-white/10 shadow-2xl hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-all group relative overflow-hidden">
       {/* Decorative Glow */}
       <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/5 rounded-full blur-[40px] opacity-0 group-hover:opacity-100 transition-opacity" />
 
-      <div className="flex items-start justify-between mb-6 relative z-10">
-        <div className="flex items-center gap-4">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-white/10 to-white/5 flex items-center justify-center border border-white/10 text-[10px] font-black text-white/40">
+      <div className="flex items-start justify-between mb-4 relative z-10">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-white/10 to-white/5 flex items-center justify-center border border-white/10 text-[9px] font-black text-white/40">
             {review.user.name.charAt(0).toUpperCase()}
           </div>
           <div className="flex flex-col">
-            <h4 className="font-black text-white text-sm uppercase tracking-widest leading-none flex items-center gap-3">
+            <h4 className="font-black text-white text-xs uppercase tracking-widest leading-none flex items-center gap-2">
               {review.user.name}
               {isOwnReview && (
-                <span className="bg-emerald-500/20 text-emerald-400 text-[8px] px-2 py-0.5 rounded-full border border-emerald-500/20 uppercase font-black tracking-widest">
-                  AUTHOR
+                <span className="bg-emerald-500/20 text-emerald-400 text-[7px] px-1.5 py-0.5 rounded-full border border-emerald-500/20 uppercase font-black tracking-widest">
+                  كاتب
                 </span>
               )}
             </h4>
-            <div className="flex items-center gap-2 text-white/20 text-[9px] font-black uppercase tracking-[0.2em] mt-1.5">
+            <div className="flex items-center gap-1.5 text-white/20 text-[8px] font-black uppercase tracking-widest mt-1">
               <FiCalendar className="shrink-0" />
               <span>{formattedDate}</span>
             </div>
@@ -43,40 +43,40 @@ export default function ReviewCard({ review, isOwnReview, onEdit, onDelete }: Pr
         </div>
 
         {isOwnReview && (
-          <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all translate-x-4 group-hover:translate-x-0">
+          <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-all translate-x-2 group-hover:translate-x-0">
             <button
               onClick={onEdit}
-              className="w-10 h-10 flex items-center justify-center bg-white/5 text-white/30 hover:text-emerald-400 hover:bg-emerald-500/10 border border-white/5 hover:border-emerald-500/30 rounded-xl transition-all"
-              title="Edit Entry"
+              className="w-8 h-8 flex items-center justify-center bg-white/5 text-white/30 hover:text-emerald-400 hover:bg-emerald-500/10 border border-white/5 hover:border-emerald-500/30 rounded-lg transition-all"
+              title="تعديل"
             >
-              <FiEdit2 size={16} />
+              <FiEdit2 size={14} />
             </button>
             <button
               onClick={onDelete}
-              className="w-10 h-10 flex items-center justify-center bg-white/5 text-white/30 hover:text-red-500 hover:bg-red-500/10 border border-white/5 hover:border-red-500/30 rounded-xl transition-all"
-              title="Purge Entry"
+              className="w-8 h-8 flex items-center justify-center bg-white/5 text-white/30 hover:text-red-500 hover:bg-red-500/10 border border-white/5 hover:border-red-500/30 rounded-lg transition-all"
+              title="حذف"
             >
-              <FiTrash2 size={16} />
+              <FiTrash2 size={14} />
             </button>
           </div>
         )}
       </div>
 
-      <div className="mb-6 relative z-10">
-        <StarRating rating={review.rating} size={16} />
+      <div className="mb-4 relative z-10">
+        <StarRating rating={review.rating} size={14} />
       </div>
 
       {review.comment && (
         <div className="relative z-10">
-          <div className="absolute top-0 left-0 text-white/5 text-6xl font-black -translate-x-4 -translate-y-4">"</div>
-          <p className="text-white/40 text-sm md:text-base leading-relaxed italic relative z-10 pl-2">
+          <div className="absolute top-0 left-0 text-white/5 text-4xl font-black -translate-x-2 -translate-y-2">"</div>
+          <p className="text-white/40 text-xs md:text-sm leading-relaxed italic relative z-10 pl-2">
             {review.comment}
           </p>
         </div>
       )}
 
       {review.imageUrl && (
-        <div className="mt-6 overflow-hidden rounded-[2rem] border border-white/10 group/revimg relative z-10">
+        <div className="mt-4 overflow-hidden rounded-xl border border-white/10 group/revimg relative z-10">
           <img
             src={review.imageUrl}
             alt="User review attachment"

@@ -39,6 +39,7 @@ export type MarketplaceFilters = {
     minPrice?: number;
     maxPrice?: number;
     storeId?: number;
+    name?: string;
     page?: number;
     limit?: number;
 };
@@ -55,10 +56,15 @@ export type MarketplaceResponse = {
 export const getMarketplaceProducts = async (
     filters?: MarketplaceFilters
 ): Promise<MarketplaceResponse> => {
-    // Normalize category: If "ALL", don't send it to backend
-    const params = { ...filters };
+    // Normalize parameters
+    const params: any = { ...filters };
     if (params.category === "ALL") {
         delete params.category;
+    }
+
+    // Map 'name' to 'search' query param as expected by backend
+    if (params.name) {
+        params.search = params.name;
     }
 
     const res = await publicApi.get<any>(

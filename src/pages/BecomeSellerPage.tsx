@@ -50,22 +50,22 @@ export default function BecomeSellerPage() {
     if (success) {
         return (
             <DashboardLayout>
-                <div className="min-h-screen flex items-center justify-center p-6">
-                    <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
-                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <FiCheckCircle className="w-8 h-8 text-green-600" />
+                <div className="min-h-screen flex items-center justify-center p-6 animate-in zoom-in duration-500">
+                    <div className="bg-black/40 backdrop-blur-xl rounded-2xl md:rounded-3xl p-8 md:p-12 max-w-md w-full text-center border border-emerald-500/20 shadow-2xl">
+                        <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/20">
+                            <FiCheckCircle className="w-10 h-10 text-emerald-500" />
                         </div>
-                        <h2 className="text-2xl font-bold text-[#1F2933] mb-2">
-                            Application Submitted!
+                        <h2 className="text-2xl font-black text-white uppercase tracking-tight mb-3">
+                            تم إرسال الطلب!
                         </h2>
-                        <p className="text-gray-500 mb-6">
-                            Your seller application has been submitted successfully. We'll review it and get back to you soon.
+                        <p className="text-white/40 text-sm font-medium mb-8 leading-relaxed">
+                            تم تقديم طلب الانضمام كبائع بنجاح. سنقوم بمراجعة طلبك والتواصل معك قريباً.
                         </p>
                         <button
                             onClick={() => navigate("/marketplace")}
-                            className="w-full px-6 py-3 bg-[#4A6F5D] text-white rounded-xl font-bold hover:bg-[#3d5c4d] transition"
+                            className="w-full h-14 bg-emerald-600/20 text-emerald-400 rounded-xl text-[11px] font-black uppercase tracking-[0.3em] border border-emerald-500/20 hover:bg-emerald-600/30 transition active:scale-95"
                         >
-                            Back to Marketplace
+                            العودة للمتجر
                         </button>
                     </div>
                 </div>
@@ -75,87 +75,91 @@ export default function BecomeSellerPage() {
 
     return (
         <DashboardLayout>
-            <div className="min-h-screen flex items-center justify-center p-6">
-                <div className="bg-white rounded-2xl shadow-xl p-8 max-w-lg w-full">
+            <div className="min-h-screen flex items-center justify-center p-4 md:p-10 animate-in fade-in duration-700">
+                <div className="bg-black/40 backdrop-blur-xl rounded-2xl md:rounded-3xl p-6 md:p-10 border border-white/10 shadow-2xl max-w-2xl w-full">
                     {/* Header */}
-                    <div className="flex items-center gap-3 mb-6">
-                        <div className="w-12 h-12 bg-[#eaf5ea] rounded-xl flex items-center justify-center">
-                            <FiShoppingBag className="w-6 h-6 text-[#4A6F5D]" />
+                    <div className="flex items-center gap-4 mb-8">
+                        <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                            <FiShoppingBag className="w-6 h-6 text-emerald-500" />
                         </div>
                         <div>
-                            <h1 className="text-2xl font-bold text-[#1F2933]">Become a Seller</h1>
-                            <p className="text-gray-500 text-sm">Start selling on our marketplace</p>
+                            <h1 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight">انضم كبائع</h1>
+                            <p className="text-white/40 text-sm font-medium">ابدأ البيع في متجر Palestine3D</p>
                         </div>
                     </div>
 
                     {error && (
-                        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm">
+                        <div className="bg-red-500/10 border border-red-500/20 text-red-500 px-4 py-3 rounded-xl mb-8 text-xs font-black uppercase tracking-widest">
                             {error}
                         </div>
                     )}
 
-                    <form onSubmit={handleSubmit} className="space-y-5">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         {/* Store Name */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Store Name <span className="text-red-500">*</span>
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 text-right">
+                                اسم المتجر <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
                                 name="storeName"
                                 value={formData.storeName}
                                 onChange={handleChange}
-                                placeholder="Enter your store name"
-                                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                                placeholder="أدخل اسم متجرك"
+                                dir="rtl"
+                                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/10 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/30 transition outline-none"
                             />
                         </div>
 
                         {/* Product Type */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Product Type <span className="text-red-500">*</span>
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 text-right">
+                                نوع المنتجات <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="productType"
                                 value={formData.productType}
                                 onChange={(e) => setFormData({ ...formData, productType: e.target.value })}
-                                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition bg-white"
+                                dir="rtl"
+                                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white/80 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/30 transition outline-none appearance-none"
                             >
-                                <option value="">Select a category</option>
-                                <option value="Palestinian Food">Palestinian Food</option>
-                                <option value="Palestinian Lifestyle">Palestinian Lifestyle</option>
-                                <option value="Handmade">Handmade</option>
-                                <option value="Palestinian Heritage">Palestinian Heritage</option>
+                                <option value="" className="bg-zinc-900">اختر الفئة</option>
+                                <option value="Palestinian Food" className="bg-zinc-900">طعام فلسطيني</option>
+                                <option value="Palestinian Lifestyle" className="bg-zinc-900">نمط حياة فلسطيني</option>
+                                <option value="Handmade" className="bg-zinc-900">أشغال يدوية</option>
+                                <option value="Palestinian Heritage" className="bg-zinc-900">تراث فلسطيني</option>
                             </select>
                         </div>
 
                         {/* Region */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Region / Area <span className="text-red-500">*</span>
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 text-right">
+                                المنطقة / المدينة <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
                                 name="region"
                                 value={formData.region}
                                 onChange={handleChange}
-                                placeholder="e.g., Ramallah, Nablus, Gaza"
-                                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition"
+                                placeholder="مثال: رام الله، نابلس، غزة"
+                                dir="rtl"
+                                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/10 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/30 transition outline-none"
                             />
                         </div>
 
                         {/* Description */}
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">
-                                Optional Message / Description
+                        <div className="space-y-2">
+                            <label className="block text-[10px] font-black uppercase tracking-[0.2em] text-white/30 text-right">
+                                رسالة اختيارية / وصف العمل
                             </label>
                             <textarea
                                 name="description"
                                 value={formData.description}
                                 onChange={handleChange}
-                                placeholder="Tell us more about your business..."
+                                placeholder="أخبرنا المزيد عن عملك..."
                                 rows={3}
-                                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-[#4A6F5D]/20 focus:border-[#4A6F5D] transition resize-none"
+                                dir="rtl"
+                                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/10 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500/30 transition outline-none resize-none"
                             />
                         </div>
 
@@ -163,21 +167,21 @@ export default function BecomeSellerPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full px-6 py-3 bg-[#4A6F5D] text-white rounded-xl font-bold hover:bg-[#3d5c4d] transition disabled:opacity-50 flex items-center justify-center gap-2"
+                            className="w-full h-14 bg-emerald-600/20 text-emerald-400 rounded-xl text-[11px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-3 border border-emerald-500/20 hover:bg-emerald-600/30 transition disabled:opacity-50 shadow-2xl active:scale-[0.98]"
                         >
                             {loading ? (
                                 <>
                                     <FiLoader className="animate-spin" size={18} />
-                                    Submitting...
+                                    جاري الإرسال...
                                 </>
                             ) : (
-                                "Submit Application"
+                                "إرسال الطلب"
                             )}
                         </button>
                     </form>
 
-                    <p className="text-xs text-gray-400 text-center mt-6">
-                        By submitting, you agree to our seller terms and conditions.
+                    <p className="text-[9px] font-black uppercase tracking-widest text-white/20 text-center mt-8">
+                        بإرسالك الطلب، أنت توافق على شروط وأحكام البيع الخاصة بنا.
                     </p>
                 </div>
             </div>

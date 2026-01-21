@@ -12,7 +12,7 @@ export default function PublicOnly({ children }: { children: React.ReactNode }) 
 
     // 2. Authenticated -> Redirect to home
     if (user) {
-        return <Navigate to="/home" replace />;
+        return <Navigate to="/" replace />;
     }
 
     // 3. Unauthenticated -> Render Page

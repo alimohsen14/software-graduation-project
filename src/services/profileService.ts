@@ -15,10 +15,10 @@ export const profileService = {
     return res.data.user;
   },
 
-  async changePassword(currentPassword: string, newPassword: string) {
+  async changePassword(oldPassword: string, newPassword: string) {
     const res = await api.patch<{ message: string }>(
       '/auth/profile/password',
-      { currentPassword, newPassword }
+      { oldPassword, newPassword }
     );
     return res.data.message;
   },

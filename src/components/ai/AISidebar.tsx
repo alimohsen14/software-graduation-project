@@ -1,11 +1,7 @@
-// src/components/AISidebar.tsx
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import {
-  FiPlus,
-  FiTrash2,
-  FiX
-} from "react-icons/fi";
+import { FiPlus, FiMessageSquare, FiTrash2, FiX } from "react-icons/fi";
+import { useAuth } from "../../context/AuthContext";
 
 type Chat = {
   id: number;
@@ -13,14 +9,14 @@ type Chat = {
   createdAt: string;
 };
 
-interface Props {
+type Props = {
   isOpen: boolean;
   toggle: () => void;
   chats: Chat[];
-  onSelectChat: (id: number) => void;
+  onSelectChat: (chatId: number) => void;
   onNewChat: () => void;
-  onDeleteChat: (id: number) => void;
-}
+  onDeleteChat: (chatId: number) => void;
+};
 
 export default function AISidebar({
   isOpen,
@@ -30,140 +26,144 @@ export default function AISidebar({
   onNewChat,
   onDeleteChat,
 }: Props): React.ReactElement {
-  const [chatToDelete, setChatToDelete] = useState<number | null>(null);
   const { t, i18n } = useTranslation();
+  const { user } = useAuth();
+  const direction = i18n.dir();
 
-  const handleDeleteRequest = (e: React.MouseEvent, id: number) => {
-    e.stopPropagation();
-    setChatToDelete(id);
-  };
+  const [deletingChatId, setDeletingChatId] = React.useState<number | null>(null);
 
   const confirmDelete = () => {
-    if (chatToDelete !== null) {
-      onDeleteChat(chatToDelete);
-      setChatToDelete(null);
+    if (deletingChatId !== null) {
+      onDeleteChat(deletingChatId);
+      setDeletingChatId(null);
     }
   };
 
   return (
     <>
+      {/* Mobile Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 bg-stone-950/60 backdrop-blur-md z-30 md:hidden" onClick={toggle} />
+        <div
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={toggle}
+        />
       )}
 
+      {/* Sidebar - Floating fixed panel attached to edge */}
       <aside
         className={`
-          fixed ${i18n.language === "ar" ? "left-0" : "right-0"} top-0 md:top-16
-          h-full md:h-[calc(100vh-64px)] w-[280px] sm:w-[320px] md:w-[190px]
-          bg-zinc-950/40 backdrop-blur-3xl shadow-2xl transition-all duration-500 border-l border-white/10
-          ${isOpen ? "translate-x-0 z-40" : i18n.language === "ar" ? "-translate-x-full" : "translate-x-full"}
-          md:translate-x-0 md:z-30
+          fixed z-50
+          top-16 bottom-0
+          w-[320px]
+          flex flex-col
+          bg-[#0a0a0a]/80 backdrop-blur-2xl
+          border-white/10
+          ${direction === "rtl" ? "left-0 border-r" : "right-0 border-l"}
+          shadow-2xl shadow-black
+          transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : direction === "rtl" ? "-translate-x-full" : "translate-x-full"}
+          md:translate-x-0
         `}
+        dir={direction}
       >
-        <div className="h-full px-4 md:px-6 py-5 md:py-8 flex flex-col text-white relative overflow-hidden">
-          {/* Decorative background glow */}
-          <div className="absolute -top-24 -left-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Close button - Mobile only */}
+        <button
+          onClick={toggle}
+          className="md:hidden absolute top-4 left-4 p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+        >
+          <FiX className="w-5 h-5" />
+        </button>
 
-          <div className="flex items-center justify-between mb-6 md:mb-8 relative z-10">
-            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-white/30">{t("ai.sidebarTitle")}</span>
-            <button
-              onClick={toggle}
-              className="md:hidden w-8 h-8 md:w-10 md:h-10 rounded-full bg-white/5 flex items-center justify-center text-white/20 hover:text-white hover:bg-white/10 transition-all border border-white/5"
-            >
-              <FiX className="w-4 h-4 md:w-5 md:h-5" />
-            </button>
-          </div>
+        {/* Header */}
+        <div className="p-6 border-b border-white/10">
+          <h2 className="text-xl font-black text-white/90 tracking-tight mb-1">
+            {t("ai.sidebarTitle")}
+          </h2>
+          <p className="text-xs text-white/50 font-medium lowercase">
+            {user?.name || "Guest User"}
+          </p>
+        </div>
 
+        {/* New Chat Button */}
+        <div className="p-4">
           <button
-            onClick={() => {
-              onNewChat();
-              if (window.innerWidth < 768) toggle();
-            }}
-            className="w-full mb-6 md:mb-8 flex items-center justify-center gap-2 md:gap-3 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all hover:bg-emerald-600/30 hover:shadow-lg hover:shadow-emerald-500/10 active:scale-95 group relative overflow-hidden"
+            onClick={onNewChat}
+            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold transition-all shadow-lg shadow-emerald-500/20 active:scale-95"
           >
-            <FiPlus className="w-4 h-4 md:w-5 md:h-5 transition-transform group-hover:rotate-90" />
-            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-widest">{t("ai.newChat")}</span>
+            <FiPlus className="w-5 h-5 transition-transform group-hover:rotate-90" />
+            <span className="text-sm">{t("ai.newChat")}</span>
           </button>
+        </div>
 
-          <div className="w-full h-px bg-white/5 mb-4 md:mb-6" />
+        {/* Chat History List - Scrollable */}
+        <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1.5 scrollbar-hide">
+          {chats.map((chat) => (
+            <div
+              key={chat.id}
+              onClick={() => onSelectChat(chat.id)}
+              className="group relative px-5 py-3 rounded-xl cursor-pointer bg-transparent hover:bg-white/5 text-white/60 hover:text-white/90 transition-all duration-300"
+            >
+              <div className="flex items-start gap-3.5">
+                <div className="text-white/40 group-hover:text-white/80">
+                  <FiMessageSquare className="w-4.5 h-4.5" />
+                </div>
 
-          <nav className="flex-1 overflow-y-auto custom-scrollbar pr-1 pb-4 md:pb-6 relative z-10">
-            <ul className="flex flex-col gap-2 md:gap-3">
-              {chats.map((chat) => (
-                <li key={chat.id} className="relative group/item">
-                  <div
-                    onClick={() => onSelectChat(chat.id)}
-                    className="cursor-pointer w-full px-3 md:px-4 py-2.5 md:py-3 rounded-xl md:rounded-2xl bg-white/0 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all flex items-center justify-between group"
-                  >
-                    <span className="text-[10px] md:text-[11px] font-bold truncate block text-white/30 group-hover:text-white transition-colors max-w-[140px] md:max-w-[140px] uppercase tracking-tighter">
-                      {chat.title}
-                    </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13px] font-medium mb-0.5 truncate tracking-wide">
+                    {chat.title}
+                  </p>
+                  <p className="text-[10px] text-white/30">
+                    {new Date(chat.createdAt).toLocaleDateString(i18n.language, {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </p>
+                </div>
 
-                    <button
-                      onClick={(e) => handleDeleteRequest(e, chat.id)}
-                      className="opacity-0 group-hover:opacity-100 text-white/10 hover:text-red-400 transition-all p-1.5 md:p-2 bg-white/0 hover:bg-white/5 rounded-lg md:rounded-xl border border-transparent hover:border-white/10"
-                      title={t("ai.deleteChat")}
-                    >
-                      <FiTrash2 className="w-3 md:w-3.5 h-3 md:h-3.5" />
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </nav>
+                {/* Delete Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDeletingChatId(chat.id);
+                  }}
+                  className="p-1.5 rounded-md text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
+                  title={t("ai.deleteChat")}
+                >
+                  <FiTrash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
 
-          <div className="mt-auto text-[9px] font-black uppercase tracking-[0.3em] text-white/20 pt-6 text-center border-t border-white/5 relative z-10">
+        {/* Footer */}
+        <div className="p-6 border-t border-white/10 text-center">
+          <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">
             {t("ai.copyright")}
-          </div>
+          </p>
         </div>
       </aside>
 
       {/* Delete Confirmation Modal */}
-      {chatToDelete !== null && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-950/60 backdrop-blur-md animate-in fade-in duration-300"
-          dir={i18n.language === "ar" ? "rtl" : "ltr"}
-          onClick={() => setChatToDelete(null)}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="bg-zinc-950/40 backdrop-blur-2xl w-full max-w-sm rounded-[3rem] p-10 border border-white/10 shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-300"
-          >
-            {/* Background decorative glow */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-red-500/10 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="text-center relative z-10">
-              <div className="w-16 h-16 bg-red-500/10 rounded-[1.5rem] flex items-center justify-center border border-red-500/20 mx-auto mb-6 text-red-500 relative">
-                <FiTrash2 className="w-8 h-8" />
-                <div className="absolute inset-0 bg-red-500/20 blur-xl opacity-50" />
-              </div>
-
-              <h3 className="text-2xl font-black text-white uppercase tracking-tighter leading-tight mb-4">
-                {t("ai.confirmDeleteTitle")}
-              </h3>
-
-              <p className="text-[11px] text-white/40 font-bold uppercase tracking-widest leading-relaxed">
-                {t("ai.confirmDeleteDesc")}
-                <br />
-                <span className="text-red-500/60 font-black mt-2 block">
-                  {t("ai.cannotUndo")}
-                </span>
-              </p>
-            </div>
-
-            <div className="mt-10 flex flex-col gap-3 relative z-10">
+      {deletingChatId !== null && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
+          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-2xl max-w-sm w-full animate-in zoom-in duration-300">
+            <h3 className="text-xl font-bold text-white mb-2">{t("ai.deleteConfirmationTitle")}</h3>
+            <p className="text-white/60 text-sm mb-6">
+              {t("ai.deleteConfirmationDesc")}
+            </p>
+            <div className="flex gap-3">
               <button
-                onClick={confirmDelete}
-                className="w-full rounded-2xl px-6 py-4 bg-red-600/20 text-red-500 border border-red-500/20 font-black uppercase tracking-widest text-[10px] hover:bg-red-600/30 transition-all active:scale-95 shadow-xl shadow-red-500/5"
-              >
-                {t("ai.deleteConfirm")}
-              </button>
-
-              <button
-                onClick={() => setChatToDelete(null)}
-                className="w-full rounded-2xl px-6 py-4 bg-white/5 border border-white/10 text-white/30 font-black uppercase tracking-widest text-[10px] hover:bg-white/10 hover:text-white transition-all active:scale-95"
+                onClick={() => setDeletingChatId(null)}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-all"
               >
                 {t("ai.cancel")}
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium transition-all"
+              >
+                {t("ai.delete")}
               </button>
             </div>
           </div>
