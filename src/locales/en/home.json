@@ -1,0 +1,55 @@
+{
+    "hero": {
+        "title": "Palestine3D",
+        "welcome": "Welcome back,",
+        "welcome_guest": "Welcome to Palestine 3D",
+        "subtitle1": "Explore Palestinian Heritage in 3D",
+        "subtitle2": "Cities, industries, and history brought to life",
+        "cta": "Discover More"
+    },
+    "cards": {
+        "market": {
+            "title": "Palestinian Market",
+            "desc": "Shop authentic heritage products",
+            "btn": "Browse Market"
+        },
+        "soap": {
+            "title": "Soap Industry",
+            "desc": "Story of Nablus soap heritage",
+            "btn": "Learn More"
+        },
+        "tour": {
+            "title": "3D Tour",
+            "desc": "Walk inside ancient Palestinian landmarks",
+            "btn": "Start Tour"
+        }
+    },
+    "sections": {
+        "heritage": {
+            "title": "Palestinian Heritage",
+            "subtitle": "Discover the richness of our history"
+        }
+    },
+    "modal": {
+        "title": "Discover More",
+        "subtitle": "Explore all sections of the Palestine 3D platform",
+        "items": {
+            "ai": {
+                "title": "AI System",
+                "desc": "Explore heritage through advanced AI solutions"
+            },
+            "market": {
+                "title": "Heritage Marketplace",
+                "desc": "Acquire artistic pieces carrying the scent of Palestinian history"
+            },
+            "library": {
+                "title": "Heritage Library",
+                "desc": "Comprehensive documentation of Palestinian landmarks and cities"
+            },
+            "module3d": {
+                "title": "3D Module",
+                "desc": "Unique visual experience for landmarks and artifacts"
+            }
+        }
+    }
+}

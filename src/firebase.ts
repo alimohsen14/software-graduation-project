@@ -12,35 +12,44 @@ const firebaseConfig = {
     appId: "1:962047427867:web:5eed368fad82163b4abfbe",
 };
 
-// Conditionally Initialize Firebase
-// If inside WebView, we DO NOT initialize anything to prevent runtime errors or native conflicts.
-
 const isWebViewEnv = isWebView();
 
+// 1. Initialize Firebase App (Always, even in WebView, for Auth/DB)
 let appInstance: any = null;
-let messagingInstance: any = null;
-let databaseInstance: any = null;
-let getTokenInstance: any = null;
-
-if (!isWebViewEnv) {
-    try {
-        appInstance = initializeApp(firebaseConfig);
-        databaseInstance = getDatabase(appInstance);
-        // Messaging might still fail in some browsers (e.g. Brave), so we wrap it
-        try {
-            messagingInstance = getMessaging(appInstance);
-            getTokenInstance = firebaseGetToken;
-        } catch (e) {
-            console.warn("Firebase Messaging failed to initialize", e);
-        }
-    } catch (e) {
-        console.error("Firebase Initialization failed", e);
-    }
-} else {
-    console.log("🚫 WebView detected: Firebase completely disabled.");
+try {
+    appInstance = initializeApp(firebaseConfig);
+} catch (e) {
+    console.error("Firebase Initialization failed", e);
 }
 
+// 2. Initialize Realtime Database (Always)
+export const database = appInstance ? getDatabase(appInstance) : null;
 export const app = appInstance;
-export const messaging = messagingInstance;
-export const database = databaseInstance;
-export const getToken = getTokenInstance;
+
+/**
+ * 3. Selective Messaging Initialization
+ * Only runs in standard browsers. Skip in WebView or unsupported environments.
+ */
+export const initMessaging = async () => {
+    if (isWebViewEnv) {
+        console.log("🚫 FCM: Skipping messaging init (WebView detected).");
+        return null;
+    }
+
+    try {
+        const supported = await isSupported();
+        if (!supported) {
+            console.warn("🚫 FCM: Messaging not supported in this browser.");
+            return null;
+        }
+        return getMessaging(appInstance);
+    } catch (e) {
+        console.warn("⚠️ FCM: Initialization failed", e);
+        return null;
+    }
+};
+
+// Re-export original functions for convenience if needed, 
+// though initMessaging is now preferred for safety.
+export const getToken = firebaseGetToken;
+export { isSupported };

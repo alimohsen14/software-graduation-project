@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { User, getMe, logout as authLogout, updatePushToken } from "../services/authService";
 import { onMessage } from "firebase/messaging";
-import { messaging, getToken } from "../firebase";
+import { initMessaging, getToken } from "../firebase";
 import { toast } from "react-toastify";
 
 interface AuthContextType {
@@ -111,33 +111,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // ----------------------------------------------------
         // 2. WEB PUSH (BROWSER)
         // ----------------------------------------------------
-        const initWebPush = async () => {
-            try {
-                // If we are in mobile WebView (token detected), we might skip web push registration
-                // to avoid double-registration or permission prompts that don't make sense in WebView.
-                // However, request below is safe.
+        const setupMessaging = async () => {
+            const messagingInstance = await initMessaging();
+            if (!messagingInstance) {
+                console.log("🚫 Messaging not active (WebView or unsupported), skipping Web Push.");
+                return null;
+            }
 
+            try {
                 // Feature Support Check
                 if (!("serviceWorker" in navigator) || !("Notification" in window)) {
-                    return;
+                    return null;
                 }
 
                 // Request Permission
                 const permission = await Notification.requestPermission();
-                if (permission !== 'granted') return;
+                if (permission !== 'granted') return null;
 
                 // Get Web Token
                 // @ts-ignore
                 const vapidKey = process.env.REACT_APP_FIREBASE_VAPID_KEY || import.meta.env?.VITE_FIREBASE_VAPID_KEY;
-                if (!vapidKey) return;
+                if (!vapidKey) return null;
 
-                // Guard: If messaging/getToken is null (e.g. WebView), skip.
-                if (!messaging || !getToken) {
-                    console.log("🚫 Messaging/Token not active (WebView or unsupported), skipping Web Push.");
-                    return;
-                }
-
-                const token = await getToken(messaging, { vapidKey });
+                const token = await getToken(messagingInstance, { vapidKey });
                 if (token) {
                     // Send to Backend (Dedup using session storage)
                     const storageKey = `fcm_sent_${user.id}`;
@@ -157,22 +153,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             } catch (err) {
                 console.error("Error initializing web push:", err);
             }
-        };
 
-        // Run web push logic
-        initWebPush();
-
-        // 3. Foreground Listener (Suppress UI if handled by Realtime)
-        if (messaging) {
-            unsubscribeForeground = onMessage(messaging, (payload) => {
+            // 3. Foreground Listener
+            const unsubscribe = onMessage(messagingInstance, (payload) => {
                 console.log("Foreground Notification (FCM):", payload);
                 window.dispatchEvent(new CustomEvent('push-received'));
             });
-        }
+
+            return unsubscribe;
+        };
+
+        const setupPromise = setupMessaging();
 
         return () => {
             window.removeEventListener("FCM_TOKEN_READY", handleMobileEvent);
-            if (unsubscribeForeground) unsubscribeForeground();
+            setupPromise.then(unsubscribe => {
+                if (unsubscribe) unsubscribe();
+            });
         };
     }, [user?.id, user?.isAdmin]); // Dependency on ID ensures re-run on login of different user
 

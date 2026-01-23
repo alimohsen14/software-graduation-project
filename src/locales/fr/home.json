@@ -1,0 +1,55 @@
+{
+    "hero": {
+        "title": "Palestine3D",
+        "welcome": "Bon retour,",
+        "welcome_guest": "Bienvenue sur Palestine 3D",
+        "subtitle1": "Explorez le patrimoine palestinien en 3D",
+        "subtitle2": "Les villes, les industries et l'histoire prennent vie",
+        "cta": "Découvrir plus"
+    },
+    "cards": {
+        "market": {
+            "title": "Marché palestinien",
+            "desc": "Achetez des produits authentiques du patrimoine",
+            "btn": "Parcourir le marché"
+        },
+        "soap": {
+            "title": "Industrie du savon",
+            "desc": "L'histoire du patrimoine du savon de Naplouse",
+            "btn": "En savoir plus"
+        },
+        "tour": {
+            "title": "Visite 3D",
+            "desc": "Promenez-vous dans les anciens monuments palestiniens",
+            "btn": "Commencer la visite"
+        }
+    },
+    "sections": {
+        "heritage": {
+            "title": "Patrimoine palestinien",
+            "subtitle": "Découvrez la richesse de notre histoire"
+        }
+    },
+    "modal": {
+        "title": "Découvrir plus",
+        "subtitle": "Explorez toutes les sections de la plateforme Palestine 3D",
+        "items": {
+            "ai": {
+                "title": "Système d'IA",
+                "desc": "Explorez le patrimoine grâce à des solutions d'IA avancées"
+            },
+            "market": {
+                "title": "Marché du patrimoine",
+                "desc": "Acquérez des pièces artistiques portant le parfum de l'histoire palestinienne"
+            },
+            "library": {
+                "title": "Bibliothèque du patrimoine",
+                "desc": "Documentation complète des monuments et des villes palestiniens"
+            },
+            "module3d": {
+                "title": "Module 3D",
+                "desc": "Expérience visuelle unique pour les monuments et les artefacts"
+            }
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "home": "Home",
+    "marketplace": "Marketplace",
+    "heritageLibrary": "Heritage Library",
+    "soapStory": "Soap Story",
+    "cities": "Cities",
+    "industries": "Industries",
+    "landmarks": "Landmarks",
+    "profile": "Profile",
+    "orders": "Orders",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "signup": "Sign Up",
+    "aiSystem": "AI System",
+    "module3d": "3D Module",
+    "adminSection": "Admin Management",
+    "adminMarket": "Admin Market",
+    "supervision": "Supervision Dashboard",
+    "analytics": "Platform Analytics",
+    "requests": "Seller Requests"
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX, FiCpu, FiShoppingBag, FiBook, FiBox } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface DiscoverMoreModalProps {
     isOpen: boolean;
@@ -10,35 +11,38 @@ interface DiscoverMoreModalProps {
 
 export default function DiscoverMoreModal({ isOpen, onClose }: DiscoverMoreModalProps) {
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation("home");
+    const isRtl = i18n.language === "ar";
+    const direction = i18n.dir();
 
     const discoveryItems = [
         {
-            title: "نظام الذكاء الاصطناعي",
+            title: t("modal.items.ai.title"),
             label: "AI System",
             icon: FiCpu,
             path: "/palestine-ai",
-            description: "استكشف التراث من خلال حلول الذكاء الاصطناعي المتقدمة",
+            description: t("modal.items.ai.desc"),
         },
         {
-            title: "سوق المنتجات التراثية",
+            title: t("modal.items.market.title"),
             label: "Marketplace",
             icon: FiShoppingBag,
             path: "/marketplace",
-            description: "اقتنِ قطعاً فنية تحمل عبق التاريخ الفلسطيني",
+            description: t("modal.items.market.desc"),
         },
         {
-            title: "المكتبة التراثية",
+            title: t("modal.items.library.title"),
             label: "Heritage Library",
             icon: FiBook,
             path: "/heritage",
-            description: "توثيق شامل للمعالم والمدن الفلسطينية",
+            description: t("modal.items.library.desc"),
         },
         {
-            title: "الوحدة التفاعلية",
+            title: t("modal.items.module3d.title"),
             label: "3D Module",
             icon: FiBox,
             path: "/3d-module",
-            description: "تجربة بصرية فريدة للمعالم والقطع الأثرية",
+            description: t("modal.items.module3d.desc"),
         },
     ];
 
@@ -50,7 +54,7 @@ export default function DiscoverMoreModal({ isOpen, onClose }: DiscoverMoreModal
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6" dir={direction}>
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -66,9 +70,9 @@ export default function DiscoverMoreModal({ isOpen, onClose }: DiscoverMoreModal
                         className="relative w-full max-w-5xl bg-[#1a130f]/40 border border-white/10 rounded-[2.5rem] shadow-[0_32px_64px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col max-h-[90vh]"
                     >
                         <div className="p-8 pb-4 flex items-center justify-between border-b border-white/5">
-                            <div dir="rtl">
-                                <h2 className="text-3xl font-black text-white mb-1">اكتشف المزيد</h2>
-                                <p className="text-white/40 text-sm font-medium">استكشف جميع أقسام منصة فلسطين ثلاثية الأبعاد</p>
+                            <div className={isRtl ? "text-right" : "text-left"}>
+                                <h2 className="text-3xl font-black text-white mb-1">{t("modal.title")}</h2>
+                                <p className="text-white/40 text-sm font-medium">{t("modal.subtitle")}</p>
                             </div>
                             <button
                                 onClick={onClose}
@@ -96,7 +100,7 @@ export default function DiscoverMoreModal({ isOpen, onClose }: DiscoverMoreModal
                                             <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">{item.label}</span>
                                         </div>
 
-                                        <div dir="rtl">
+                                        <div className={isRtl ? "text-right" : "text-left"}>
                                             <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">
                                                 {item.title}
                                             </h3>

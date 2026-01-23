@@ -17,25 +17,25 @@ export function HomePage() {
 
   const mainCards = [
     {
-      title: t("cards.marketplace_title"),
-      subtitle: t("cards.marketplace_desc"),
-      buttonText: t("cards.marketplace_btn"),
+      title: t("cards.market.title"),
+      subtitle: t("cards.market.desc"),
+      buttonText: t("cards.market.btn"),
       image: "/assets/home/card-marketplace.jpeg",
       path: "/marketplace",
       accentColor: "amber",
     },
     {
-      title: t("cards.soap_title"),
-      subtitle: t("cards.soap_desc"),
-      buttonText: t("cards.soap_btn"),
+      title: t("cards.soap.title"),
+      subtitle: t("cards.soap.desc"),
+      buttonText: t("cards.soap.btn"),
       image: "/assets/home/card-soap-story.jpeg",
       path: "/soap-story",
       accentColor: "stone",
     },
     {
-      title: t("cards.tour_title"),
-      subtitle: t("cards.tour_desc"),
-      buttonText: t("cards.tour_btn"),
+      title: t("cards.tour.title"),
+      subtitle: t("cards.tour.desc"),
+      buttonText: t("cards.tour.btn"),
       image: "/assets/home/card-3d-tour.jpeg",
       path: "/soap-3d",
       accentColor: "olive",
@@ -63,22 +63,22 @@ export function HomePage() {
               <p className="text-lg sm:text-2xl md:text-3xl text-white/85 font-medium mb-1">
                 {user ? (
                   <>
-                    {t("welcome")}{" "}
+                    {t("hero.welcome")}{" "}
                     <span className="text-white font-semibold">
                       {user.name}
                     </span>
                   </>
                 ) : (
-                  t("welcome_guest")
+                  t("hero.welcome_guest")
                 )}
               </p>
 
               {/* السطر الثاني: الوصف */}
               <p className="text-sm sm:text-lg md:text-xl text-white/60 leading-tight md:leading-relaxed">
-                {t("hero_subtitle_1")}
+                {t("hero.subtitle1")}
               </p>
               <p className="text-sm sm:text-lg md:text-xl text-white/60 leading-tight md:leading-relaxed">
-                {t("hero_subtitle_2")}
+                {t("hero.subtitle2")}
               </p>
             </div>
 
@@ -87,7 +87,7 @@ export function HomePage() {
               className="group relative px-6 sm:px-10 py-2.5 sm:py-4 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full font-bold text-sm sm:text-lg text-white shadow-2xl backdrop-blur-xl transition-all hover:scale-105 active:scale-95 overflow-hidden min-h-[44px]"
             >
               <div className="relative z-10 flex items-center gap-3">
-                <span className="tracking-wide">{t("discover_more")}</span>
+                <span className="tracking-wide">{t("hero.cta")}</span>
                 <FiArrowRight className={`group-hover:${direction === 'rtl' ? '-translate-x-1' : 'translate-x-1'} transition-transform ${direction === 'rtl' ? 'rotate-180' : ''}`} />
               </div>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity" />

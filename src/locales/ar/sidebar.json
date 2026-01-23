@@ -1,0 +1,23 @@
+{
+    "home": "الرئيسية",
+    "marketplace": "المتجر",
+    "heritageLibrary": "المكتبة التراثية",
+    "soapStory": "قصة الصابون",
+    "cities": "المدن",
+    "industries": "الصناعات",
+    "landmarks": "المعالم",
+    "profile": "الملف الشخصي",
+    "orders": "طلباتي",
+    "notifications": "الإشعارات",
+    "settings": "الإعدادات",
+    "logout": "تسجيل الخروج",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "aiSystem": "نظام الذكاء الاصطناعي",
+    "module3d": "وحدة ثلاثية الأبعاد",
+    "adminSection": "إدارة المسؤول",
+    "adminMarket": "إدارة السوق",
+    "supervision": "لوحة الإشراف",
+    "analytics": "تحليلات المنصة",
+    "requests": "طلبات البائعين"
+}

@@ -10,6 +10,7 @@ export default function SoapBuildingsPage() {
   const navigate = useNavigate();
 
   return (
+
     <div
       style={{
         minHeight: "100vh",

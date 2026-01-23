@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/auth/AuthLayout";
 import { FiUser, FiMail, FiMapPin, FiCalendar, FiLock, FiArrowRight } from "react-icons/fi";
+import { COUNTRIES } from "../data/countries";
 
 export function SignupPage() {
   const navigate = useNavigate();
@@ -26,7 +27,8 @@ export function SignupPage() {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const direction = i18n.dir();
   const { refreshUser } = useAuth();
 
   const handleChange = (
@@ -152,15 +154,26 @@ export function SignupPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 md:gap-5">
             <div className="relative group">
-              <FiMapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />
-              <input
+              <FiMapPin className={`absolute ${direction === 'rtl' ? 'right-4' : 'left-4'} top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors z-10`} />
+              <select
                 name="country"
                 value={form.country}
                 onChange={handleChange}
-                className="w-full pl-11 pr-4 py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all placeholder:text-white/20 text-white min-h-[44px]"
-                placeholder={t("auth.country")}
                 required
-              />
+                className={`w-full ${direction === 'rtl' ? 'pr-11 pl-4' : 'pl-11 pr-4'} py-3 md:py-3.5 bg-white/5 border border-white/10 rounded-xl md:rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all appearance-none cursor-pointer text-white min-h-[44px]`}
+              >
+                <option value="" className="bg-[#1a130f]">
+                  {i18n.language === "ar" ? "اختر الدولة" : i18n.language === "fr" ? "Choisir le pays" : "Select Country"}
+                </option>
+                {COUNTRIES.map((c) => (
+                  <option key={c.code} value={c.code} className="bg-[#1a130f]">
+                    {i18n.language === "ar" ? c.name_ar : i18n.language === "fr" ? c.name_fr : c.name_en}
+                  </option>
+                ))}
+              </select>
+              <div className={`pointer-events-none absolute inset-y-0 ${direction === 'rtl' ? 'left-4' : 'right-4'} flex items-center px-1 text-white/30`}>
+                <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" /></svg>
+              </div>
             </div>
             <div className="relative group">
               <FiCalendar className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-emerald-400 transition-colors" />

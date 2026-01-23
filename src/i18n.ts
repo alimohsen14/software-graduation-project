@@ -5,6 +5,12 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import en from "./locales/en.json";
 import ar from "./locales/ar.json";
 import fr from "./locales/fr.json";
+import homeEn from "./locales/en/home.json";
+import homeAr from "./locales/ar/home.json";
+import homeFr from "./locales/fr/home.json";
+import sidebarEn from "./locales/en/sidebar.json";
+import sidebarAr from "./locales/ar/sidebar.json";
+import sidebarFr from "./locales/fr/sidebar.json";
 
 i18n
   .use(LanguageDetector)
@@ -16,9 +22,21 @@ i18n
       escapeValue: false,
     },
     resources: {
-      en: { translation: en },
-      ar: { translation: ar },
-      fr: { translation: fr },
+      en: {
+        translation: en,
+        home: homeEn,
+        sidebar: sidebarEn
+      },
+      ar: {
+        translation: ar,
+        home: homeAr,
+        sidebar: sidebarAr
+      },
+      fr: {
+        translation: fr,
+        home: homeFr,
+        sidebar: sidebarFr
+      },
     },
   });
 

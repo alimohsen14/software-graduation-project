@@ -1,0 +1,23 @@
+{
+    "home": "Accueil",
+    "marketplace": "Marché",
+    "heritageLibrary": "Bibliothèque patrimoniale",
+    "soapStory": "Histoire du savon",
+    "cities": "Villes",
+    "industries": "Industries",
+    "landmarks": "Monuments",
+    "profile": "Profil",
+    "orders": "Mes commandes",
+    "notifications": "Notifications",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "signup": "Créer un compte",
+    "aiSystem": "Système IA",
+    "module3d": "Module 3D",
+    "adminSection": "Gestion Administrative",
+    "adminMarket": "Gestion du Marché",
+    "supervision": "Tableau de Bord de Supervision",
+    "analytics": "Analyses de la Plateforme",
+    "requests": "Demandes des Vendeurs"
+}
