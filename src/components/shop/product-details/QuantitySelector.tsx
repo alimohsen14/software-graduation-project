@@ -12,9 +12,11 @@ export default function QuantitySelector({
   onIncrease,
   onDecrease,
 }: Props) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+
   return (
-    <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 shadow-lg">
+    <div className={`inline-flex items-center gap-3 bg-white/5 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 shadow-lg ${isRtl ? "flex-row-reverse" : ""}`}>
       <button
         onClick={onDecrease}
         disabled={quantity <= 1}
@@ -23,8 +25,10 @@ export default function QuantitySelector({
         −
       </button>
 
-      <div className="flex flex-col items-center">
-        <span className="text-[7px] font-black text-white/20 uppercase tracking-widest">{t("marketplace.control") || "Control"}</span>
+      <div className="flex flex-col items-center min-w-[20px]">
+        <span className="text-[7px] font-black text-white/20 uppercase tracking-widest leading-none mb-0.5">
+          {t("marketplace.control") || "Control"}
+        </span>
         <span className="text-xs font-black text-white w-5 text-center tabular-nums">
           {quantity}
         </span>

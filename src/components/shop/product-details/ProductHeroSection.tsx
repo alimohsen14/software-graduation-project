@@ -9,6 +9,7 @@ import StockWarningBox from "../StockWarningBox";
 import { useAuth } from "../../../context/AuthContext";
 import ReportProductModal from "../../reports/ReportProductModal";
 import { FiFlag } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   id: number;
@@ -40,6 +41,9 @@ export default function ProductHeroSection({
   onBuyNow,
 }: Props) {
   const { user } = useAuth();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+
   const [quantity, setQuantity] = useState(1);
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
@@ -58,14 +62,10 @@ export default function ProductHeroSection({
 
   const disabled = stock === 0 || isSoldOut;
 
-  console.log("REPORT BTN CHECK:", {
-    role: (user as any)?.role,
-    isAdmin: user?.isAdmin,
-    isSeller: user?.isSeller
-  });
-
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-start animate-in fade-in duration-700">
+    <section
+      className={`grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-start animate-in fade-in duration-700 ${isRtl ? "text-right" : "text-left"}`}
+    >
       <ProductImage image={image} badge={badge} badges={badges} name={name} />
 
       <div className="flex flex-col gap-4 md:gap-6">
@@ -80,14 +80,14 @@ export default function ProductHeroSection({
           )}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className={`flex items-center gap-4 ${isRtl ? "flex-row-reverse" : ""}`}>
           <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={16} />
           <div className="h-4 w-px bg-white/10" />
           <ProductPrice price={price} />
         </div>
 
         <div className="space-y-4 bg-white/5 rounded-2xl p-4 md:p-6 border border-white/5 shadow-inner backdrop-blur-sm">
-          <div className="flex items-center justify-between gap-4">
+          <div className={`flex items-center justify-between gap-4 ${isRtl ? "flex-row-reverse" : ""}`}>
             <StockStatus stock={stock} />
             <QuantitySelector
               quantity={quantity}
@@ -110,10 +110,10 @@ export default function ProductHeroSection({
             <div className="pt-2 border-t border-white/5 mt-4">
               <button
                 onClick={() => setIsReportModalOpen(true)}
-                className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/30 hover:text-red-400 transition-all group"
+                className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/30 hover:text-red-400 transition-all group ${isRtl ? "flex-row-reverse" : ""}`}
               >
                 <FiFlag size={12} className="group-hover:scale-110 transition-transform" />
-                Report this product
+                {t("marketplace.product.reportProduct")}
               </button>
             </div>
           )}

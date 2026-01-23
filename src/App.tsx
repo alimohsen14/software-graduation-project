@@ -48,6 +48,9 @@ import FoodsPage from "./pages/heritage/FoodsPage";
 import FoodDetailsPage from "./pages/heritage/FoodDetailsPage";
 import ClothesPage from "./pages/heritage/customs/ClothesPage";
 import ClothesDetailsPage from "./pages/heritage/customs/ClothesDetailsPage";
+import SoapStoryHero from "./pages/soap-story/SoapStoryHero";
+import SoapPage from "./pages/soap-story/SoapPage";
+import SoapBuildingsPage from "./pages/soap-story/SoapBuildingsPage";
 
 import RequireAuth from "./components/auth/RequireAuth";
 import PublicOnly from "./components/auth/PublicOnly";
@@ -130,6 +133,9 @@ export default function App() {
               <Route path="/heritage/foods/:id" element={<FoodDetailsPage />} />
               <Route path="/heritage/customs/clothes" element={<ClothesPage />} />
               <Route path="/heritage/customs/clothes/:id" element={<ClothesDetailsPage />} />
+              <Route path="/soap-story" element={<SoapStoryHero />} />
+              <Route path="/soap-page" element={<SoapPage />} />
+              <Route path="/soap-buildings" element={<SoapBuildingsPage />} />
             </Routes>
           </CartProvider>
         </NotificationProvider>

@@ -20,7 +20,8 @@ export default function StarRating({
     showText = false,
     reviewsCount = 0
 }: Props) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isRtl = i18n.language === "ar";
     const fullStars = Math.floor(rating);
     const hasHalf = !interactive && rating - fullStars >= 0.5;
     const emptyStars = max - fullStars - (hasHalf ? 1 : 0);
@@ -46,8 +47,8 @@ export default function StarRating({
     };
 
     return (
-        <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 p-2 bg-white/5 rounded-xl border border-white/5 shadow-inner">
+        <div className={`flex items-center gap-4 ${isRtl ? "flex-row-reverse" : ""}`}>
+            <div className={`flex items-center gap-1.5 p-2 bg-white/5 rounded-xl border border-white/5 shadow-inner ${isRtl ? "flex-row-reverse" : ""}`}>
                 {Array.from({ length: 5 }).map((_, i) => {
                     const isFull = i < fullStars;
                     const isHalf = i === fullStars && hasHalf;
@@ -65,7 +66,7 @@ export default function StarRating({
                                 className={`${isFull ? "text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.3)]" : "text-white/10"}`}
                             />
                             {isHalf && (
-                                <div className="absolute inset-0 overflow-hidden w-1/2">
+                                <div className={`absolute inset-0 overflow-hidden w-1/2 ${isRtl ? "right-0" : "left-0"}`}>
                                     <FiStar size={size} fill="currentColor" className="text-amber-500" />
                                 </div>
                             )}
@@ -74,8 +75,8 @@ export default function StarRating({
                 })}
             </div>
             {showText && (
-                <div className="flex flex-col">
-                    <div className="flex items-center gap-2">
+                <div className={`flex flex-col ${isRtl ? "items-end text-right" : "items-start text-left"}`}>
+                    <div className={`flex items-center gap-2 ${isRtl ? "flex-row-reverse" : ""}`}>
                         <span className="text-xl font-black text-white leading-none">{rating.toFixed(1)}</span>
                         <span className="text-[10px] font-black uppercase tracking-widest text-white/20 whitespace-nowrap">
                             {t("marketplace.reliabilityMetric")}

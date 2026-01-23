@@ -29,7 +29,7 @@ export function HomePage() {
       subtitle: t("cards.soap_desc"),
       buttonText: t("cards.soap_btn"),
       image: "/assets/home/card-soap-story.jpeg",
-      path: "/heritage/industries/soap",
+      path: "/soap-story",
       accentColor: "stone",
     },
     {
@@ -144,7 +144,13 @@ export function HomePage() {
                         {card.subtitle}
                       </p>
 
-                      <button className={`px-4 sm:px-5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold text-white border transition-all duration-300 active:scale-95 ${styles.btn}`}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCardClick(card);
+                        }}
+                        className={`px-4 sm:px-5 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-bold text-white border transition-all duration-300 active:scale-95 ${styles.btn}`}
+                      >
                         {card.buttonText}
                       </button>
                     </div>

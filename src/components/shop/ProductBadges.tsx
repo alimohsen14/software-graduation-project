@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     badges?: string[];
@@ -6,6 +7,9 @@ type Props = {
 };
 
 export default function ProductBadges({ badges = [], showLowStock = true }: Props) {
+    const { t, i18n } = useTranslation();
+    const isRtl = i18n.language === "ar";
+
     if (!badges || badges.length === 0) return null;
 
     const isSoldOut = badges.includes("SOLD_OUT");
@@ -19,7 +23,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isSoldOut) {
             return (
                 <span className="bg-[#6B7280] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    SOLD OUT
+                    {t("badges.soldOut")}
                 </span>
             );
         }
@@ -27,7 +31,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isHot && isBestSeller) {
             return (
                 <span className="bg-gradient-to-r from-[#F59E0B] to-[#EF4444] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    🔥 BEST SELLER
+                    🔥 {t("badges.bestSeller")}
                 </span>
             );
         }
@@ -35,7 +39,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isBestSeller) {
             return (
                 <span className="bg-[#F59E0B] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    BEST SELLER
+                    {t("badges.bestSeller")}
                 </span>
             );
         }
@@ -43,7 +47,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isHot) {
             return (
                 <span className="bg-[#EF4444] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    🔥 HOT
+                    🔥 {t("badges.hot")}
                 </span>
             );
         }
@@ -51,7 +55,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isNew) {
             return (
                 <span className="bg-[#10B981] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    NEW
+                    {t("badges.new")}
                 </span>
             );
         }
@@ -60,12 +64,12 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
     };
 
     return (
-        <div className="absolute top-3 left-3 flex flex-col gap-2">
+        <div className={`absolute top-3 flex flex-col gap-2 ${isRtl ? "right-3 items-end" : "left-3 items-start"}`}>
             {renderMainBadge()}
 
             {showLowStock && isLowStock && !isSoldOut && (
                 <span className="bg-[#FEF3C7] text-[#92400E] text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-                    Low Stock
+                    {t("badges.lowStock")}
                 </span>
             )}
         </div>

@@ -8,8 +8,17 @@ import { ProductCategory } from "./marketplace.service";
 export type Product = {
   id: number;
   name: string;
+  name_ar?: string;
+  name_en?: string;
+  name_fr?: string;
   shortDescription?: string;
+  shortDescription_ar?: string;
+  shortDescription_en?: string;
+  shortDescription_fr?: string;
   fullDescription?: string;
+  fullDescription_ar?: string;
+  fullDescription_en?: string;
+  fullDescription_fr?: string;
   price: number;
   image: string;
   stock: number;
