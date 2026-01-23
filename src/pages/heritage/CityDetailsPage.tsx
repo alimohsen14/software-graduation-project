@@ -1,93 +1,237 @@
-import React from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
-import { FiArrowRight, FiHome, FiMapPin } from "react-icons/fi";
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import { cities } from "../../data/heritage/cities";
+import { useParams } from "react-router-dom";
+import { citiesData } from "../../data/citiesData";
+import "../../styles/cityDetails.css";
+
+const BG = "/images/city_main.png";
 
 export default function CityDetailsPage() {
     const { id } = useParams();
-    const navigate = useNavigate();
-    const city = cities.find((c) => c.id === id);
+    const city = id ? (citiesData as any)[id] : null;
+
 
     if (!city) {
-        return (
-            <DashboardLayout>
-                <div className="py-20 text-center" dir="rtl">
-                    <h2 className="text-3xl font-bold text-[#2f5c3f] mb-4">المدينة غير موجودة</h2>
-                    <button
-                        onClick={() => navigate("/heritage/cities")}
-                        className="text-emerald-600 font-bold hover:underline"
-                    >
-                        العودة إلى قائمة المدن
-                    </button>
-                </div>
-            </DashboardLayout>
-        );
+        return <div style={{ color: "white" }}>المدينة غير موجودة</div>;
     }
 
     return (
-        <DashboardLayout>
-            <div className="py-10" dir="rtl">
-                {/* Breadcrumbs */}
-                <nav className="flex items-center gap-2 mb-6 text-sm font-medium text-[#2f5c3f]/60">
-                    <Link to="/heritage" className="hover:text-emerald-700 flex items-center gap-1">
-                        <FiHome size={14} />
-                        الرئيسية
-                    </Link>
-                    <FiArrowRight size={14} />
-                    <Link to="/heritage/cities" className="hover:text-emerald-700">
-                        المدن الفلسطينية
-                    </Link>
-                    <FiArrowRight size={14} />
-                    <span className="text-[#2f5c3f]">{city.name}</span>
-                </nav>
+        <div
+            className="city-details-root"
+            style={{ backgroundImage: `url(${BG})` }}
+        >
+            <div className="city-details-panel">
 
-                <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-emerald-50 mb-12">
-                    {/* Hero Image */}
-                    <div className="relative h-[300px] md:h-[500px]">
-                        <img
-                            src={city.image}
-                            alt={city.name}
-                            className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                        <div className="absolute bottom-8 right-8 text-white">
-                            <div className="flex items-center gap-2 mb-2 bg-emerald-600/80 backdrop-blur-sm px-3 py-1 rounded-full w-fit text-sm">
-                                <FiMapPin size={16} />
-                                فلسطين
-                            </div>
-                            <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg">
-                                {city.name}
-                            </h1>
-                        </div>
-                    </div>
+                <h1 className="city-name">{city.name}</h1>
 
-                    {/* Content Wrapper */}
-                    <div className="p-8 md:p-12 lg:p-16">
-                        <div className="max-w-4xl">
-                            <h2 className="text-2xl md:text-3xl font-bold text-[#2f5c3f] mb-6 relative inline-block">
-                                لمحة عن المدينة
-                                <div className="absolute -bottom-2 right-0 w-1/2 h-1 bg-emerald-600 rounded-full" />
-                            </h2>
+                {/* ===== INFO BOX WITH SCROLL ===== */}
+                <div className="city-info-box">
 
-                            <p className="text-[#2f5c3f]/80 text-lg md:text-xl leading-relaxed font-medium mb-10">
-                                {city.fullDescription}
-                            </p>
+                    {city.location?.trim() && (
+                        <section className="info-section">
+                            <h3>📍 الموقع الجغرافي</h3>
+                            <ul className="info-list">
+                                {city.location
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
 
-                            {/* Back Button */}
-                            <div className="flex justify-start">
-                                <button
-                                    onClick={() => navigate("/heritage/cities")}
-                                    className="flex items-center gap-2 px-8 py-4 bg-[#2f5c3f] text-white rounded-2xl font-bold hover:bg-emerald-800 transition shadow-lg hover:shadow-emerald-900/20"
-                                >
-                                    <FiArrowRight />
-                                    العودة إلى المدن
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {city.area?.trim() && (
+                        <section className="info-section">
+                            <h3>🗺️ المساحة والأراضي</h3>
+                            <ul className="info-list">
+                                {city.area
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.naming?.trim() && (
+                        <section className="info-section">
+                            <h3>🏷️ سبب التسمية</h3>
+                            <ul className="info-list">
+                                {city.naming
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.history?.trim() && (
+                        <section className="info-section">
+                            <h3>📜 الأهمية التاريخية</h3>
+                            <ul className="info-list">
+                                {city.history
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.landmarks?.trim() && (
+                        <section className="info-section">
+                            <h3>🏛️ المعالم التاريخية</h3>
+                            <ul className="info-list">
+                                {city.landmarks
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => (
+                                        <li key={i}>{l.replace(/^-\s*/, "")}</li>
+                                    ))}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.climate?.trim() && (
+                        <section className="info-section">
+                            <h3>🌤️ المناخ</h3>
+                            <ul className="info-list">
+                                {city.climate
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.water?.trim() && (
+                        <section className="info-section">
+                            <h3>💧 مصادر المياه</h3>
+                            <ul className="info-list">
+                                {city.water
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.heritage?.trim() && (
+                        <section className="info-section">
+                            <h3>👘 اللباس التراثي</h3>
+                            <ul className="info-list">
+                                {city.heritage
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.occupation?.trim() && (
+                        <section className="info-section">
+                            <h3>⚠️ احتلال المدينة</h3>
+                            <ul className="info-list">
+                                {city.occupation
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.population?.trim() && (
+                        <section className="info-section">
+                            <h3>👥 السكان</h3>
+                            <ul className="info-list">
+                                {city.population
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {Array.isArray(city.families) && city.families.length > 0 && (
+                        <section className="info-section">
+                            <h3>👨‍👩‍👧‍👦 أبرز العائلات</h3>
+                            <ul className="info-list">
+                                {city.families.map((f: string, i: number) => (
+                                    <li key={i}>{f}</li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
+
+                    {Array.isArray(city.mosques) && city.mosques.length > 0 && (
+                        <section className="info-section">
+                            <h3>🕌 المساجد</h3>
+                            <ul className="info-list">
+                                {city.mosques.map((m: string, i: number) => (
+                                    <li key={i}>{m}</li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.notableFigures?.trim() && (
+                        <section className="info-section">
+                            <h3>⭐ شخصيات بارزة</h3>
+                            <ul className="info-list">
+                                {city.notableFigures
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.industry?.trim() && (
+                        <section className="info-section">
+                            <h3>🏭 الصناعة والاقتصاد</h3>
+                            <ul className="info-list">
+                                {city.industry
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => (
+                                        <li key={i}>{l.replace(/^-\s*/, "")}</li>
+                                    ))}
+                            </ul>
+                        </section>
+                    )}
+
+                    {city.agriculture?.trim() && (
+                        <section className="info-section">
+                            <h3>🌿 الزراعة</h3>
+                            <ul className="info-list">
+                                {city.agriculture
+                                    .split("\n")
+                                    .filter((l: string) => l.trim())
+                                    .map((l: string, i: number) => <li key={i}>{l}</li>)}
+                            </ul>
+                        </section>
+                    )}
+
+                    {Array.isArray(city.ruins) && city.ruins.length > 0 && (
+                        <section className="info-section">
+                            <h3>🏺 الآثار والخِرَب</h3>
+                            <ul className="info-list">
+                                {city.ruins.map((r: string, i: number) => (
+                                    <li key={i}>{r}</li>
+                                ))}
+                            </ul>
+                        </section>
+                    )}
+
                 </div>
+
+                {/* ===== VILLAGES ===== */}
+                <h2 className="villages-title">بعض قرى المدينة:</h2>
+
+                <div className="villages-line">
+                    {city.villages.map((v: any) => (
+                        <div key={v.id} className="village-card">
+                            {v.name}
+                        </div>
+                    ))}
+                </div>
+
             </div>
-        </DashboardLayout>
+        </div>
     );
 }

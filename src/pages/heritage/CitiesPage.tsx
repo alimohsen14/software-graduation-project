@@ -1,63 +1,77 @@
-import React from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { FiArrowRight, FiHome } from "react-icons/fi";
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import HeritageHero from "../../components/heritage/HeritageHero";
-import HeritageSection from "../../components/heritage/HeritageSection";
-import HeritageGrid from "../../components/heritage/HeritageGrid";
-import HeritageCard from "../../components/heritage/HeritageCard";
-import { cities } from "../../data/heritage/cities";
+import "../../styles/cities.css";
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const CITY_BG = "/images/city_main.png";
+const FLAG = "/images/pal-flag.png";
+
+const CITIES = [
+    { id: "qalqilya", name: "قلقيلية" },
+    { id: "tulkarm", name: "طولكرم" },
+    { id: "ramallah", name: "رام الله" },
+    { id: "salfit", name: "سلفيت" },
+    { id: "nablus", name: "نابلس" },
+    { id: "nazareth", name: "الناصرة" },
+    { id: "akka", name: "عكا" },
+    { id: "ramla", name: "الرملة" },
+    { id: "tiberias", name: "طبريا" },
+    { id: "haifa", name: "حيفا" },
+    { id: "tubas", name: "طوباس" },
+    { id: "jenin", name: "جنين" },
+    { id: "lydd", name: "اللد" },
+    { id: "jaffa", name: "يافا" },
+    { id: "jerusalem", name: "القدس" },
+    { id: "hebron", name: "الخليل" },
+    { id: "gaza", name: "غزة" },
+    { id: "bethlehem", name: "بيت لحم" },
+    { id: "jericho", name: "أريحا" },
+    { id: "bisan", name: "بيسان" },
+    { id: "safad", name: "صفد" },
+];
 
 export default function CitiesPage() {
+    const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    return (
-        <DashboardLayout>
-            <div className="py-10" dir="rtl">
-                {/* Breadcrumbs */}
-                <nav className="flex items-center gap-2 mb-6 text-sm font-medium text-[#2f5c3f]/60">
-                    <Link to="/heritage" className="hover:text-emerald-700 flex items-center gap-1">
-                        <FiHome size={14} />
-                        الرئيسية
-                    </Link>
-                    <FiArrowRight size={14} />
-                    <span className="text-[#2f5c3f]">المدن الفلسطينية</span>
-                </nav>
+    const filtered = CITIES.filter((c) => c.name.includes(search));
 
-                <HeritageHero
-                    title="المدن الفلسطينية"
-                    subtitle="من الساحل إلى الجبل، مدننا تحكي تاريخاً لا ينسى."
-                    backgroundImage="https://images.unsplash.com/photo-1596489390292-945763261642?auto=format&fit=crop&q=80"
+    return (
+        <div
+            className="cities-root"
+            style={{ backgroundImage: `url(${CITY_BG})` }}
+        >
+            <div className="cities-panel">
+
+                <h1 className="cities-title">
+                    <span className="title-wrap">
+                        مدن فلسطين
+                        <img src={FLAG} className="title-flag" alt="Palestine Flag" />
+                    </span>
+                </h1>
+
+                <input
+                    className="cities-search"
+                    placeholder="ابحث عن مدينة..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                 />
 
-                <HeritageSection
-                    title="استكشف مدننا"
-                    subtitle="انقر على أي مدينة لمعرفة المزيد عن تاريخها ومعالمها"
-                >
-                    <HeritageGrid>
-                        {cities.map((city) => (
-                            <HeritageCard
-                                key={city.id}
-                                title={city.name}
-                                description={city.shortDescription}
-                                image={city.image}
-                                onClick={() => navigate(`/heritage/cities/${city.id}`)}
-                            />
-                        ))}
-                    </HeritageGrid>
-                </HeritageSection>
+                <div className="cities-list">
+                    {filtered.map((city) => (
+                        <button
+                            key={city.id}
+                            className="city-btn"
+                            onClick={() => navigate(`/heritage/cities/${city.id}`)}
 
-                {/* Back Button */}
-                <div className="flex justify-start">
-                    <button
-                        onClick={() => navigate("/heritage")}
-                        className="flex items-center gap-2 px-6 py-3 bg-white border border-emerald-200 rounded-xl text-[#2f5c3f] font-bold hover:bg-emerald-50 transition shadow-sm"
-                    >
-                        <FiArrowRight />
-                        العودة إلى الرئيسية
-                    </button>
+                        >
+                            <img src={FLAG} className="city-flag" alt="" />
+                            <span>{city.name}</span>
+                        </button>
+                    ))}
                 </div>
+
             </div>
-        </DashboardLayout>
+        </div>
     );
 }

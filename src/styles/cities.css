@@ -1,0 +1,155 @@
+.cities-root {
+    min-height: 100vh;
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding-top: 80px;
+}
+
+/* اللوحة اللي فيها كل المحتوى */
+.cities-panel {
+    width: 900px;
+    max-width: 95%;
+    max-height: 85vh;
+
+    background: transparent;
+    border-radius: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-x: hidden;
+}
+
+.cities-title {
+    margin: 0 auto 24px auto;
+    padding: 0;
+    text-align: center;
+}
+
+.title-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1;
+
+    color: #7a4a1f;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.title-flag {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin-top: 20px;
+}
+
+/* البحث */
+.cities-search {
+    width: 420px;
+    max-width: 90%;
+    margin: 0 auto 26px auto;
+
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 2px solid #c9a45b;
+    outline: none;
+    font-size: 17px;
+
+    background: #f3e1b6;
+    color: #4a2c12;
+    text-align: right;
+}
+
+/* قائمة المدن */
+.cities-list {
+    direction: rtl;
+
+    max-height: 65vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-flow: row dense;
+
+    column-gap: 40px;
+    row-gap: 26px;
+
+    padding: 10px 40px;
+
+    justify-items: stretch;
+}
+
+/* زر المدينة */
+.city-btn {
+    width: 100%;
+
+    background: linear-gradient(to bottom, #f3dfb1, #e6cb97);
+    border: 2px solid #b58a45;
+    border-radius: 22px;
+
+    padding: 18px 20px;
+    font-size: 18px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+
+    color: #4b2b10;
+    cursor: pointer;
+
+    transition: 0.2s ease;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+
+    direction: rtl;
+}
+
+.city-btn:hover {
+    transform: scale(1.06);
+    background: linear-gradient(to bottom, #ffe3a6, #e2bc70);
+}
+
+/* صورة العلم */
+.city-flag {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+    .cities-list {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px 20px;
+    }
+
+    .title-wrap {
+        font-size: 32px;
+    }
+
+    .title-flag {
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cities-list {
+        grid-template-columns: 1fr;
+    }
+}

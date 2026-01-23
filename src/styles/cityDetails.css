@@ -1,0 +1,139 @@
+.city-details-root {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  padding-top: 80px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.city-details-panel {
+  width: 800px;
+  max-width: 92%;
+  color: #4b2b10;
+}
+
+.city-name {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 20px;
+}
+
+/* ===== INFO BOX ===== */
+
+.city-info-box {
+  background: rgba(245, 230, 190, 0.18);
+  backdrop-filter: blur(2px);
+
+  border: 1px solid rgba(120, 80, 40, 0.25);
+  box-shadow: inset 0 0 20px rgba(120, 80, 40, 0.15);
+
+  padding: 24px;
+  border-radius: 22px;
+
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+/* ===== SECTIONS ===== */
+
+.info-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 40px;
+}
+
+.info-section h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #6b3f16;
+}
+
+.info-list {
+  margin: 0;
+  padding-right: 18px;
+}
+
+.info-list li {
+  margin: 0 0 4px 0;
+  line-height: 1.5;
+}
+
+/* ===== VILLAGES ===== */
+
+.villages-title {
+  margin-top: 50px;
+  margin-bottom: 22px;
+
+  font-size: 24px;
+  font-weight: 800;
+  text-align: right;
+
+  color: #492c13;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.villages-line {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  overflow-x: auto;
+  padding: 20px 10px 30px;
+
+  scroll-behavior: smooth;
+}
+
+.village-card {
+  min-width: 140px;
+  padding: 14px 12px;
+
+  background: linear-gradient(to bottom, #f3ddb0, #d7b47b);
+  border: 1px solid #a77438;
+
+  border-radius: 18px;
+  text-align: center;
+
+  font-weight: bold;
+  font-size: 15px;
+
+  color: #4b2b10;
+  cursor: pointer;
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+  transition: 0.2s ease;
+
+  flex-shrink: 0;
+}
+
+.village-card:hover {
+  transform: translateY(-4px) scale(1.04);
+  background: linear-gradient(to bottom, #ffe5b0, #e0bf80);
+}
+
+/* ===== Scrollbar Style ===== */
+
+.city-info-box::-webkit-scrollbar,
+.villages-line::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.city-info-box::-webkit-scrollbar-track,
+.villages-line::-webkit-scrollbar-track {
+  background: rgba(211, 189, 167, 0.95);
+  border-radius: 10px;
+}
+
+.city-info-box::-webkit-scrollbar-thumb,
+.villages-line::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #e0b874, #b37a36);
+  border-radius: 10px;
+}
+
+.city-info-box::-webkit-scrollbar-thumb:hover,
+.villages-line::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #f0c987, #c98a3f);
+}

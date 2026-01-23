@@ -40,6 +40,14 @@ import CitiesPage from "./pages/heritage/CitiesPage";
 import CityDetailsPage from "./pages/heritage/CityDetailsPage";
 import IndustriesPage from "./pages/heritage/IndustriesPage";
 import IndustryDetailsPage from "./pages/heritage/IndustryDetailsPage";
+import TraditionsHomePage from "./pages/heritage/TraditionsHomePage";
+import WeddingStagesPage from "./pages/heritage/WeddingStagesPage";
+import WeddingStageDetailsPage from "./pages/heritage/WeddingStageDetailsPage";
+import CondolenceDetailsPage from "./pages/traditions/CondolenceDetailsPage";
+import FoodsPage from "./pages/heritage/FoodsPage";
+import FoodDetailsPage from "./pages/heritage/FoodDetailsPage";
+import ClothesPage from "./pages/heritage/customs/ClothesPage";
+import ClothesDetailsPage from "./pages/heritage/customs/ClothesDetailsPage";
 
 import RequireAuth from "./components/auth/RequireAuth";
 import PublicOnly from "./components/auth/PublicOnly";
@@ -114,6 +122,14 @@ export default function App() {
               <Route path="/heritage/cities/:id" element={<CityDetailsPage />} />
               <Route path="/heritage/industries" element={<IndustriesPage />} />
               <Route path="/heritage/industries/:id" element={<IndustryDetailsPage />} />
+              <Route path="/heritage/traditions" element={<TraditionsHomePage />} />
+              <Route path="/heritage/traditions/wedding" element={<WeddingStagesPage />} />
+              <Route path="/heritage/traditions/wedding/:id" element={<WeddingStageDetailsPage />} />
+              <Route path="/traditions/condolence" element={<CondolenceDetailsPage />} />
+              <Route path="/heritage/foods" element={<FoodsPage />} />
+              <Route path="/heritage/foods/:id" element={<FoodDetailsPage />} />
+              <Route path="/heritage/customs/clothes" element={<ClothesPage />} />
+              <Route path="/heritage/customs/clothes/:id" element={<ClothesDetailsPage />} />
             </Routes>
           </CartProvider>
         </NotificationProvider>

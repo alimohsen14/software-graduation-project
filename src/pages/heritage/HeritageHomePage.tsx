@@ -1,60 +1,118 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardLayout from "../../components/layout/DashboardLayout";
-import HeritageHero from "../../components/heritage/HeritageHero";
-import HeritageSection from "../../components/heritage/HeritageSection";
-import HeritageGrid from "../../components/heritage/HeritageGrid";
-import HeritageCard from "../../components/heritage/HeritageCard";
 
+// ================= Library Card =================
+const LibraryCard = ({
+    title,
+    subtitle,
+    image,
+    onClick,
+}: {
+    title: string;
+    subtitle: string;
+    image: string;
+    onClick?: () => void;
+}) => {
+    return (
+        <div
+            onClick={onClick}
+            className="
+        w-full
+        bg-[rgba(30,22,14,0.78)]
+        border border-[rgba(255,255,255,0.18)]
+        rounded-[14px]
+        p-[12px]
+        cursor-pointer
+        text-center
+        text-white
+        shadow-[0_10px_30px_rgba(0,0,0,0.35)]
+        transition-all
+        hover:-translate-y-1
+        hover:shadow-[0_12px_35px_rgba(0,0,0,0.45)]
+      "
+        >
+            {/* Image */}
+            <div className="rounded-[14px] overflow-hidden">
+                <img
+                    src={image}
+                    alt={title}
+                    className="w-full h-[120px] object-cover"
+                />
+            </div>
+
+            {/* Title */}
+            <h3 className="mt-[12px] text-[18px] text-[#f3dca4] font-bold">
+                {title}
+            </h3>
+
+            {/* Subtitle */}
+            <p className="mt-[6px] text-[13px] text-white/80">
+                {subtitle}
+            </p>
+        </div>
+    );
+};
+
+// ================= Page =================
 export default function HeritageHomePage() {
     const navigate = useNavigate();
 
     return (
-        <DashboardLayout>
-            <div className="py-10" dir="rtl">
-                <HeritageHero
-                    title="مكتبة التراث الفلسطيني"
-                    subtitle="استكشف عبق التاريخ وتراثنا الفلسطيني الأصيل عبر المدن والحرف والتقاليد."
-                    backgroundImage="https://images.unsplash.com/photo-1597330377319-3544579c231e?auto=format&fit=crop&q=80"
-                />
+        <div
+            className="min-h-screen flex justify-center bg-no-repeat bg-cover bg-center md:bg-[center_top]"
+            style={{
+                backgroundImage: "url('/images/library-bg.png')",
+                backgroundColor: "#000",
+            }}
+        >
+            <main
+                className="relative z-[2] min-h-screen flex flex-col items-center w-full px-4 md:px-6"
+                dir="rtl"
+            >
+                {/* ===== Header ===== */}
+                <header className="mt-16 md:mt-[100px] mb-20 md:mb-[120px] text-center">
+                    <h1 className="m-0 text-[#f5e7c6] text-2xl md:text-[clamp(24px,3vw,34px)] drop-shadow-[0_8px_25px_rgba(0,0,0,0.8)] font-bold px-2">
+                        المكتبة التراثية الفلسطينية
+                    </h1>
+                </header>
 
-                <HeritageSection
-                    title="أقسام المكتبة"
-                    subtitle="اختر القسم الذي ترغب في استكشافه"
+                {/* ===== Cards Grid ===== */}
+                <section
+                    className="
+                        w-full
+                        max-w-[900px]
+                        grid
+                        grid-cols-1
+                        sm:grid-cols-2
+                        md:grid-cols-3
+                        gap-x-[14px]
+                        gap-y-[20px]
+                        mb-[40px]
+                    "
                 >
-                    <HeritageGrid>
-                        <HeritageCard
-                            title="المدن الفلسطينية"
-                            description="تعرف على تاريخ المدن الفلسطينية العريقة، من القدس ونابلس إلى حيفا وغزة."
-                            image="https://images.unsplash.com/photo-1596489390292-945763261642?auto=format&fit=crop&q=80"
-                            onClick={() => navigate("/heritage/cities")}
-                        />
-                        <HeritageCard
-                            title="الصناعات التقليدية"
-                            description="اكتشف الحرف اليدوية والصناعات التي توارثها الأجداد وحافظت على الهوية الفلسطينية."
-                            image="https://images.unsplash.com/photo-1600857062241-98e5dba7f214?auto=format&fit=crop&q=80"
-                            onClick={() => navigate("/heritage/industries")}
-                        />
-                        <HeritageCard
-                            title="المعالم التاريخية"
-                            description="رحلة عبر الزمان لاستكشاف القلاع والمساجد والكنائس التي تؤكد تجذرنا في هذه الأرض."
-                            image="https://images.unsplash.com/photo-1597330377319-3544579c231e?auto=format&fit=crop&q=80"
-                            onClick={() => { }} // Placeholder for now or just info
-                        />
-                    </HeritageGrid>
-                </HeritageSection>
+                    <LibraryCard
+                        image="/images/card-cities.png"
+                        title="المدن والقرى"
+                        subtitle="اكتشف مدننا وقرانا العريقة"
+                        onClick={() => navigate("/heritage/cities")}
+                    />
 
-                {/* Call to Action or Footer Section */}
-                <div className="bg-emerald-50 rounded-3xl p-8 md:p-12 text-center border border-emerald-100 mb-16 shadow-inner">
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#2f5c3f] mb-4">
-                        تراثنا هو هويتنا
-                    </h2>
-                    <p className="text-[#2f5c3f]/80 max-w-2xl mx-auto leading-relaxed font-medium">
-                        تأسست هذه المكتبة لتكون نافذة للعالم على الجمال والثقافة الفلسطينية.
-                        نحن نعتز بتاريخنا ونسعى لنقله للأجيال القادمة بكل فخر.
-                    </p>
-                </div>
-            </div>
-        </DashboardLayout>
+                    <LibraryCard
+                        image="/images/card-industries.png"
+                        title="الصناعات الفلسطينية"
+                        subtitle="تعرف على الصناعات والحرف"
+                        onClick={() => navigate("/heritage/industries")}
+                    />
+
+                    <LibraryCard
+                        image="/images/card-landmarks.png"
+                        title="العادات والتقاليد الفلسطينية"
+                        subtitle="الأعراس، العزاء، والأعياد في تراثنا الأصيل"
+                        onClick={() => navigate("/heritage/traditions")}
+                    />
+
+                </section>
+            </main>
+        </div>
     );
 }
