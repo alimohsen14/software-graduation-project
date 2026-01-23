@@ -7,12 +7,6 @@ export interface SupervisionOverview {
     totalStores: number;
     activeStores: number;
     inactiveStores: number;
-    topStore: {
-        storeId: number;
-        storeName: string;
-        revenue: number;
-        ordersCount: number;
-    } | null;
 }
 
 // Use strictly what the list view needs (and what backend returns for list)
@@ -36,10 +30,6 @@ export interface StrictStoreDetails {
         name: string;
         soldCount: number;
     } | null;
-    monthlySales: {
-        soldCount: number;
-        revenue: number;
-    };
     products: any[];
     orders: any[];
 }
@@ -82,7 +72,6 @@ export const getOverview = async (): Promise<SupervisionOverview> => {
             totalStores: res.data?.totalStores ?? 0,
             activeStores: res.data?.activeStores ?? 0,
             inactiveStores: res.data?.inactiveStores ?? 0,
-            topStore: res.data?.topStore ?? null,
         };
     } catch (error) {
         console.error("Error fetching supervision overview:", error);
@@ -90,7 +79,6 @@ export const getOverview = async (): Promise<SupervisionOverview> => {
             totalStores: 0,
             activeStores: 0,
             inactiveStores: 0,
-            topStore: null,
         };
     }
 };

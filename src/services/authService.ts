@@ -103,3 +103,7 @@ export const resetPassword = async (token: string, newPassword: string) => {
   });
 };
 
+export const updatePushToken = async (token: string, platform: "web" | "android" | "ios" = "web") => {
+  return api.post("/users/push-token", { token, platform });
+};
+

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 function Soap3DModelViewer() {
+    const { t, i18n } = useTranslation();
     const mvRef = useRef<any>(null);
     const wrapRef = useRef<HTMLDivElement | null>(null);
 
@@ -11,6 +13,11 @@ function Soap3DModelViewer() {
 
     const [doorState, setDoorState] = useState<"OPEN" | "CLOSED">("CLOSED");
     const [showDoorMenu, setShowDoorMenu] = useState(false);
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [modelSrc, setModelSrc] = useState<string>(
+        window.innerWidth <= 768 ? "/models/soap-factory1.glb" : "/models/soap-factory.glb"
+    );
 
     const [isDoorAnimating, setIsDoorAnimating] = useState(false);
     const [hotspot3Fade, setHotspot3Fade] = useState<"strong" | "faded">("strong");
@@ -41,6 +48,7 @@ function Soap3DModelViewer() {
     const [settingsPage, setSettingsPage] = useState<"main" | "theme">("main");
 
     const [isFullscreen, setIsFullscreen] = useState(false);
+    const [showMobileControls, setShowMobileControls] = useState(false);
 
     const DEFAULT_BOX_POSITIONS: Record<string, { x: number; y: number }> = {
         "1": { x: -200, y: -20 },   // قريب من الآلة – عدّلي لاحقًا
@@ -120,6 +128,23 @@ function Soap3DModelViewer() {
         requestAnimationFrame(animate);
     };
 
+    const handleZoom = (direction: "in" | "out") => {
+        const mv = mvRef.current;
+        if (!mv) return;
+
+        // Get current orbit
+        const orbit = mv.getCameraOrbit();
+        const r = orbit.radius;
+        const step = r * 0.2; // Zoom by 20% of current radius
+
+        let newRadius = direction === "in" ? r - step : r + step;
+
+        // Clamp values
+        newRadius = Math.max(0.2, Math.min(400, newRadius));
+
+        mv.cameraOrbit = `${orbit.theta}rad ${orbit.phi}rad ${newRadius}m`;
+    };
+
     const restartModel = () => {
         const mv = mvRef.current;
         if (!mv) return;
@@ -153,13 +178,30 @@ function Soap3DModelViewer() {
 
 
     useEffect(() => {
+        const handleResize = () => {
+            const width = window.innerWidth;
+            const mobileMode = width <= 768;
+            setIsMobile(mobileMode);
+
+            const newSrc = mobileMode ? "/models/soap-factory1.glb" : "/models/soap-factory.glb";
+            if (newSrc !== modelSrc) {
+                setModelSrc(newSrc);
+                setLoaded(false); // Reset loaded state for new model
+                setProgress(0);  // Reset progress bar
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+        handleResize(); // Initial check
+
         document.addEventListener("mousemove", onBoxMouseMove);
         document.addEventListener("mouseup", onBoxMouseUp);
         return () => {
+            window.removeEventListener("resize", handleResize);
             document.removeEventListener("mousemove", onBoxMouseMove);
             document.removeEventListener("mouseup", onBoxMouseUp);
         };
-    });
+    }, [modelSrc]);
 
 
     // منع سكرول الصفحة أثناء zoom داخل الموديول
@@ -198,15 +240,10 @@ function Soap3DModelViewer() {
         const onProgress = (e: any) => {
             const p = e?.detail?.totalProgress ?? 0;
             setProgress(p);
-            if (p >= 1) setLoaded(true);
+            // Don't setLoaded(true) here, let onLoad handle it for a smoother transition
         };
 
-
-
-
-
         const onLoad = () => {
-
             const mv = mvRef.current;
             if (!mv) return;
 
@@ -214,19 +251,23 @@ function Soap3DModelViewer() {
             mv.currentTime = 0; // الباب مسكّر بالبداية
             mv.pause();
 
-
+            setProgress(1);
             setLoaded(true);
         };
 
         el.addEventListener("progress", onProgress);
         el.addEventListener("load", onLoad);
 
+        // If it's already loaded for some reason
+        if (el.complete) {
+            onLoad();
+        }
+
         return () => {
             el.removeEventListener("progress", onProgress);
             el.removeEventListener("load", onLoad);
         };
-    }, []
-    );
+    }, [modelSrc]); // Re-attach if src changes
 
 
     const getCameraPosition = (mv: any) => {
@@ -539,7 +580,8 @@ setActiveHotspot(id);
                 {/* Loading */}
                 {!loaded && (
                     <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm">
-                        <p className="text-white/90 text-sm mb-3">Loading 3D model…</p>
+                        <p className="text-white/90 text-sm mb-1">{t("module3d.loading")}</p>
+                        <p className="text-white/60 text-[11px] font-mono mb-3">{Math.round(progress * 100)}%</p>
                         <div className="w-64 h-1.5 bg-white/20 rounded-full overflow-hidden">
                             <div
                                 className="h-full bg-sky-400 transition-all"
@@ -564,7 +606,7 @@ setActiveHotspot(id);
 
                         {/* Title */}
                         <div className="absolute top-6 text-white text-sm tracking-widest opacity-80">
-                            NAVIGATION BASICS
+                            {t("module3d.navBasics")}
                         </div>
 
                         {/* Controls */}
@@ -572,28 +614,25 @@ setActiveHotspot(id);
 
                             <div>
                                 <div className="text-4xl mb-4">🔄</div>
-                                <h4 className="font-semibold mb-2">Orbit</h4>
-                                <p className="text-xs opacity-70">
-                                    Left click + drag<br />
-                                    One finger drag (touch)
+                                <h4 className="font-semibold mb-2">{t("module3d.orbit")}</h4>
+                                <p className="text-xs opacity-70 whitespace-pre-line">
+                                    {t("module3d.orbitDesc")}
                                 </p>
                             </div>
 
                             <div>
                                 <div className="text-4xl mb-4">🔍</div>
-                                <h4 className="font-semibold mb-2">Zoom</h4>
-                                <p className="text-xs opacity-70">
-                                    Scroll wheel<br />
-                                    Pinch (touch)
+                                <h4 className="font-semibold mb-2">{t("module3d.zoom")}</h4>
+                                <p className="text-xs opacity-70 whitespace-pre-line">
+                                    {t("module3d.zoomDesc")}
                                 </p>
                             </div>
 
                             <div>
                                 <div className="text-4xl mb-4">✋</div>
-                                <h4 className="font-semibold mb-2">Pan</h4>
-                                <p className="text-xs opacity-70">
-                                    Right click + drag<br />
-                                    Two fingers (touch)
+                                <h4 className="font-semibold mb-2">{t("module3d.pan")}</h4>
+                                <p className="text-xs opacity-70 whitespace-pre-line">
+                                    {t("module3d.panDesc")}
                                 </p>
                             </div>
 
@@ -608,8 +647,8 @@ setActiveHotspot(id);
 
                 <model-viewer
                     ref={mvRef}
-                    src="/models/soap-factory.glb"
-                    alt="Nablus Soap Factory 3D Model"
+                    src={modelSrc}
+                    alt={t("module3d.loading")}
                     camera-controls
                     data-visibility-attribute="data-visible"
                     autoplay={false}
@@ -710,33 +749,33 @@ setActiveHotspot(id);
 
                 {activeHotspot === "1" && (
                     <div
-                        style={{
+                        style={!isMobile ? {
                             transform: `translate(${boxPos.x}px, ${boxPos.y}px)`,
-                        }}
-                        className="
-    absolute z-40 bottom-28 left-1/2 -translate-x-1/2
+                        } : {}}
+                        className={`
+    z-40 ${isMobile ? "fixed bottom-24 left-1/2 -translate-x-1/2 w-[90vw] max-h-[40vh]" : "absolute bottom-28 left-1/2 -translate-x-1/2 w-64"}
     bg-black/85 backdrop-blur-md
     text-white rounded-2xl
-    w-64 max-w-[90vw]
     shadow-2xl
     border border-white/10
     animate-fade-in
     select-none
     flex flex-col
-  "
+    overflow-hidden
+  `}
                     >
 
                         {/* ===== Header ===== */}
                         <div
                             dir="rtl"
-                            onMouseDown={onBoxMouseDown}
-                            className="
+                            onMouseDown={!isMobile ? onBoxMouseDown : undefined}
+                            className={`
     flex items-center justify-between
     px-3 py-1.5
     border-b border-white/15
     text-sm font-semibold
-    cursor-grab
-  "
+    ${!isMobile ? "cursor-grab" : ""}
+  `}
                         >
 
                             <span>الطابق الأرضي </span>
@@ -751,32 +790,17 @@ setActiveHotspot(id);
 
                         {/* ===== Content ===== */}
                         <div
-                            dir="rtl"
+                            dir="auto"
                             className="
         px-4 py-3
         text-[13px] leading-relaxed
-        text-right
         opacity-90
-        max-h-28
         overflow-y-auto
         hotspot-scroll
       "
                         >
-                            <p className="mb-2">
-                                هو مكان العمل الرئيسي في المصبنة، حيث تتم عملية{" "}
-                                <span className="font-semibold">طبخ الصابون داخل الحِلّة</span>.
-                            </p>
-
-                            <p className="mb-2">
-                                يتميّز بفراغ واسع وسقف مرتفع تحمله{" "}
-                                <span className="font-semibold">أعمدة حجرية ضخمة</span>، مع مدخل مباشر
-                                من الشارع لتسهيل إدخال المواد وإخراج الصابون.
-                            </p>
-
-                            <p className="mb-2">
-                                كما يحتوي على مخازن للوقود وفتحات تؤدي إلى{" "}
-                                <span className="font-semibold">آبار الزيت في الأسفل</span>، ودرج
-                                يُنقل عبره الصابون إلى الطابق العلوي للتجفيف.
+                            <p className="mb-2 break-words">
+                                {t("module3d.hotspots.groundFloor.desc")}
                             </p>
                         </div>
 
@@ -796,48 +820,34 @@ setActiveHotspot(id);
 
                 {activeHotspot === "3" && (
                     <div
-                        style={{
+                        style={!isMobile ? {
                             transform: `translate(${boxPos.x}px, ${boxPos.y}px)`,
-                        }}
-                        className="absolute z-40 bottom-28 left-1/2 -translate-x-1/2
-           bg-black/80 text-white rounded-xl px-4 py-3 w-64 shadow-lg
+                        } : {}}
+                        className={`
+           z-40 ${isMobile ? "fixed bottom-24 left-1/2 -translate-x-1/2 w-[90vw] max-h-[40vh]" : "absolute bottom-28 left-1/2 -translate-x-1/2 w-64"}
+           bg-black/80 text-white rounded-xl px-4 py-3 shadow-lg overflow-hidden
            flex flex-col
-           animate-fade-in select-none"
+           animate-fade-in select-none`}
                     >
 
                         {/* العنوان */}
                         <div
-                            dir="rtl"
-                            className="text-sm font-semibold mb-2 pb-1 text-right
-             border-b border-white/20 cursor-grab"
-                            onMouseDown={onBoxMouseDown}
+                            dir="auto"
+                            className={`text-sm font-semibold mb-2 pb-1 ${i18n.language === 'ar' ? 'text-right' : 'text-left'}
+             border-b border-white/20 ${!isMobile ? "cursor-grab" : ""}`}
+                            onMouseDown={!isMobile ? onBoxMouseDown : undefined}
                         >
-                            حِلّة طبخ الصابون
+                            {t("module3d.hotspots.halla.title")}
                         </div>
                         {/* النص مع رول */}
-                        <div className="relative">
+                        <div className="relative flex-1 overflow-hidden flex flex-col">
 
                             {/* محتوى قابل للتمرير */}
-                            <div className="hotspot-scroll text-[13px] leading-snug opacity-90 text-right pr-2
-                max-h-32 overflow-y-auto mb-2">
+                            <div className={`hotspot-scroll text-[13px] leading-snug opacity-90 ${i18n.language === 'ar' ? 'text-right pr-2' : 'text-left pl-2'}
+                overflow-y-auto mb-2`}>
 
                                 <p className="mb-2">
-
-
-                                    تُعدّ <span className="font-semibold">حِلّة طبخ الصابون</span> العنصر الأهم في المصبنة،
-                                    إذ كانت تُستخدم لغلي زيت الزيتون مع المواد الطبيعية لبدء عملية تصنيع
-                                    الصابون النابلسي.
-                                </p>
-
-                                <p className="mb-2">
-                                    صُنعت هذه الحِلّة من النحاس السميك لتحمّل درجات الحرارة العالية،
-                                    وكانت تُسخَّن من الأسفل بواسطة النار القادمة من القميم.
-                                </p>
-
-                                <p className="mb-1">
-                                    وقد صُمّمت لتتّسع لكميات كبيرة من زيت الزيتون، تكفي لإنتاج دفعة
-                                    كاملة من الصابون، مما جعل التحكم بعملية الطبخ فيها أمرًا دقيقًا
-                                    ويتطلّب خبرة عالية.
+                                    {t("module3d.hotspots.halla.desc")}
                                 </p>
                             </div>
 
@@ -866,7 +876,7 @@ setActiveHotspot(id);
                         <img
                             src="/images/pot.jpg"
                             alt="Pot"
-                            className="w-full h-32 object-cover rounded-lg cursor-pointer mt-auto"
+                            className="w-full h-32 md:h-32 object-cover rounded-lg cursor-pointer mt-auto shrink-0"
                             onClick={() => setShowImage(true)}
                             draggable={false}
                         />
@@ -886,34 +896,33 @@ setActiveHotspot(id);
 
                 {activeHotspot === "5" && (
                     <div
-                        style={{
+                        style={!isMobile ? {
                             transform: `translate(${boxPos.x}px, ${boxPos.y}px)`,
-                        }}
-                        className="
-      absolute z-40 bottom-28 left-1/2 -translate-x-1/2
+                        } : {}}
+                        className={`
+      z-40 ${isMobile ? "fixed bottom-24 left-1/2 -translate-x-1/2 w-[90vw] max-h-[40vh]" : "absolute bottom-28 left-1/2 -translate-x-1/2 w-64"}
       bg-black/85 backdrop-blur-md
       text-white rounded-2xl
-      w-64 max-w-[90vw]
       shadow-2xl
       border border-white/10
       animate-fade-in
       select-none
       flex flex-col
-    "
+      overflow-hidden
+    `}
                     >
-                        {/* Header */}
                         <div
-                            dir="rtl"
-                            onMouseDown={onBoxMouseDown}
-                            className="
+                            dir="auto"
+                            onMouseDown={!isMobile ? onBoxMouseDown : undefined}
+                            className={`
         flex items-center justify-between
         px-3 py-1.5
         border-b border-white/15
         text-sm font-semibold
-        cursor-grab
-      "
+        ${!isMobile ? "cursor-grab" : ""}
+      `}
                         >
-                            <span>المفرش</span>
+                            <span>{t("module3d.hotspots.mafrash.title")}</span>
                             <button
                                 onClick={() => setActiveHotspot(null)}
                                 className="text-white/45 hover:text-white text-xs"
@@ -924,36 +933,24 @@ setActiveHotspot(id);
 
                         {/* Content */}
                         <div
-                            dir="rtl"
-                            className="
+                            dir="auto"
+                            className={`
         px-4 py-3
         text-[13px] leading-relaxed
-        text-right
+        ${i18n.language === 'ar' ? 'text-right' : 'text-left'}
         opacity-90
         max-h-37
         overflow-y-auto
         hotspot-scroll
-      "
+      `}
                         >
                             <p className="mb-2">
-                                هو الطابق المخصّص لبسط الصابون وتجفيفه بعد طبخه.
-                            </p>
-
-                            <p className="mb-2">
-                                في هذا الطابق كانت تتم عدة مراحل متتالية، تبدأ ببسط الصابون على الأرض،
-                                ثم تسوية سطحه، وبعد أن يتماسك يُقسَّم إلى مربعات متساوية،
-                                ويُدمغ بختم المصبنة، ثم يُقطّع إلى قطع منفصلة.
-                            </p>
-
-                            <p>
-                                بعد ذلك تُرتَّب القطع في أكوام مخروطية الشكل تُعرف باسم
-                                <span className="font-semibold"> «تنانير» </span>
-                                ، كما هو موضّح في الصورة المرفقة أدناه.
+                                {t("module3d.hotspots.mafrash.desc")}
                             </p>
 
                             <img
                                 src="/images/tnaneer.jpeg"
-                                alt="تنانير الصابون"
+                                alt={t("module3d.hotspots.mafrash.title")}
                                 className="w-full h-24 object-cover rounded-lg mt-2 opacity-90"
                             />
 
@@ -964,32 +961,32 @@ setActiveHotspot(id);
 
                 {activeHotspot === "4" && (
                     <div
-                        style={{ transform: `translate(${boxPos.x}px, ${boxPos.y}px)` }}
-                        className="
-      absolute z-40 bottom-28 left-1/2 -translate-x-1/2
+                        style={!isMobile ? { transform: `translate(${boxPos.x}px, ${boxPos.y}px)` } : {}}
+                        className={`
+      z-40 ${isMobile ? "fixed bottom-24 left-1/2 -translate-x-1/2 w-[90vw] max-h-[40vh]" : "absolute bottom-28 left-1/2 -translate-x-1/2 w-64"}
       bg-black/85 backdrop-blur-md
       text-white rounded-2xl
-      w-64 max-w-[90vw]
       shadow-2xl
       border border-white/10
       animate-fade-in
       select-none
       flex flex-col
-    "
+      overflow-hidden
+    `}
                     >
                         {/* Header */}
                         <div
-                            dir="rtl"
-                            onMouseDown={onBoxMouseDown}
-                            className="
+                            dir="auto"
+                            onMouseDown={!isMobile ? onBoxMouseDown : undefined}
+                            className={`
         flex items-center justify-between
         px-3 py-1.5
         border-b border-white/15
         text-sm font-semibold
-        cursor-grab
-      "
+        ${!isMobile ? "cursor-grab" : ""}
+      `}
                         >
-                            <span>المِبْزَل (أحواض تصريف ماء الخمير)</span>
+                            <span>{t("module3d.hotspots.mazbal.title")}</span>
                             <button
                                 onClick={() => setActiveHotspot(null)}
                                 className="text-white/45 hover:text-white text-xs"
@@ -1000,34 +997,19 @@ setActiveHotspot(id);
 
                         {/* Content */}
                         <div
-                            dir="rtl"
-                            className="
+                            dir="auto"
+                            className={`
         px-4 py-3
         text-[13px] leading-relaxed
-        text-right
+        ${i18n.language === 'ar' ? 'text-right' : 'text-left'}
         opacity-90
         max-h-25
         overflow-y-auto
         hotspot-scroll
-      "
+      `}
                         >
                             <p className="mb-2">
-                                المِبْزَل هو حوض نصف دائري يقع أسفل الحِلّة مباشرة،
-                                ومتصل بها بفتحة يمكن فتحها وإغلاقها أثناء عملية طبخ الصابون.
-                                يُستخدم المبزل لتصريف ما يُعرف بـ «ماء الخُمير»،
-                                وهو السائل الذي ينفصل عن خليط الزيت خلال مراحل الطبخ الأولى.
-                            </p>
-                            <p className="mb-2">
-                                عند بداية التسخين، ينفصل جزء من السائل عن الزيت بسبب اختلاف الكثافة،
-                                فيتجمّع في أسفل الحِلّة، ثم يُسحب عبر فتحة المبزل إلى أحواض خاصة مجاورة.
-                                بعد ذلك يُعاد استخدام هذا السائل بعد تعديل تركيزه ضمن مراحل الطبخ اللاحقة،
-                                ما يجعل المبزل عنصرًا أساسيًا في ضبط جودة الصابون.
-                            </p>
-                            <p className="mb-2">
-                                وجود المبزل أسفل الحِلّة يدل على دقّة تصميم المصبنة،
-                                حيث جرى دمج الأدوات والفراغات المعمارية
-                                لخدمة خطوات التصنيع بشكل عملي ومنظّم،
-                                دون الحاجة إلى نقل السوائل يدويًا لمسافات طويلة.
+                                {t("module3d.hotspots.mazbal.desc")}
                             </p>
                         </div>
                     </div>
@@ -1036,32 +1018,32 @@ setActiveHotspot(id);
 
                 {activeHotspot === "2" && (
                     <div
-                        style={{ transform: `translate(${boxPos.x}px, ${boxPos.y}px)` }}
-                        className="
-      absolute z-40 bottom-28 left-1/2 -translate-x-1/2
+                        style={!isMobile ? { transform: `translate(${boxPos.x}px, ${boxPos.y}px)` } : {}}
+                        className={`
+      z-40 ${isMobile ? "fixed bottom-24 left-1/2 -translate-x-1/2 w-[90vw] max-h-[40vh]" : "absolute bottom-28 left-1/2 -translate-x-1/2 w-64"}
       bg-black/85 backdrop-blur-md
       text-white rounded-2xl
-      w-64 max-w-[90vw]
       shadow-2xl
       border border-white/10
       animate-fade-in
       select-none
       flex flex-col
-    "
+      overflow-hidden
+    `}
                     >
                         {/* Header */}
                         <div
-                            dir="rtl"
-                            onMouseDown={onBoxMouseDown}
-                            className="
+                            dir="auto"
+                            onMouseDown={!isMobile ? onBoxMouseDown : undefined}
+                            className={`
         flex items-center justify-between
         px-3 py-1.5
         border-b border-white/15
         text-sm font-semibold
-        cursor-grab
-      "
+        ${!isMobile ? "cursor-grab" : ""}
+      `}
                         >
-                            <span>بيت النار (القِمّيم)</span>
+                            <span>{t("module3d.hotspots.qammim.title")}</span>
                             <button
                                 onClick={() => setActiveHotspot(null)}
                                 className="text-white/45 hover:text-white text-xs"
@@ -1072,60 +1054,43 @@ setActiveHotspot(id);
 
                         {/* Content */}
                         <div
-                            dir="rtl"
-                            className="
+                            dir="auto"
+                            className={`
         px-4 py-3
         text-[13px] leading-relaxed
-        text-right
+        ${i18n.language === 'ar' ? 'text-right' : 'text-left'}
         opacity-90
         max-h-28
         overflow-y-auto
         hotspot-scroll
-      "
+      `}
                         >
                             <p className="mb-2">
-                                القِمّيم هو الغرفة الواقعة أسفل الحِلّة مباشرة، ويُعدّ مصدر الحرارة الأساسي في المصبنة.
-                                فيه كانت تُشعَل النار لتسخين القدر المستخدم في طبخ الصابون.
+                                {t("module3d.hotspots.qammim.desc")}
                             </p>
-
-                            <p className="mb-2">
-                                كان الوقود يُحرق داخل القِمّيم، وتنتقل الحرارة عبر قاعدة الحِلّة إلى خليط الزيت
-                                والمواد الأخرى. كما خُصّص ممر لخروج الدخان إلى خارج المبنى لتقليل تراكمه داخل
-                                مكان العمل.
-                            </p>
-
-                            <p className="mb-2">
-                                يتميّز القِمّيم بصِغَر مساحته وسقفه المنخفض، لأنه صُمّم لوظيفة واحدة فقط هي إشعال
-                                النار. ويعكس وجوده دقّة تصميم المصبنة في تنظيم العمل وفصل مصدر الحرارة عن أماكن
-                                الحركة.
-                            </p>
-
-                            <p>
-                                (يقع القِمّيم أسفل هذا الدرج مباشرة، إلا أنّه غير ظاهر في هذا الموديول)
-                            </p>
-
                         </div>
                     </div>
                 )}
 
 
-                {showImage && (
-                    <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm
+                {
+                    showImage && (
+                        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm
                   flex items-center justify-center">
 
-                        {/* زر إغلاق */}
-                        <button
-                            onClick={() => {
-                                setShowImage(false);
-                                setActiveImagePoint(null);
-                            }}
-                            className="absolute top-6 right-6 text-white text-2xl z-50"
-                        >
-                            ✕
-                        </button>
+                            {/* زر إغلاق */}
+                            <button
+                                onClick={() => {
+                                    setShowImage(false);
+                                    setActiveImagePoint(null);
+                                }}
+                                className="absolute top-6 right-6 text-white text-2xl z-50"
+                            >
+                                ✕
+                            </button>
 
-                        {/* الكونتينر الصح */}
-                        <div className="relative 
+                            {/* الكونتينر الصح */}
+                            <div className="relative 
                 bg-black/60 
                 p-4 
                 rounded-2xl 
@@ -1137,220 +1102,185 @@ setActiveHotspot(id);
                 max-h-[650px]"   >
 
 
-                            <img
-                                src="/images/pot.jpg"
-                                alt="Pot"
-                                className="w-full h-full object-contain rounded-xl cursor-default"
-                                draggable={false}
-                            />
+                                <img
+                                    src="/images/pot.jpg"
+                                    alt={t("module3d.hotspots.halla.title")}
+                                    className="w-full h-full object-contain rounded-xl cursor-default"
+                                    draggable={false}
+                                />
 
 
-                            {/* 🔴 نقطة رقم 1 */}
+                                {/* 🔴 نقطة رقم 1 */}
 
-                            <button
-                                className="hotspot-pot absolute"
-                                style={{
-                                    left: "55.9%",
-                                    top: "31.2%",
-                                    transform: "translate(-50%, -50%)",
-                                }}
-                                onClick={() => {
-                                    setBoxPos(DEFAULT_BOX_POSITIONS["3.1"]);
-                                    setActiveImagePoint("3.1");
-                                }}
-
-                            >
-                                3.1
-                            </button>
-                            {activeImagePoint === "3.1" && (
-                                <div
-                                    dir="rtl"
+                                <button
+                                    className="hotspot-pot absolute"
                                     style={{
-                                        transform: `translate(${boxPos.x}px, ${boxPos.y}px)`,
+                                        left: "55.9%",
+                                        top: "31.2%",
+                                        transform: "translate(-50%, -50%)",
                                     }}
-                                    className="
-      absolute z-[60]
-      bottom-24 left-1/2 -translate-x-1/2
+                                    onClick={() => {
+                                        setBoxPos(DEFAULT_BOX_POSITIONS["3.1"]);
+                                        setActiveImagePoint("3.1");
+                                    }}
+
+                                >
+                                    3.1
+                                </button>
+                                {activeImagePoint === "3.1" && (
+                                    <div
+                                        dir="rtl"
+                                        style={!isMobile ? {
+                                            transform: `translate(${boxPos.x}px, ${boxPos.y}px)`,
+                                        } : {}}
+                                        className={`
+      z-[60]
+      ${isMobile ? "fixed bottom-24 left-1/2 -translate-x-1/2 w-[90vw] max-h-[40vh]" : "absolute bottom-24 left-1/2 -translate-x-1/2 w-60"}
       bg-black/90 text-white
       rounded-xl
-      w-60
       shadow-2xl
       animate-fade-in
       select-none
       flex flex-col
       overflow-hidden
-    "
-                                >
-                                    {/* ===== الهيدر (قابل للسحب) ===== */}
-                                    <div
-                                        onMouseDown={onBoxMouseDown}
-                                        className="
+    `}
+                                    >
+                                        {/* ===== الهيدر (قابل للسحب) ===== */}
+                                        <div
+                                            dir="auto"
+                                            onMouseDown={!isMobile ? onBoxMouseDown : undefined}
+                                            className={`
         flex items-center justify-between
         text-sm font-semibold
         px-4 py-2
         border-b border-white/20
-        cursor-grab
-      "
-                                    >
-                                        <span>3.1 — المخاضة والدكشّاب</span>
-
-                                        <button
-                                            onClick={() => setActiveImagePoint(null)}
-                                            className="text-white/60 hover:text-white text-xs"
+        ${!isMobile ? "cursor-grab" : ""}
+      `}
                                         >
-                                            ✕
-                                        </button>
-                                    </div>
+                                            <span>{t("module3d.hotspots.hallaImage.title")}</span>
 
-                                    {/* ===== النص مع تمرير ===== */}
-                                    <div className="relative px-4 pt-3 flex-1">
-                                        <div
-                                            className="
-          hotspot-scroll
-          text-xs leading-snug opacity-90 text-right
-          max-h-25 overflow-y-auto
-          pr-2
-        "
-                                        >
-                                            <p className="mb-2">
-                                                تُستخدم <span className="font-semibold">المخاضة</span> في بداية طبخ
-                                                الصابون لتحريك خليط الزيت والمحاليل داخل الحِلّة،
-                                                حيث تساعد على بدء عملية التصبّن بشكل متوازن.
-                                            </p>
-
-                                            <p>
-                                                أما <span className="font-semibold">الدكشّاب</span> فهو أداة خشبية أطول
-                                                وأعرض، تشبه الملعقة الكبيرة، ويُستخدم خلال مراحل
-                                                الطبخ اللاحقة لتحريك الخليط باستمرار، وضمان تجانسه
-                                                . ومنع التصاقه أو احتراقه
-                                            </p>
+                                            <button
+                                                onClick={() => setActiveImagePoint(null)}
+                                                className="text-white/60 hover:text-white text-xs"
+                                            >
+                                                ✕
+                                            </button>
                                         </div>
 
-                                        {/* 🔻 مؤشر التمرير */}
-                                        <div
-                                            className="
+                                        {/* ===== النص مع تمرير ===== */}
+                                        <div className="relative px-4 pt-3 flex-1">
+                                            <div
+                                                dir="auto"
+                                                className={`
+          hotspot-scroll
+          text-xs leading-snug opacity-90 ${i18n.language === 'ar' ? 'text-right pr-2' : 'text-left pl-2'}
+          max-h-25 overflow-y-auto
+        `}
+                                            >
+                                                <p className="mb-2">
+                                                    {t("module3d.hotspots.hallaImage.desc")}
+                                                </p>
+                                            </div>
+
+                                            {/* 🔻 مؤشر التمرير */}
+                                            <div
+                                                className="
           pointer-events-none
           absolute bottom-0 left-0 w-full h-6
           bg-gradient-to-t from-black/90 to-transparent
           flex justify-center items-end
         "
-                                        >
-                                            <span className="text-white/60 text-sm animate-bounce">⌄</span>
+                                            >
+                                                <span className="text-white/60 text-sm animate-bounce">⌄</span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    {/* ===== الصورة (ثابتة، بدون قص) ===== */}
-                                    <div className="px-4 pb-4 pt-2 border-t border-white/10">
-                                        <img
-                                            src="/images/tools.jpg"
-                                            alt="أدوات تحريك الصابون"
-                                            className="
+                                        {/* ===== الصورة (ثابتة، بدون قص) ===== */}
+                                        <div className="px-4 pb-4 pt-2 border-t border-white/10">
+                                            <img
+                                                src="/images/tools.jpg"
+                                                alt={t("module3d.hotspots.hallaImage.title")}
+                                                className="
           w-full
           h-28
           object-contain
           rounded-lg
           bg-black/30
         "
-                                            draggable={false}
-                                        />
+                                                draggable={false}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
 
 
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )
+                }
 
 
 
                 {/* ===== Bottom Control Bar ===== */}
                 <div
-                    className="
-    absolute z-30 bottom-4 left-1/2 -translate-x-1/2
-    w-[92%] max-w-5xl
-    flex items-center justify-between
-    px-4 py-3
-    rounded-2xl
- 
- 
-  "
+                    className={
+                        isMobile
+                            ? `fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[94%] flex flex-col gap-3 px-4 py-3 rounded-2xl bg-black/40 backdrop-blur-xl border border-white/10 shadow-2xl transition-all duration-300 ease-out ${showMobileControls ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-6 pointer-events-none"}`
+                            : "absolute z-30 bottom-4 left-1/2 -translate-x-1/2 w-[92%] max-w-5xl flex items-center justify-between px-4 py-3 rounded-2xl"
+                    }
                 >
-                    {/* ===== Left Side ===== */}
-                    <div className="flex items-center gap-1">
+                    {/* ===== Left Side / Top Row on Mobile ===== */}
+                    <div className={`flex items-center gap-1 ${isMobile ? "justify-center overflow-x-auto no-scrollbar pb-1" : ""}`}>
+                        {/* Zoom buttons (Mobile Only) */}
+                        {isMobile && (
+                            <>
+                                <button onClick={() => handleZoom("out")} className="mv-gear-btn px-3">
+                                    <span className="mv-icon">−</span>
+                                </button>
+                                <button onClick={() => handleZoom("in")} className="mv-gear-btn px-3">
+                                    <span className="mv-icon text-lg">+</span>
+                                </button>
+                                <div className="w-[1px] h-4 bg-white/10 mx-1" />
+                            </>
+                        )}
 
                         {/* Fullscreen */}
-
-                        <button
-                            onClick={toggleFullscreen}
-                            className="mv-gear-btn"
-                        >
-                            <span className="mv-icon">
-                                {isFullscreen ? "⤡" : "⤢"}
-                            </span>
+                        <button onClick={toggleFullscreen} className="mv-gear-btn">
+                            <span className="mv-icon">{isFullscreen ? "⤡" : "⤢"}</span>
                         </button>
 
-
                         {/* Settings */}
-
                         <div className="relative">
-                            <button
-
-                                onClick={() => setShowSettings(v => !v)}
-                                className="ui-btn text-xs px-2"
-                            >
+                            <button onClick={() => setShowSettings(v => !v)} className="ui-btn text-xs px-2">
                                 ⚙
                             </button>
-
-
                             {showSettings && (
-                                <div className="mv-settings-panel">
-                                    {/* نفس محتوى الإعدادات زي ما هو */}
+                                <div className={`mv-settings-panel ${isMobile ? "bottom-12 left-0" : ""}`}>
                                     {settingsPage === "main" && (
                                         <>
-                                            <div
-                                                className="mv-settings-row"
-                                                onClick={() => setSettingsPage("theme")}
-                                            >
-                                                <span>Theme</span>
+                                            <div className="mv-settings-row" onClick={() => setSettingsPage("theme")}>
+                                                <span>{t("module3d.settings.theme")}</span>
                                                 <span className="mv-settings-value">
-                                                    {isDarkBox ? "Dark" : "Light"} ›
+                                                    {isDarkBox ? t("module3d.settings.dark") : t("module3d.settings.light")} ›
                                                 </span>
                                             </div>
-
                                             <div className="mv-settings-divider" />
-
-                                            <div
-                                                className="mv-settings-row"
-                                                onClick={restartModel}
-                                            >
-                                                <span>Restart</span>
+                                            <div className="mv-settings-row" onClick={restartModel}>
+                                                <span>{t("module3d.settings.restart")}</span>
                                                 <span>🔄</span>
                                             </div>
                                         </>
                                     )}
-
                                     {settingsPage === "theme" && (
                                         <>
-                                            <div
-                                                className="mv-settings-row"
-                                                onClick={() => setSettingsPage("main")}
-                                            >
-                                                ← Back
+                                            <div className="mv-settings-row" onClick={() => setSettingsPage("main")}>
+                                                ← {t("module3d.settings.back")}
                                             </div>
-
-                                            <div
-                                                className={`mv-settings-sub-row ${!isDarkBox ? "active" : ""}`}
-                                                onClick={() => setIsDarkBox(false)}
-                                            >
-                                                Light
+                                            <div className={`mv-settings-sub-row ${!isDarkBox ? "active" : ""}`} onClick={() => setIsDarkBox(false)}>
+                                                {t("module3d.settings.light")}
                                             </div>
-
-                                            <div
-                                                className={`mv-settings-sub-row ${isDarkBox ? "active" : ""}`}
-                                                onClick={() => setIsDarkBox(true)}
-                                            >
-                                                Dark
+                                            <div className={`mv-settings-sub-row ${isDarkBox ? "active" : ""}`} onClick={() => setIsDarkBox(true)}>
+                                                {t("module3d.settings.dark")}
                                             </div>
                                         </>
                                     )}
@@ -1358,15 +1288,11 @@ setActiveHotspot(id);
                             )}
                         </div>
 
-                        {/* Door أول شي */}
+                        {/* Door */}
                         <div className="relative">
-                            <button
-                                onClick={() => setShowDoorMenu(v => !v)}
-                                className="ui-btn flex items-center gap-1"
-                            >
-                                Door :{doorState === "OPEN" ? "Open" : "Closed"} ▼
+                            <button onClick={() => setShowDoorMenu(v => !v)} className="ui-btn flex items-center gap-1">
+                                {isMobile ? t("module3d.door") : `${t("module3d.door")} :${doorState === "OPEN" ? t("module3d.doorOpen") : t("module3d.doorClosed")}`} ▼
                             </button>
-
                             {showDoorMenu && (
                                 <div className="absolute bottom-10 left-1/2 -translate-x-1/2 ui-menu">
                                     <button
@@ -1376,9 +1302,8 @@ setActiveHotspot(id);
                                         }}
                                         className="ui-menu-item"
                                     >
-                                        Open
+                                        {t("module3d.doorOpen")}
                                     </button>
-
                                     <button
                                         onClick={() => {
                                             if (doorState !== "CLOSED") toggleDoor("CLOSED");
@@ -1386,7 +1311,7 @@ setActiveHotspot(id);
                                         }}
                                         className="ui-menu-item"
                                     >
-                                        Close
+                                        {t("module3d.doorClosed")}
                                     </button>
                                 </div>
                             )}
@@ -1394,20 +1319,15 @@ setActiveHotspot(id);
 
                         {/* Help */}
                         <button onClick={() => setShowHelp(true)} className="ui-btn">
-                            Help ?
+                            {t("module3d.help")}
                         </button>
-
-
                     </div>
 
-
-                    {/* ===== Center Annotation Navigation ===== */}
-                    <div className="annotation-nav">
-
+                    {/* ===== Right Side / Bottom Row on Mobile ===== */}
+                    <div className={`annotation-nav ${isMobile ? "self-center scale-95" : ""}`}>
                         <button
                             onClick={() => {
-                                const next =
-                                    (currentStep - 1 + HOTSPOT_ORDER.length) % HOTSPOT_ORDER.length;
+                                const next = (currentStep - 1 + HOTSPOT_ORDER.length) % HOTSPOT_ORDER.length;
                                 setCurrentStep(next);
                                 goToHotspotById(HOTSPOT_ORDER[next]);
                             }}
@@ -1415,14 +1335,12 @@ setActiveHotspot(id);
                         >
                             ‹
                         </button>
-
                         <div className="annotation-center">
-                            <div className="annotation-title">Select an annotation</div>
+                            <div className="annotation-title">{t("module3d.selectAnnotation")}</div>
                             <div className="annotation-count">
                                 {currentStep + 1} / {HOTSPOT_ORDER.length}
                             </div>
                         </div>
-
                         <button
                             onClick={() => {
                                 const next = (currentStep + 1) % HOTSPOT_ORDER.length;
@@ -1433,17 +1351,23 @@ setActiveHotspot(id);
                         >
                             ›
                         </button>
-
                     </div>
-
-
-
-
-
                 </div>
 
-            </div>
-        </div>
+                {/* ===== Mobile Toggle Button ===== */}
+                {
+                    isMobile && (
+                        <button
+                            onClick={() => setShowMobileControls(prev => !prev)}
+                            className="fixed right-6 bottom-6 z-[60] w-12 h-12 rounded-full bg-black/60 backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center text-white text-xl active:scale-90 transition-all duration-300"
+                            aria-label="Toggle controls"
+                        >
+                            {showMobileControls ? "✕" : "⚙️"}
+                        </button>
+                    )
+                }
+            </div >
+        </div >
     );
 }
 

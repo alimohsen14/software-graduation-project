@@ -22,6 +22,7 @@ import AdminAnalyticsPage from "./pages/admin/AdminAnalyticsPage";
 import AdminSupervisionDashboard from "./pages/admin/AdminSupervisionDashboard";
 import AdminStoresListPage from "./pages/admin/AdminStoresListPage";
 import AdminStoreDetailsPage from "./pages/admin/AdminStoreDetailsPage";
+import AdminReportsPage from "./pages/admin/AdminReportsPage";
 import Soap3DPage from "./pages/Soap3DPage";
 import UserOrdersPage from "./pages/UserOrdersPage";
 import UserOrderDetailsPage from "./pages/UserOrderDetailsPage";
@@ -44,6 +45,7 @@ import RequireAuth from "./components/auth/RequireAuth";
 import PublicOnly from "./components/auth/PublicOnly";
 import { CartProvider } from "./context/CartContext";
 import { AuthProvider } from "./context/AuthContext";
+import { NotificationProvider } from "./context/NotificationContext";
 import CartDrawer from "./components/cart/CartDrawer";
 
 import { ToastContainer } from "react-toastify";
@@ -53,65 +55,68 @@ export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <ToastContainer theme="dark" position="top-right" autoClose={3000} />
-        <CartProvider>
-          <CartDrawer />
-          <Routes>
-            {/* PUBLIC ROUTES */}
-            <Route path="/" element={<HomePage />} />
+        <NotificationProvider>
+          <ToastContainer theme="dark" position="top-right" autoClose={3000} />
+          <CartProvider>
+            <CartDrawer />
+            <Routes>
+              {/* PUBLIC ROUTES */}
+              <Route path="/" element={<HomePage />} />
 
-            {/* PUBLIC ONLY (Redirect to home if logged in) */}
-            <Route path="/login" element={<PublicOnly><LoginPage /></PublicOnly>} />
-            <Route path="/signup" element={<PublicOnly><SignupPage /></PublicOnly>} />
-            <Route path="/forgot-password" element={<PublicOnly><ForgotPasswordPage /></PublicOnly>} />
-            <Route path="/reset-password" element={<PublicOnly><ResetPasswordPage /></PublicOnly>} />
-            <Route path="/google-redirect" element={<PublicOnly><GoogleRedirectHandler /></PublicOnly>} />
+              {/* PUBLIC ONLY (Redirect to home if logged in) */}
+              <Route path="/login" element={<PublicOnly><LoginPage /></PublicOnly>} />
+              <Route path="/signup" element={<PublicOnly><SignupPage /></PublicOnly>} />
+              <Route path="/forgot-password" element={<PublicOnly><ForgotPasswordPage /></PublicOnly>} />
+              <Route path="/reset-password" element={<PublicOnly><ResetPasswordPage /></PublicOnly>} />
+              <Route path="/google-redirect" element={<PublicOnly><GoogleRedirectHandler /></PublicOnly>} />
 
-            {/* PROTECTED ROUTES */}
-            <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
-            <Route path="/shop" element={<RequireAuth><ShopPage /></RequireAuth>} />
-            <Route path="/shop/product/:id" element={<RequireAuth><ProductDetailsPage /></RequireAuth>} />
+              {/* PROTECTED ROUTES */}
+              <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+              <Route path="/shop" element={<RequireAuth><ShopPage /></RequireAuth>} />
+              <Route path="/shop/product/:id" element={<RequireAuth><ProductDetailsPage /></RequireAuth>} />
 
-            <Route path="/orders" element={<RequireAuth><UserOrdersPage /></RequireAuth>} />
-            <Route path="/orders/:id" element={<RequireAuth><UserOrderDetailsPage /></RequireAuth>} />
-            <Route path="/palestine-ai" element={<RequireAuth><PalestineAIPage /></RequireAuth>} />
-            <Route path="/soap-3d" element={<RequireAuth><Soap3DPage /></RequireAuth>} />
-            <Route path="/become-seller" element={<RequireAuth><BecomeSellerPage /></RequireAuth>} />
+              <Route path="/orders" element={<RequireAuth><UserOrdersPage /></RequireAuth>} />
+              <Route path="/orders/:id" element={<RequireAuth><UserOrderDetailsPage /></RequireAuth>} />
+              <Route path="/palestine-ai" element={<RequireAuth><PalestineAIPage /></RequireAuth>} />
+              <Route path="/soap-3d" element={<RequireAuth><Soap3DPage /></RequireAuth>} />
+              <Route path="/become-seller" element={<RequireAuth><BecomeSellerPage /></RequireAuth>} />
 
-            {/* ADMIN */}
-            <Route path="/admin/market" element={<RequireAuth><AdminMarketPage /></RequireAuth>} />
-            <Route path="/admin/products" element={<RequireAuth><AdminProductsPage /></RequireAuth>} />
-            <Route path="/admin/orders" element={<RequireAuth><AdminOrdersPage /></RequireAuth>} />
-            <Route path="/admin/stock-alerts" element={<RequireAuth><AdminStockAlertsPage /></RequireAuth>} />
-            <Route path="/admin/store" element={<RequireAuth><AdminStorePage /></RequireAuth>} />
-            <Route path="/admin/seller-requests" element={<RequireAuth><SellerRequestsPage /></RequireAuth>} />
-            <Route path="/admin/analytics" element={<RequireAuth><AdminAnalyticsPage /></RequireAuth>} />
+              {/* ADMIN */}
+              <Route path="/admin/market" element={<RequireAuth><AdminMarketPage /></RequireAuth>} />
+              <Route path="/admin/products" element={<RequireAuth><AdminProductsPage /></RequireAuth>} />
+              <Route path="/admin/orders" element={<RequireAuth><AdminOrdersPage /></RequireAuth>} />
+              <Route path="/admin/stock-alerts" element={<RequireAuth><AdminStockAlertsPage /></RequireAuth>} />
+              <Route path="/admin/store" element={<RequireAuth><AdminStorePage /></RequireAuth>} />
+              <Route path="/admin/seller-requests" element={<RequireAuth><SellerRequestsPage /></RequireAuth>} />
+              <Route path="/admin/analytics" element={<RequireAuth><AdminAnalyticsPage /></RequireAuth>} />
 
-            {/* ADMIN SUPERVISION */}
-            <Route path="/admin/supervision" element={<RequireAuth><AdminSupervisionDashboard /></RequireAuth>} />
-            <Route path="/admin/supervision/stores" element={<RequireAuth><AdminStoresListPage /></RequireAuth>} />
-            <Route path="/admin/supervision/stores/:id" element={<RequireAuth><AdminStoreDetailsPage /></RequireAuth>} />
+              {/* ADMIN SUPERVISION */}
+              <Route path="/admin/supervision" element={<RequireAuth><AdminSupervisionDashboard /></RequireAuth>} />
+              <Route path="/admin/supervision/stores" element={<RequireAuth><AdminStoresListPage /></RequireAuth>} />
+              <Route path="/admin/supervision/stores/:id" element={<RequireAuth><AdminStoreDetailsPage /></RequireAuth>} />
+              <Route path="/admin/reports" element={<RequireAuth><AdminReportsPage /></RequireAuth>} />
 
-            {/* SELLER */}
-            <Route path="/seller" element={<RequireAuth><SellerDashboardPage /></RequireAuth>} />
-            <Route path="/seller/products" element={<RequireAuth><SellerProductsPage /></RequireAuth>} />
-            <Route path="/seller/orders" element={<RequireAuth><SellerOrdersPage /></RequireAuth>} />
-            <Route path="/seller/stock-alerts" element={<RequireAuth><SellerStockAlertsPage /></RequireAuth>} />
-            <Route path="/seller/store" element={<RequireAuth><ManageMyShopPage /></RequireAuth>} />
+              {/* SELLER */}
+              <Route path="/seller" element={<RequireAuth><SellerDashboardPage /></RequireAuth>} />
+              <Route path="/seller/products" element={<RequireAuth><SellerProductsPage /></RequireAuth>} />
+              <Route path="/seller/orders" element={<RequireAuth><SellerOrdersPage /></RequireAuth>} />
+              <Route path="/seller/stock-alerts" element={<RequireAuth><SellerStockAlertsPage /></RequireAuth>} />
+              <Route path="/seller/store" element={<RequireAuth><ManageMyShopPage /></RequireAuth>} />
 
-            {/* PUBLIC MARKET */}
-            <Route path="/marketplace" element={<MarketplacePage />} />
-            <Route path="/marketplace/product/:id" element={<ProductDetailsPage />} />
-            <Route path="/store/:storeId" element={<StorePage />} />
+              {/* PUBLIC MARKET */}
+              <Route path="/marketplace" element={<MarketplacePage />} />
+              <Route path="/marketplace/product/:id" element={<ProductDetailsPage />} />
+              <Route path="/store/:storeId" element={<StorePage />} />
 
-            {/* HERITAGE LIBRARY (PUBLIC) */}
-            <Route path="/heritage" element={<HeritageHomePage />} />
-            <Route path="/heritage/cities" element={<CitiesPage />} />
-            <Route path="/heritage/cities/:id" element={<CityDetailsPage />} />
-            <Route path="/heritage/industries" element={<IndustriesPage />} />
-            <Route path="/heritage/industries/:id" element={<IndustryDetailsPage />} />
-          </Routes>
-        </CartProvider>
+              {/* HERITAGE LIBRARY (PUBLIC) */}
+              <Route path="/heritage" element={<HeritageHomePage />} />
+              <Route path="/heritage/cities" element={<CitiesPage />} />
+              <Route path="/heritage/cities/:id" element={<CityDetailsPage />} />
+              <Route path="/heritage/industries" element={<IndustriesPage />} />
+              <Route path="/heritage/industries/:id" element={<IndustryDetailsPage />} />
+            </Routes>
+          </CartProvider>
+        </NotificationProvider>
       </AuthProvider>
     </BrowserRouter>
   );

@@ -351,5 +351,53 @@
                 "na": "N/A"
             }
         }
+    },
+    "module3d": {
+        "loading": "Chargement du modèle 3D...",
+        "navBasics": "BASES DE LA NAVIGATION",
+        "orbit": "Orbite",
+        "orbitDesc": "Clic gauche + glisser\nGlissement à un doigt (tactile)",
+        "zoom": "Zoom",
+        "zoomDesc": "Molette de la souris\nPincement (tactile)",
+        "pan": "Panoramique",
+        "panDesc": "Clic droit + glisser\nDeux doigts (tactile)",
+        "door": "Porte",
+        "doorOpen": "Ouverte",
+        "doorClosed": "Fermée",
+        "help": "Aide ?",
+        "selectAnnotation": "Sélectionner une annotation",
+        "settings": {
+            "theme": "Thème",
+            "light": "Clair",
+            "dark": "Sombre",
+            "restart": "Redémarrer",
+            "back": "Retour"
+        },
+        "hotspots": {
+            "groundFloor": {
+                "title": "Rez-de-chaussée",
+                "desc": "C'est l'espace de travail principal de la savonnerie, où se déroule le processus de cuisson du savon dans la cuve. Il se caractérise par une zone spacieuse et un plafond élevé soutenu par d'énormes colonnes de pierre, avec une entrée directe depuis la rue pour faciliter l'entrée des matériaux et la sortie du savon. Il contient également des réserves de combustible et des ouvertures menant aux puits d'huile en dessous, ainsi qu'un escalier par lequel le savon est déplacé à l'étage pour le séchage."
+            },
+            "qammim": {
+                "title": "Salle du Four (Qammim)",
+                "desc": "Le Qammim est la pièce située directement sous la cuve, et c'est la principale source de chaleur de la savonnerie. On y allumait le feu pour chauffer la cuve utilisée pour la cuisson du savon. Le combustible était brûlé à l'intérieur du Qammim, et la chaleur était transférée par la base de la cuve au mélange d'huile et d'autres matériaux. Un passage était également dédié à l'évacuation de la fumée à l'extérieur du bâtiment pour réduire son accumulation à l'intérieur du lieu de travail. Le Qammim se caractérise par sa petite surface et son plafond bas, car il a été conçu pour une seule fonction, à savoir allumer le feu. (Le Qammim est situé directement sous cet escalier, mais il n'est pas visible dans ce module)"
+            },
+            "halla": {
+                "title": "Cuve de Cuisson du Savon",
+                "desc": "La cuve de cuisson du savon est l'élément le plus important de la savonnerie, car elle servait à faire bouillir l'huile d'olive avec des matières naturelles pour lancer le processus de fabrication du savon de Naplouse. Cette cuve était en cuivre épais pour résister aux températures élevées, et elle était chauffée par le bas par le feu provenant du Qammim. Elle a été conçue pour accueillir de grandes quantités d'huile d'olive, de quoi produire une fournée complète de savon."
+            },
+            "hallaImage": {
+                "title": "3.1 — Makhada et Dakshab",
+                "desc": "La Makhada est utilisée au début de la cuisson du savon pour remuer le mélange d'huile et de solutions à l'intérieur de la cuve, car elle aide à démarrer le processus de saponification de manière équilibrée. Quant au Dakshab, c'est un outil en bois plus long et plus large, semblable à une grande cuillère, et il est utilisé lors des étapes ultérieures de la cuisson pour remuer le mélange en continu, assurant son homogénéité et l'empêchant de coller ou de brûler."
+            },
+            "mazbal": {
+                "title": "Le Mabzal (Bassins de Drainage des Eaux de Fermentation)",
+                "desc": "Le Mabzal est un bassin semi-circulaire situé directement sous la cuve, relié à celle-ci par une ouverture qui peut être ouverte et fermée pendant le processus de cuisson du savon. Le Mabzal est utilisé pour drainer ce que l'on appelle « l'eau de fermentation », qui est le liquide qui se sépare du mélange d'huile au cours des premières étapes de la cuisson. Au début du chauffage, une partie du liquide se sépare de l'huile en raison de la densité différente, s'accumule au fond de la cuve, puis est évacuée par l'ouverture du Mabzal vers des bassins adjacents spéciaux."
+            },
+            "mafrash": {
+                "title": "Le Mafrash",
+                "desc": "C'est l'étage dédié à l'étalage et au séchage du savon après la cuisson. Sur cet étage, plusieurs étapes consécutives ont été réalisées, à commencer par l'étalage du savon sur le sol, puis le nivellement de sa surface. Une fois solidifié, il est divisé en carrés égaux, marqués du sceau de l'usine, puis découpé en morceaux séparés. Ensuite, les pièces sont disposées en tas coniques connus sous le nom de « Tananeer »."
+            }
+        }
     }
 }

@@ -116,7 +116,7 @@ export default function AdminStoreDetailsPage() {
     }
 
     // Safely access properties with contract enforcement
-    const { name, isActive, bestSeller, monthlySales, products, orders } = store;
+    const { name, isActive, bestSeller, products, orders } = store;
 
     return (
         <DashboardLayout>
@@ -175,9 +175,9 @@ export default function AdminStoreDetailsPage() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                    {/* 2. Best Seller Card */}
-                    <div className="bg-stone-900/40 backdrop-blur-md rounded-[2.5rem] p-10 border border-white/10 relative overflow-hidden shadow-2xl group">
+                <div className="mb-16">
+                    {/* 2. Best Seller Card - Full Width or Centered as its the only one */}
+                    <div className="bg-stone-900/40 backdrop-blur-md rounded-[2.5rem] p-10 border border-white/10 relative overflow-hidden shadow-2xl group max-w-2xl">
                         <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
                             <FiAward size={240} />
                         </div>
@@ -188,34 +188,14 @@ export default function AdminStoreDetailsPage() {
                             <div className="relative z-10">
                                 <h2 className="text-3xl font-black text-white mb-3 tracking-tight uppercase leading-none">{bestSeller.name}</h2>
                                 <p className="text-white/40 font-bold text-[10px] uppercase tracking-widest bg-white/5 py-1 px-3 rounded-lg w-fit">
-                                    Sold {bestSeller.soldCount} units
+                                    Sold {bestSeller.soldCount} units since launch
                                 </p>
                             </div>
                         ) : (
                             <div className="py-12 text-white/10 font-black uppercase tracking-widest text-sm italic">
-                                NO SALES DATA RECORDED
+                                NO TOP PRODUCTS RECORDED
                             </div>
                         )}
-                    </div>
-
-                    {/* 3. Monthly Sales Card */}
-                    <div className="bg-white/5 backdrop-blur-md rounded-[2.5rem] p-10 border border-white/10 relative overflow-hidden shadow-2xl group">
-                        <div className="absolute -top-10 -right-10 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity">
-                            <FiTrendingUp size={240} />
-                        </div>
-                        <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 mb-10 flex items-center gap-3">
-                            <FiTrendingUp size={16} /> 30-Day Velocity
-                        </h3>
-                        <div className="grid grid-cols-2 gap-10 relative z-10">
-                            <div>
-                                <p className="text-[10px] text-white/30 font-black uppercase tracking-widest mb-3">Item Count</p>
-                                <p className="text-4xl font-black text-white tracking-tighter">{monthlySales.soldCount}</p>
-                            </div>
-                            <div>
-                                <p className="text-[10px] text-white/30 font-black uppercase tracking-widest mb-3">Total Revenue</p>
-                                <p className="text-4xl font-black text-white tracking-tighter">{monthlySales.revenue.toLocaleString()}₪</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
@@ -259,8 +239,8 @@ export default function AdminStoreDetailsPage() {
                                                 </td>
                                                 <td className="px-10 py-5 text-right">
                                                     <span className={`px-3 py-1.5 rounded-xl text-[10px] font-black tracking-widest uppercase border ${p.stock > 10
-                                                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                                                            : 'bg-red-500/10 text-red-400 border-red-500/20'
+                                                        ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                                                        : 'bg-red-500/10 text-red-400 border-red-500/20'
                                                         }`}>
                                                         {p.stock ?? 0} units
                                                     </span>

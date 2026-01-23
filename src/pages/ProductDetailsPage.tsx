@@ -164,6 +164,7 @@ export default function ProductDetailsPage() {
             {/* 2. Primary Product HeroSection */}
             <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-4 md:p-8 border border-white/10 shadow-2xl relative overflow-hidden">
               <ProductHeroSection
+                id={product.id}
                 name={product.name}
                 image={product.image}
                 badge={product.badge}

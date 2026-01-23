@@ -7,6 +7,7 @@ import {
     SupervisionOverview,
     StoreListItem
 } from "../../services/adminStoresSupervision.service";
+import { getReports } from "../../services/reportService";
 import {
     FiShoppingBag,
     FiCheckCircle,
@@ -17,7 +18,8 @@ import {
     FiSearch,
     FiFilter,
     FiChevronLeft,
-    FiChevronRight
+    FiChevronRight,
+    FiAlertTriangle
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 
@@ -29,6 +31,9 @@ export default function AdminSupervisionDashboard() {
     const [overviewData, setOverviewData] = useState<SupervisionOverview | null>(null);
     const [overviewLoading, setOverviewLoading] = useState(true);
     const [overviewError, setOverviewError] = useState<string | null>(null);
+
+    // Reports State
+    const [pendingReportsCount, setPendingReportsCount] = useState(0);
 
     // Stores Table State
     const [stores, setStores] = useState<StoreListItem[]>([]);
@@ -65,6 +70,16 @@ export default function AdminSupervisionDashboard() {
         }
     };
 
+    const fetchPendingReportsCount = async () => {
+        try {
+            const reports = await getReports();
+            const pending = reports.filter(r => r.status === "PENDING").length;
+            setPendingReportsCount(pending);
+        } catch (err) {
+            console.error("Failed to load reports count", err);
+        }
+    };
+
     // Fetch Stores List
     const fetchStores = useCallback(async () => {
         setTableLoading(true);
@@ -91,6 +106,7 @@ export default function AdminSupervisionDashboard() {
     // Initial Overview Fetch
     useEffect(() => {
         fetchOverview();
+        fetchPendingReportsCount();
     }, []);
 
     // Debounce Search & Fetch Stores
@@ -161,7 +177,7 @@ export default function AdminSupervisionDashboard() {
                 </div>
 
                 {/* COUNT CARDS */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                     <MetricCard
                         title="Total Stores"
                         value={overviewData?.totalStores.toString() || "0"}
@@ -183,19 +199,14 @@ export default function AdminSupervisionDashboard() {
                         color="text-red-400"
                         bg="bg-red-400/10 border-red-400/20"
                     />
-                    {/* Top Performing Store Card */}
-                    <div className="bg-white/5 backdrop-blur-md rounded-2xl shadow-xl border border-white/10 p-6">
-                        <h3 className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-4">Top Performing Store</h3>
-                        {overviewData?.topStore ? (
-                            <div>
-                                <p className="font-black text-lg text-white mb-2 truncate">{overviewData.topStore.storeName}</p>
-                                <p className="text-sm font-bold text-emerald-400 mb-1">{overviewData.topStore.revenue.toLocaleString()} ₪</p>
-                                <p className="text-xs font-medium text-white/40">{overviewData.topStore.ordersCount} Orders</p>
-                            </div>
-                        ) : (
-                            <p className="text-white/20 text-sm font-medium italic">No sales data available</p>
-                        )}
-                    </div>
+                    <MetricCard
+                        title="Product Reports"
+                        value={pendingReportsCount.toString()}
+                        icon={<FiAlertTriangle />}
+                        color="text-yellow-400"
+                        bg="bg-yellow-400/10 border-yellow-400/20"
+                        onClick={() => navigate("/admin/reports")}
+                    />
                 </div>
 
                 {/* STORES DIRECTORY SECTION */}
@@ -388,9 +399,12 @@ export default function AdminSupervisionDashboard() {
     );
 }
 
-function MetricCard({ title, value, icon, color, bg }: { title: string; value: string; icon: React.ReactNode; color: string; bg?: string }) {
+function MetricCard({ title, value, icon, color, bg, onClick }: { title: string; value: string; icon: React.ReactNode; color: string; bg?: string; onClick?: () => void }) {
     return (
-        <div className="bg-white/5 backdrop-blur-md p-8 rounded-[2rem] shadow-xl border border-white/10 transition-all hover:shadow-2xl hover:bg-white/10 hover:-translate-y-1">
+        <div
+            onClick={onClick}
+            className={`bg-white/5 backdrop-blur-md p-8 rounded-[2rem] shadow-xl border border-white/10 transition-all hover:shadow-2xl hover:bg-white/10 hover:-translate-y-1 ${onClick ? "cursor-pointer" : ""}`}
+        >
             <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-6 shadow-sm border ${bg || "bg-white/5 border-white/10"}`}>
                 <span className={color}>{icon}</span>
             </div>

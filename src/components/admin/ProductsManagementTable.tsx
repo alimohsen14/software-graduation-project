@@ -107,10 +107,10 @@ export default function ProductsManagementTable({
                     <td className="px-8 py-5">
                       <span
                         className={`px-2 py-1 rounded-md text-[10px] font-black border ${p.status === "IN_STOCK"
-                            ? "bg-green-50 text-green-700 border-green-200"
-                            : p.status === "LOW_STOCK"
-                              ? "bg-amber-50 text-amber-700 border-amber-200"
-                              : "bg-red-50 text-red-700 border-red-200"
+                          ? "bg-green-50 text-green-700 border-green-200"
+                          : p.status === "LOW_STOCK"
+                            ? "bg-amber-50 text-amber-700 border-amber-200"
+                            : "bg-red-50 text-red-700 border-red-200"
                           }`}
                       >
                         {p.status.replace("_", " ")}

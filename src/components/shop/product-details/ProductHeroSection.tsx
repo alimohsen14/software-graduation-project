@@ -6,8 +6,12 @@ import QuantitySelector from "./QuantitySelector";
 import AddToCartActions from "./AddToCartActions";
 import StarRating from "./StarRating";
 import StockWarningBox from "../StockWarningBox";
+import { useAuth } from "../../../context/AuthContext";
+import ReportProductModal from "../../reports/ReportProductModal";
+import { FiFlag } from "react-icons/fi";
 
 type Props = {
+  id: number;
   name: string;
   image: string;
   badge?: string;
@@ -22,6 +26,7 @@ type Props = {
 };
 
 export default function ProductHeroSection({
+  id,
   name,
   image,
   badge,
@@ -34,7 +39,9 @@ export default function ProductHeroSection({
   onAddToCart,
   onBuyNow,
 }: Props) {
+  const { user } = useAuth();
   const [quantity, setQuantity] = useState(1);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
   const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
 
   const handleIncrease = () => {
@@ -50,6 +57,12 @@ export default function ProductHeroSection({
   };
 
   const disabled = stock === 0 || isSoldOut;
+
+  console.log("REPORT BTN CHECK:", {
+    role: (user as any)?.role,
+    isAdmin: user?.isAdmin,
+    isSeller: user?.isSeller
+  });
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-start animate-in fade-in duration-700">
@@ -91,8 +104,28 @@ export default function ProductHeroSection({
             onAddToCart={() => onAddToCart(quantity)}
             onBuyNow={() => onBuyNow(quantity)}
           />
+
+          {/* Report Button - Visible for users and sellers, hidden for admins */}
+          {user && !user.isAdmin && (
+            <div className="pt-2 border-t border-white/5 mt-4">
+              <button
+                onClick={() => setIsReportModalOpen(true)}
+                className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/30 hover:text-red-400 transition-all group"
+              >
+                <FiFlag size={12} className="group-hover:scale-110 transition-transform" />
+                Report this product
+              </button>
+            </div>
+          )}
         </div>
       </div>
+
+      <ReportProductModal
+        productId={String(id)}
+        productName={name}
+        isOpen={isReportModalOpen}
+        onClose={() => setIsReportModalOpen(false)}
+      />
     </section>
   );
 }

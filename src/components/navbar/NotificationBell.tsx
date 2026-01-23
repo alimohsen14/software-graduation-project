@@ -1,57 +1,27 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { FiBell, FiCheck, FiPackage } from "react-icons/fi";
+import React, { useRef, useState, useEffect } from "react";
+import { FiBell, FiPackage } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import {
-    getNotifications,
-    getUnreadCount,
-    markAsRead,
-    markAllAsRead,
-    Notification,
-} from "../../services/notification.service";
+import { useNotifications } from "../../context/NotificationContext";
 
 export default function NotificationBell() {
     const navigate = useNavigate();
     const dropdownRef = useRef<HTMLDivElement>(null);
-
-    const [notifications, setNotifications] = useState<Notification[]>([]);
-    const [unreadCount, setUnreadCount] = useState(0);
+    const { notifications, unreadCount, markAsRead, markAllAsRead, refresh } = useNotifications();
     const [isOpen, setIsOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [expandedId, setExpandedId] = useState<number | null>(null);
-    const [markingReadId, setMarkingReadId] = useState<number | null>(null);
     const [markingAllRead, setMarkingAllRead] = useState(false);
-
-    const fetchUnreadCount = useCallback(async () => {
-        try {
-            const count = await getUnreadCount();
-            setUnreadCount(count);
-        } catch (err) {
-            console.error("Failed to fetch unread count", err);
-        }
-    }, []);
-
-    const fetchNotifications = useCallback(async () => {
-        setLoading(true);
-        try {
-            const data = await getNotifications();
-            setNotifications(data);
-        } catch (err) {
-            console.error("Failed to fetch notifications", err);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
 
     const handleToggle = () => {
         if (!isOpen) {
-            fetchNotifications();
-            fetchUnreadCount();
+            // Optional: refresh from REST if needed, but realtime handles it.
+            // We can call refresh() to be safe (hydration check).
+            refresh();
         }
         setIsOpen(!isOpen);
         setExpandedId(null);
     };
 
-    const handleNotificationClick = async (notification: Notification) => {
+    const handleNotificationClick = async (notification: any) => {
         // Toggle expand/collapse
         if (expandedId === notification.id) {
             setExpandedId(null);
@@ -60,18 +30,8 @@ export default function NotificationBell() {
         }
 
         // Mark as read if not already
-        if (!notification.isRead && markingReadId !== notification.id) {
-            setMarkingReadId(notification.id);
-            try {
-                await markAsRead(notification.id);
-                // Refetch to get fresh data
-                await fetchNotifications();
-                await fetchUnreadCount();
-            } catch (err) {
-                console.error("Failed to mark as read", err);
-            } finally {
-                setMarkingReadId(null);
-            }
+        if (!notification.isRead) {
+            await markAsRead(notification.id, notification.isSeller);
         }
     };
 
@@ -83,15 +43,9 @@ export default function NotificationBell() {
 
     const handleMarkAllAsRead = async () => {
         if (markingAllRead) return;
-
         setMarkingAllRead(true);
         try {
             await markAllAsRead();
-            // Refetch to get fresh data
-            await fetchNotifications();
-            await fetchUnreadCount();
-        } catch (err) {
-            console.error("Failed to mark all as read", err);
         } finally {
             setMarkingAllRead(false);
         }
@@ -111,17 +65,6 @@ export default function NotificationBell() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
-
-    // Fetch unread count on mount
-    useEffect(() => {
-        fetchUnreadCount();
-        const interval = setInterval(fetchUnreadCount, 30000);
-        return () => clearInterval(interval);
-    }, [fetchUnreadCount]);
-
-    const getNotificationIcon = () => {
-        return <FiPackage className="w-4 h-4 text-[#4A6F5D]" />;
-    };
 
     return (
         <div className="relative" ref={dropdownRef}>
@@ -153,11 +96,7 @@ export default function NotificationBell() {
 
                     {/* Notifications List */}
                     <div className="max-h-[380px] overflow-y-auto scrollbar-hide">
-                        {loading ? (
-                            <div className="px-5 py-10 text-center text-white/20 text-xs font-medium animate-pulse">
-                                Loading updates...
-                            </div>
-                        ) : notifications.length === 0 ? (
+                        {notifications.length === 0 ? (
                             <div className="px-5 py-10 text-center text-white/20 text-xs font-medium">
                                 No new notifications
                             </div>
@@ -172,7 +111,6 @@ export default function NotificationBell() {
                                     >
                                         <button
                                             onClick={() => handleNotificationClick(notification)}
-                                            disabled={markingReadId === notification.id}
                                             className="w-full px-5 py-4 text-left flex items-start gap-4 transition disabled:opacity-50 group"
                                         >
                                             <div
@@ -221,4 +159,3 @@ export default function NotificationBell() {
         </div>
     );
 }
-

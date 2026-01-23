@@ -371,5 +371,53 @@
         "na": "N/A"
       }
     }
+  },
+  "module3d": {
+    "loading": "Loading 3D model...",
+    "navBasics": "NAVIGATION BASICS",
+    "orbit": "Orbit",
+    "orbitDesc": "Left click + drag\nOne finger drag (touch)",
+    "zoom": "Zoom",
+    "zoomDesc": "Scroll wheel\nPinch (touch)",
+    "pan": "Pan",
+    "panDesc": "Right click + drag\nTwo fingers (touch)",
+    "door": "Door",
+    "doorOpen": "Open",
+    "doorClosed": "Closed",
+    "help": "Help ?",
+    "selectAnnotation": "Select an annotation",
+    "settings": {
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "restart": "Restart",
+      "back": "Back"
+    },
+    "hotspots": {
+      "groundFloor": {
+        "title": "Ground Floor",
+        "desc": "It is the main workspace in the soap factory, where the soap cooking process takes place inside the pot. It is characterized by a spacious area and a high ceiling supported by massive stone columns, with a direct entrance from the street to facilitate the entry of materials and the exit of soap. It also contains fuel stores and openings leading to the oil wells below, and a staircase through which the soap is moved to the upper floor for drying."
+      },
+      "qammim": {
+        "title": "Furnace Room (Qammim)",
+        "desc": "The Qammim is the room located directly below the pot, and it is the main source of heat in the soap factory. In it, fire was lit to heat the pot used in cooking soap. Fuel was burned inside the Qammim, and heat was transferred through the base of the pot to the mixture of oil and other materials. A passage was also dedicated for smoke to exit outside the building to reduce its accumulation inside the workplace. The Qammim is characterized by its small area and low ceiling, as it was designed for only one function, which is lighting the fire. (The Qammim is located directly below this staircase, but it is not visible in this module)"
+      },
+      "halla": {
+        "title": "Soap Cooking Pot",
+        "desc": "The soap cooking pot is the most important element in the soap factory, as it was used to boil olive oil with natural materials to start the Nabulsi soap manufacturing process. This pot was made of thick copper to withstand high temperatures, and it was heated from below by fire coming from the Qammim. It was designed to accommodate large quantities of olive oil, enough to produce a full batch of soap."
+      },
+      "hallaImage": {
+        "title": "3.1 — Makhada and Dakshab",
+        "desc": "The Makhada is used at the beginning of soap cooking to stir the mixture of oil and solutions inside the pot, as it helps start the saponification process in a balanced way. As for the Dakshab, it is a longer and wider wooden tool, like a large spoon, and it is used during later cooking stages to stir the mixture continuously, ensuring its homogeneity and preventing it from sticking or burning."
+      },
+      "mazbal": {
+        "title": "The Mabzal (Fermentation Water Drainage Basins)",
+        "desc": "The Mabzal is a semi-circular basin located directly below the pot, connected to it by an opening that can be opened and closed during the soap cooking process. The Mabzal is used to drain what is known as 'fermentation water', which is the liquid that separates from the oil mixture during the initial cooking stages. At the beginning of heating, part of the liquid separates from the oil due to different density, collects at the bottom of the pot, and is then pulled through the Mabzal opening to special adjacent basins. The presence of the Mabzal below the pot indicates the precision of the soap factory design."
+      },
+      "mafrash": {
+        "title": "The Mafrash",
+        "desc": "It is the floor dedicated to spreading and drying soap after cooking. On this floor, several consecutive stages were carried out, starting with spreading the soap on the ground, then leveling its surface. After it solidifies, it is divided into equal squares, stamped with the factory's seal, and then cut into separate pieces. After that, the pieces are arranged in conical piles known as 'Tananeer'."
+      }
+    }
   }
 }

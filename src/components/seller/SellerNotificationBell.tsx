@@ -1,41 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiBell } from 'react-icons/fi';
-import { getNotifications, markNotificationRead, SellerNotification } from '../../services/seller.service';
+import { useNotifications } from '../../context/NotificationContext';
 
 export default function SellerNotificationBell() {
-    const [notifications, setNotifications] = useState<SellerNotification[]>([]);
+    const { notifications, unreadCount, markAsRead, refresh } = useNotifications();
     const [isOpen, setIsOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
-
-    const fetchNotifications = async () => {
-        try {
-            setLoading(true);
-            const data = await getNotifications();
-            setNotifications(data);
-        } catch (err) {
-            console.error("Failed to fetch notifications", err);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    // Poll every 60s
-    useEffect(() => {
-        fetchNotifications();
-        const interval = setInterval(fetchNotifications, 60000);
-
-        // Listen for custom refresh event
-        const handleRefresh = () => fetchNotifications();
-        window.addEventListener('seller:refresh-notifications', handleRefresh);
-
-        return () => {
-            clearInterval(interval);
-            window.removeEventListener('seller:refresh-notifications', handleRefresh);
-        };
-    }, []);
 
     // Close click outside
     useEffect(() => {
@@ -53,15 +25,9 @@ export default function SellerNotificationBell() {
         };
     }, [isOpen]);
 
-    const handleNotificationClick = async (notification: SellerNotification) => {
+    const handleNotificationClick = async (notification: any) => {
         if (!notification.isRead) {
-            // Optimistic update
-            setNotifications(prev => prev.map(n => n.id === notification.id ? { ...n, isRead: true } : n));
-            try {
-                await markNotificationRead(notification.id);
-            } catch (err) {
-                console.error("Failed to mark read", err);
-            }
+            await markAsRead(notification.id, true); // true = isSeller
         }
 
         setIsOpen(false);
@@ -71,14 +37,12 @@ export default function SellerNotificationBell() {
         }
     };
 
-    const unreadCount = notifications.filter(n => !n.isRead).length;
-
     return (
         <div className="relative" ref={dropdownRef}>
             <button
                 onClick={() => {
                     setIsOpen(!isOpen);
-                    if (!isOpen) fetchNotifications(); // Refetch on open
+                    if (!isOpen) refresh(); // Optional refresh
                 }}
                 className="relative p-2 rounded-full hover:bg-white/20 text-[#1d2d1f] hover:text-[#4A6F5D] transition"
             >
@@ -123,7 +87,7 @@ export default function SellerNotificationBell() {
                     <div className="px-4 py-2 border-t border-gray-50 bg-gray-50 rounded-b-2xl">
                         <button
                             className="text-xs text-[#4A6F5D] font-medium hover:underline w-full text-center"
-                            onClick={fetchNotifications}
+                            onClick={() => refresh()}
                         >
                             Refresh
                         </button>
