@@ -1,0 +1,12 @@
+{
+    "sidebarTitle": "AI Assistant",
+    "newChat": "New Chat",
+    "deleteChat": "Delete Chat",
+    "copyright": "Palestine3D AI",
+    "delete": {
+        "title": "Delete this conversation?",
+        "desc": "This chat will be permanently deleted and cannot be recovered. Are you sure?",
+        "cancel": "Cancel",
+        "confirm": "Delete"
+    }
+}

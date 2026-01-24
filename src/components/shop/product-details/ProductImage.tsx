@@ -15,7 +15,7 @@ export default function ProductImage({ image, badge, badges, name }: Props) {
   const isSoldOut = badges?.includes("SOLD_OUT") ?? false;
 
   return (
-    <div className="relative w-full max-h-[240px] md:max-h-[400px] rounded-xl md:rounded-2xl overflow-hidden bg-zinc-900/50 border border-white/10 shadow-2xl group/img flex items-center justify-center">
+    <div className="relative w-full h-[260px] md:h-[360px] rounded-xl overflow-hidden bg-zinc-900/50 border border-white/10 shadow-xl group/img flex items-center justify-center">
       <img
         src={image}
         alt={name}

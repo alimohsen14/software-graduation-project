@@ -2,6 +2,7 @@ import React from 'react';
 import { FiX, FiBox, FiShoppingBag, FiHeart, FiUsers } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import { Store } from '../../services/store.service';
+import { useTranslation } from 'react-i18next';
 
 interface StoreSocialListsProps {
     isOpen: boolean;
@@ -13,12 +14,14 @@ interface StoreSocialListsProps {
 
 export default function StoreSocialLists({ isOpen, onClose, title, stores, type }: StoreSocialListsProps) {
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation("marketplace");
+    const direction = i18n.dir();
 
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/40 backdrop-blur-2xl animate-in fade-in duration-500">
-            <div className="bg-[#0d0d0d]/90 backdrop-blur-3xl w-full max-w-md rounded-[3rem] border border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-500 group relative">
+            <div dir={direction} className="bg-[#0d0d0d]/90 backdrop-blur-3xl w-full max-w-md rounded-[3rem] border border-white/10 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-500 group relative">
                 {/* Background decorative glows */}
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-emerald-500/10 transition-all duration-1000" />
                 <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-500/5 rounded-full blur-[100px] pointer-events-none group-hover:bg-indigo-500/10 transition-all duration-1000" />
@@ -26,7 +29,7 @@ export default function StoreSocialLists({ isOpen, onClose, title, stores, type 
                 {/* Header */}
                 <div className="px-10 py-8 border-b border-white/5 flex items-center justify-between bg-white/5 relative z-10">
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 mb-2">Relational Database</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 mb-2">{t("followedStores")} / {t("favoriteStores")}</span>
                         <div className="flex items-center gap-4">
                             {type === 'followed' ? (
                                 <FiUsers className="text-emerald-500" size={24} />
@@ -52,11 +55,13 @@ export default function StoreSocialLists({ isOpen, onClose, title, stores, type 
                                 <FiBox size={40} />
                             </div>
                             <div className="space-y-3">
-                                <p className="text-white font-black uppercase tracking-tighter text-xl">Null Manifest</p>
-                                <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.2em] px-10 leading-relaxed">
+                                <p className="text-xl font-black text-white uppercase tracking-tighter mb-1">
+                                    {t("store.nullManifest")}
+                                </p>
+                                <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em] px-10 leading-relaxed">
                                     {type === 'followed'
-                                        ? "No active subscriptions detected in current segment."
-                                        : "No high-value favorites recorded in local matrix."}
+                                        ? t("store.noUnitsAvailable")
+                                        : t("store.noUnitsAvailable")}
                                 </p>
                             </div>
                         </div>
@@ -92,7 +97,7 @@ export default function StoreSocialLists({ isOpen, onClose, title, stores, type 
                                             </span>
                                             {store.isOfficial && (
                                                 <span className="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded-lg text-[8px] font-black uppercase tracking-widest shrink-0">
-                                                    Verified
+                                                    {t("store.verifiedStore")}
                                                 </span>
                                             )}
                                         </div>
@@ -114,7 +119,7 @@ export default function StoreSocialLists({ isOpen, onClose, title, stores, type 
                         onClick={onClose}
                         className="w-full py-5 text-[11px] font-black uppercase tracking-[0.3em] text-white/20 hover:text-white bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/10 rounded-[1.5rem] transition-all active:scale-95 shadow-2xl"
                     >
-                        Exit Directory
+                        {t("cart.exit")}
                     </button>
                 </div>
             </div>

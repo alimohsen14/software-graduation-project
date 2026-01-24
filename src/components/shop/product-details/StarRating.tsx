@@ -75,18 +75,8 @@ export default function StarRating({
                 })}
             </div>
             {showText && (
-                <div className={`flex flex-col ${isRtl ? "items-end text-right" : "items-start text-left"}`}>
-                    <div className={`flex items-center gap-2 ${isRtl ? "flex-row-reverse" : ""}`}>
-                        <span className="text-xl font-black text-white leading-none">{rating.toFixed(1)}</span>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-white/20 whitespace-nowrap">
-                            {t("marketplace.reliabilityMetric")}
-                        </span>
-                    </div>
-                    {reviewsCount > 0 && (
-                        <span className="text-[8px] font-black uppercase tracking-[0.2em] text-emerald-500/40">
-                            {reviewsCount} {t("marketplace.qualitativeVerifications")}
-                        </span>
-                    )}
+                <div className={`flex items-center gap-2 ${isRtl ? "flex-row-reverse" : ""}`}>
+                    <span className="text-xl font-black text-white leading-none">{rating.toFixed(1)}</span>
                 </div>
             )}
         </div>

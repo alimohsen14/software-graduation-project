@@ -1,0 +1,12 @@
+{
+    "sidebarTitle": "Assistant IA",
+    "newChat": "Nouvelle discussion",
+    "deleteChat": "Supprimer la discussion",
+    "copyright": "Palestine3D AI",
+    "delete": {
+        "title": "Supprimer cette conversation ?",
+        "desc": "Cette discussion sera définitivement supprimée et ne pourra pas être récupérée. Êtes-vous sûr ?",
+        "cancel": "Annuler",
+        "confirm": "Supprimer"
+    }
+}

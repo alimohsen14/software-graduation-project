@@ -2,6 +2,7 @@ import React from "react";
 import { FiShoppingBag, FiUserPlus, FiShoppingCart } from "react-icons/fi";
 import { useCart } from "../../context/CartContext";
 import SellerNotificationBell from "../seller/SellerNotificationBell";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     onBecomeSeller: () => void;
@@ -17,20 +18,23 @@ export default function MarketplaceHeader({
     showDashboard = false
 }: Props) {
     const { toggleCart, cartItems } = useCart();
+    const { t, i18n } = useTranslation("marketplace");
+    const direction = i18n.dir();
+
     return (
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-8 mb-6 md:mb-12 animate-in fade-in slide-in-from-top-4 duration-700" dir="rtl">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-4 md:gap-8 mb-6 md:mb-12 animate-in fade-in slide-in-from-top-4 duration-700" dir={direction}>
             <div className="flex items-center gap-3 md:gap-6 group w-full lg:w-auto">
                 <div className="shrink-0 w-10 h-10 md:w-16 md:h-16 bg-emerald-500/5 backdrop-blur-3xl rounded-xl md:rounded-[1.5rem] border border-emerald-500/10 flex items-center justify-center text-emerald-400 shadow-xl transition-transform duration-700 group-hover:scale-110 group-hover:rotate-[5deg] relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                     <FiShoppingBag className="w-5 h-5 md:w-8 md:h-8 relative z-10" />
                 </div>
                 <div>
-                    <div className="flex flex-col mb-1 text-right">
-                        <span className="text-emerald-500/40 text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] mb-0.5 pr-2 md:pr-3 border-r-2 border-emerald-500/30 leading-none">
-                            سوق التراث
+                    <div className={`flex flex-col mb-1 ${direction === 'rtl' ? 'text-right' : 'text-left'}`}>
+                        <span className={`text-emerald-500/40 text-[7px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] mb-0.5 ${direction === 'rtl' ? 'pr-2 md:pr-3 border-r-2' : 'pl-2 md:pl-3 border-l-2'} border-emerald-500/30 leading-none`}>
+                            {t("title")}
                         </span>
                         <h1 className="text-xl md:text-5xl font-black text-white tracking-tighter uppercase leading-[0.9] transition-all group-hover:tracking-tight duration-700">
-                            المتجر
+                            {t("title")}
                         </h1>
                     </div>
                 </div>
@@ -63,7 +67,7 @@ export default function MarketplaceHeader({
                         className="flex-1 sm:flex-none flex items-center justify-center gap-3 px-6 py-3.5 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-full font-black text-[10px] uppercase tracking-[0.1em] hover:bg-emerald-600/30 transition-all active:scale-95 group/btn shadow-xl"
                     >
                         <FiUserPlus size={18} className="group-hover/btn:rotate-12 transition-transform duration-500" />
-                        <span>انضم كبائع</span>
+                        <span>{t("joinAsSeller")}</span>
                     </button>
                 )}
 
@@ -74,7 +78,7 @@ export default function MarketplaceHeader({
                     >
                         <FiShoppingBag size={18} className="group-hover/btn:-translate-y-1 transition-transform duration-500" />
                         <span>
-                            {window.location.pathname.startsWith('/admin') || (typeof window !== 'undefined' && (window as any).isAdminCheck) ? "لوحة التحكم" : "حساب التاجر"}
+                            {window.location.pathname.startsWith('/admin') || (typeof window !== 'undefined' && (window as any).isAdminCheck) ? t("dashboard") : t("sellerAccount")}
                         </span>
                     </button>
                 )}

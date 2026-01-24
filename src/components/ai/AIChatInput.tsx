@@ -46,7 +46,7 @@ export default function AIChatInput({ value, onChange, onSend, isLoading }: Prop
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative flex items-end gap-2 p-3 bg-black/40 backdrop-blur-md border border-white/20 rounded-2xl transition-all focus-within:border-emerald-500/50 shadow-inner"
+      className="relative flex items-end gap-2 p-3 bg-transparent transition-all"
       dir={direction}
     >
       <textarea

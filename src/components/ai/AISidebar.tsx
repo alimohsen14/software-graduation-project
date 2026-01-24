@@ -26,16 +26,23 @@ export default function AISidebar({
   onNewChat,
   onDeleteChat,
 }: Props): React.ReactElement {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("ai");
   const { user } = useAuth();
   const direction = i18n.dir();
+  const isRtl = direction === "rtl";
 
   const [deletingChatId, setDeletingChatId] = React.useState<number | null>(null);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deletingChatId !== null) {
-      onDeleteChat(deletingChatId);
-      setDeletingChatId(null);
+      setIsDeleting(true);
+      try {
+        await onDeleteChat(deletingChatId);
+      } finally {
+        setIsDeleting(false);
+        setDeletingChatId(null);
+      }
     }
   };
 
@@ -49,121 +56,122 @@ export default function AISidebar({
         />
       )}
 
-      {/* Sidebar - Floating fixed panel attached to edge */}
+      {/* Sidebar - Exact same style as main sidebar */}
       <aside
-        className={`
-          fixed z-50
-          top-16 bottom-0
-          w-[320px]
-          flex flex-col
-          bg-[#0a0a0a]/80 backdrop-blur-2xl
-          border-white/10
-          ${direction === "rtl" ? "left-0 border-r" : "right-0 border-l"}
-          shadow-2xl shadow-black
-          transition-transform duration-300 ease-in-out
-          ${isOpen ? "translate-x-0" : direction === "rtl" ? "-translate-x-full" : "translate-x-full"}
-          md:translate-x-0
-        `}
+        className={`fixed top-16 bottom-0 ${isRtl ? "left-0" : "right-0"} w-64 z-40 transform transition-transform duration-500 ease-in-out ${isOpen ? "translate-x-0" : isRtl ? "-translate-x-full" : "translate-x-full"
+          } bg-white/5 backdrop-blur-sm ${isRtl ? "border-l" : "border-r"} border-white/10 shadow-md shadow-black/20 flex flex-col pointer-events-auto md:translate-x-0`}
         dir={direction}
       >
         {/* Close button - Mobile only */}
         <button
           onClick={toggle}
-          className="md:hidden absolute top-4 left-4 p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+          className={`md:hidden absolute top-4 p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition-colors ${isRtl ? "right-4" : "left-4"}`}
         >
           <FiX className="w-5 h-5" />
         </button>
 
         {/* Header */}
-        <div className="p-6 border-b border-white/10">
-          <h2 className="text-xl font-black text-white/90 tracking-tight mb-1">
-            {t("ai.sidebarTitle")}
+        <div className="px-4 pt-12 pb-4">
+          <h2 className="text-lg font-black text-white tracking-tight mb-1">
+            {t("sidebarTitle")}
           </h2>
-          <p className="text-xs text-white/50 font-medium lowercase">
+          <p className="text-[10px] text-white/40 font-medium">
             {user?.name || "Guest User"}
           </p>
         </div>
 
         {/* New Chat Button */}
-        <div className="p-4">
+        <div className="px-4 pb-4">
           <button
             onClick={onNewChat}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold transition-all shadow-lg shadow-emerald-500/20 active:scale-95"
+            className="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-400 font-semibold text-sm transition-all shadow-lg shadow-emerald-500/5 active:scale-95"
           >
-            <FiPlus className="w-5 h-5 transition-transform group-hover:rotate-90" />
-            <span className="text-sm">{t("ai.newChat")}</span>
+            <FiPlus className="w-4.5 h-4.5" />
+            <span>{t("newChat")}</span>
           </button>
         </div>
 
         {/* Chat History List - Scrollable */}
-        <div className="flex-1 overflow-y-auto px-4 py-2 space-y-1.5 scrollbar-hide">
-          {chats.map((chat) => (
-            <div
-              key={chat.id}
-              onClick={() => onSelectChat(chat.id)}
-              className="group relative px-5 py-3 rounded-xl cursor-pointer bg-transparent hover:bg-white/5 text-white/60 hover:text-white/90 transition-all duration-300"
-            >
-              <div className="flex items-start gap-3.5">
-                <div className="text-white/40 group-hover:text-white/80">
-                  <FiMessageSquare className="w-4.5 h-4.5" />
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-medium mb-0.5 truncate tracking-wide">
-                    {chat.title}
-                  </p>
-                  <p className="text-[10px] text-white/30">
-                    {new Date(chat.createdAt).toLocaleDateString(i18n.language, {
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </p>
-                </div>
-
-                {/* Delete Button */}
+        <div className="flex-1 overflow-y-auto px-4 scrollbar-hide">
+          <nav className="space-y-1.5">
+            {chats.map((chat) => (
+              <div
+                key={chat.id}
+                onClick={() => onSelectChat(chat.id)}
+                className="group relative"
+              >
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setDeletingChatId(chat.id);
-                  }}
-                  className="p-1.5 rounded-md text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
-                  title={t("ai.deleteChat")}
+                  className={`w-full flex items-center ${isRtl ? "flex-row-reverse text-right" : "flex-row text-left"} gap-3.5 px-5 py-3 rounded-xl transition-all duration-300 text-white/60 hover:text-white/90 hover:bg-white/5`}
                 >
-                  <FiTrash2 className="w-3.5 h-3.5" />
+                  <FiMessageSquare className="w-4.5 h-4.5 text-white/40 group-hover:text-white/80" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[13px] tracking-wide font-medium truncate">
+                      {chat.title}
+                    </p>
+                    <p className="text-[10px] text-white/30">
+                      {new Date(chat.createdAt).toLocaleDateString(i18n.language, {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </p>
+                  </div>
+
+                  {/* Delete Button */}
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setDeletingChatId(chat.id);
+                    }}
+                    className="p-1.5 rounded-md text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-colors opacity-0 group-hover:opacity-100"
+                    title={t("deleteChat")}
+                  >
+                    <FiTrash2 className="w-3.5 h-3.5" />
+                  </button>
                 </button>
               </div>
-            </div>
-          ))}
+            ))}
+          </nav>
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-white/10 text-center">
+        <div className="p-4 border-t border-white/10 text-center">
           <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest">
-            {t("ai.copyright")}
+            {t("copyright")}
           </p>
         </div>
       </aside>
 
-      {/* Delete Confirmation Modal */}
+      {/* Delete Confirmation Modal - Cleaner design */}
       {deletingChatId !== null && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-zinc-900 border border-white/10 p-6 rounded-2xl shadow-2xl max-w-sm w-full animate-in zoom-in duration-300">
-            <h3 className="text-xl font-bold text-white mb-2">{t("ai.deleteConfirmationTitle")}</h3>
-            <p className="text-white/60 text-sm mb-6">
-              {t("ai.deleteConfirmationDesc")}
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => !isDeleting && setDeletingChatId(null)}
+        >
+          <div
+            className="bg-[#0d0d0d]/95 backdrop-blur-xl border border-white/10 p-6 rounded-2xl shadow-2xl max-w-sm w-full animate-in zoom-in duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-lg font-bold text-white mb-2">{t("delete.title")}</h3>
+            <p className="text-white/60 text-sm mb-6 leading-relaxed">
+              {t("delete.desc")}
             </p>
-            <div className="flex gap-3">
+            <div className={`flex gap-3 ${isRtl ? "flex-row-reverse" : ""}`}>
               <button
                 onClick={() => setDeletingChatId(null)}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-all"
+                disabled={isDeleting}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium transition-all disabled:opacity-50"
               >
-                {t("ai.cancel")}
+                {t("delete.cancel")}
               </button>
               <button
                 onClick={confirmDelete}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium transition-all"
+                disabled={isDeleting}
+                className="flex-1 px-4 py-2.5 rounded-xl bg-red-500/20 hover:bg-red-500/30 border border-red-500/30 hover:border-red-500/50 text-red-400 font-medium transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
-                {t("ai.delete")}
+                {isDeleting && (
+                  <div className="w-4 h-4 border-2 border-red-400/30 border-t-red-400 rounded-full animate-spin" />
+                )}
+                <span>{t("delete.confirm")}</span>
               </button>
             </div>
           </div>

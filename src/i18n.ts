@@ -17,6 +17,12 @@ import profileFr from "./locales/fr/profile.json";
 import discoverEn from "./locales/en/discover.json";
 import discoverAr from "./locales/ar/discover.json";
 import discoverFr from "./locales/fr/discover.json";
+import aiEn from "./locales/en/ai.json";
+import aiAr from "./locales/ar/ai.json";
+import aiFr from "./locales/fr/ai.json";
+import marketplaceEn from "./locales/en/marketplace.json";
+import marketplaceAr from "./locales/ar/marketplace.json";
+import marketplaceFr from "./locales/fr/marketplace.json";
 
 i18n
   .use(LanguageDetector)
@@ -33,21 +39,27 @@ i18n
         home: homeEn,
         sidebar: sidebarEn,
         profile: profileEn,
-        discover: discoverEn
+        discover: discoverEn,
+        ai: aiEn,
+        marketplace: marketplaceEn
       },
       ar: {
         translation: ar,
         home: homeAr,
         sidebar: sidebarAr,
         profile: profileAr,
-        discover: discoverAr
+        discover: discoverAr,
+        ai: aiAr,
+        marketplace: marketplaceAr
       },
       fr: {
         translation: fr,
         home: homeFr,
         sidebar: sidebarFr,
         profile: profileFr,
-        discover: discoverFr
+        discover: discoverFr,
+        ai: aiFr,
+        marketplace: marketplaceFr
       },
     },
   });

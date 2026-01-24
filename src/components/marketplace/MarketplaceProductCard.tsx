@@ -20,7 +20,7 @@ export default function MarketplaceProductCard({
     onClick,
     onStoreClick,
 }: Props) {
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation(["marketplace", "translation"]);
     const direction = i18n.dir();
     const { addToCart, cartItems } = useCart();
     const { isAuthenticated } = useAuth();
@@ -47,10 +47,6 @@ export default function MarketplaceProductCard({
         togglingFavorite
     } = useStoreSocialStatus(product.store.id);
 
-    // Calculate how many of this product are in the cart
-    const cartItem = cartItems.find((item) => item.id === product.id);
-    const inCartCount = cartItem?.quantity ?? 0;
-
     const handleStoreClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         onStoreClick();
@@ -64,11 +60,11 @@ export default function MarketplaceProductCard({
     return (
         <div
             onClick={onClick}
-            className="group bg-[#FBF7EF] rounded-2xl md:rounded-[2rem] border border-[#E6DFC6] shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col overflow-hidden cursor-pointer h-full"
+            className="group bg-white/70 backdrop-blur-md rounded-xl border border-[#E6DFC6]/50 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden cursor-pointer h-full"
             dir={direction}
         >
             {/* Image Section */}
-            <div className="relative aspect-[4/5] overflow-hidden bg-white">
+            <div className="relative h-48 md:h-52 overflow-hidden bg-white">
                 <img
                     src={product.image}
                     className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${isSoldOut ? "grayscale opacity-50" : ""}`}
@@ -96,7 +92,7 @@ export default function MarketplaceProductCard({
             </div>
 
             {/* Info Section */}
-            <div className="p-3 md:p-6 flex flex-col flex-grow">
+            <div className="p-3 flex flex-col flex-grow">
                 {/* Store Info */}
                 <div className="flex items-center justify-between mb-2 md:mb-4">
                     <button
@@ -124,27 +120,24 @@ export default function MarketplaceProductCard({
                         disabled={togglingFollow}
                         className={`text-[8px] md:text-[10px] font-bold transition-colors shrink-0 ${isFollowed ? "text-emerald-600" : "text-[#CDA15A] hover:text-[#B88A42]"}`}
                     >
-                        {isFollowed ? t("marketplace.following") : t("marketplace.follow")}
+                        {isFollowed ? t("following") : t("follow")}
                     </button>
                 </div>
 
                 {/* Name & Description */}
-                <div className="flex flex-col gap-0.5 md:gap-1 mb-3 md:mb-6">
-                    <h3 className="text-sm md:text-xl font-bold text-[#2f5c3f] leading-tight line-clamp-1">
+                <div className="flex flex-col gap-0.5 md:gap-1 mb-3">
+                    <h3 className="text-sm md:text-base font-semibold text-[#2f5c3f] leading-tight line-clamp-2">
                         {product.name}
                     </h3>
-                    <p className="hidden md:block text-xs text-[#2f5c3f]/60 line-clamp-2 min-h-[32px]">
-                        {product.shortDescription || product.description}
-                    </p>
-                    <p className="md:hidden text-[10px] text-[#2f5c3f]/60 line-clamp-1">
+                    <p className="text-xs text-[#2f5c3f]/70 line-clamp-1">
                         {product.shortDescription || product.description}
                     </p>
                 </div>
 
                 {/* Price & Action */}
-                <div className="mt-auto pt-2 md:pt-4 border-t border-[#E6DFC6]/50 flex items-center justify-between">
+                <div className="mt-auto pt-3 border-t border-[#E6DFC6]/50 flex items-center justify-between">
                     <div className="flex flex-col">
-                        <span className="text-[7px] md:text-[10px] font-bold text-[#2f5c3f]/40 uppercase tracking-widest leading-none mb-0.5 md:mb-1">{t("marketplace.price")}</span>
+                        <span className="text-[7px] md:text-[10px] font-bold text-[#2f5c3f]/40 uppercase tracking-widest leading-none mb-0.5 md:mb-1">{t("price")}</span>
                         <span className="text-base md:text-2xl font-black text-[#2f5c3f]">
                             {product.price}<span className={`text-[10px] md:text-sm ${direction === 'rtl' ? 'mr-0.5' : 'ml-0.5'}`}>₪</span>
                         </span>
@@ -158,17 +151,10 @@ export default function MarketplaceProductCard({
                                 ? "bg-gray-100 text-gray-300 cursor-not-allowed"
                                 : "bg-[#2f5c3f] text-white hover:bg-[#274b34] hover:shadow-md active:scale-90"
                                 }`}
-                            title={t("marketplace.addToCart")}
+                            title={t("addToCart")}
                         >
                             <FiShoppingCart size={16} className="md:w-5 md:h-5" />
                         </button>
-
-                        {/* Item-specific numeric badge */}
-                        {inCartCount > 0 && (
-                            <span className={`absolute -top-1.5 ${direction === 'rtl' ? '-left-1.5' : '-right-1.5'} w-5 h-5 md:w-6 md:h-6 bg-red-500 text-white text-[9px] md:text-[10px] font-black rounded-full flex items-center justify-center border-2 border-[#FBF7EF] shadow-lg animate-in zoom-in duration-300`}>
-                                {inCartCount}
-                            </span>
-                        )}
                     </div>
                 </div>
             </div>

@@ -41,7 +41,7 @@ export default function ProductHeroSection({
   onBuyNow,
 }: Props) {
   const { user } = useAuth();
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("marketplace");
   const isRtl = i18n.language === "ar";
 
   const [quantity, setQuantity] = useState(1);
@@ -68,26 +68,26 @@ export default function ProductHeroSection({
     >
       <ProductImage image={image} badge={badge} badges={badges} name={name} />
 
-      <div className="flex flex-col gap-4 md:gap-6">
-        <div className="space-y-2 md:space-y-3">
-          <h1 className="text-xl md:text-2xl lg:text-3xl font-black text-white tracking-tight uppercase leading-snug">
+      <div className="flex flex-col gap-3 md:gap-4">
+        <div className="space-y-1.5 md:space-y-2">
+          <h1 className="text-lg md:text-xl lg:text-2xl font-black text-white tracking-tight uppercase leading-snug">
             {name}
           </h1>
           {shortDescription && (
-            <p className="text-white/40 text-xs md:text-sm leading-relaxed max-w-lg font-medium">
+            <p className="text-white/40 text-[10px] md:text-xs leading-relaxed max-w-lg font-medium">
               {shortDescription}
             </p>
           )}
         </div>
 
-        <div className={`flex items-center gap-4 ${isRtl ? "flex-row-reverse" : ""}`}>
-          <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={16} />
-          <div className="h-4 w-px bg-white/10" />
+        <div className={`flex items-center gap-3 ${isRtl ? "flex-row-reverse" : ""}`}>
+          <StarRating rating={avgRating} reviewsCount={reviewsCount} showText size={14} />
+          <div className="h-3 w-px bg-white/10" />
           <ProductPrice price={price} />
         </div>
 
-        <div className="space-y-4 bg-white/5 rounded-2xl p-4 md:p-6 border border-white/5 shadow-inner backdrop-blur-sm">
-          <div className={`flex items-center justify-between gap-4 ${isRtl ? "flex-row-reverse" : ""}`}>
+        <div className="space-y-3 bg-white/5 rounded-xl p-3 md:p-5 border border-white/5 shadow-inner backdrop-blur-sm">
+          <div className={`flex items-center justify-between gap-3 ${isRtl ? "flex-row-reverse" : ""}`}>
             <StockStatus stock={stock} />
             <QuantitySelector
               quantity={quantity}
@@ -107,13 +107,13 @@ export default function ProductHeroSection({
 
           {/* Report Button - Visible for users and sellers, hidden for admins */}
           {user && !user.isAdmin && (
-            <div className="pt-2 border-t border-white/5 mt-4">
+            <div className="pt-1.5 border-t border-white/5 mt-2">
               <button
                 onClick={() => setIsReportModalOpen(true)}
-                className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/30 hover:text-red-400 transition-all group ${isRtl ? "flex-row-reverse" : ""}`}
+                className={`flex items-center gap-2 text-[8px] font-black uppercase tracking-[0.2em] text-white/20 hover:text-red-400 transition-all group ${isRtl ? "flex-row-reverse" : ""}`}
               >
-                <FiFlag size={12} className="group-hover:scale-110 transition-transform" />
-                {t("marketplace.product.reportProduct")}
+                <FiFlag size={10} className="group-hover:scale-110 transition-transform" />
+                {t("product.reportProduct")}
               </button>
             </div>
           )}

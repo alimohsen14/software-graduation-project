@@ -158,11 +158,20 @@ function AIPageContent({
     }
   }
 
+  const messagesEndRef = React.useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when messages change
+  React.useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   if (!user) return null;
 
   return (
-    <div dir={direction} className="flex h-full w-full overflow-hidden bg-transparent">
-      {/* Sidebar - Positioned fixed within AISidebar */}
+    <div dir={direction} className="flex h-screen overflow-hidden bg-transparent">
+      {/* Sidebar - Can overlay above chat area */}
       <AISidebar
         isOpen={isAISidebarOpen}
         toggle={toggleAISidebar || (() => { })}
@@ -172,12 +181,12 @@ function AIPageContent({
         onDeleteChat={handleDeleteChatLogic}
       />
 
-      {/* Main Chat Area - Occupies full width, content is centered */}
-      <main className="flex-1 flex flex-col h-full relative overflow-hidden">
+      {/* Main Chat Area - Flex column with internal scrolling */}
+      <main className="flex-1 flex flex-col h-full relative">
         {/* Hamburger Button - Mobile/Tablet Only */}
         <button
           onClick={toggleAISidebar}
-          className={`lg:hidden fixed top-24 z-30 p-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white/90 hover:text-white hover:bg-white/20 transition-all shadow-2xl active:scale-95
+          className={`lg:hidden fixed top-20 md:top-24 z-30 p-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/20 text-white/90 hover:text-white hover:bg-white/20 transition-all shadow-2xl active:scale-95
             ${direction === "rtl" ? "left-6" : "right-6"}
           `}
         >
@@ -186,9 +195,9 @@ function AIPageContent({
           </svg>
         </button>
 
-        {/* Scrollable Messages Container */}
+        {/* Scrollable Messages Container - ONLY this scrolls */}
         <div className="flex-1 overflow-y-auto scrollbar-hide scroll-smooth">
-          <div className="max-w-[760px] w-full mx-auto px-4 pt-12 pb-10">
+          <div className="max-w-[760px] w-full mx-auto px-4 pt-20 md:pt-24 pb-6">
             {messages.length === 0 ? (
               // Welcome State
               <div className="space-y-8 py-10">
@@ -206,15 +215,17 @@ function AIPageContent({
                 {messages.map((m) => (
                   <AIMessageBubble key={m.id} message={m} />
                 ))}
+                {/* Scroll anchor */}
+                <div ref={messagesEndRef} />
               </div>
             )}
           </div>
         </div>
 
-        {/* Input Bar - Always visible at bottom, flex-none to prevent shrinking */}
-        <div className="flex-none p-4 pb-8 bg-gradient-to-t from-black/60 to-transparent">
-          <div className="max-w-[760px] w-full mx-auto">
-            <div className="bg-white/5 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.5)] overflow-hidden focus-within:border-emerald-500/50 transition-all">
+        {/* Sticky Input Bar - Glass design, stays at bottom of chat area */}
+        <div className="sticky bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black/70 via-black/40 to-transparent backdrop-blur-xl border-t border-white/10">
+          <div className="max-w-[760px] w-full mx-auto px-4 py-3">
+            <div className="bg-black/35 backdrop-blur-2xl rounded-2xl border border-white/10 shadow-lg overflow-hidden focus-within:border-emerald-500/30 transition-all">
               <AIChatInput
                 value={input}
                 onChange={setInput}
@@ -226,8 +237,8 @@ function AIPageContent({
               />
             </div>
             {/* Disclaimer */}
-            <p className="text-[10px] text-white/20 text-center mt-3 uppercase tracking-[0.2em] font-bold">
-              Palestine3D AI Assistant • v1.0 • 🍉
+            <p className="text-[9px] text-white/10 text-center mt-2 uppercase tracking-[0.2em] font-bold">
+              Palestine3D AI • v1.0 • 🍉
             </p>
           </div>
         </div>
@@ -237,7 +248,7 @@ function AIPageContent({
 }
 
 export default function PalestineAIPage() {
-  const [isAiSidebarOpen, setAiSidebarOpen] = useState(false);
+  const [isAiSidebarOpen, setAiSidebarOpen] = useState(true); // Start visible by default
 
   return (
     <DashboardLayout

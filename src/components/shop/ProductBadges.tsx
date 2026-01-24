@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function ProductBadges({ badges = [], showLowStock = true }: Props) {
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation("marketplace");
     const isRtl = i18n.language === "ar";
 
     if (!badges || badges.length === 0) return null;
@@ -23,7 +23,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isSoldOut) {
             return (
                 <span className="bg-[#6B7280] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    {t("badges.soldOut")}
+                    {t("marketplace.badges.soldOut")}
                 </span>
             );
         }
@@ -31,7 +31,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isHot && isBestSeller) {
             return (
                 <span className="bg-gradient-to-r from-[#F59E0B] to-[#EF4444] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    🔥 {t("badges.bestSeller")}
+                    🔥 {t("marketplace.badges.bestSeller")}
                 </span>
             );
         }
@@ -39,7 +39,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isBestSeller) {
             return (
                 <span className="bg-[#F59E0B] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    {t("badges.bestSeller")}
+                    {t("marketplace.badges.bestSeller")}
                 </span>
             );
         }
@@ -47,7 +47,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isHot) {
             return (
                 <span className="bg-[#EF4444] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    🔥 {t("badges.hot")}
+                    🔥 {t("marketplace.badges.hot")}
                 </span>
             );
         }
@@ -55,7 +55,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
         if (isNew) {
             return (
                 <span className="bg-[#10B981] text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm">
-                    {t("badges.new")}
+                    {t("marketplace.badges.new")}
                 </span>
             );
         }
@@ -69,7 +69,7 @@ export default function ProductBadges({ badges = [], showLowStock = true }: Prop
 
             {showLowStock && isLowStock && !isSoldOut && (
                 <span className="bg-[#FEF3C7] text-[#92400E] text-xs font-semibold px-3 py-1 rounded-full shadow-sm">
-                    {t("badges.lowStock")}
+                    {t("marketplace.badges.lowStock")}
                 </span>
             )}
         </div>

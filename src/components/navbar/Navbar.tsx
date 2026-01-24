@@ -51,7 +51,7 @@ export default function Navbar({
 
 
       <div className="w-full px-4 md:px-10">
-        <div className="h-14 md:h-20 flex items-center justify-between">
+        <div className="h-14 md:h-16 flex items-center justify-between">
 
           <div className="flex items-center gap-2 md:gap-4">
             <button

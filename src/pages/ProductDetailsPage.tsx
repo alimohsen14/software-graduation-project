@@ -16,13 +16,13 @@ export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("marketplace");
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
 
   const handleAuthAction = (action: () => void) => {
     if (!isAuthenticated) {
-      toast.info(t("auth.loginRequired") || "Please login to continue");
+      toast.info(t("product.loginRequired") || "Please login to continue");
       navigate("/login", { state: { from: location } });
       return;
     }
@@ -92,7 +92,7 @@ export default function ProductDetailsPage() {
     return (
       <DashboardLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <p className="text-[#6B7280] text-base">{t("marketplace.loadingProduct")}</p>
+          <p className="text-white/40 text-sm font-black uppercase tracking-[0.3em]">{t("product.loading")}</p>
         </div>
       </DashboardLayout>
     );
@@ -102,7 +102,7 @@ export default function ProductDetailsPage() {
     return (
       <DashboardLayout>
         <div className="min-h-screen flex items-center justify-center">
-          <p className="text-[#6B7280] text-base">{t("marketplace.productNotFound")}</p>
+          <p className="text-white/40 text-sm font-black uppercase tracking-[0.3em]">{t("product.notFound")}</p>
         </div>
       </DashboardLayout>
     );
@@ -110,15 +110,15 @@ export default function ProductDetailsPage() {
 
   return (
     <DashboardLayout>
-      <div className="w-full min-h-screen py-4 md:py-8 px-4 sm:px-6 animate-in fade-in duration-700" dir={isRtl ? "rtl" : "ltr"}>
-        <div className="max-w-6xl mx-auto">
+      <div className="w-full min-h-screen py-4 md:py-6 px-4 sm:px-6 animate-in fade-in duration-700" dir={isRtl ? "rtl" : "ltr"}>
+        <div className="max-w-5xl mx-auto">
           {/* Back Button */}
           <button
             onClick={() => navigate(-1)}
-            className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-white/30 hover:text-white mb-6 transition-all group ${isRtl ? "flex-row-reverse" : ""}`}
+            className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.3em] text-white/30 hover:text-white mb-4 transition-all group ${isRtl ? "flex-row-reverse" : ""}`}
           >
             <FiArrowLeft size={14} className={`${isRtl ? "rotate-180 group-hover:translate-x-1" : "group-hover:-translate-x-1"} transition-transform`} />
-            {t("marketplace.backToMarket")}
+            {t("product.backToMarket")}
           </button>
 
           {/* Added to Cart Toast */}
@@ -128,39 +128,39 @@ export default function ProductDetailsPage() {
                 <FiCheck size={14} />
               </div>
               <div className="flex flex-col">
-                <span className="text-[9px] font-black uppercase tracking-widest opacity-50">{t("marketplace.updated")}</span>
-                <span className="text-xs font-bold">{t("marketplace.addedToCartToast")}</span>
+                <span className="text-[9px] font-black uppercase tracking-widest opacity-50">{t("product.updated")}</span>
+                <span className="text-xs font-bold">{t("product.addedToCartToast")}</span>
               </div>
             </div>
           )}
 
-          <div className="flex flex-col gap-4 md:gap-6">
+          <div className="flex flex-col gap-3 md:gap-4">
             {/* 1. Store/Header Section - Compact Card */}
             {product.store && (
-              <div className={`bg-black/40 backdrop-blur-xl rounded-2xl p-4 md:p-5 border border-white/10 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden group ${isRtl ? "md:flex-row-reverse" : ""}`}>
+              <div className={`bg-black/40 backdrop-blur-xl rounded-xl p-3 md:p-4 border border-white/10 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden group ${isRtl ? "md:flex-row-reverse" : ""}`}>
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
 
                 <button
                   onClick={() => navigate(`/store/${product.store?.id}`)}
                   className={`flex items-center gap-3 group/store relative z-10 ${isRtl ? "flex-row-reverse text-right" : ""}`}
                 >
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl overflow-hidden bg-white/5 border border-white/10 group-hover/store:border-emerald-500/30 transition-all">
+                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg overflow-hidden bg-white/5 border border-white/10 group-hover/store:border-emerald-500/30 transition-all">
                     {product.store.logo ? (
                       <img src={product.store.logo} alt={product.store.name} className="w-full h-full object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-white/20">
-                        <FiShoppingBag size={20} />
+                        <FiShoppingBag size={18} />
                       </div>
                     )}
                   </div>
                   <div className={`flex flex-col gap-0.5 ${isRtl ? "items-end" : "items-start"}`}>
-                    <span className="text-[8px] font-black uppercase tracking-widest text-emerald-500/40">{t("marketplace.verifiedSeller")}</span>
+                    <span className="text-[7px] font-black uppercase tracking-widest text-emerald-500/40">{t("store.verifiedStore")}</span>
                     <div className={`flex items-center gap-2 ${isRtl ? "flex-row-reverse" : ""}`}>
-                      <h2 className="text-base md:text-lg font-black text-white group-hover/store:text-emerald-400 transition-colors uppercase tracking-tight">
+                      <h2 className="text-sm md:text-base font-black text-white group-hover/store:text-emerald-400 transition-colors uppercase tracking-tight">
                         {product.store.name}
                       </h2>
                       {product.store.isOfficial && (
-                        <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full text-[8px] font-black uppercase">{t("marketplace.official")}</span>
+                        <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded-full text-[7px] font-black uppercase">{t("official")}</span>
                       )}
                     </div>
                   </div>
@@ -170,29 +170,29 @@ export default function ProductDetailsPage() {
                   <button
                     onClick={() => handleAuthAction(toggleFollow)}
                     disabled={togglingFollow}
-                    className={`flex-1 md:flex-none h-10 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all border ${isFollowed
+                    className={`flex-1 md:flex-none h-9 px-3 rounded-lg text-[8px] font-black uppercase tracking-widest transition-all border ${isFollowed
                       ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-lg shadow-emerald-500/10"
                       : "bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:text-white"
                       }`}
                   >
-                    {isFollowed ? t("marketplace.following") : t("marketplace.follow")}
+                    {isFollowed ? t("following") : t("follow")}
                   </button>
                   <button
                     onClick={() => handleAuthAction(toggleFavorite)}
                     disabled={togglingFavorite}
-                    className={`flex-1 md:flex-none h-10 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all border ${isFavorited
+                    className={`flex-1 md:flex-none h-9 px-3 rounded-lg text-[8px] font-black uppercase tracking-widest transition-all border ${isFavorited
                       ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-lg shadow-emerald-500/10"
                       : "bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:text-white"
                       }`}
                   >
-                    {isFavorited ? t("marketplace.favorited") : t("marketplace.favorite")}
+                    {isFavorited ? t("favorited") : t("favorite")}
                   </button>
                 </div>
               </div>
             )}
 
             {/* 2. Primary Product HeroSection */}
-            <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-4 md:p-8 border border-white/10 shadow-2xl relative overflow-hidden">
+            <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 md:p-6 border border-white/10 shadow-xl relative overflow-hidden">
               <ProductHeroSection
                 id={product.id}
                 name={translatedName}
@@ -210,18 +210,37 @@ export default function ProductDetailsPage() {
             </div>
 
             {/* 3. Description Section - Compact Card */}
-            <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-5 md:p-8 border border-white/10 shadow-xl">
+            <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 md:p-6 border border-white/10 shadow-lg">
               <ProductDescription description={translatedFullDescription} />
             </div>
 
             {/* 4. Reviews Section - Compact Card */}
-            <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-5 md:p-8 border border-white/10 shadow-xl">
+            <div className="bg-black/40 backdrop-blur-xl rounded-xl p-4 md:p-6 border border-white/10 shadow-lg mb-4 md:mb-0">
               <ProductReviewsSection
                 productId={product.id}
                 avgRating={product.avgRating}
                 reviewsCount={product.reviewsCount}
                 onMutation={fetchProduct}
               />
+            </div>
+
+            {/* Sticky Mobile Add to Cart */}
+            <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-black/60 backdrop-blur-2xl border-t border-white/10 md:hidden animate-in slide-in-from-bottom duration-500">
+              <div className="max-w-md mx-auto flex items-center gap-3">
+                <div className="flex flex-col">
+                  <span className="text-[7px] font-black text-white/20 uppercase tracking-widest">{t("product.price")}</span>
+                  <span className="text-base font-black text-white tabular-nums">{product.price}<span className="text-emerald-500 text-xs ml-0.5">₪</span></span>
+                </div>
+                <div className="flex-1">
+                  <button
+                    onClick={() => handleBuyNow(1)}
+                    disabled={product.stock === 0}
+                    className="w-full h-11 rounded-lg bg-emerald-600 text-white text-[9px] font-black uppercase tracking-widest shadow-lg shadow-emerald-500/20 active:scale-[0.98] transition-all disabled:opacity-20"
+                  >
+                    {product.stock === 0 ? t("product.outOfStock") : t("product.buyNow")}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
