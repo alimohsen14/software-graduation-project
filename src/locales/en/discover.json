@@ -1,0 +1,22 @@
+{
+    "title": "Explore the Soap Factory World",
+    "subtitle": "Discover the Nablus Soap Factory experience in 3D",
+    "cards": {
+        "marketplace": {
+            "title": "Soap Factory Marketplace",
+            "desc": "Shop products inspired by the traditional Nablus soap industry"
+        },
+        "ai": {
+            "title": "Smart Soap Factory Guide",
+            "desc": "Learn about the soap factory and soap-making process with AI assistance"
+        },
+        "tour3d": {
+            "title": "3D Soap Factory Tour",
+            "desc": "Walk inside the soap factory and explore the soap-making stages interactively"
+        },
+        "archive": {
+            "title": "Soap Industry Archive",
+            "desc": "Documenting the history of soap factories and soap production in Palestine"
+        }
+    }
+}

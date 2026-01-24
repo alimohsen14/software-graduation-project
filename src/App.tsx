@@ -83,14 +83,15 @@ export default function App() {
 
               {/* PROTECTED ROUTES */}
               <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
-              <Route path="/shop" element={<RequireAuth><ShopPage /></RequireAuth>} />
-              <Route path="/shop/product/:id" element={<RequireAuth><ProductDetailsPage /></RequireAuth>} />
-
               <Route path="/orders" element={<RequireAuth><UserOrdersPage /></RequireAuth>} />
               <Route path="/orders/:id" element={<RequireAuth><UserOrderDetailsPage /></RequireAuth>} />
               <Route path="/palestine-ai" element={<RequireAuth><PalestineAIPage /></RequireAuth>} />
-              <Route path="/soap-3d" element={<RequireAuth><Soap3DPage /></RequireAuth>} />
               <Route path="/become-seller" element={<RequireAuth><BecomeSellerPage /></RequireAuth>} />
+
+              {/* PUBLIC SHOP & 3D */}
+              <Route path="/shop" element={<ShopPage />} />
+              <Route path="/shop/product/:id" element={<ProductDetailsPage />} />
+              <Route path="/soap-3d" element={<Soap3DPage />} />
 
               {/* ADMIN */}
               <Route path="/admin/market" element={<RequireAuth><AdminMarketPage /></RequireAuth>} />

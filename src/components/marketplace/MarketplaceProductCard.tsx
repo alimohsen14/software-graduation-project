@@ -5,6 +5,9 @@ import { useStoreSocialStatus } from "../../hooks/useStoreSocialStatus";
 import StockWarningBox from "../shop/StockWarningBox";
 import { useCart } from "../../context/CartContext";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 type Props = {
     product: MarketplaceProduct;
@@ -20,7 +23,21 @@ export default function MarketplaceProductCard({
     const { t, i18n } = useTranslation();
     const direction = i18n.dir();
     const { addToCart, cartItems } = useCart();
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const isSoldOut = product.badges?.includes("SOLD_OUT") ?? false;
+
+    const handleAuthAction = (action: () => void) => {
+        if (!isAuthenticated) {
+            toast.info(t("auth.loginRequired") || "Please login to continue");
+            navigate("/login", { state: { from: location } });
+            return;
+        }
+        action();
+    };
+
     const {
         isFollowed,
         isFavorited,
@@ -41,7 +58,7 @@ export default function MarketplaceProductCard({
 
     const handleAddToCart = (e: React.MouseEvent) => {
         e.stopPropagation();
-        addToCart(product, 1, false);
+        handleAuthAction(() => addToCart(product, 1, false));
     };
 
     return (
@@ -60,7 +77,7 @@ export default function MarketplaceProductCard({
 
                 {/* Heart Icon (Top Right/Left) */}
                 <button
-                    onClick={(e) => { e.stopPropagation(); toggleFavorite(); }}
+                    onClick={(e) => { e.stopPropagation(); handleAuthAction(toggleFavorite); }}
                     disabled={togglingFavorite}
                     className={`absolute top-2 ${direction === 'rtl' ? 'left-2' : 'right-2'} md:top-4 ${direction === 'rtl' ? 'md:left-4' : 'md:right-4'} w-8 h-8 md:w-11 md:h-11 rounded-full flex items-center justify-center backdrop-blur-md transition-all shadow-md z-10 ${isFavorited
                         ? "bg-red-500 text-white"
@@ -103,7 +120,7 @@ export default function MarketplaceProductCard({
                     </button>
 
                     <button
-                        onClick={(e) => { e.stopPropagation(); toggleFollow(); }}
+                        onClick={(e) => { e.stopPropagation(); handleAuthAction(toggleFollow); }}
                         disabled={togglingFollow}
                         className={`text-[8px] md:text-[10px] font-bold transition-colors shrink-0 ${isFollowed ? "text-emerald-600" : "text-[#CDA15A] hover:text-[#B88A42]"}`}
                     >

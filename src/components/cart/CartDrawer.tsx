@@ -4,10 +4,26 @@ import { useCart } from "../../context/CartContext";
 import CheckoutModal from "../checkout/CheckoutModal";
 import { createOrder, mockPayment } from "../../services/order.service";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function CartDrawer() {
     const { t, i18n } = useTranslation();
     const isRtl = i18n.language === "ar";
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleCheckoutClick = () => {
+        if (!isAuthenticated) {
+            toast.info(t("auth.loginRequired") || "Please login to continue");
+            navigate("/login", { state: { from: location } });
+            closeCart();
+            return;
+        }
+        setIsCheckoutOpen(true);
+    };
 
     const {
         cartItems,
@@ -246,7 +262,7 @@ export default function CartDrawer() {
 
                                         <button
                                             className="w-full py-5 md:py-6 bg-emerald-600/20 text-emerald-400 border border-emerald-500/20 rounded-xl md:rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] hover:bg-emerald-600/30 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)] active:scale-[0.98] transition-all shadow-2xl relative overflow-hidden group/checkout"
-                                            onClick={() => setIsCheckoutOpen(true)}
+                                            onClick={handleCheckoutClick}
                                         >
                                             <span className="relative z-10">{t("marketplace.cart.checkout")}</span>
                                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover/checkout:translate-x-full transition-transform duration-1000" />

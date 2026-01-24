@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   FiUser,
   FiCpu,
@@ -16,6 +16,7 @@ import {
 import type { IconType } from "react-icons";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -45,7 +46,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
     { key: "AI", label: t("aiSystem"), Icon: FiCpu, path: "/palestine-ai" },
     { key: "Marketplace", label: t("marketplace"), Icon: FiShoppingBag, path: "/marketplace" },
     { key: "Library", label: t("heritageLibrary"), Icon: FiBook, path: "/heritage" },
-    { key: "3D", label: t("module3d"), Icon: FiBox, path: "/3d-module" },
+    { key: "3D", label: t("module3d"), Icon: FiBox, path: "/soap-3d" },
   ];
 
   const adminItems: SidebarItem[] = [
@@ -67,7 +68,19 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
     touchStartX.current = null;
   }
 
+  const location = useLocation();
+  const { isAuthenticated } = useAuth();
+
   const handleNavigation = (key: string, path: string) => {
+    const protectedPaths = ["/profile", "/orders", "/palestine-ai", "/settings"];
+    const isProtected = protectedPaths.some(p => path.startsWith(p));
+
+    if (isProtected && !isAuthenticated) {
+      toast.info(t("auth.loginRequired") || "Please login to continue");
+      navigate("/login", { state: { from: location } });
+      return;
+    }
+
     setActive(key);
     navigate(path);
     closeSidebar();

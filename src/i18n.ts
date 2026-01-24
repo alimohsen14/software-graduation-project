@@ -11,6 +11,12 @@ import homeFr from "./locales/fr/home.json";
 import sidebarEn from "./locales/en/sidebar.json";
 import sidebarAr from "./locales/ar/sidebar.json";
 import sidebarFr from "./locales/fr/sidebar.json";
+import profileEn from "./locales/en/profile.json";
+import profileAr from "./locales/ar/profile.json";
+import profileFr from "./locales/fr/profile.json";
+import discoverEn from "./locales/en/discover.json";
+import discoverAr from "./locales/ar/discover.json";
+import discoverFr from "./locales/fr/discover.json";
 
 i18n
   .use(LanguageDetector)
@@ -25,17 +31,23 @@ i18n
       en: {
         translation: en,
         home: homeEn,
-        sidebar: sidebarEn
+        sidebar: sidebarEn,
+        profile: profileEn,
+        discover: discoverEn
       },
       ar: {
         translation: ar,
         home: homeAr,
-        sidebar: sidebarAr
+        sidebar: sidebarAr,
+        profile: profileAr,
+        discover: discoverAr
       },
       fr: {
         translation: fr,
         home: homeFr,
-        sidebar: sidebarFr
+        sidebar: sidebarFr,
+        profile: profileFr,
+        discover: discoverFr
       },
     },
   });

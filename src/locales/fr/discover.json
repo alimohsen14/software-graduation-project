@@ -1,0 +1,22 @@
+{
+    "title": "Découvrez le monde de la savonnerie",
+    "subtitle": "Explorez l'expérience de la savonnerie de Naplouse en 3D",
+    "cards": {
+        "marketplace": {
+            "title": "Marché de la savonnerie",
+            "desc": "Achetez des produits inspirés de la fabrication traditionnelle du savon de Naplouse"
+        },
+        "ai": {
+            "title": "Guide intelligent de la savonnerie",
+            "desc": "Découvrez l'histoire de la savonnerie et la fabrication du savon grâce à l'IA"
+        },
+        "tour3d": {
+            "title": "Visite 3D de la savonnerie",
+            "desc": "Explorez l'intérieur de la savonnerie et découvrez les étapes de fabrication du savon"
+        },
+        "archive": {
+            "title": "Archives de l'industrie du savon",
+            "desc": "Documentation de l'histoire des savonneries et de la production du savon en Palestine"
+        }
+    }
+}

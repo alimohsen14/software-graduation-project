@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import DashboardLayout from "../components/layout/DashboardLayout";
 import ProductHeroSection from "../components/shop/product-details/ProductHeroSection";
 import ProductDescription from "../components/shop/product-details/ProductDescription";
@@ -9,12 +9,25 @@ import { FiArrowLeft, FiCheck, FiShoppingBag, FiPlus, FiHeart } from "react-icon
 import { useCart } from "../context/CartContext";
 import { useStoreSocialStatus } from "../hooks/useStoreSocialStatus";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 export default function ProductDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const { t, i18n } = useTranslation();
   const { addToCart } = useCart();
+  const { isAuthenticated } = useAuth();
+
+  const handleAuthAction = (action: () => void) => {
+    if (!isAuthenticated) {
+      toast.info(t("auth.loginRequired") || "Please login to continue");
+      navigate("/login", { state: { from: location } });
+      return;
+    }
+    action();
+  };
 
   const [product, setProduct] = useState<Product | null>(null);
   const isRtl = i18n.language === "ar";
@@ -61,14 +74,18 @@ export default function ProductDetailsPage() {
 
   const handleAddToCart = (quantity: number) => {
     if (!product) return;
-    addToCart(product, quantity, false); // Silent add
-    setAddedToCartToast(true);
-    setTimeout(() => setAddedToCartToast(false), 2000);
+    handleAuthAction(() => {
+      addToCart(product, quantity, false); // Silent add
+      setAddedToCartToast(true);
+      setTimeout(() => setAddedToCartToast(false), 2000);
+    });
   };
 
   const handleBuyNow = (quantity: number) => {
     if (!product) return;
-    addToCart(product, quantity, true); // Add and Open
+    handleAuthAction(() => {
+      addToCart(product, quantity, true); // Add and Open
+    });
   };
 
   if (loading) {
@@ -151,7 +168,7 @@ export default function ProductDetailsPage() {
 
                 <div className={`flex items-center gap-2 relative z-10 ${isRtl ? "flex-row-reverse" : ""}`}>
                   <button
-                    onClick={toggleFollow}
+                    onClick={() => handleAuthAction(toggleFollow)}
                     disabled={togglingFollow}
                     className={`flex-1 md:flex-none h-10 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all border ${isFollowed
                       ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-lg shadow-emerald-500/10"
@@ -161,7 +178,7 @@ export default function ProductDetailsPage() {
                     {isFollowed ? t("marketplace.following") : t("marketplace.follow")}
                   </button>
                   <button
-                    onClick={toggleFavorite}
+                    onClick={() => handleAuthAction(toggleFavorite)}
                     disabled={togglingFavorite}
                     className={`flex-1 md:flex-none h-10 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all border ${isFavorited
                       ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-lg shadow-emerald-500/10"

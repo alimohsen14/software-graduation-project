@@ -12,12 +12,16 @@ import { toast } from "react-toastify";
 
 interface AuthContextType {
     user: User | null | undefined;
+    isAuthenticated: boolean;
+    isLoading: boolean;
     refreshUser: () => Promise<User | null>;
     logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
     user: undefined,
+    isAuthenticated: false,
+    isLoading: true,
     refreshUser: async () => null,
     logout: async () => { },
 });
@@ -182,7 +186,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     return (
-        <AuthContext.Provider value={{ user, refreshUser, logout }}>
+        <AuthContext.Provider value={{
+            user,
+            isAuthenticated: !!user,
+            isLoading: user === undefined,
+            refreshUser,
+            logout
+        }}>
             {children}
         </AuthContext.Provider>
     );

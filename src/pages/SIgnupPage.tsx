@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
 import AuthLayout from "../components/auth/AuthLayout";
 import { FiUser, FiMail, FiMapPin, FiCalendar, FiLock, FiArrowRight } from "react-icons/fi";
-import { COUNTRIES } from "../data/countries";
+import { COUNTRIES } from "../constants/countries";
 
 export function SignupPage() {
   const navigate = useNavigate();

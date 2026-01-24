@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { login } from "../services/authService";
 import { useAuth } from "../context/AuthContext";
 import { useTranslation } from "react-i18next";
@@ -13,8 +13,11 @@ export function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useTranslation();
   const { refreshUser } = useAuth();
+
+  const from = (location.state as any)?.from?.pathname || "/";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +35,7 @@ export function LoginPage() {
       const userData = await refreshUser();
 
       if (userData) {
-        navigate("/", { replace: true });
+        navigate(from, { replace: true });
       } else {
         setError(t("auth.sessionFailing") || "Login successful, but session failing. Please ensure cookies are enabled.");
       }
