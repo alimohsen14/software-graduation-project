@@ -19,7 +19,7 @@ const getApiUrl = () => {
 
     // Otherwise, target the same host on port 3000
     // This handles LAN IPs, Emulator IPs, and custom hostnames
-    return `http://${host}:3000`;
+    return `http://${host}:3000/api`;
 };
 
 const API_URL = getApiUrl();
