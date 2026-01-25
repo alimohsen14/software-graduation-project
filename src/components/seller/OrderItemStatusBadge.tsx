@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { OrderItemStatus } from '../../services/seller.service';
 
 interface OrderItemStatusBadgeProps {
@@ -6,6 +7,7 @@ interface OrderItemStatusBadgeProps {
 }
 
 export default function OrderItemStatusBadge({ status }: OrderItemStatusBadgeProps) {
+    const { t } = useTranslation("seller");
     const getStatusStyles = (status: OrderItemStatus) => {
         switch (status) {
             case 'PENDING_APPROVAL':
@@ -29,7 +31,7 @@ export default function OrderItemStatusBadge({ status }: OrderItemStatusBadgePro
 
     return (
         <span className={`inline-flex items-center px-4 py-1.5 rounded-xl text-[9px] font-black tracking-widest border backdrop-blur-md transition-all duration-300 ${getStatusStyles(status)}`}>
-            {formatStatus(status)}
+            {t(`status.${status}`)}
         </span>
     );
 }

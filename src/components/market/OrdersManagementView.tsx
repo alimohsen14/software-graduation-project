@@ -11,7 +11,7 @@ import { FiLoader, FiInbox } from "react-icons/fi";
 const getService = () => window.location.pathname.startsWith('/admin') ? adminService : sellerService;
 
 export default function OrdersManagementView() {
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation("seller");
     const service = getService();
     const [orders, setOrders] = useState<sellerService.SellerOrder[]>([]);
     const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ export default function OrdersManagementView() {
             setOrders(ordersList);
         } catch (err) {
             console.error("Failed to load orders", err);
-            toast.error(t("seller.orders.failedLoad"));
+            toast.error(t("orders.failedLoad"));
             setOrders([]);
         } finally {
             setLoading(false);
@@ -54,13 +54,13 @@ export default function OrdersManagementView() {
     const handleApprove = async (itemId: number) => {
         const id = Number(itemId);
         if (!id || isNaN(id)) {
-            toast.error(t("seller.orders.invalidItem"));
+            toast.error(t("orders.invalidItem"));
             return;
         }
 
         try {
             await service.approveOrderItem(id);
-            toast.success(t("seller.orders.approved"));
+            toast.success(t("orders.approved"));
 
             // REMOVE ITEM FROM UI: Instant removal
             setOrders((prevOrders: sellerService.SellerOrder[]) =>
@@ -73,7 +73,7 @@ export default function OrdersManagementView() {
             window.dispatchEvent(new Event('seller:refresh-notifications'));
         } catch (err) {
             console.error("Failed to approve item", err);
-            toast.error(t("seller.orders.failedApprove"));
+            toast.error(t("orders.failedApprove"));
         }
     };
 
@@ -82,7 +82,7 @@ export default function OrdersManagementView() {
         if (!id || isNaN(id)) return;
 
         // Find product name for the modal
-        let productName = t("seller.orders.thisItem");
+        let productName = t("orders.thisItem");
         for (const order of orders) {
             const item = order.items.find((i: sellerService.SellerOrderItem) => i.id === id);
             if (item) {
@@ -100,7 +100,7 @@ export default function OrdersManagementView() {
 
         try {
             await service.rejectOrderItem(id, reason.trim());
-            toast.error(t("seller.orders.rejected"), {
+            toast.error(t("orders.rejected"), {
                 icon: "❌" as any,
                 style: { backgroundColor: '#FEF2F2', color: '#991B1B' }
             });
@@ -116,7 +116,7 @@ export default function OrdersManagementView() {
             window.dispatchEvent(new Event('seller:refresh-notifications'));
         } catch (err: any) {
             console.error("Failed to reject item", err);
-            const msg = err.response?.data?.message || t("seller.orders.failedApprove");
+            const msg = err.response?.data?.message || t("orders.failedApprove");
             toast.error(msg);
             throw err;
         }
@@ -130,33 +130,33 @@ export default function OrdersManagementView() {
     const isAr = i18n.language === "ar";
 
     return (
-        <div className={`py-10 px-6 max-w-4xl mx-auto space-y-12 ${isAr ? "text-right" : "text-left"}`}>
+        <div className={`py-10 px-6 max-w-[900px] mx-auto space-y-10 ${isAr ? "text-right" : "text-left"}`}>
             <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-6 ${isAr ? "sm:flex-row-reverse" : ""}`}>
                 <div>
-                    <h1 className="text-4xl font-black text-white tracking-tighter uppercase mb-2">{t("seller.orders.title")}</h1>
-                    <p className="text-white/40 font-bold uppercase tracking-widest text-[10px]">{t("seller.orders.subtitle")}</p>
+                    <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-1">{t("orders.title")}</h1>
+                    <p className="text-white/40 font-bold uppercase tracking-widest text-[9px]">{t("orders.subtitle")}</p>
                 </div>
                 <button
                     onClick={fetchOrders}
                     className="flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl text-[10px] font-black text-white uppercase tracking-widest hover:bg-white/10 transition-all shadow-lg backdrop-blur-md"
                 >
-                    {t("seller.orders.syncQueue")}
+                    {t("orders.syncQueue")}
                 </button>
             </div>
 
             {loading ? (
                 <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl">
                     <div className="w-12 h-12 border-4 border-emerald-500/10 border-t-emerald-500 rounded-full animate-spin"></div>
-                    <p className="mt-6 font-black text-white/20 uppercase tracking-widest text-[10px]">{t("seller.orders.loading")}</p>
+                    <p className="mt-6 font-black text-white/20 uppercase tracking-widest text-[10px]">{t("orders.loading")}</p>
                 </div>
             ) : visibleOrders.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-32 bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/10 shadow-xl text-center">
                     <div className="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center mb-6 text-white/5 border border-white/5 shadow-inner">
                         <FiInbox size={32} />
                     </div>
-                    <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">{t("seller.orders.noOrders")}</h3>
+                    <h3 className="text-xl font-black text-white/40 uppercase tracking-tight">{t("orders.empty")}</h3>
                     <p className="mt-2 font-bold text-white/20 uppercase tracking-widest text-[10px] max-w-xs leading-relaxed">
-                        {t("seller.orders.noOrdersDesc")}
+                        {t("orders.noOrdersDesc")}
                     </p>
                 </div>
             ) : (

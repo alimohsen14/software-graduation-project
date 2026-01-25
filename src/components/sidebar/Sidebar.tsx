@@ -42,7 +42,6 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
   const items: SidebarItem[] = [
     { key: "Home", label: t("home"), Icon: FiHome, path: "/" },
     { key: "Profile", label: t("profile"), Icon: FiUser, path: "/profile" },
-    { key: "Orders", label: t("orders"), Icon: FiBriefcase, path: "/orders" },
     { key: "AI", label: t("aiSystem"), Icon: FiCpu, path: "/palestine-ai" },
     { key: "Marketplace", label: t("marketplace"), Icon: FiShoppingBag, path: "/marketplace" },
     { key: "Library", label: t("heritageLibrary"), Icon: FiBook, path: "/heritage" },
@@ -72,7 +71,7 @@ export default function Sidebar({ isOpen, closeSidebar }: SidebarProps) {
   const { isAuthenticated } = useAuth();
 
   const handleNavigation = (key: string, path: string) => {
-    const protectedPaths = ["/profile", "/orders", "/palestine-ai", "/settings"];
+    const protectedPaths = ["/profile", "/palestine-ai", "/settings"];
     const isProtected = protectedPaths.some(p => path.startsWith(p));
 
     if (isProtected && !isAuthenticated) {

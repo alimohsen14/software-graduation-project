@@ -14,7 +14,7 @@ export default function OrderDetailsModal({
     onClose,
     order
 }: OrderDetailsModalProps) {
-    const { t, i18n } = useTranslation();
+    const { t, i18n } = useTranslation("seller");
     const isAr = i18n.language === "ar";
 
     if (!isOpen || !order) return null;
@@ -24,9 +24,9 @@ export default function OrderDetailsModal({
     // 1. Order Delivery Details (Primary Source)
     // 2. Nested Order Object (Potential Backend Structure)
     // 3. Customer Profile (Fallback for old orders)
-    const displayPhone = order.phone || (order as any).order?.phone || order.customer?.phone || t("seller.orderDetails.na");
-    const displayCity = order.city || (order as any).order?.city || order.customer?.city || t("seller.orderDetails.na");
-    const displayAddress = order.address || (order as any).order?.address || order.customer?.address || t("seller.orderDetails.na");
+    const displayPhone = order.phone || (order as any).order?.phone || order.customer?.phone || t("orderDetails.na");
+    const displayCity = order.city || (order as any).order?.city || order.customer?.city || t("orderDetails.na");
+    const displayAddress = order.address || (order as any).order?.address || order.customer?.address || t("orderDetails.na");
 
     const currentLang = i18n.language === 'ar' ? 'ar-EG' : i18n.language === 'fr' ? 'fr-FR' : 'en-US';
     const formattedDate = new Date(order.createdAt).toLocaleDateString(currentLang, {
@@ -46,8 +46,8 @@ export default function OrderDetailsModal({
                 {/* Header */}
                 <div className={`px-10 py-8 bg-white/5 border-b border-white/5 flex items-center justify-between z-10 shrink-0 ${isAr ? "flex-row-reverse" : ""}`}>
                     <div>
-                        <h3 className="text-2xl font-black tracking-tighter uppercase leading-none">{t("seller.orderDetails.title")}</h3>
-                        <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-2">{t("seller.orderDetails.subtitle")}</p>
+                        <h3 className="text-2xl font-black tracking-tighter uppercase leading-none">{t("orderDetails.title")}</h3>
+                        <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-2">{t("orderDetails.subtitle")}</p>
                     </div>
                     <button
                         onClick={onClose}
@@ -65,9 +65,9 @@ export default function OrderDetailsModal({
                                 <FiUser size={20} />
                             </div>
                             <div className="flex-1">
-                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("seller.orderDetails.entityIdentifier")}</p>
+                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("orderDetails.entityIdentifier")}</p>
                                 <p className="text-sm font-black uppercase tracking-tight leading-none pt-1">
-                                    {order.customer?.name || t("seller.orderDetails.anonymous")}
+                                    {order.customer?.name || t("orderDetails.anonymous")}
                                 </p>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ export default function OrderDetailsModal({
                                 <FiPhone size={20} />
                             </div>
                             <div className="flex-1">
-                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("seller.orderDetails.commProtocol")}</p>
+                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("orderDetails.commProtocol")}</p>
                                 <p className="text-sm font-black uppercase tracking-tight leading-none pt-1">{displayPhone}</p>
                             </div>
                         </div>
@@ -89,7 +89,7 @@ export default function OrderDetailsModal({
                                 <FiMapPin size={20} />
                             </div>
                             <div className="flex-1">
-                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("seller.orderDetails.geographicalSector")}</p>
+                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("orderDetails.geographicalSector")}</p>
                                 <p className="text-sm font-black uppercase tracking-tight leading-none pt-1">{displayCity}</p>
                             </div>
                         </div>
@@ -100,7 +100,7 @@ export default function OrderDetailsModal({
                                 <FiHome size={20} />
                             </div>
                             <div className="flex-1">
-                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("seller.orderDetails.terminalAddress")}</p>
+                                <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("orderDetails.terminalAddress")}</p>
                                 <p className="text-xs font-bold uppercase tracking-widest text-white/60 leading-relaxed pt-1">{displayAddress}</p>
                             </div>
                         </div>
@@ -112,7 +112,7 @@ export default function OrderDetailsModal({
                                     <FiCalendar size={20} />
                                 </div>
                                 <div className="flex-1">
-                                    <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("seller.orderDetails.temporalTimestamp")}</p>
+                                    <p className="text-[10px] text-white/30 font-black uppercase tracking-[0.2em] mb-1">{t("orderDetails.temporalTimestamp")}</p>
                                     <p className="text-sm font-black uppercase tracking-tight text-white/80 pt-1">{formattedDate}</p>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ export default function OrderDetailsModal({
                         onClick={onClose}
                         className="w-full py-5 bg-white/5 text-white/60 border border-white/10 rounded-2xl font-black uppercase tracking-[0.2em] hover:bg-white/10 hover:text-white transition-all shadow-xl active:scale-[0.98] text-[10px]"
                     >
-                        {t("seller.orderDetails.deinitialize")}
+                        {t("orderDetails.deinitialize")}
                     </button>
                 </div>
             </div>

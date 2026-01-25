@@ -23,6 +23,9 @@ import aiFr from "./locales/fr/ai.json";
 import marketplaceEn from "./locales/en/marketplace.json";
 import marketplaceAr from "./locales/ar/marketplace.json";
 import marketplaceFr from "./locales/fr/marketplace.json";
+import sellerEn from "./locales/en/seller.json";
+import sellerAr from "./locales/ar/seller.json";
+import sellerFr from "./locales/fr/seller.json";
 
 i18n
   .use(LanguageDetector)
@@ -41,7 +44,8 @@ i18n
         profile: profileEn,
         discover: discoverEn,
         ai: aiEn,
-        marketplace: marketplaceEn
+        marketplace: marketplaceEn,
+        seller: sellerEn
       },
       ar: {
         translation: ar,
@@ -50,7 +54,8 @@ i18n
         profile: profileAr,
         discover: discoverAr,
         ai: aiAr,
-        marketplace: marketplaceAr
+        marketplace: marketplaceAr,
+        seller: sellerAr
       },
       fr: {
         translation: fr,
@@ -59,7 +64,8 @@ i18n
         profile: profileFr,
         discover: discoverFr,
         ai: aiFr,
-        marketplace: marketplaceFr
+        marketplace: marketplaceFr,
+        seller: sellerFr
       },
     },
   });
