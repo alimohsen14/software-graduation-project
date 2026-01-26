@@ -2,6 +2,7 @@ import "../../styles/cities.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const CITY_BG = "/images/city_main.png";
 const FLAG = "/images/pal-flag.png";
@@ -31,28 +32,32 @@ const CITIES = [
 ];
 
 export default function CitiesPage() {
+    const { t, i18n } = useTranslation("cities");
     const [search, setSearch] = useState("");
     const navigate = useNavigate();
 
-    const filtered = CITIES.filter((c) => c.name.includes(search));
+    const filtered = CITIES.filter((city) =>
+        t(`cities.${city.id}`).toLowerCase().includes(search.toLowerCase())
+    );
 
     return (
         <div
             className="cities-root"
             style={{ backgroundImage: `url(${CITY_BG})` }}
+            dir={i18n.dir()}
         >
             <div className="cities-panel">
 
                 <h1 className="cities-title">
                     <span className="title-wrap">
-                        مدن فلسطين
+                        {t("title")}
                         <img src={FLAG} className="title-flag" alt="Palestine Flag" />
                     </span>
                 </h1>
 
                 <input
                     className="cities-search"
-                    placeholder="ابحث عن مدينة..."
+                    placeholder={t("searchPlaceholder")}
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
@@ -63,10 +68,9 @@ export default function CitiesPage() {
                             key={city.id}
                             className="city-btn"
                             onClick={() => navigate(`/heritage/cities/${city.id}`)}
-
                         >
                             <img src={FLAG} className="city-flag" alt="" />
-                            <span>{city.name}</span>
+                            <span>{t(`cities.${city.id}`)}</span>
                         </button>
                     ))}
                 </div>

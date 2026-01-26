@@ -1,0 +1,27 @@
+{
+    "pageTitle": "Vêtements traditionnels palestiniens",
+    "backButton": "Retour aux traditions",
+    "details": {
+        "titlePrefix": "📜 À propos de ce vêtement",
+        "backButton": "Retour à la liste des vêtements",
+        "homeButton": "Bibliothèque principale",
+        "notFound": "Article non trouvé"
+    },
+    "items": {
+        "embroidered-dress": {
+            "title": "Robe palestinienne brodée",
+            "shortDesc": "Symbole de l'identité palestinienne et de la broderie à la main authentique.",
+            "fullDesc": "La robe palestinienne brodée est l'un des symboles les plus importants du patrimoine palestinien. Ses motifs portent des connotations sociales et culturelles qui expriment l'identité. Les femmes brodaient leurs robes à la main avec des fils de soie colorés, et elle est portée lors d'occasions, de mariages et de fêtes."
+        },
+        "keffiyeh": {
+            "title": "Keffieh palestinien",
+            "shortDesc": "Symbole de la lutte et de l'identité nationale palestinienne.",
+            "fullDesc": "Le keffieh palestinien était utilisé pour se protéger du soleil et de la poussière lors des travaux dans les champs, puis est devenu un symbole de lutte et d'identité. Il est porté aujourd'hui lors d'occasions nationales, de manifestations et d'événements culturels."
+        },
+        "men-clothes": {
+            "title": "Vêtements traditionnels pour hommes",
+            "shortDesc": "Le Qumbas, le Hatta et l'Abaya dans la vie quotidienne et les occasions.",
+            "fullDesc": "Les hommes portaient le Qumbas avec le Hatta ou le Keffieh, et parfois l'Abaya lors d'occasions formelles. Ce vêtement reflète la dignité et la simplicité de la société palestinienne traditionnelle."
+        }
+    }
+}

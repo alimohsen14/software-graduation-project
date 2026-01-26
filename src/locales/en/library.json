@@ -1,0 +1,17 @@
+{
+    "title": "Palestinian Heritage Library",
+    "cards": {
+        "cities": {
+            "title": "Cities and Villages",
+            "subtitle": "Discover our ancient cities and villages"
+        },
+        "industries": {
+            "title": "Palestinian Industries",
+            "subtitle": "Learn about industries and crafts"
+        },
+        "traditions": {
+            "title": "Palestinian Heritage Landmarks",
+            "subtitle": "Discover authentic Palestinian heritage"
+        }
+    }
+}

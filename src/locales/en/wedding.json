@@ -1,0 +1,32 @@
+{
+    "pageTitle": "Stages of a Palestinian Wedding",
+    "backButton": "Back to Traditions",
+    "details": {
+        "titlePrefix": "📜 Heritage Description",
+        "backButton": "Back to Stages",
+        "homeButton": "Main Library",
+        "notFound": "Stage not found"
+    },
+    "items": {
+        "henna": {
+            "title": "Bride's Henna Night",
+            "short": "A special evening for the bride with her friends and family",
+            "description": "Henna night is held before the wedding, where the bride's relatives and friends gather at her family's house. The bride wears the embroidered Palestinian dress, and traditional folk songs are sung.\n\nHenna is engraved on the bride's hands amidst an atmosphere of joy, dancing, and dabke, and sweets and drinks are served to guests. This night is considered a farewell to the bride before she moves to her marital home."
+        },
+        "hammam": {
+            "title": "Groom's Hammam",
+            "short": "A youthful celebration for the groom with his friends",
+            "description": "The groom's hammam is held before the wedding, where his friends and relatives gather. They go to the public bath or gather at a relative's house.\n\nFolk songs are sung, and food and sweets are served. The goal is to raise the groom's morale and introduce him to the atmosphere of joy and celebration."
+        },
+        "feast": {
+            "title": "Wedding Feast",
+            "short": "A large lunch provided by the groom's family for guests",
+            "description": "The groom's family holds a large feast on the wedding day or before it. Animals are slaughtered, and food is prepared in large quantities to feed the villagers and relatives.\n\nThe feast is considered a sign of generosity and joy, and everyone participates without exception, as part of social bonds."
+        },
+        "zaffa": {
+            "title": "Palestinian Zaffa",
+            "short": "A procession to transport the bride with songs and dabke",
+            "description": "The bride leaves her parents' house with a popular Palestinian zaffa. Cars are decorated, traditional songs are sung, and dabkes are performed on the way.\n\nFamily and friends participate in the procession until reaching the marital home or the wedding hall. The zaffa is considered one of the most beautiful and joyful moments of the wedding."
+        }
+    }
+}

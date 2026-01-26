@@ -1,0 +1,27 @@
+{
+    "title": "Villes de Palestine",
+    "searchPlaceholder": "Rechercher une ville...",
+    "cities": {
+        "salfit": "Salfit",
+        "ramallah": "Ramallah",
+        "tulkarm": "Tulkarm",
+        "qalqilya": "Qalqilya",
+        "ramla": "Ramla",
+        "akka": "Acre",
+        "nazareth": "Nazareth",
+        "nablus": "Naplouse",
+        "jenin": "Jénine",
+        "tubas": "Toubas",
+        "haifa": "Haïfa",
+        "tiberias": "Tibériade",
+        "hebron": "Hébron",
+        "jerusalem": "Jérusalem",
+        "jaffa": "Jaffa",
+        "lydd": "Lydda",
+        "gaza": "Gaza",
+        "bethlehem": "Bethléem",
+        "jericho": "Jéricho",
+        "bisan": "Beït Shéan",
+        "safad": "Safed"
+    }
+}

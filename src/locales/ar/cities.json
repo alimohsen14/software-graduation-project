@@ -1,0 +1,27 @@
+{
+    "title": "مدن فلسطين",
+    "searchPlaceholder": "ابحث عن مدينة...",
+    "cities": {
+        "salfit": "سلفيت",
+        "ramallah": "رام الله",
+        "tulkarm": "طولكرم",
+        "qalqilya": "قلقيلية",
+        "ramla": "الرملة",
+        "akka": "عكا",
+        "nazareth": "الناصرة",
+        "nablus": "نابلس",
+        "jenin": "جنين",
+        "tubas": "طوباس",
+        "haifa": "حيفا",
+        "tiberias": "طبريا",
+        "hebron": "الخليل",
+        "jerusalem": "القدس",
+        "jaffa": "يافا",
+        "lydd": "اللد",
+        "gaza": "غزة",
+        "bethlehem": "بيت لحم",
+        "jericho": "أريحا",
+        "bisan": "بيسان",
+        "safad": "صفد"
+    }
+}

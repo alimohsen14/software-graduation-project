@@ -1,17 +1,21 @@
 import "../../styles/industries.css";
-
+import { useTranslation } from "react-i18next";
 import { industriesData } from "../../data/industriesData";
 import IndustryCard from "../../ui/IndustryCard";
 
 const BG = "/images/city_main.png";
 
 export default function IndustriesPage() {
+    const { t } = useTranslation("heritage");
+
     return (
         <div
             className="industries-root"
             style={{ backgroundImage: `url(${BG})` }}
         >
-            <h1 className="industries-title">الصناعات والحرف الفلسطينية</h1>
+            <h1 className="industries-title">
+                {t("heritage:industriesPage.title", "الصناعات والحرف الفلسطينية")}
+            </h1>
 
             <div className="industries-container">
                 <div className="industries-scroll-box">
@@ -19,9 +23,9 @@ export default function IndustriesPage() {
                         {industriesData.map((item, i) => (
                             <IndustryCard
                                 key={i}
-                                title={item.title}
+                                title={t(`heritage:industriesPage.items.${item.id}.title`)}
                                 image={item.image}
-                                text={item.text}
+                                text={t(`heritage:industriesPage.items.${item.id}.text`)}
                             />
                         ))}
                     </div>

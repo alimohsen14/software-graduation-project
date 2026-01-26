@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // ================= Library Card =================
 const LibraryCard = ({
@@ -56,6 +57,7 @@ const LibraryCard = ({
 // ================= Page =================
 export default function HeritageHomePage() {
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation("heritage");
 
     return (
         <div
@@ -67,47 +69,48 @@ export default function HeritageHomePage() {
         >
             <main
                 className="relative z-[2] min-h-screen flex flex-col items-center w-full px-4 md:px-6"
-                dir="rtl"
+                dir={i18n.dir()}
             >
                 {/* ===== Header ===== */}
-                <header className="mt-16 md:mt-[100px] mb-20 md:mb-[120px] text-center">
+                <header className="mt-[130px] mb-[200px] text-center">
                     <h1 className="m-0 text-[#f5e7c6] text-2xl md:text-[clamp(24px,3vw,34px)] drop-shadow-[0_8px_25px_rgba(0,0,0,0.8)] font-bold px-2">
-                        المكتبة التراثية الفلسطينية
+                        {t("title")}
                     </h1>
                 </header>
 
                 {/* ===== Cards Grid ===== */}
                 <section
                     className="
-                        w-full
-                        max-w-[900px]
-                        grid
-                        grid-cols-1
-                        sm:grid-cols-2
-                        md:grid-cols-3
-                        gap-x-[14px]
-                        gap-y-[20px]
-                        mb-[40px]
-                    "
+    w-full
+    max-w-[1000px]
+    grid
+    grid-cols-1
+    md:grid-cols-3
+    gap-x-[50px]
+    gap-y-[30px]
+    mb-[40px]
+    px-30
+    md:px-0
+  "
                 >
                     <LibraryCard
                         image="/images/card-cities.png"
-                        title="المدن والقرى"
-                        subtitle="اكتشف مدننا وقرانا العريقة"
+                        title={t("cards.cities.title")}
+                        subtitle={t("cards.cities.subtitle")}
                         onClick={() => navigate("/heritage/cities")}
                     />
 
                     <LibraryCard
                         image="/images/card-industries.png"
-                        title="الصناعات الفلسطينية"
-                        subtitle="تعرف على الصناعات والحرف"
+                        title={t("cards.industries.title")}
+                        subtitle={t("cards.industries.subtitle")}
                         onClick={() => navigate("/heritage/industries")}
                     />
 
                     <LibraryCard
                         image="/images/card-landmarks.png"
-                        title="العادات والتقاليد الفلسطينية"
-                        subtitle="الأعراس، العزاء، والأعياد في تراثنا الأصيل"
+                        title={t("cards.traditions.title")}
+                        subtitle={t("cards.traditions.subtitle")}
                         onClick={() => navigate("/heritage/traditions")}
                     />
 

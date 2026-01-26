@@ -1,0 +1,17 @@
+{
+    "title": "Bibliothèque du patrimoine palestinien",
+    "cards": {
+        "cities": {
+            "title": "Villes et villages",
+            "subtitle": "Découvrez nos villes et villages ancestraux"
+        },
+        "industries": {
+            "title": "Industries palestiniennes",
+            "subtitle": "Découvrez les industries et l'artisanat"
+        },
+        "traditions": {
+            "title": "Monuments du patrimoine palestinien",
+            "subtitle": "Découvrez le patrimoine palestinien authentique"
+        }
+    }
+}

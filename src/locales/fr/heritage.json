@@ -1,0 +1,51 @@
+{
+    "industriesPage": {
+        "title": "Industries de Palestine",
+        "items": {
+            "embroidery": {
+                "title": "Broderie palestinienne",
+                "text": "L'art de la broderie en Palestine est considéré comme une partie intégrante du patrimoine culturel palestinien, se distinguant par sa diversité, sa beauté et sa précision artistique. Il s'agit d'un moyen d'expression où le savoir-faire artisanal se mêle à la créativité artistique et aux traditions culturelles. Les techniques varient selon les régions et incluent des styles célèbres tels que la « broderie de velours », la « broderie du costume traditionnel » et la « broderie en mosaïque ». Elle est utilisée pour décorer les robes traditionnelles, les abayas, les nappes, les coussins, les mouchoirs et les châles. Ces pièces brodées expriment l'identité culturelle, l'appartenance nationale et le patrimoine palestinien. Cette activité est concentrée à Ramallah, Jérusalem, Bethléem et Gaza. Des associations caritatives spécialisées emploient des femmes à domicile dans les villages environnants, avec environ 10 000 femmes travaillant en Cisjordanie et dans la bande de Gaza.\nLe marketing est l'un des défis majeurs en raison de la baisse de la demande locale causée par des coûts de main-d'œuvre élevés liés à une production purement manuelle. De plus, l'activité limitée des associations, le manque d'accès aux marchés extérieurs et la concurrence intense des produits jordaniens vendus à bas prix constituent des obstacles importants."
+            },
+            "olive-wood": {
+                "title": "Artisanat du bois d'olivier",
+                "text": "L'industrie du bois d'olivier est l'une des plus anciennes industries traditionnelles de Palestine, remontant au XVIe siècle. Elle est apparue avec l'arrivée des missions missionnaires en Terre Sainte, commençant par la fabrication de rosaires à partir de noyaux d'olives par les moines franciscains. Cet artisanat a évolué vers la production d'objets religieux vendus aux touristes chrétiens dans la région de Bethléem. On utilise le bois d'oliviers affaiblis qui ne produisent plus de fruits, évitant ainsi de nuire au secteur agricole. Avant 1967, le bois provenait de Syrie et de Jordanie ; après l'occupation, Ramallah et Naplouse sont devenues les principales sources. On compte 120 ateliers en Cisjordanie employant environ 600 ouvriers. 95 % des établissements sont familiaux, souvent situés dans les maisons, transmettant les compétences de père en fils dès l'enfance.\nLes ventes annuelles se répartissent ainsi : 60 % localement aux touristes, et 40 % à l'exportation, notamment vers l'Italie et l'Allemagne.\n"
+            },
+            "soap": {
+                "title": "Savon de Naplouse",
+                "text": "La fabrication du savon de Naplouse est l'une des plus anciennes industries traditionnelles de la ville, réputée depuis des siècles. Ce savon est mondialement connu pour sa qualité et sa pureté, caractérisé par sa composition naturelle et biologique à base d'huile d'olive, d'alcalis, d'eau et parfois d'autres matières naturelles comme l'huile d'amande et l'huile de laurier. Les ingrédients sont soigneusement mélangés et séchés dans des moules spéciaux.\n\nLe savon de Naplouse possède des propriétés nettoyantes efficaces et douces pour la peau. Les savonneries de Naplouse ont été touchées par l'invasion israélienne de 2002, qui a détruit la savonnerie Kanaan, l'une des plus grandes. Il ne reste aujourd'hui que 3 à 4 savonneries en activité."
+            },
+            "earthenware": {
+                "title": "Industrie de la céramique",
+                "text": "L'histoire de la fabrication de la céramique en Palestine remonte à au moins 400 ans, introduite par les Turcs lors de la restauration de la mosquée Al-Aqsa à Jérusalem. La première usine a été créée à Jérusalem en 1922 par un Arménien dont l'atelier fonctionne toujours. Hébron est aujourd'hui la ville principale pour la céramique palestinienne, avec une première usine en 1962. L'industrie a prospéré avec jusqu'à vingt-cinq usines. Certaines ont fermé après l'Intifada de 2000, dont dix à Hébron.\n\nEnviron 100 ouvriers travaillent dans ce secteur, avec une moyenne de 4 à 6 ouvriers par établissement. 30 % de la production est vendue localement, 30 % exportée vers Israël, 20 % vers les pays arabes (surtout la Jordanie) et 20 % vers l'Europe et l'Amérique.\n\nLes matières premières sont importées des Pays-Bas et d'Espagne. Les tentatives de production locale ont échoué en raison des coûts élevés liés à l'absence de matériaux naturels appropriés dans le sol palestinien."
+            },
+            "glass": {
+                "title": "Industrie du verre artisanal",
+                "text": "L'industrie traditionnelle du verre soufflé à la bouche est connue en Palestine depuis l'Antiquité, se développant après l'arrivée de l'islam avec des innovations en couleurs et motifs. Les produits incluent des objets d'art et de décoration tels que des vases, des plateaux, des lampes et du vitrail. Ces produits prestigieux reflètent l'identité palestinienne et le savoir-faire manuel. L'industrie est concentrée à Hébron avec trois usines utilisant des techniques entièrement manuelles, tandis qu'une usine à Naplouse a fermé au début de l'Intifada."
+            },
+            "leather": {
+                "title": "Industrie du cuir",
+                "text": "La fabrication du cuir et des sandales en cuir est majoritairement concentrée dans le gouvernorat d'Hébron, reposant sur un grand savoir-faire et des compétences traditionnelles. Elle fait vivre de nombreuses familles et soutient l'économie locale tout en préservant le patrimoine culturel. Cependant, elle a souffert de conditions économiques instables ; son âge d'or se situant entre 1975 et 2000, suivi d'un déclin dû à la réalité politique et économique."
+            },
+            "coincidences": {
+                "title": "Industrie de la nacre",
+                "text": "La plupart des ateliers de nacre sont répartis dans la région de Bethléem et de Beit Sahour, produisant des bijoux et des décorations artisanales. L'occupation israélienne a provoqué un déclin net, avec des taxes augmentant les coûts de production. La demande locale a également chuté avec la baisse du tourisme, entraînant la fermeture de nombreux ateliers ou leur déménagement en Jordanie où les conditions sont plus favorables."
+            },
+            "pottery": {
+                "title": "Industrie de la poterie",
+                "text": "\nLa poterie est l'une des plus anciennes industries traditionnelles de Palestine, accompagnant les civilisations humaines depuis des millénaires. Cet artisanat est toujours pratiqué dans les villages palestiniens comme activité familiale à domicile, à l'exception de quelques ateliers à Hébron, Gaza, Jénine et Toubas.\n\nRépartition des établissements :\n- 16 ateliers à Hébron (96 ouvriers)\n- 89 établissements à Gaza (50 ouvriers)\n- 1 atelier à Jénine (6 ouvriers)\n- 1 établissement à Toubas (4 ouvriers)\n- 2 établissements historiques à Irtah (8 ouvriers)\n\nDes équipements simples comme le tour de potier et des fours à bois ou diesel sont utilisés. 90 % des produits sont exportés vers Israël, et seulement 10 % sont vendus localement.\n"
+            },
+            "bamboo": {
+                "title": "Industrie du bambou",
+                "text": "\nL'industrie du bambou est concentrée dans la ville de Gaza, avec une usine supplémentaire à Beit Jala en Cisjordanie. C'est une industrie patrimoniale importante de la société palestinienne.\n\nLe bambou se caractérise par sa robustesse et sa flexibilité, ce qui le rend idéal pour fabriquer des meubles légers, des paniers et des outils du quotidien.\n"
+            },
+            "straw": {
+                "title": "Vannerie (Paille)",
+                "text": "\nL'activité de vannerie est concentrée dans les villes et villages du centre de la Palestine, utilisant les palmiers locaux comme matière première.\n\nLes femmes fabriquent ces objets à domicile pour le compte d'associations. Les produits incluent des paniers, des tapis et des boîtes de rangement, constituant une source de revenus vitale pour les familles rurales.\n"
+            },
+            "wax": {
+                "title": "Industrie de la bougie",
+                "text": "\nLa fabrication de bougies est un artisanat traditionnel lié à la religion chrétienne en Palestine.\n\nIl existe trois usines à Bethléem produisant des bougies religieuses de manière traditionnelle, ainsi qu'un atelier dans un monastère près de Jéricho.\n\nCes bougies sont utilisées dans les églises et lors des rituels religieux, et sont vendues aux pèlerins et touristes.\n"
+            }
+        }
+    }
+}

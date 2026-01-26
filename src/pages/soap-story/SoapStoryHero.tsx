@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const storyBg = "/images/soap_story.png";
 
 
 const SoapStoryHero = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation("soapStory");
 
   return (
     <section
@@ -26,33 +28,32 @@ const SoapStoryHero = () => {
           right: "10%",
           maxWidth: "520px",
           color: "#fff",
-          textAlign: "right",
+          textAlign: i18n.language === "ar" ? "right" : "left",
         }}
       >
         {/* Title */}
         <h1
 
           style={{
-            direction: "rtl",
-            textAlign: "right",
+            direction: i18n.dir(),
+            textAlign: i18n.language === "ar" ? "right" : "left",
             fontSize: "40px",
             color: "#3b2415",
             fontWeight: "800",
             marginBottom: "14px",
             lineHeight: "1.3",
             textShadow: "0 4px 10px rgba(0,0,0,0.5)",
+            whiteSpace: "pre-line"
           }}
         >
-          المصابن والصابون النابلسي
-          <br />
-          من شجرة الزيتون بدأت الحكاية🌿
+          {t("hero.title")}
         </h1>
 
         {/* Description */}
         <p
           style={{
-            direction: "rtl",
-            textAlign: "right",
+            direction: i18n.dir(),
+            textAlign: i18n.language === "ar" ? "right" : "left",
             fontSize: "18px",
             lineHeight: "1.9",
             color: "#301e11",
@@ -61,13 +62,11 @@ const SoapStoryHero = () => {
             textShadow: "0 2px 6px rgba(0,0,0,0.5)",
           }}
         >
-          لم تكن الصبّانة مجرد مكان لصناعة الصابون، بل كانت قلبًا نابضًا بالحياة
-          الاقتصادية والاجتماعية في نابلس، ومَعلمًا يعكس مكانة أصحابها ونفوذهم،
-          وحرفة توارثها الناس جيلًا بعد جيل.
+          {t("hero.description")}
         </p>
 
         {/* Buttons */}
-        <div style={{ display: "flex", gap: "14px", justifyContent: "flex-end" }}>
+        <div style={{ display: "flex", gap: "14px", justifyContent: i18n.language === "ar" ? "flex-end" : "flex-start" }}>
           <button
             onClick={() => navigate("/soap-page")}
             style={{
@@ -80,7 +79,7 @@ const SoapStoryHero = () => {
               cursor: "pointer",
             }}
           >
-            تعرّف على الصبّانات
+            {t("hero.learnButton")}
           </button>
 
           <button
@@ -95,7 +94,7 @@ const SoapStoryHero = () => {
               cursor: "pointer",
             }}
           >
-            اكتشف كيف يُصنع الصابون النابلسي
+            {t("hero.processButton")}
           </button>
         </div>
       </div>
@@ -104,3 +103,4 @@ const SoapStoryHero = () => {
 };
 
 export default SoapStoryHero;
+

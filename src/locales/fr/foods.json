@@ -1,0 +1,37 @@
+{
+    "pageTitle": "Cuisine traditionnelle palestinienne",
+    "backButton": "Retour aux traditions",
+    "details": {
+        "titlePrefix": "📜 À propos de ce plat",
+        "backButton": "Retour à la liste des plats",
+        "homeButton": "Bibliothèque principale",
+        "notFound": "Plat non trouvé"
+    },
+    "items": {
+        "musakhan": {
+            "title": "Musakhan",
+            "shortDesc": "Un plat palestinien célèbre à base de poulet, de sumac et d'huile d'olive.",
+            "fullDesc": "Le Musakhan est l'un des plats palestiniens les plus célèbres, composé de pain Taboon trempé dans l'huile d'olive, surmonté de poulet cuit avec de grandes quantités d'oignons et de sumac. Il est souvent servi pendant les saisons de récolte des olives, considéré comme un symbole de la générosité et de l'hospitalité palestiniennes."
+        },
+        "maqluba": {
+            "title": "Maqluba",
+            "shortDesc": "Riz, légumes et viande renversés dans un plat lors du service.",
+            "fullDesc": "Le Maqluba est un plat traditionnel composé de couches de riz et de légumes comme l'aubergine ou le chou-fleur, avec de la viande ou du poulet. Lors du service, la cocotte est renversée, d'où son nom. Il est généralement préparé pour des occasions familiales et des banquets."
+        },
+        "maftoul": {
+            "title": "Maftoul",
+            "shortDesc": "Grains roulés à la main avec bouillon de poulet et pois chiches.",
+            "fullDesc": "Le Maftoul ressemble au couscous mais en plus gros, préparé à la main à partir de boulghour et de farine. Il est cuit avec du bouillon de poulet, des pois chiches et des oignons et servi chaud, surtout en hiver. Les femmes participent souvent à sa préparation collective."
+        },
+        "kanafeh": {
+            "title": "Kunafa de Naplouse",
+            "shortDesc": "Un dessert célèbre au fromage et au sirop de la ville de Naplouse.",
+            "fullDesc": "Le Kunafa de Naplouse est l'un des bonbons palestiniens et arabes les plus célèbres, composé d'une fine couche de pâte farcie de fromage blanc et imbibée de sirop. Il est spécifiquement associé à la ville de Naplouse."
+        },
+        "kaak": {
+            "title": "Ka'ak de Jérusalem",
+            "shortDesc": "Pain circulaire recouvert de sésame vendu dans les rues de Jérusalem.",
+            "fullDesc": "Le Ka'ak de Jérusalem est un long pain circulaire recouvert de sésame vendu dans les rues de la vieille ville de Jérusalem. Il est généralement consommé avec du za'atar, du fromage ou des œufs, et fait partie de la vie quotidienne des habitants."
+        }
+    }
+}

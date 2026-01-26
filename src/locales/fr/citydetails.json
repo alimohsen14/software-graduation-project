@@ -1,0 +1,502 @@
+{
+    "labels": {
+        "location": "Localisation",
+        "area": "Superficie",
+        "naming": "Appellation",
+        "history": "Histoire",
+        "landmarks": "Monuments",
+        "climate": "Climat",
+        "water": "Eau",
+        "heritage": "Patrimoine",
+        "occupation": "Occupation",
+        "population": "Population",
+        "families": "Familles",
+        "mosques": "Mosquées",
+        "notableFigures": "Personnalités marquantes",
+        "industry": "Industrie",
+        "agriculture": "Agriculture",
+        "ruins": "Ruines",
+        "economy": "Économie",
+        "villages": "Quelques villages de la ville :",
+        "cityNotFound": "Ville non trouvée"
+    },
+    "cities": {
+        "qalqilya": {
+            "id": "qalqilya",
+            "name": "Qalqilya",
+            "sections": {
+                "location": "Située à l'ouest de la Palestine, c'est la ville de Cisjordanie la plus proche de la côte méditerranéenne (environ 14 km). Elle est entourée par la « Ligne Verte » sur trois côtés et se trouve à environ 82 km de Jérusalem.",
+                "area": "Une ville frontalière qui a grandement souffert du « Mur de séparation ».",
+                "naming": "On pense que son nom a des racines romaines ou grecques, et certains le lient au mot « Qal’a » (forteresse).",
+                "history": "Ville antique habitée par les Cananéens, elle fut une étape importante sur les routes commerciales. Elle fut le théâtre d'une lutte acharnée lors des guerres de 1948 et 1967 et souffrit de la confiscation de vastes étendues de ses terres pour la colonisation.",
+                "climate": "Climat méditerranéen tempéré, avec des précipitations élevées.",
+                "water": "Elle repose sur d'immenses bassins d'eaux souterraines et dépend de puits artésiens pour l'irrigation.",
+                "population": "La population de la ville est d'environ 50 000 habitants.",
+                "economy": "Agriculture : Connue comme la « Ville de la Goyave », ainsi que pour ses agrumes, ses avocats et ses cultures maraîchères sous serre. Commerce : Elle constitue un centre commercial névralgique pour les villages environnants.",
+                "landmarks": "Parc zoologique national de Qalqilya\nSanctuaires soufis\nAnciennes mosquées\nPlusieurs ruines archéologiques comme Khirbet Hanuta"
+            },
+            "villages": [
+                {
+                    "id": "azzun",
+                    "name": "Azzun"
+                },
+                {
+                    "id": "jayyus",
+                    "name": "Jayyus"
+                },
+                {
+                    "id": "kafr-thulth",
+                    "name": "Kafr Thulth"
+                },
+                {
+                    "id": "habla",
+                    "name": "Habla"
+                },
+                {
+                    "id": "al-funduq",
+                    "name": "Al-Funduq"
+                },
+                {
+                    "id": "jinsafut",
+                    "name": "Jinsafut"
+                },
+                {
+                    "id": "baqat-al-hatab",
+                    "name": "Baqat al-Hatab"
+                },
+                {
+                    "id": "falamya",
+                    "name": "Falamya"
+                },
+                {
+                    "id": "immatayn",
+                    "name": "Immatayn"
+                },
+                {
+                    "id": "kafr-laqif",
+                    "name": "Kafr Laqif"
+                },
+                {
+                    "id": "azzun-at-ma",
+                    "name": "Azzun Atme"
+                },
+                {
+                    "id": "saniriya",
+                    "name": "Saniriya"
+                },
+                {
+                    "id": "beit-amin",
+                    "name": "Beit Amin"
+                },
+                {
+                    "id": "islah",
+                    "name": "Islah"
+                },
+                {
+                    "id": "an-nabi-elyas",
+                    "name": "An-Nabi Elyas"
+                }
+            ]
+        },
+        "tulkarm": {
+            "id": "tulkarm",
+            "name": "Tulkarem",
+            "sections": {
+                "location": "Tulkarem est située dans le nord-ouest de la Cisjordanie, servant de lien entre la côte et les montagnes. Elle se trouve à environ 15 km de la côte méditerranéenne et à 31 km de Naplouse. Elle culmine à environ 90 mètres d'altitude.",
+                "area": "Un emplacement stratégique surplombant la plaine côtière.",
+                "naming": "Son nom se compose de « Tul » ou « Tur » (signifiant montagne) et « Karm » (signifiant vignoble) ; son nom signifie donc « Montagne des Vignobles » en raison de sa renommée dans la culture de la vigne.",
+                "history": "Fondée par les Cananéens, elle fut une étape majeure sur les routes commerciales et postales entre l'Égypte et le Levant. Elle prospéra aux époques romaine et islamique. Centre de district à l'époque ottomane, elle connut une grande résistance sous le mandat britannique.",
+                "climate": "Climat méditerranéen tempéré, caractérisé par une forte humidité en été et de fortes pluies en hiver.",
+                "water": "Elle dépend de vastes réserves d'eaux souterraines (puits et sources comme Ain al-Deir).",
+                "population": "La population du gouvernorat est d'environ 190 000 habitants.",
+                "economy": "Agriculture : L'une des zones les plus fertiles, célèbre pour ses agrumes, ses olives, ses légumes et ses serres. Industrie : Réputée pour l'agroalimentaire, le plastique, le papier et le commerce grâce à sa position frontalière.",
+                "landmarks": "Khirbet Irtah\nChâteau de Shufa\nAnciens bains romains\nPlusieurs tertres archéologiques historiques"
+            },
+            "villages": [
+                {
+                    "id": "shuweika",
+                    "name": "Shuweika"
+                },
+                {
+                    "id": "iktaba",
+                    "name": "Iktaba"
+                },
+                {
+                    "id": "bal_a",
+                    "name": "Bal'a"
+                },
+                {
+                    "id": "deir-al-ghusun",
+                    "name": "Deir al-Ghusun"
+                },
+                {
+                    "id": "qaffin",
+                    "name": "Qaffin"
+                },
+                {
+                    "id": "atill",
+                    "name": "Attil"
+                },
+                {
+                    "id": "zeita",
+                    "name": "Zeita"
+                },
+                {
+                    "id": "khukhma",
+                    "name": "Khukhma"
+                },
+                {
+                    "id": "anabta",
+                    "name": "Anabta"
+                },
+                {
+                    "id": "kafr-al-labad",
+                    "name": "Kafr al-Labad"
+                },
+                {
+                    "id": "kuran",
+                    "name": "Kur"
+                },
+                {
+                    "id": "saffarin",
+                    "name": "Saffarin"
+                },
+                {
+                    "id": "kafr-zibad",
+                    "name": "Kafr Zibad"
+                },
+                {
+                    "id": "kafr-abbush",
+                    "name": "Kafr Abbush"
+                },
+                {
+                    "id": "al-ras",
+                    "name": "Al-Ras"
+                },
+                {
+                    "id": "faraun",
+                    "name": "Far'un"
+                },
+                {
+                    "id": "kafr-sur",
+                    "name": "Kafr Sur"
+                },
+                {
+                    "id": "kafr-jamal",
+                    "name": "Kafr Jamal"
+                },
+                {
+                    "id": "nazlat-issa",
+                    "name": "Nazlat Issa"
+                },
+                {
+                    "id": "nazlat-abu-nar",
+                    "name": "Nazlat Abu Nar"
+                }
+            ]
+        },
+        "ramallah": {
+            "id": "ramallah",
+            "name": "Ramallah",
+            "sections": {
+                "location": "Ramallah est située au centre de la Palestine dans les montagnes de Jérusalem, à environ 15 km de Jérusalem. Elle est surnommée la « Fiancée de la Palestine » pour sa beauté naturelle et sa prospérité urbaine.",
+                "area": "Ramallah connaît une expansion urbaine significative et constitue actuellement un centre administratif et politique majeur.",
+                "naming": "Le mot Ramallah signifie « Dieu a voulu » ou « Dieu a décrété ». On dit que « Ram » signifie hauteur ou plateau en cananéen.",
+                "history": "Ville historique habitée par le clan Haddadin au XVIe siècle. Elle connut une croissance rapide au XXe siècle pour devenir l'un des pôles culturels et politiques les plus importants de Palestine.",
+                "climate": "Climat de montagne tempéré en été et froid en hiver, avec des chutes de neige occasionnelles.",
+                "water": "Elle s'appuie sur des réseaux d'eau modernes et des sources d'eaux souterraines via la Compagnie des eaux du district de Jérusalem.",
+                "population": "La population du gouvernorat de Ramallah et al-Bireh est d'environ 350 000 habitants.",
+                "industry": "C'est un centre économique et commercial majeur, réputé pour ses industries agroalimentaires, le papier, le plastique, le commerce et les services financiers.",
+                "landmarks": "La Vieille Ville, le complexe récréatif de Ramallah, le Palais de la Culture, le sanctuaire de Mahmoud Darwish et la Tour Franque."
+            },
+            "villages": [
+                {
+                    "id": "al-bireh",
+                    "name": "Al-Bireh"
+                },
+                {
+                    "id": "beitunia",
+                    "name": "Beitunia"
+                },
+                {
+                    "id": "birzeit",
+                    "name": "Birzeit"
+                },
+                {
+                    "id": "nilin",
+                    "name": "Ni'lin"
+                },
+                {
+                    "id": "qibya",
+                    "name": "Qibya"
+                },
+                {
+                    "id": "sinjil",
+                    "name": "Sinjil"
+                },
+                {
+                    "id": "silwad",
+                    "name": "Silwad"
+                },
+                {
+                    "id": "mazraat-al-sharqiya",
+                    "name": "Mazra'at al-Sharqiya"
+                }
+            ]
+        },
+        "nablus": {
+            "id": "nablus",
+            "name": "Naplouse",
+            "sections": {
+                "location": "Située dans le nord de la Cisjordanie, entre le mont Ebal et le mont Garizim. Elle est à 69 km de Jérusalem et 42 km de la Méditerranée.",
+                "area": "L'une des plus grandes villes palestiniennes avec une vaste zone urbaine et un terrain montagneux.",
+                "naming": "Nommée « Neapolis » (Nouvelle Ville) par les Romains, nom qui fut arabisé en « Naplouse ». Elle est surnommée la « Montagne du Feu ».",
+                "history": "Cité cananéenne antique (Sichem). Tout au long de sa longue histoire, elle fut un centre administratif et économique pour le nord de la Palestine. Célèbre pour sa résistance et sa résilience.",
+                "climate": "Climat méditerranéen tempéré, avec des étés doux et des hivers froids et pluvieux.",
+                "water": "Elle dépend de nombreuses sources environnantes (comme Ain al-Qaryun et Ain al-Asal) et de puits artésiens.",
+                "population": "La population du gouvernorat est d'environ 400 000 habitants, celle de la ville d'environ 160 000.",
+                "industry": "Capitale économique de la Palestine : célèbre pour son savon nabulsi, ses textiles, le commerce de l'or et ses pâtisseries (notamment la Knafeh Nabulsia).",
+                "landmarks": "Vieille Ville, Grande Mosquée Salahia, Mosquée Al-Nasr, Puits de Jacob et le Mont Garizim (centre de la communauté samaritaine)."
+            },
+            "villages": [
+                {
+                    "id": "asira-ash-shamaliya",
+                    "name": "Asira ash-Shamaliya"
+                },
+                {
+                    "id": "huwara",
+                    "name": "Huwara"
+                },
+                {
+                    "id": "beita",
+                    "name": "Beita"
+                },
+                {
+                    "id": "burqa",
+                    "name": "Burqa"
+                },
+                {
+                    "id": "sebastia",
+                    "name": "Sebastia"
+                }
+            ]
+        },
+        "salfit": {
+            "id": "salfit",
+            "name": "Salfit",
+            "sections": {
+                "location": "Située au centre de la Cisjordanie, au nord de Ramallah et au sud de Naplouse. Elle culmine à environ 520 mètres d'altitude.",
+                "area": "Centre du gouvernorat de Salfit, caractérisé par sa nature montagneuse et son expansion urbaine récente.",
+                "naming": "Nom cananéen signifiant « Panier de Raisins » (Salm Fit), en raison de sa renommée dans la viticulture durant l'Antiquité.",
+                "history": "Habitée par les Cananéens, elle s'est développée durant les époques islamique et ottomane. Elle est devenue un gouvernorat indépendant sous l'Autorité nationale palestinienne.",
+                "climate": "Climat méditerranéen tempéré, considéré comme l'une des zones aux précipitations abondantes.",
+                "water": "Célèbre pour ses nombreuses sources (environ 23 sources) mais souffre de la confiscation des nappes souterraines par l'occupation.",
+                "population": "La population de la ville est d'environ 12 000 habitants et celle du gouvernorat d'environ 75 000.",
+                "industry": "Repose sur l'agriculture (notamment l'olive) et est réputée pour produire la meilleure huile d'olive ; elle possède également des industries du bois et chimiques.",
+                "landmarks": "Vieille Ville, site archéologique de Dar al-Darb, Khirbet Jalal al-Din et sources naturelles environnantes."
+            }
+        },
+        "gaza": {
+            "id": "gaza",
+            "name": "Gaza",
+            "sections": {
+                "location": "Située sur la côte méditerranéenne au sud de la Palestine, elle est la porte de la Palestine vers l'Afrique. Elle culmine à 45 mètres d'altitude.",
+                "area": "L'une des villes les plus densément peuplées au monde, la superficie de la ville de Gaza seule est d'environ 45 km².",
+                "naming": "Son nom est cananéen et signifie « fort » ou « invincible ». Les Arabes l'ont appelée « Gaza Hashim » car Hashim bin Abd Manaf y fut enterré.",
+                "history": "L'une des plus anciennes villes du monde (plus de 5000 ans). Civilisations successives : Pharaons, Cananéens, Perses, Grecs, Romains, Musulmans, puis Croisés. Elle passa sous administration égyptienne après 1948 puis fut occupée par Israël en 1967.",
+                "climate": "Climat méditerranéen : chaud avec des hivers doux, et une forte humidité en été.",
+                "water": "Dépend de l'aquifère côtier, souffre d'une grave crise de l'eau et de pollution due au siège et aux agressions.",
+                "population": "La population du gouvernorat de Gaza est d'environ 700 000 habitants, et la bande de Gaza dans son ensemble compte plus de 2 millions de personnes.",
+                "industry": "Repose sur l'agriculture (agrumes, fraises), la pêche, le commerce et les industries légères (textiles et ameublement).",
+                "landmarks": "Grande Mosquée Omari, Église de Saint-Porphyre, Château de Barquq et le marché historique de Qaysariya."
+            }
+        },
+        "nazareth": {
+            "id": "nazareth",
+            "name": "Nazareth",
+            "sections": {
+                "location": "Située dans la région de Galilée au nord de la Palestine, dans une cuvette entourée de montagnes. Elle est à 105 km de Jérusalem et 30 km de Tibériade.",
+                "area": "Nazareth est aujourd'hui considérée comme la plus grande ville arabe à l'intérieur des territoires occupés en 1948.",
+                "naming": "L'origine du nom fait référence à « La Victorieuse » ou « La Gagnante ». Connue comme la Ville de l'Annonciation pour son lien avec la naissance du Christ.",
+                "history": "Ville très ancienne, témoin d'événements chrétiens majeurs. Restée une ville purement arabe tout au long de l'histoire. Après 1948, elle est passée sous occupation israélienne et a constitué un centre culturel et national pour les Palestiniens de l'intérieur.",
+                "climate": "Climat de montagne méditerranéen tempéré : doux en été et froid/pluvieux en hiver.",
+                "water": "Célèbre pour le « Puits de Marie » (Ain al-Adhra) qui était la principale source d'eau dans l'Antiquité.",
+                "population": "La population de la ville est d'environ 80 000 habitants, et forme avec ses banlieues un vaste centre de population.",
+                "industry": "Repose sur le tourisme religieux (pèlerinage chrétien), le commerce, l'artisanat traditionnel et les services éducatifs et de santé.",
+                "landmarks": "Basilique de l'Annonciation, Église Saint-Joseph, Mosquée Blanche, Vieille Ville et Puits de Marie."
+            }
+        },
+        "jenin": {
+            "id": "jenin",
+            "name": "Jénine",
+            "sections": {
+                "location": "Située à l'extrême nord de la Cisjordanie, surplombant la plaine de Marj Ibn Amer. Elle est à 75 km de Jérusalem et 43 km de Haïfa.",
+                "area": "Présente un emplacement stratégique en tant que lien entre les montagnes de Naplouse, la plaine côtière et la Galilée.",
+                "naming": "Origine cananéenne « Engannim » signifiant « Source des Jardins » pour ses nombreux vergers et son eau.",
+                "history": "Fondée par des tribus cananéennes. Témoin de batailles décisives contre les envahisseurs à travers l'histoire (notamment la bataille de 1948 contre les milices sionistes). Surnommée « Jénine al-Qassam ».",
+                "climate": "Climat méditerranéen tempéré, chaud/sec en été et froid/pluvieux en hiver.",
+                "water": "Dépend des eaux souterraines et des puits artésiens, célèbre pour ses eaux jaillissantes abondantes dans l'Antiquité.",
+                "population": "La population du gouvernorat de Jénine est d'environ 330 000 habitants, et celle de la ville d'environ 50 000.",
+                "industry": "Connue comme le « Panier alimentaire de la Palestine » pour son immense production agricole (pastèques, légumes, olives), et son commerce actif avec l'intérieur palestinien.",
+                "landmarks": "Grande Mosquée de Jénine (Fatima Khatun), Église de Burqin (4ème plus ancienne), Camp de Jénine et tunnel archéologique de Bal'ama."
+            }
+        },
+        "jaffa": {
+            "id": "jaffa",
+            "name": "Jaffa",
+            "sections": {
+                "location": "Située sur la côte méditerranéenne, à environ 55 km à l'ouest de Jérusalem. À une altitude de 35 mètres, elle est la porte maritime de la Palestine et un port de commerce majeur à travers l'histoire.",
+                "area": "Ville côtière bénéficiant d'un emplacement stratégique sur la Méditerranée, son port a été un centre commercial de premier plan durant des millénaires.",
+                "naming": "Le nom Jaffa est d'origine cananéenne, signifiant « la belle » ou « belle vue ». Son nom a été associé à la beauté et à la splendeur à travers les civilisations.",
+                "history": "AV. J.-C. : D'abord habitée par les Cananéens, puis occupée par les Perses, Alexandre le Grand en 331 av. J.-C. et les Romains en 63 av. J.-C. APR. J.-C. : Devenue province byzantine au IVe siècle, puis musulmane au VIIe siècle sous Amr ibn al-Aas. Tombée aux mains des sionistes en 1948, elle demeure sous occupation.",
+                "climate": "Climat méditerranéen tempéré, étés relativement chauds et hivers doux et pluvieux.",
+                "water": "Dépend historiquement des puits côtiers et des nappes phréatiques.",
+                "population": "La population arabe est actuellement estimée à environ 25 000 personnes, aux côtés d'environ 120 020 Juifs. Malgré l'hébraïsation, la ville conserve ses monuments arabes.",
+                "industry": "Célèbre pour la culture des agrumes, en particulier l'orange de Jaffa exportée dans le monde entier. Des industries comme le papier, le plastique, le verre et le savon y ont prospéré, parallèlement au commerce portuaire et au tourisme.",
+                "landmarks": "Place de l'Horloge, Place Al-Eid, Anciens bains turcs, Saraya ottomane, Fontaine Mahmoudiya, Église de la Citadelle et divers monastères et églises."
+            }
+        },
+        "akka": {
+            "id": "akka",
+            "name": "Acre",
+            "sections": {
+                "location": "L'une des plus anciennes villes de Palestine, située sur la côte méditerranéenne, à environ 181 km au nord-ouest de Jérusalem. Son emplacement stratégique a favorisé le commerce et les contacts culturels. Fondée par les Phéniciens au IIIe millénaire av. J.-C. et appelée « Akko », signifiant sable chaud.",
+                "naming": "Nom antique « Akko », un nom phénicien signifiant sable chaud, qui s'est transformé en « Akka » au fil des âges.",
+                "history": "Conquise par le chef musulman Shurahbil ibn Hasana en 16 AH. En 20 AH, Muawiya y établit un chantier naval. Au XVIIIe siècle, elle fut gouvernée par Zahir al-Umar. En 1799, la campagne de Napoléon échoua à capturer la ville. Tombée aux mains des sionistes en 1948 après des batailles et des massacres.",
+                "population": "Avant 1948, la plupart des habitants étaient des Arabes musulmans. Aujourd'hui, les Palestiniens représentent environ 35 % de la population.",
+                "industry": "Réputée pour plusieurs activités économiques : verrerie, industrie de la teinture, pêche et pâtisseries/plats traditionnels comme la Tamriya et le gâteau Hawari.",
+                "landmarks": "Remparts d'Al-Jazzar, Khan al-Umdan, Hammams, Vieille Saraya, Marché Blanc, Hammam Pasha, Khan al-Ifranj et Château d'Acre."
+            }
+        },
+        "hebron": {
+            "id": "hebron",
+            "name": "Hébron",
+            "sections": {
+                "location": "Située au sud de la Cisjordanie, à 35 km au sud de Jérusalem. L'une des plus anciennes villes du monde avec plus de 6000 ans d'histoire, bâtie par les Cananéens sous le nom de « Kiriath Arba ».",
+                "population": "La population du gouvernorat a atteint environ 782 227 habitants en 2021. La ville est le centre avec environ 162 315 habitants. La Vieille Ville est habitée par environ 10 000 Palestiniens sous une forte présence militaire.",
+                "naming": "Nommée d'après le prophète Ibrahim (Abraham), connu sous le nom d'« Al-Khalil » (l'Ami de Dieu), qui y séjourna en tant qu'invité en 1900 av. J.-C.",
+                "economy": "Capitale économique palestinienne. Célèbre pour la verrerie, la céramique, les chaussures, la taille de pierre et les industries agroalimentaires/chimiques. Ses produits agricoles incluent le raisin et les olives.",
+                "occupation": "Occupée en 1967. Des avant-postes de colonisation ont été établis à l'intérieur des quartiers arabes. La mosquée Ibrahimi a été divisée après le massacre de 1994. La rue Shuhada reste fermée, mutilant le cœur de la vieille ville."
+            }
+        },
+        "tubas": {
+            "id": "tubas",
+            "name": "Toubas",
+            "sections": {
+                "location": "Située à 21 km au nord-est de Naplouse, à 45 km du Jourdain, et à 330 mètres au-dessus du niveau de la mer.",
+                "naming": "D'origine cananéenne antique « Tabaas », connue des Romains sous le nom de « Thèbes ». Nommée « Toubas » par les Arabes après la conquête islamique.",
+                "history": "Bâtie sur les ruines de la cité cananéenne « Tabaas » (signifiant éclat). Mentionnée à l'époque romaine sous le nom de « Thèbes » sur la route entre Naplouse et Beisan. Devenue chef-lieu de district en 1965.",
+                "population": "La population est passée d'environ 5 500 en 1945 à environ 16 000 en 2007 selon le PCBS.",
+                "economy": "Essentiellement agricole : céréales, légumes, olives, raisins, amandes, figues et bétail. L'activité commerciale porte sur les produits de base pour les villages voisins.",
+                "ruins": "Tell al-Radgha, Khirbet Jabaris, Khirbet Salhab, Tell al-Hamma et Khirbet Aynun."
+            }
+        },
+        "jerusalem": {
+            "id": "jerusalem",
+            "name": "Jérusalem",
+            "sections": {
+                "location": "Située au cœur de la Palestine, sur les collines centrales entre la Méditerranée et la mer Morte. Elle culmine à 750 mètres d'altitude. C'est la première Qibla des musulmans et le lieu de l'Ascension.",
+                "area": "La superficie de la municipalité de Jérusalem (Est et Ouest) est d'environ 126 km², et c'est la plus grande ville palestinienne en superficie et en population.",
+                "naming": "Origine jébusienne « Urusalim » signifiant « Cité de la Paix ». Appelée « Beït al-Maqdis », « Al-Quds al-Sharif » et « Aelia ».",
+                "history": "L'une des plus anciennes villes de la Terre (5000 ans). Bâtie par les Jébusiens. Conquise par les musulmans à l'époque d'Omar ibn al-Khattab. Gouvernée par les Ayyoubides, les Mamelouks, les Ottomans. Tombée sous mandat britannique puis sous occupation israélienne (Ouest en 1948 et Est en 1967).",
+                "climate": "Climat méditerranéen montagneux : étés doux et hivers froids et pluvieux.",
+                "water": "Dépendait des sources de montagne dans l'Antiquité et des réseaux d'eau modernes aujourd'hui.",
+                "population": "La population palestinienne du gouvernorat de Jérusalem est d'environ 450 000 habitants, souffrant du mur et des restrictions.",
+                "industry": "Repose principalement sur le tourisme religieux, l'artisanat traditionnel, les industries agroalimentaires et le textile.",
+                "landmarks": "Mosquée Al-Aqsa, Dôme du Rocher, Église du Saint-Sépulcre, Mur du Bouraq, Remparts et Portes de Jérusalem (Porte de Damas) et le Mont des Oliviers."
+            }
+        },
+        "jericho": {
+            "id": "jericho",
+            "name": "Jéricho",
+            "sections": {
+                "location": "Située dans la vallée du Jourdain, c'est la ville la plus basse du monde (environ 258 mètres sous le niveau de la mer). À environ 36 km à l'est de Jérusalem et 7 km à l'ouest du Jourdain.",
+                "area": "Une ville antique et un centre historique et touristique majeur.",
+                "naming": "« Jéricho » est un mot cananéen signifiant « fragrance » ou « parfumé », et elle était surnommée « Ville des Palmiers ».",
+                "history": "L'une des plus anciennes villes du monde (10 000 ans). Habitée par les Cananéens et les civilisations successives, sa terre contient des ruines de diverses époques (pierre, bronze, byzantine et islamique).",
+                "climate": "Climat tropical : très chaud en été et doux en hiver, ce qui en fait une station d'hiver pour les Palestiniens.",
+                "water": "Célèbre pour ses sources, les plus importantes étant Ain as-Sultan et Ain Duyuk.",
+                "population": "Population de la ville et de ses banlieues estimée entre 30 000 et 40 000 habitants.",
+                "economy": "L'agriculture est le secteur primaire, réputé pour : les palmiers (dattes), les bananes, les agrumes et les légumes. Le tourisme est également une source de revenus majeure grâce aux monuments archéologiques.",
+                "landmarks": "Tell as-Sultan (Ancienne Jéricho), Palais d'Hisham, Mont de la Tentation (Qarantal), Monastère Saint-Georges (Wadi Qelt) et le Musée russe."
+            }
+        },
+        "lydd": {
+            "id": "lydd",
+            "name": "Lydda",
+            "sections": {
+                "location": "Située au sud-est de Jaffa (15 km) et près de Ramla (5 km). Elle culmine à 50 mètres d'altitude. Un nœud de transport important où se croisent les chemins de fer, les routes côtières et intérieures.",
+                "naming": "Nommée d'après les anciens Lydiens. Connue sous le nom de « Lydda » à l'époque grecque et « Diospolis » à l'époque romaine.",
+                "history": "L'une des villes les plus anciennes, habitée par les Natoufiens il y a 12 000 ans. Conquise par Amr ibn al-Aas en 636 ap. J.-C., elle fut la capitale du Jund Filastin. Elle connut une lutte majeure et le déplacement de la majeure partie de sa population lors du massacre de la mosquée Dahmash en 1948.",
+                "population": "Sa population actuelle est d'environ 75 000 habitants, les Arabes représentant environ 27 %.",
+                "landmarks": "Mosquée Dahmash, Grande Mosquée Omari, Église Saint-Georges (Al-Khader), Pont Jindas, Gare ferroviaire et Aéroport de Lydda."
+            }
+        },
+        "ramla": {
+            "id": "ramla",
+            "name": "Ramla",
+            "sections": {
+                "location": "Située à 45 km de Jérusalem. Emplacement stratégique reliant Jaffa et Jérusalem, et passage important pour le commerce et les chemins de fer entre l'Égypte et le Levant.",
+                "naming": "Nommée d'après le « Raml » (sable) qui entourait son site de construction.",
+                "history": "Fondée par le calife omeyyade Souleymane ibn Abd al-Malik en 715 ap. J.-C. pour être la capitale du Jund Filastin. Elle fut gouvernée par les Abbassides, les Croisés, les Ottomans, et tomba sous l'occupation en 1948.",
+                "population": "La population arabe restante dans ses vieux quartiers (comme Al-Juwarish et Al-Ribat) et dans la ville s'élève à quelques milliers après le déplacement de la plupart des habitants.",
+                "landmarks": "La Grande Mosquée, la Mosquée Blanche et son célèbre minaret, le Bassin d'Al-Anziya, le Sanctuaire du Prophète Salih et les ruines du palais de Souleymane ibn Abd al-Malik."
+            }
+        },
+        "tiberias": {
+            "id": "tiberias",
+            "name": "Tibériade",
+            "sections": {
+                "location": "Située au nord-est, sur la rive occidentale de la mer de Galilée, à 160 km de Jérusalem.",
+                "naming": "Nommée Tibériade en l'honneur de l'empereur romain Tibère César. Bâtie près de la cité cananéenne de Raqqa.",
+                "history": "Conquise par Shurahbil ibn Hasana en 634 ap. J.-C., elle fut la capitale du Jund al-Urdun. Libérée par Saladin à Hattin. Capturée par les sionistes en 1948 avec l'aide des Britanniques, sa population arabe fut évacuée.",
+                "economy": "Célèbre pour ses bains minéraux chauds thérapeutiques, la pêche dans le lac, l'agriculture et le tourisme.",
+                "landmarks": "La mer de Galilée (Lac de Tibériade), les bains minéraux, la Mosquée de la Mer, la Mosquée du Pont, des sanctuaires et tombes historiques."
+            }
+        },
+        "haifa": {
+            "id": "haifa",
+            "name": "Haïfa",
+            "sections": {
+                "location": "Ville côtière au nord de la Palestine sur la Méditerranée, à 159 km de Jérusalem. Bordée par le mont Carmel, elle abrite le port le plus important de Palestine.",
+                "naming": "Du mot « Hafa » signifiant rivage, ou « Haïfa » signifiant protégée par l'ombre du mont Carmel.",
+                "history": "Ancienne cité cananéenne. Conquise par les musulmans à l'époque d'Omar ibn al-Khattab. Connut une renaissance urbaine à l'époque ottomane. Tombée en 1948 après le déplacement de la grande majorité de ses habitants arabes.",
+                "economy": "Un centre industriel et commercial maritime majeur. Célèbre pour son port, ses industries chimiques et son agriculture (notamment les olives et les agrumes dans ses environs).",
+                "landmarks": "Le Mont Carmel, les sites baha'is (Jardins Baha'is), la Mosquée de l'Istiqlal, l'église du monastère carmélite et la Tour de l'Horloge."
+            }
+        },
+        "safad": {
+            "id": "safad",
+            "name": "Safed",
+            "sections": {
+                "location": "Située à l'extrême nord de la Palestine, près du mont Jarmaq (la plus haute montagne de Palestine). Ancienne cité cananéenne s'élevant de manière significative au-dessus du niveau de la mer.",
+                "naming": "Du mot cananéen « Safat » signifiant don ou lien. Connue des Romains sous le nom de « Sepph » (le château fortifié).",
+                "history": "Libérée par Saladin en 1188. C'était un centre administratif et postal important à l'époque mamelouke. Tombée aux mains des milices sionistes en 1948, sa population fut totalement déplacée.",
+                "climate": "Climat montagneux : doux en été et très froid en hiver avec des chutes de neige régulières.",
+                "landmarks": "Château de Safed, mosquées mameloukes (Al-Younsi, Al-Ahmar), loges soufies et ses vieux quartiers bâtis en pierres de basalte."
+            }
+        },
+        "bisan": {
+            "id": "bisan",
+            "name": "Beït Shéan",
+            "sections": {
+                "location": "Située dans la vallée du Jourdain à l'est de Marj Ibn Amer. À 38 km de Tibériade et 127 km de Jérusalem. Un lien important entre la vallée du Jourdain et l'intérieur.",
+                "naming": "Ancien nom cananéen « Beit Shan ». Connue en grec sous le nom de « Scythopolis ».",
+                "history": "L'une des plus anciennes villes (6000 av. J.-C.). Conquise par les musulmans en 634 ap. J.-C. Elle fut un centre commercial et administratif majeur à travers les âges. Tombée lors de la Nakba, elle fut transformée en ville sous occupation.",
+                "economy": "Dépend de l'agriculture irriguée (légumes, agrumes, bananes) et de la disponibilité des ressources en eau.",
+                "landmarks": "Théâtre romain, ancien Tell Bisan, Pont Romain et de nombreuses ruines archéologiques."
+            }
+        },
+        "bethlehem": {
+            "id": "bethlehem",
+            "name": "Bethléem",
+            "sections": {
+                "location": "Située à 10 km au sud de Jérusalem. Ville sainte et internationale associée à la naissance de Jésus-Christ.",
+                "naming": "Son nom est cananéen et signifie « Maison du Pain ».",
+                "history": "Fondée par les Cananéens (3000 av. J.-C.). La Basilique de la Nativité fut construite en 326 ap. J.-C. Conquise par les musulmans à l'époque d'Omar ibn al-Khattab. Connut un grand développement en tant que centre religieux et touristique mondial.",
+                "economy": "Repose lourdement sur le tourisme religieux, l'artisanat traditionnel (bois d'olivier et nacre) et la broderie.",
+                "landmarks": "Basilique de la Nativité, Grotte du Lait, Bassins de Salomon, Mosquée Bilal (Tombeau de Rachel), Palais de l'Hérodion et monastères historiques."
+            }
+        }
+    }
+}

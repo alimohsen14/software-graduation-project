@@ -1,0 +1,32 @@
+{
+    "pageTitle": "Étapes d'un mariage palestinien",
+    "backButton": "Retour aux traditions",
+    "details": {
+        "titlePrefix": "📜 Description du patrimoine",
+        "backButton": "Retour aux étapes",
+        "homeButton": "Bibliothèque principale",
+        "notFound": "Étape non trouvée"
+    },
+    "items": {
+        "henna": {
+            "title": "Nuit du henné de la mariée",
+            "short": "Une soirée spéciale pour la mariée avec ses amies et sa famille",
+            "description": "La nuit du henné a lieu avant le mariage, où les parents et amis de la mariée se réunissent dans la maison de sa famille. La mariée porte la robe palestinienne brodée et des chansons folkloriques traditionnelles sont chantées.\n\nLe henné est gravé sur les mains de la mariée dans une atmosphère de joie, de danse et de dabke, et des bonbons et des boissons sont servis aux invités. Cette nuit est considérée comme un adieu à la mariée avant son emménagement dans son foyer conjugal."
+        },
+        "hammam": {
+            "title": "Hammam du marié",
+            "short": "Une célébration de jeunesse pour le marié avec ses amis",
+            "description": "Le hammam du marié a lieu avant le mariage, où ses amis et parents se réunissent. Ils se rendent au bain public ou se réunissent chez un parent.\n\nDes chansons folkloriques sont chantées, et de la nourriture et des bonbons sont servis. Le but est de remonter le moral du marié et de l'introduire dans l'atmosphère de joie et de célébration."
+        },
+        "feast": {
+            "title": "Festin de mariage",
+            "short": "Un grand déjeuner offert par la famille du marié aux invités",
+            "description": "La famille du marié organise un grand festin le jour du mariage ou avant. Des animaux sont abattus et de la nourriture est préparée en grandes quantités pour nourrir les villageois et les parents.\n\nLe festin est considéré comme un signe de générosité et de joie, et tout le monde y participe sans exception, dans le cadre des liens sociaux."
+        },
+        "zaffa": {
+            "title": "Zaffa palestinienne",
+            "short": "Une procession pour transporter la mariée avec chants et dabke",
+            "description": "La mariée quitte la maison de ses parents avec une zaffa populaire palestinienne. Les voitures sont décorées, des chansons traditionnelles sont chantées et des dabkes sont exécutés en chemin.\n\nLa famille et les amis participent à la procession jusqu'à la maison conjugale ou la salle de mariage. La zaffa est considérée comme l'un des moments les plus beaux et les plus joyeux du mariage."
+        }
+    }
+}

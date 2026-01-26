@@ -1,0 +1,61 @@
+{
+    "industriesPage": {
+        "title": "Palestinian Industries",
+        "details": {
+            "notFound": "Industry not found",
+            "backToList": "Back to industries list",
+            "backLabel": "Back to Industries",
+            "home": "Home",
+            "industries": "Traditional Industries",
+            "category": "Traditional Craft",
+            "about": "About this craft",
+            "backButton": "Back to Industries"
+        },
+        "items": {
+            "embroidery": {
+                "title": "Palestinian Embroidery",
+                "text": "The art of embroidery in Palestine is considered an integral part of Palestinian cultural heritage, characterized by its diversity, beauty, and artistic precision. It is an expressive medium where craftsmanship blends with artistic creativity and cultural traditions. Embroidery techniques in Palestine vary by region and include famous styles such as 'velvet embroidery', 'traditional dress embroidery', and 'mosaic embroidery'. It is used to decorate traditional dresses, abayas, tablecloths, pillows, handkerchiefs, and shawls. These embroidered pieces represent cultural identity, national belonging, and Palestinian heritage. This craft is concentrated in Ramallah, Jerusalem, Bethlehem, and Gaza. Charitable organizations specialized in embroidery employ women at home in surrounding villages, with an estimated 10,000 women working in the West Bank and Gaza Strip.\nMarketing is one of the most significant challenges facing this craft due to declining demand in the local market caused by high labor costs resulting from pure manual production. Additionally, the limited activity of organizations in this field, the lack of external market access due to inadequate experience or high export costs, and intense competition from similar Jordanian products sold at lower prices due to lower labor costs in Jordan are major obstacles."
+            },
+            "olive-wood": {
+                "title": "Olive Wood Industry",
+                "text": "The olive wood industry is one of the oldest traditional industries in Palestine, dating back to the 16th century. It emerged with the arrival of missionary missions to the Holy Land, starting with the manufacture of rosaries from olive seeds by Franciscan monks. This industry evolved into producing religious items marketed to Christian tourists in the Bethlehem area. Weak olive trees that no longer bear fruit are used, ensuring no damage to the agricultural sector. Before 1967, most wood was brought from Syria and Jordan; after the occupation, Ramallah and Nablus became the primary suppliers. There are 120 olive workshops in the West Bank employing approximately 600 workers. 95% of establishments are family-owned, often located within homes, inheriting skills from fathers and grandfathers, with skills acquired from childhood work.\nAnnual sales are distributed as follows: 60% sold locally to tourists, and 40% exported abroad, especially to Italy and Germany.\n"
+            },
+            "soap": {
+                "title": "Nabulsi Soap",
+                "text": "Nabulsi soap manufacturing is one of the oldest traditional industries in the city of Nablus, famous for several centuries. Nabulsi soap is worldwide renowned for its quality and purity, characterized by its natural and organic composition primarily based on olive oil, along with alkalis, water, and sometimes other natural materials like almond oil and laurel oil. These ingredients are carefully mixed and poured into special molds before setting and drying.\n\nNabulsi soap has effective yet gentle skin-cleansing properties and a fragrant scent. Nablus soap factories were affected by the 2002 Israeli invasion, which destroyed the Kanaan soap factory, one of the largest and most famous. Only a few (3-4) active factories remain today."
+            },
+            "earthenware": {
+                "title": "Ceramics Industry",
+                "text": "The history of the ceramics industry in Palestine dates back at least 400 years, introduced by the Turks during the restoration of Al-Aqsa Mosque in Jerusalem. The first factory was established in Jerusalem in 1922 and still operates today. Hebron is currently the leading Palestinian city in ceramic production, with its first factory established in 1962. The industry flourished over past decades, becoming synonymous with the city, with the number of factories reaching twenty-five. While factories in Bethlehem and Al-Bireh closed after the 2000 Intifada, as did ten factories in Hebron.\n\nApproximately 100 workers are employed in this industry, averaging 4-6 workers per establishment. 30% of production is marketed locally, 30% is exported to Israel, 20% to Arab countries (especially Jordan), and the remaining 20% is exported to Europe and America.\n\nRaw materials (clay and dyes) are imported from the Netherlands and Spain. Local attempts to produce raw materials were made, but costs were higher than imports due to the unavailability of necessary natural materials in Palestinian soil."
+            },
+            "glass": {
+                "title": "Handmade Glass Industry",
+                "text": "The traditional handmade glass industry has been known in Palestine since ancient times, developing significantly after the arrival of Islam with innovative colors and patterns. Products include a wide range of artistic pieces and home decorations such as vessels, trays, lamps, vases, mirrors, and stained glass. These products are prestigious and reflect Palestinian identity and manual skill. The industry is concentrated in Hebron, home to three factories using entirely manual techniques, while a factory in Nablus closed at the start of the Intifada."
+            },
+            "leather": {
+                "title": "Leather Industry",
+                "text": "The manufacturing of leather and leather sandals is mostly concentrated in the Hebron Governorate, relying on high craftsmanship and traditional skills. It provides a livelihood for many families in the city and surrounding areas, supporting the local economy and preserving cultural and artisanal heritage. However, it has suffered from poor economic conditions and instability; its golden age was between 1975 and 2000, followed by a decline due to political and economic realities."
+            },
+            "coincidences": {
+                "title": "Mother-of-Pearl Industry",
+                "text": "Most mother-of-pearl (nacre) workshops are distributed in the Bethlehem and Beit Sahour areas, producing artistic pieces and handmade items like jewelry and decorations. The Israeli occupation has caused a decline in this industry, with various taxes and fees increasing production costs. Local demand has also decreased due to the decline in tourism, leading to the closure of many workshops, with many moving to Jordan due to better conditions and incentives provided for such crafts."
+            },
+            "pottery": {
+                "title": "Pottery Industry",
+                "text": "\nPottery is one of the oldest traditional industries in Palestine, accompanying human civilizations for thousands of years. This craft is still practiced in Palestinian villages and regions as a family home-based activity, except for limited workshops in Hebron, Gaza, Jenin, and Tubas.\n\nDistribution of establishments:\n- 16 workshops in Hebron (96 workers)\n- 89 establishments in Gaza (50 workers)\n- 1 workshop in Jenin (6 workers)\n- 1 establishment in Tubas (4 workers)\n- 2 historical establishments in Irtah (8 workers)\n\nSimple equipment like the potter's wheel and wood-fired or diesel ovens are used, which causes environmental damage. 90% of products are exported to the Israeli market, with only 10% sold locally.\n"
+            },
+            "bamboo": {
+                "title": "Bamboo Industry",
+                "text": "\nThe bamboo industry is concentrated in Gaza City, with an additional factory in Beit Jala in the West Bank. It is considered one of the important heritage industries in Palestinian society.\n\nBamboo is characterized by strength, flexibility, and adaptability to climate conditions, making it suitable for many household and craft products such as light furniture, baskets, and everyday tools.\n"
+            },
+            "straw": {
+                "title": "Straw Crafts",
+                "text": "\nStraw-making activity is concentrated in cities and villages in central Palestine, with raw materials obtained locally where palm trees are abundant.\n\nWomen in homes produce these items for women's associations and committees. Straw products include baskets, mats, and storage tools, serving as an important source of income for rural families.\n"
+            },
+            "wax": {
+                "title": "Wax Industry",
+                "text": "\nThe candle industry is a traditional craft associated with the Christian religion in Palestine.\n\nThere are three factories in Bethlehem producing religious candles using traditional methods, as well as an establishment operating within a monastery in the Jericho area.\n\nThese candles are used in churches and religious rituals and are marketed to pilgrims and tourists.\n"
+            }
+        }
+    }
+}

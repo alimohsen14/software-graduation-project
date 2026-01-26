@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { traditionsData } from "../../data/traditionsData";
 import HeritageBackground from "../../ui/HeritageBackground";
 
@@ -61,6 +62,7 @@ const LibraryCard = ({
 // ================= Traditions Home Page =================
 export default function TraditionsHomePage() {
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation("traditions");
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const nextSlide = () => {
@@ -89,12 +91,12 @@ export default function TraditionsHomePage() {
         <HeritageBackground>
             <main
                 className="relative z-[2] min-h-[calc(100vh-165px)] flex flex-col items-center w-full"
-                dir="rtl"
+                dir={i18n.dir()}
             >
                 {/* ===== Header ===== */}
                 <header className="mt-16 md:mt-[100px] mb-10 md:mb-[80px] text-center px-4">
                     <h1 className="m-0 text-[#f5e7c6] text-2xl md:text-[clamp(24px,3vw,34px)] drop-shadow-[0_8px_25px_rgba(0,0,0,0.8)] font-bold">
-                        العادات والتقاليد الفلسطينية
+                        {t("pageTitle")}
                     </h1>
                 </header>
 
@@ -112,14 +114,14 @@ export default function TraditionsHomePage() {
 
                     {/* Card Container */}
                     <div className="relative w-full flex md:block overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar gap-4 py-8 md:h-[450px]">
-                        {traditionsData.map((card: any, index: number) => (
+                        {traditionsData.map((item, index: number) => (
                             <LibraryCard
-                                key={card.id}
-                                title={card.title}
-                                short={card.short}
-                                image={card.image}
+                                key={item.id}
+                                title={t(`items.${item.id}.title`)}
+                                short={t(`items.${item.id}.short`)}
+                                image={item.image}
                                 isActive={index === currentIndex}
-                                onClick={() => handleCardClick(card.id)}
+                                onClick={() => handleCardClick(item.id)}
                             />
                         ))}
                     </div>
@@ -151,9 +153,10 @@ export default function TraditionsHomePage() {
                     onClick={() => navigate("/heritage")}
                     className="mt-12 mb-20 px-8 py-2 rounded-full bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 transition-all text-sm"
                 >
-                    العودة للمكتبة
+                    {t("backButton")}
                 </button>
             </main>
         </HeritageBackground>
     );
 }
+

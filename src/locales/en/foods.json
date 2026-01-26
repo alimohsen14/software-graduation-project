@@ -1,0 +1,37 @@
+{
+    "pageTitle": "Traditional Palestinian Cuisine",
+    "backButton": "Back to Traditions",
+    "details": {
+        "titlePrefix": "📜 About this dish",
+        "backButton": "Back to Dishes List",
+        "homeButton": "Main Library",
+        "notFound": "Dish not found"
+    },
+    "items": {
+        "musakhan": {
+            "title": "Musakhan",
+            "shortDesc": "A famous Palestinian dish based on chicken, sumac, and olive oil.",
+            "fullDesc": "Musakhan is one of the most famous Palestinian dishes, consisting of Taboon bread dipped in olive oil, topped with chicken cooked with large amounts of onions and sumac. It is often served during olive harvest seasons, considered a symbol of Palestinian generosity and hospitality, and family members gather around it in a warm atmosphere."
+        },
+        "maqluba": {
+            "title": "Maqluba",
+            "shortDesc": "Rice, vegetables, and meat flipped in one dish when serving.",
+            "fullDesc": "Maqluba is a traditional dish consisting of layers of rice and vegetables such as eggplant or cauliflower, with meat or chicken. When serving, the pot is flipped upside down to appear beautiful and distinctive, hence its name. It is usually prepared for family occasions and banquets."
+        },
+        "maftoul": {
+            "title": "Maftoul",
+            "shortDesc": "Hand-rolled grains with chicken broth and chickpeas.",
+            "fullDesc": "Maftoul is similar to couscous but larger in size, prepared by hand from bulgur and flour. It is cooked with chicken broth, chickpeas, and onions and served hot, especially in winter. It is considered one of the dishes that require time and effort in preparation, and often women participate in its collective preparation."
+        },
+        "kanafeh": {
+            "title": "Nabulsi Kunafa",
+            "shortDesc": "A famous dessert with cheese and syrup from Nablus city.",
+            "fullDesc": "Nabulsi Kunafa is one of the most famous Palestinian and Arab sweets, consisting of a thin dough layer stuffed with white cheese and soaked in syrup. It is specifically associated with the city of Nablus and is served at weddings, occasions, and visits."
+        },
+        "kaak": {
+            "title": "Jerusalem Ka'ak",
+            "shortDesc": "Sesame-covered circular bread sold in the streets of Jerusalem.",
+            "fullDesc": "Jerusalem Ka'ak is a long sesame-covered circular bread sold in the streets of the Old City of Jerusalem. It is usually eaten with za'atar, cheese, or eggs, and is considered part of the daily life of the city's residents and visitors."
+        }
+    }
+}

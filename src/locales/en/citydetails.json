@@ -1,0 +1,1317 @@
+{
+    "labels": {
+        "location": "Location",
+        "area": "Area",
+        "naming": "Naming",
+        "history": "History",
+        "landmarks": "Landmarks",
+        "climate": "Climate",
+        "water": "Water",
+        "heritage": "Heritage",
+        "occupation": "Occupation",
+        "population": "Population",
+        "families": "Families",
+        "mosques": "Mosques",
+        "notableFigures": "Notable Figures",
+        "industry": "Industry",
+        "agriculture": "Agriculture",
+        "ruins": "Ruins",
+        "economy": "Economy",
+        "villages": "Some villages of the city:",
+        "cityNotFound": "City not found"
+    },
+    "cities": {
+        "qalqilya": {
+            "id": "qalqilya",
+            "name": "Qalqilya",
+            "sections": {
+                "location": "Located in the west of Palestine, it is the closest West Bank city to the Mediterranean coast (about 14 km). It is surrounded by the 'Green Line' on three sides and is about 82 km from Jerusalem.",
+                "area": "A border city that has suffered greatly from the 'Separation Wall'.",
+                "naming": "Its name is believed to have Roman or Greek roots, and some link it to the word 'Qal’a' (fortress).",
+                "history": "An ancient city inhabited by Canaanites, it was an important station on trade routes. It witnessed great struggle during the 1948 and 1967 wars and suffered from the confiscation of large areas of its land for settlement.",
+                "climate": "Moderate Mediterranean climate, with high rainfall.",
+                "water": "It sits above massive groundwater basins and relies on artesian wells for irrigation.",
+                "population": "The city's population is about 50,000.",
+                "economy": "Agriculture: Known as the 'Guava City', and for citrus, avocados, and greenhouse vegetables. Trade: It forms an important commercial center for the surrounding villages.",
+                "landmarks": "Qalqilya National Zoo\nSufi shrines\nOld mosques\nSeveral archaeological ruins like Khirbet Hanuta"
+            },
+            "villages": [
+                {
+                    "id": "azzun",
+                    "name": "Azzun"
+                },
+                {
+                    "id": "jayyus",
+                    "name": "Jayyus"
+                },
+                {
+                    "id": "kafr-thulth",
+                    "name": "Kafr Thulth"
+                },
+                {
+                    "id": "habla",
+                    "name": "Habla"
+                },
+                {
+                    "id": "al-funduq",
+                    "name": "Al-Funduq"
+                },
+                {
+                    "id": "jinsafut",
+                    "name": "Jinsafut"
+                },
+                {
+                    "id": "baqat-al-hatab",
+                    "name": "Baqat al-Hatab"
+                },
+                {
+                    "id": "falamya",
+                    "name": "Falamya"
+                },
+                {
+                    "id": "immatayn",
+                    "name": "Immatayn"
+                },
+                {
+                    "id": "kafr-laqif",
+                    "name": "Kafr Laqif"
+                },
+                {
+                    "id": "azzun-at-ma",
+                    "name": "Azzun Atme"
+                },
+                {
+                    "id": "saniriya",
+                    "name": "Saniriya"
+                },
+                {
+                    "id": "beit-amin",
+                    "name": "Beit Amin"
+                },
+                {
+                    "id": "islah",
+                    "name": "Islah"
+                },
+                {
+                    "id": "an-nabi-elyas",
+                    "name": "An-Nabi Elyas"
+                }
+            ]
+        },
+        "tulkarm": {
+            "id": "tulkarm",
+            "name": "Tulkarm",
+            "sections": {
+                "location": "Tulkarm is located in the northwestern West Bank, serving as a link between the coast and the mountains. It is about 15 km from the Mediterranean coast and 31 km from Nablus. It rises about 90 meters above sea level.",
+                "area": "A strategic location overlooking the coastal plain.",
+                "naming": "Its name consists of 'Tul' or 'Tur' (meaning mountain) and 'Karm' (meaning vineyard), so its name means 'Mountain of Vineyards' for its fame in grape cultivation.",
+                "history": "Founded by the Canaanites, it was an important station on trade and mail routes between Egypt and the Levant. It flourished in the Roman and Islamic eras. It was a district center in the Ottoman era and witnessed great struggle during the British Mandate.",
+                "climate": "Moderate Mediterranean climate, characterized by high humidity in summer and heavy rain in winter.",
+                "water": "It relies on large groundwater reserves (wells and springs like Ain al-Deir).",
+                "population": "The governorate's population is about 190,000.",
+                "economy": "Agriculture: One of the most fertile areas, famous for citrus, olives, vegetables, and greenhouses. Industry: Famous for food industries, plastics, paper, and trade due to its border location.",
+                "landmarks": "Khirbet Irtah\nShufa Castle\nOld Roman baths\nSeveral historical archaeological mounds"
+            },
+            "villages": [
+                {
+                    "id": "shuweika",
+                    "name": "Shuweika"
+                },
+                {
+                    "id": "iktaba",
+                    "name": "Iktaba"
+                },
+                {
+                    "id": "bal_a",
+                    "name": "Bal'a"
+                },
+                {
+                    "id": "deir-al-ghusun",
+                    "name": "Deir al-Ghusun"
+                },
+                {
+                    "id": "qaffin",
+                    "name": "Qaffin"
+                },
+                {
+                    "id": "atill",
+                    "name": "Attil"
+                },
+                {
+                    "id": "zeita",
+                    "name": "Zeita"
+                },
+                {
+                    "id": "khukhma",
+                    "name": "Khukhma"
+                },
+                {
+                    "id": "anabta",
+                    "name": "Anabta"
+                },
+                {
+                    "id": "kafr-al-labad",
+                    "name": "Kafr al-Labad"
+                },
+                {
+                    "id": "kuran",
+                    "name": "Kur"
+                },
+                {
+                    "id": "saffarin",
+                    "name": "Saffarin"
+                },
+                {
+                    "id": "kafr-zibad",
+                    "name": "Kafr Zibad"
+                },
+                {
+                    "id": "kafr-abbush",
+                    "name": "Kafr Abbush"
+                },
+                {
+                    "id": "al-ras",
+                    "name": "Al-Ras"
+                },
+                {
+                    "id": "faraun",
+                    "name": "Far'un"
+                },
+                {
+                    "id": "kafr-sur",
+                    "name": "Kafr Sur"
+                },
+                {
+                    "id": "kafr-jamal",
+                    "name": "Kafr Jamal"
+                },
+                {
+                    "id": "nazlat-issa",
+                    "name": "Nazlat Issa"
+                },
+                {
+                    "id": "nazlat-abu-nar",
+                    "name": "Nazlat Abu Nar"
+                },
+                {
+                    "id": "baqa-ash-sharqiya",
+                    "name": "Baqa ash-Sharqiya"
+                },
+                {
+                    "id": "al-nazla-al-sharqiya",
+                    "name": "An-Nazla al-Sharqiya"
+                },
+                {
+                    "id": "al-nazla-al-wusta",
+                    "name": "An-Nazla al-Wusta"
+                },
+                {
+                    "id": "al-nazla-al-gharbiya",
+                    "name": "An-Nazla al-Gharbiya"
+                },
+                {
+                    "id": "ramin",
+                    "name": "Ramin"
+                },
+                {
+                    "id": "tulkarm-camp",
+                    "name": "Tulkarm Camp"
+                },
+                {
+                    "id": "nur-shams-camp",
+                    "name": "Nur Shams Camp"
+                }
+            ]
+        },
+        "ramallah": {
+            "id": "ramallah",
+            "name": "Ramallah",
+            "sections": {
+                "location": "Ramallah is located in the center of Palestine in the Jerusalem Mountains, about 15 km from Jerusalem. It is nicknamed the 'Bride of Palestine' for its natural beauty and urban prosperity.",
+                "area": "Ramallah is witnessing significant urban expansion and is currently an important administrative and political center.",
+                "naming": "The word Ramallah means 'God willed' or 'God decreed'. It is said that 'Ram' means height or plateau in Canaanite.",
+                "history": "A historical city inhabited by the Haddadin clan in the 16th century AD. It witnessed rapid growth in the 20th century to become one of the most important cultural and political centers in Palestine.",
+                "climate": "Moderate mountain climate in summer and cold in winter, with occasional snowfall.",
+                "water": "It relies on modern water networks and groundwater sources through the Jerusalem District Water Company.",
+                "population": "The population of Ramallah and al-Bireh Governorate is about 350,000.",
+                "industry": "It is a major economic and commercial center, famous for food industries, paper, plastic, trade, and financial services.",
+                "landmarks": "The Old City, Ramallah Recreational Complex, Cultural Palace, Mahmoud Darwish Shrine, and the French Tower."
+            },
+            "villages": [
+                {
+                    "id": "al-bireh",
+                    "name": "Al-Bireh"
+                },
+                {
+                    "id": "beitunia",
+                    "name": "Beitunia"
+                },
+                {
+                    "id": "birzeit",
+                    "name": "Birzeit"
+                },
+                {
+                    "id": "nilin",
+                    "name": "Ni'lin"
+                },
+                {
+                    "id": "qibya",
+                    "name": "Qibya"
+                },
+                {
+                    "id": "sinjil",
+                    "name": "Sinjil"
+                },
+                {
+                    "id": "silwad",
+                    "name": "Silwad"
+                },
+                {
+                    "id": "mazraat-al-sharqiya",
+                    "name": "Mazra'at al-Sharqiya"
+                },
+                {
+                    "id": "jifna",
+                    "name": "Jifna"
+                },
+                {
+                    "id": "atara",
+                    "name": "Atara"
+                },
+                {
+                    "id": "deir-dibwan",
+                    "name": "Deir Dibwan"
+                },
+                {
+                    "id": "burham",
+                    "name": "Burham"
+                },
+                {
+                    "id": "aboud",
+                    "name": "Aboud"
+                },
+                {
+                    "id": "taybeh",
+                    "name": "Taybeh"
+                },
+                {
+                    "id": "beit-ur-al-fauka",
+                    "name": "Beit Ur al-Fauqa"
+                },
+                {
+                    "id": "beit-ur-al-tahta",
+                    "name": "Beit Ur al-Tahta"
+                }
+            ]
+        },
+        "nablus": {
+            "id": "nablus",
+            "name": "Nablus",
+            "sections": {
+                "location": "Located in the northern West Bank, between Mount Ebal and Mount Gerizim. It's 69 km from Jerusalem and 42 km from the Mediterranean.",
+                "area": "One of the largest Palestinian cities with a wide urban area and mountainous terrain.",
+                "naming": "Named 'Neapolis' (New City) by the Romans, which was Arabized to 'Nablus'. It's nicknamed 'Mountain of Fire'.",
+                "history": "Ancient Canaanite city (Shechem). Throughout its long history, it was an administrative and economic center for northern Palestine. Famous for its resistance and resilience.",
+                "climate": "Moderate Mediterranean climate, with mild summers and cold, rainy winters.",
+                "water": "Relies on many surrounding springs (like Ain al-Qaryun and Ain al-Asal) and artesian wells.",
+                "population": "Governorate population is about 400,000, city population is about 160,000.",
+                "industry": "Economic capital of Palestine: famous for Nabulsi soap, textiles, gold trade, and sweets (especially Knafeh Nabulsia).",
+                "landmarks": "Old City, Great Salahia Mosque, Al-Nasr Mosque, Jacob's Well, and Mount Gerizim (center of the Samaritan community)."
+            },
+            "villages": [
+                {
+                    "id": "asira-ash-shamaliya",
+                    "name": "Asira ash-Shamaliya"
+                },
+                {
+                    "id": "huwara",
+                    "name": "Huwara"
+                },
+                {
+                    "id": "beita",
+                    "name": "Beita"
+                },
+                {
+                    "id": "burqa",
+                    "name": "Burqa"
+                },
+                {
+                    "id": "sebastia",
+                    "name": "Sebastia"
+                },
+                {
+                    "id": "beit-furik",
+                    "name": "Beit Furik"
+                },
+                {
+                    "id": "beit-dajan",
+                    "name": "Beit Dajan"
+                },
+                {
+                    "id": "aqraba",
+                    "name": "Aqraba"
+                },
+                {
+                    "id": "salem",
+                    "name": "Salem"
+                },
+                {
+                    "id": "qusra",
+                    "name": "Qusra"
+                },
+                {
+                    "id": "qabalan",
+                    "name": "Qabalan"
+                },
+                {
+                    "id": "jamaein",
+                    "name": "Jama'ein"
+                },
+                {
+                    "id": "talfit",
+                    "name": "Talfit"
+                },
+                {
+                    "id": "awarta",
+                    "name": "Awarta"
+                },
+                {
+                    "id": "deir-sharaf",
+                    "name": "Deir Sharaf"
+                }
+            ]
+        },
+        "salfit": {
+            "id": "salfit",
+            "name": "Salfit",
+            "sections": {
+                "location": "Located in the central West Bank, north of Ramallah and south of Nablus. It rises about 520 meters above sea level.",
+                "area": "The center of Salfit Governorate, characterized by its mountainous nature and new urban expansion.",
+                "naming": "Canaanite name meaning 'Basket of Grapes' (Salm Fit), for its fame in viticulture in ancient times.",
+                "history": "Inhabited by Canaanites, it developed during the Islamic and Ottoman eras. It became an independent governorate under the Palestinian National Authority.",
+                "climate": "Moderate Mediterranean climate, and is considered one of the areas with abundant rainfall.",
+                "water": "Famous for its many springs (about 23 springs) but suffers from the occupation's confiscation of groundwater sources.",
+                "population": "City population is about 12,000 and governorate about 75,000.",
+                "industry": "Relies on agriculture (especially olives) and is famous for producing the best olive oil, also has wood and chemical industries.",
+                "landmarks": "Old City, Dar al-Darb archaeological site, Khirbet Jalal al-Din, and surrounding natural springs."
+            },
+            "villages": [
+                {
+                    "id": "az-zawiya",
+                    "name": "Az-Zawiya"
+                },
+                {
+                    "id": "biddya",
+                    "name": "Biddya"
+                },
+                {
+                    "id": "bruqin",
+                    "name": "Bruqin"
+                },
+                {
+                    "id": "deir-istiya",
+                    "name": "Deir Istiya"
+                },
+                {
+                    "id": "harris",
+                    "name": "Haris"
+                },
+                {
+                    "id": "kifl-haris",
+                    "name": "Kifl Haris"
+                },
+                {
+                    "id": "mas-ha",
+                    "name": "Mas-ha"
+                },
+                {
+                    "id": "marda",
+                    "name": "Marda"
+                },
+                {
+                    "id": "qasra",
+                    "name": "Qasra"
+                },
+                {
+                    "id": "qira",
+                    "name": "Qira"
+                },
+                {
+                    "id": "rafat",
+                    "name": "Rafat"
+                },
+                {
+                    "id": "sarta",
+                    "name": "Sarta"
+                },
+                {
+                    "id": "sarta-al-gharbiyya",
+                    "name": "Sarta al-Gharbiya"
+                },
+                {
+                    "id": "yasuf",
+                    "name": "Yasuf"
+                },
+                {
+                    "id": "wadi-qana",
+                    "name": "Wadi Qana"
+                }
+            ]
+        },
+        "gaza": {
+            "id": "gaza",
+            "name": "Gaza",
+            "sections": {
+                "location": "Located on the Mediterranean coast in southern Palestine, it is Palestine's gateway to Africa. It rises 45 meters above sea level.",
+                "area": "One of the most densely populated cities in the world, the area of Gaza City alone is about 45 square km.",
+                "naming": "Its name is Canaanite meaning 'strong' or 'invincible'. Arabs called it 'Gaza Hashim' because Hashim bin Abd Manaf was buried there.",
+                "history": "One of the oldest cities in the world (over 5000 years). Successive civilizations: Pharaohs, Canaanites, Persians, Greeks, Romans, Muslims, then Crusaders. It came under Egyptian administration after 1948 then was occupied by Israel in 1967.",
+                "climate": "Mediterranean climate: warm with mild winters, and high humidity in summer.",
+                "water": "Relies on the coastal aquifer, suffers from a severe water crisis and pollution due to the siege and aggression.",
+                "population": "Gaza Governorate population is about 700,000, and the Strip as a whole more than 2 million.",
+                "industry": "Relies on agriculture (citrus, strawberries), fishing, trade, and light industries (textiles and furniture).",
+                "landmarks": "Great Omari Mosque, Church of Saint Porphyrius, Barquq Castle, and historical Qaysariya Market."
+            },
+            "villages": [
+                {
+                    "id": "jabalia",
+                    "name": "Jabalia"
+                },
+                {
+                    "id": "beit-lahia",
+                    "name": "Beit Lahia"
+                },
+                {
+                    "id": "beit-hanoun",
+                    "name": "Beit Hanoun"
+                },
+                {
+                    "id": "khan-yunis",
+                    "name": "Khan Yunis"
+                },
+                {
+                    "id": "rafah",
+                    "name": "Rafah"
+                },
+                {
+                    "id": "deir-al-balah",
+                    "name": "Deir al-Balah"
+                },
+                {
+                    "id": "al-shati-camp",
+                    "name": "Al-Shati Camp"
+                },
+                {
+                    "id": "al-bureij",
+                    "name": "Al-Bureij Camp"
+                },
+                {
+                    "id": "al-maghazi",
+                    "name": "Al-Maghazi Camp"
+                },
+                {
+                    "id": "al-nuseirat",
+                    "name": "Al-Nuseirat Camp"
+                }
+            ]
+        },
+        "nazareth": {
+            "id": "nazareth",
+            "name": "Nazareth",
+            "sections": {
+                "location": "Located in the Galilee region of northern Palestine, in a depression surrounded by mountains. It is 105 km from Jerusalem and 30 km from Tiberias.",
+                "area": "Nazareth is today considered the largest Arab city inside the 1948 occupied territories.",
+                "naming": "The name's origin refers to 'The Victorious' or 'The Winner'. Known as the City of the Annunciation for its link to the birth of Christ.",
+                "history": "A very ancient city, witness to major Christian events. Remained a purely Arab city throughout history. After 1948, it came under Israeli occupation and formed a cultural and national center for Palestinians inside.",
+                "climate": "Moderate Mediterranean mountain climate: mild in summer and cold/rainy in winter.",
+                "water": "Famous for 'Mary's Well' (Ain al-Adhra) which was the primary source of water in ancient times.",
+                "population": "City population is about 80,000, and with its suburbs forms a large population center.",
+                "industry": "Relies on religious tourism (Christian pilgrimage), trade, traditional crafts, and educational/health services.",
+                "landmarks": "Church of the Annunciation, Church of St. Joseph, White Mosque, Old City, and Mary's Well."
+            },
+            "villages": [
+                {
+                    "id": "reineh",
+                    "name": "Reineh"
+                },
+                {
+                    "id": "yafa-an-naseriyya",
+                    "name": "Yafa an-Naseriyya"
+                },
+                {
+                    "id": "ikt",
+                    "name": "Iksal"
+                },
+                {
+                    "id": "kafr-kanna",
+                    "name": "Kafr Kanna"
+                },
+                {
+                    "id": "ain-mahel",
+                    "name": "Ain Mahel"
+                },
+                {
+                    "id": "mashhad",
+                    "name": "Mashhad"
+                },
+                {
+                    "id": "tur-an",
+                    "name": "Tur'an"
+                },
+                {
+                    "id": "eilut",
+                    "name": "Eilut"
+                }
+            ]
+        },
+        "jenin": {
+            "id": "jenin",
+            "name": "Jenin",
+            "sections": {
+                "location": "Located in the far north of the West Bank, overlooking the Marj Ibn Amer plain. It's 75 km from Jerusalem and 43 km from Haifa.",
+                "area": "Features a strategic location as a link between Nablus mountains, the coastal plain, and Galilee.",
+                "naming": "Canaanite origin 'Engannim' meaning 'Spring of Gardens' for its many orchards and water.",
+                "history": "Founded by Canaanite tribes. Witnessed decisive battles against invaders throughout history (especially 1948 battle against Zionist gangs). Nicknamed 'Jenin al-Qassam'.",
+                "climate": "Moderate Mediterranean climate, hot/dry in summer and cold/rainy in winter.",
+                "water": "Relies on groundwater and artesian wells, famous for its abundant flowing water in ancient times.",
+                "population": "Jenin Governorate population is about 330,000, and the city about 50,000.",
+                "industry": "Known as the 'Food Basket of Palestine' for its huge agricultural production (watermelon, vegetables, olives), and active trade with the Palestinian interior.",
+                "landmarks": "Jenin Grand Mosque (Fatima Khatun), Burqin Church (4th oldest), Jenin Camp, and Bal'ama archaeological tunnel."
+            },
+            "villages": [
+                {
+                    "id": "qabatiya",
+                    "name": "Qabatiya"
+                },
+                {
+                    "id": "arraba",
+                    "name": "Arraba"
+                },
+                {
+                    "id": "ya_bad",
+                    "name": "Ya'bad"
+                },
+                {
+                    "id": "silat-al-harithiya",
+                    "name": "Silat al-Harithiya"
+                },
+                {
+                    "id": "kafr-ra_i",
+                    "name": "Kafr Ra'i"
+                },
+                {
+                    "id": "jaba",
+                    "name": "Jaba'"
+                },
+                {
+                    "id": "meithalun",
+                    "name": "Meithalun"
+                },
+                {
+                    "id": "al-yamun",
+                    "name": "Al-Yamun"
+                },
+                {
+                    "id": "silat-adh-dhahr",
+                    "name": "Silat adh-Dhahr"
+                },
+                {
+                    "id": "burqin",
+                    "name": "Burqin"
+                },
+                {
+                    "id": "an-nazla",
+                    "name": "An-Nazla"
+                },
+                {
+                    "id": "al-fandaqumiya",
+                    "name": "Al-Fandaqumiya"
+                }
+            ]
+        },
+        "jaffa": {
+            "id": "jaffa",
+            "name": "Jaffa",
+            "sections": {
+                "location": "Located on the Mediterranean coast, about 55 km west of Jerusalem. At an altitude of 35 meters, it is Palestine's maritime gateway and a major trade port throughout history.",
+                "area": "A coastal city with a strategic Mediterranean location, its port has been a main trade center for thousands of years.",
+                "naming": "The name Jaffa is Canaanite in origin, meaning 'the beautiful' or 'fair view'. Its name has been associated with beauty and splendor across civilizations.",
+                "history": "BC: First settled by Canaanites, then occupied by Persians, Alexander the Great in 331 BC, and Romans in 63 BC. AD: Became a Byzantine province in the 4th century, then Muslim in the 7th century under Amr ibn al-Aas. Fell to Zionists in 1948 and remains under occupation.",
+                "climate": "Moderate Mediterranean climate, relatively hot summers and mild rainy winters.",
+                "water": "Historically relies on coastal wells and groundwater sources.",
+                "population": "Arab population is currently estimated at about 25,000, alongside about 120,000 Jews. Despite Hebraization, the city retains its Arab landmarks.",
+                "industry": "Famous for citrus cultivation, especially the Jaffa orange exported worldwide. Industries like paper, plastic, glass, and soap flourished, alongside port-related trade and tourism.",
+                "mosques": "Jaffa Great Mosque, Hassan Bek Mosque, Sea Mosque, Ajami Mosque, Sheikh Raslan Mosque, Dabbagh Mosque, Siksik Mosque, Baraka Mosque, Jabaliya Mosque.",
+                "landmarks": "Clock Square, Al-Eid Square, Old Turkish Baths, Ottoman Saraya, Mahmoudiya Fountain, Citadel Church, and various monasteries and churches."
+            },
+            "villages": [
+                {
+                    "id": "abu-kabir",
+                    "name": "Abu Kabir"
+                },
+                {
+                    "id": "abu-shusha-arab",
+                    "name": "Abu Shusha (Arab)"
+                },
+                {
+                    "id": "arsuf",
+                    "name": "Arsuf"
+                },
+                {
+                    "id": "ijlil-al-qibliya",
+                    "name": "Ijlil al-Qibliya"
+                },
+                {
+                    "id": "ijlil-ash-shamaliya",
+                    "name": "Ijlil ash-Shamaliya"
+                },
+                {
+                    "id": "al-jammasin-al-gharbi",
+                    "name": "Al-Jammasin al-Gharbi"
+                },
+                {
+                    "id": "al-jammasin-ash-sharqi",
+                    "name": "Al-Jammasin ash-Sharqi"
+                },
+                {
+                    "id": "istafiya",
+                    "name": "Istafiya"
+                },
+                {
+                    "id": "as-sawalima-arab",
+                    "name": "As-Sawalima (Arab)"
+                },
+                {
+                    "id": "ash-sheikh-muannis",
+                    "name": "Ash-Sheikh Muannis"
+                },
+                {
+                    "id": "al-qala",
+                    "name": "Al-Qala"
+                },
+                {
+                    "id": "beit-dajan",
+                    "name": "Beit Dajan"
+                },
+                {
+                    "id": "jarisha",
+                    "name": "Jarisha"
+                },
+                {
+                    "id": "hay-abu-kabir",
+                    "name": "Hay Abu Kabir"
+                },
+                {
+                    "id": "sarona",
+                    "name": "Sarona"
+                },
+                {
+                    "id": "zubina",
+                    "name": "Zubina"
+                },
+                {
+                    "id": "ras-al-ain",
+                    "name": "Ras al-Ain"
+                },
+                {
+                    "id": "fajja",
+                    "name": "Fajja"
+                },
+                {
+                    "id": "arab-ash-shubaki",
+                    "name": "Arab ash-Shubaki"
+                },
+                {
+                    "id": "salama",
+                    "name": "Salama"
+                },
+                {
+                    "id": "yalama",
+                    "name": "Yalama"
+                },
+                {
+                    "id": "mulabbis",
+                    "name": "Mulabbis"
+                },
+                {
+                    "id": "kafr-ana",
+                    "name": "Kafr 'Ana"
+                }
+            ]
+        },
+        "akka": {
+            "id": "akka",
+            "name": "Akka",
+            "sections": {
+                "location": "One of Palestine's oldest cities, located on the Mediterranean coast, about 181 km northwest of Jerusalem. Its strategic location aided trade and cultural contact. Founded by Phoenicians in the 3rd millennium BC and called 'Akko', meaning hot sand.",
+                "naming": "Ancient name 'Akko', a Phoenician name meaning hot sand, which morphed into 'Akka' over ages.",
+                "history": "Conquered by Muslim leader Shurahbil ibn Hasana in 16 AH. In 20 AH, Muawiya established a shipyard there. In the 18th century, it was ruled by Zahir al-Umar. In 1799, Napoleon's campaign failed to capture the city. Fell to Zionists in 1948 after battles and massacres.",
+                "population": "Before 1948, most inhabitants were Arab Muslims. Today, Palestinians make up about 35% of the population.",
+                "industry": "Famous for several economic activities: glass making, dye industry, fishing, and traditional sweets/foods like Tamriya and Hawari cake.",
+                "landmarks": "Al-Jazzar Walls, Khan al-Umdan, Hammams, Old Saray, White Market, Pasha Hammam, Khan al-Ifranj, and Akka Castle."
+            },
+            "villages": [
+                {
+                    "id": "al-damun",
+                    "name": "Al-Damun"
+                },
+                {
+                    "id": "al-jdeida",
+                    "name": "Al-Jadeeda"
+                },
+                {
+                    "id": "tell-al-manshiyya",
+                    "name": "Tell al-Manshiyya"
+                },
+                {
+                    "id": "al-husayniyya",
+                    "name": "Al-Husayniyya"
+                },
+                {
+                    "id": "al-ruways",
+                    "name": "Al-Ruways"
+                },
+                {
+                    "id": "al-zib",
+                    "name": "Al-Zib"
+                },
+                {
+                    "id": "al-samiriya",
+                    "name": "Al-Samiriya"
+                },
+                {
+                    "id": "al-ghabisiya",
+                    "name": "Al-Ghabisiya"
+                },
+                {
+                    "id": "al-shaykh-danun",
+                    "name": "Al-Shaykh Danun"
+                },
+                {
+                    "id": "al-shaykh-dawud",
+                    "name": "Al-Shaykh Dawud"
+                },
+                {
+                    "id": "al-kabri",
+                    "name": "Al-Kabri"
+                },
+                {
+                    "id": "al-mazra_a",
+                    "name": "Al-Mazra'a"
+                },
+                {
+                    "id": "al-kamana",
+                    "name": "Al-Kamana"
+                },
+                {
+                    "id": "al-mansura",
+                    "name": "Al-Mansura"
+                },
+                {
+                    "id": "al-nabi-rubin",
+                    "name": "Al-Nabi Rubin"
+                },
+                {
+                    "id": "al-amudat",
+                    "name": "Al-Amudiyat"
+                },
+                {
+                    "id": "tarshiha",
+                    "name": "Tarshiha"
+                }
+            ]
+        },
+        "hebron": {
+            "id": "hebron",
+            "name": "Hebron",
+            "sections": {
+                "location": "Located in the southern West Bank, 35 km south of Jerusalem. One of the world's oldest cities with history over 6000 years, built by Canaanites as 'Kiriath Arba'.",
+                "population": "Governorate population reached about 782,227 in 2021. The city is the center with about 162,315 inhabitants. The Old City is inhabited by about 10,000 Palestinians under heavy military presence.",
+                "naming": "Named after Prophet Ibrahim (Abraham), known as 'Al-Khalil' (the Friend of God), who stayed as a guest there in 1900 BC.",
+                "economy": "Palestinian economic capital. Famous for glass making, ceramics, shoes, stone cutting, and food/chemical industries. Its agricultural products include grapes and olives.",
+                "occupation": "Occupied in 1967. Settlement outposts were established inside Arab neighborhoods. The Ibrahimi Mosque was divided after the 1994 massacre. Shuhada Street remains closed, cutting the Old City's heart."
+            },
+            "villages": [
+                {
+                    "id": "idna",
+                    "name": "Idna"
+                },
+                {
+                    "id": "al-burj",
+                    "name": "Al-Burj"
+                },
+                {
+                    "id": "al-baqa",
+                    "name": "Al-Baqa"
+                },
+                {
+                    "id": "al-buwib",
+                    "name": "Al-Buwib"
+                },
+                {
+                    "id": "al-jabba",
+                    "name": "Al-Jaba'"
+                },
+                {
+                    "id": "al-dawaymeh",
+                    "name": "Al-Dawayima"
+                },
+                {
+                    "id": "al-ramo",
+                    "name": "Al-Ramo"
+                },
+                {
+                    "id": "al-samu",
+                    "name": "Al-Samu'"
+                },
+                {
+                    "id": "al-zahiriyya",
+                    "name": "Adh-Dhahiriya"
+                },
+                {
+                    "id": "imarish",
+                    "name": "Imarish"
+                },
+                {
+                    "id": "beit-ammar",
+                    "name": "Beit Ummar"
+                },
+                {
+                    "id": "beit-awwa",
+                    "name": "Beit 'Awwa"
+                },
+                {
+                    "id": "beit-kahil",
+                    "name": "Beit Kahil"
+                },
+                {
+                    "id": "beit-ula",
+                    "name": "Beit Ula"
+                },
+                {
+                    "id": "bani-naim",
+                    "name": "Bani Na'im"
+                },
+                {
+                    "id": "tarqumiya",
+                    "name": "Tarqumiya"
+                },
+                {
+                    "id": "dura",
+                    "name": "Dura"
+                },
+                {
+                    "id": "halhul",
+                    "name": "Halhul"
+                },
+                {
+                    "id": "yatta",
+                    "name": "Yatta"
+                }
+            ]
+        },
+        "tubas": {
+            "id": "tubas",
+            "name": "Tubas",
+            "sections": {
+                "location": "Located 21 km northeast of Nablus, 45 km from the Jordan River, and 330 meters above sea level.",
+                "naming": "Of ancient Canaanite origin 'Tabaas', known to Romans as 'Thebes'. Named 'Tubas' by Arabs after the Islamic conquest.",
+                "history": "Built on the ruins of the Canaanite town 'Tabaas' (meaning radiance). Mentioned in Roman times as 'Thebes' on the road between Nablus and Beisan. Became a district center in 1965.",
+                "population": "Population grew from about 5,500 in 1945 to about 16,000 in 2007 according to PCBS.",
+                "economy": "Primarily agricultural: grains, vegetables, olives, grapes, almonds, figs, and livestock. Commercial activity involves basic goods for neighboring villages.",
+                "ruins": "Tell al-Radgha, Khirbet Jabaris, Khirbet Salhab, Tell al-Hamma, and Khirbet Aynun."
+            },
+            "villages": [
+                {
+                    "id": "aqaba",
+                    "name": "Aqaba"
+                },
+                {
+                    "id": "bardala",
+                    "name": "Bardala"
+                },
+                {
+                    "id": "tayasir",
+                    "name": "Tayasir"
+                },
+                {
+                    "id": "tammun",
+                    "name": "Tammun"
+                }
+            ]
+        },
+        "jerusalem": {
+            "id": "jerusalem",
+            "name": "Jerusalem",
+            "sections": {
+                "location": "Located in the heart of Palestine, on central hills between the Mediterranean and the Dead Sea. Rises 750 meters above sea level. It is the first Qibla for Muslims and the place of Ascension.",
+                "area": "The area of Jerusalem Municipality (East and West) is about 126 sq km, and it is the largest Palestinian city in area and population.",
+                "naming": "Jebusite origin 'Urusalim' meaning 'City of Peace'. Called 'Beit al-Maqdis', 'Al-Quds al-Sharif' and 'Aelia'.",
+                "history": "One of the oldest cities on Earth (5000 years). Built by Jebusites. Conquered by Muslims during Omar ibn al-Khattab's era. Ruled by Ayyubids, Mamluks, Ottomans. Fell to British mandate then Israeli occupation (West 1948 and East 1967).",
+                "climate": "Mountainous Mediterranean climate: mild summers and cold, rainy winters.",
+                "water": "Relied on mountain springs in ancient times and modern water networks today.",
+                "population": "Jerusalem Governorate population is about 450,000 Palestinians, suffering from the wall and restrictions.",
+                "industry": "Mainly relies on religious tourism, traditional crafts, food industries, and textiles.",
+                "landmarks": "Al-Aqsa Mosque, Dome of the Rock, Church of the Holy Sepulchre, Buraq Wall, Jerusalem Walls and Gates (Damascus Gate), and Mount of Olives."
+            },
+            "villages": [
+                {
+                    "id": "abu-dis",
+                    "name": "Abu Dis"
+                },
+                {
+                    "id": "abu-ghosh",
+                    "name": "Abu Ghosh"
+                },
+                {
+                    "id": "isawiya",
+                    "name": "Isawiya"
+                },
+                {
+                    "id": "al-eizariya",
+                    "name": "Al-Eizariya"
+                },
+                {
+                    "id": "anata",
+                    "name": "Anata"
+                },
+                {
+                    "id": "bir-nabala",
+                    "name": "Bir Nabala"
+                },
+                {
+                    "id": "biddu",
+                    "name": "Biddu"
+                },
+                {
+                    "id": "beit-hanina",
+                    "name": "Beit Hanina"
+                },
+                {
+                    "id": "shuafat",
+                    "name": "Shuafat"
+                },
+                {
+                    "id": "qalandiya",
+                    "name": "Qalandiya"
+                },
+                {
+                    "id": "lifta",
+                    "name": "Lifta"
+                },
+                {
+                    "id": "al-ram",
+                    "name": "Al-Ram"
+                },
+                {
+                    "id": "mukhmas",
+                    "name": "Mukhmas"
+                }
+            ]
+        },
+        "jericho": {
+            "id": "jericho",
+            "name": "Jericho",
+            "sections": {
+                "location": "Located in the Jordan Valley, it is the lowest city in the world (about 258 meters below sea level). About 36 km east of Jerusalem and 7 km west of the Jordan River.",
+                "area": "An ancient city and an important tourism and historical center.",
+                "naming": "'Jericho' is a Canaanite word meaning 'fragrance' or 'scented', and it was nicknamed 'City of Palms'.",
+                "history": "One of the world's oldest cities (10,000 years old). Inhabited by Canaanites and successive civilizations, its land contains ruins from various eras (Stone, Bronze, Byzantine, and Islamic).",
+                "climate": "Tropical climate: very hot in summer and mild in winter, making it a winter resort for Palestinians.",
+                "water": "Famous for its springs, most importantly Ain as-Sultan and Ain Duyuk.",
+                "population": "City and suburbs population estimated at 30,000-40,000.",
+                "economy": "Agriculture is the primary sector, famous for: palms (dates), bananas, citrus, and vegetables. Tourism is also a main income source due to archaeological landmarks.",
+                "landmarks": "Tell as-Sultan (Ancient Jericho), Hisham's Palace, Mount of Temptation (Qarantal), St. George's Monastery (Wadi Qelt), and the Russian Museum."
+            },
+            "villages": [
+                {
+                    "id": "al-auja",
+                    "name": "Al-Auja"
+                },
+                {
+                    "id": "al-nuweima",
+                    "name": "Al-Nuweima"
+                },
+                {
+                    "id": "al-jiftlik",
+                    "name": "Al-Jiftlik"
+                },
+                {
+                    "id": "fasayil",
+                    "name": "Fasayil"
+                },
+                {
+                    "id": "ain-as-sultan",
+                    "name": "Ain as-Sultan"
+                },
+                {
+                    "id": "aqabat-jaber",
+                    "name": "Aqabat Jaber"
+                }
+            ]
+        },
+        "lydd": {
+            "id": "lydd",
+            "name": "Lydd",
+            "sections": {
+                "location": "Located southeast of Jaffa (15 km) and near Ramla (5 km). Rises 50 meters above sea level. An important transport hub where railways, coastal, and interior roads meet.",
+                "naming": "Named after the ancient Lydians. Known as 'Lydda' in the Greek era and 'Diospolis' in the Roman era.",
+                "history": "One of the oldest cities, inhabited by Natufians 12,000 years ago. Conquered by Amr ibn al-Aas in 636 AD and was the capital of Jund Filastin. It witnessed major struggle and the displacement of most of its population in the Dahmash Mosque massacre in 1948.",
+                "population": "Its current population is about 75,000, with Arabs making up about 27%.",
+                "landmarks": "Dahmash Mosque, Great Omari Mosque, Church of Saint George (Al-Khader), Jindas Bridge, Railway Station, and Lydda Airport."
+            },
+            "villages": [
+                {
+                    "id": "majd-al-sadiq",
+                    "name": "Majd al-Sadiq"
+                },
+                {
+                    "id": "qula",
+                    "name": "Qula"
+                },
+                {
+                    "id": "al-muzayria",
+                    "name": "Al-Muzayri'a"
+                },
+                {
+                    "id": "beit-nabala",
+                    "name": "Beit Nabala"
+                },
+                {
+                    "id": "jimzu",
+                    "name": "Jimzu"
+                },
+                {
+                    "id": "naalin",
+                    "name": "Ni'lin"
+                },
+                {
+                    "id": "rentis",
+                    "name": "Rentis"
+                }
+            ]
+        },
+        "ramla": {
+            "id": "ramla",
+            "name": "Ramla",
+            "sections": {
+                "location": "Located 45 km from Jerusalem. Strategic location linking Jaffa and Jerusalem, and an important passage for trade and railways between Egypt and the Levant.",
+                "naming": "Named after the 'Raml' (sand) that surrounded its construction site.",
+                "history": "Founded by the Umayyad Caliph Suleiman ibn Abd al-Malik in 715 AD to be the capital of Jund Filastin. It was ruled by Abbasids, Crusaders, Ottomans, and fell to the occupation in 1948.",
+                "population": "The remaining Arab population in its old neighborhoods (like Al-Juwarish and Al-Ribat) and the city amounts to a few thousand after the displacement of most inhabitants.",
+                "landmarks": "The Great Mosque, The White Mosque and its famous minaret, Al-Anziya Pool, Prophet Salih Shrine, and ruins of Suleiman ibn Abd al-Malik's palace."
+            },
+            "villages": [
+                {
+                    "id": "abu-shusha",
+                    "name": "Abu Shusha"
+                },
+                {
+                    "id": "idna",
+                    "name": "Idna"
+                },
+                {
+                    "id": "al-burj",
+                    "name": "Al-Burj"
+                },
+                {
+                    "id": "al-qibab",
+                    "name": "Al-Qibab"
+                },
+                {
+                    "id": "anaba",
+                    "name": "Anaba"
+                },
+                {
+                    "id": "qatra",
+                    "name": "Qatra"
+                },
+                {
+                    "id": "majdal-yaba",
+                    "name": "Majdal Yaba"
+                }
+            ]
+        },
+        "tiberias": {
+            "id": "tiberias",
+            "name": "Tiberias",
+            "sections": {
+                "location": "Located in the northeast on the western shore of the Sea of Galilee, 160 km from Jerusalem.",
+                "naming": "Named Tiberias in honor of the Roman Emperor Tiberius Caesar. Built near the Canaanite city of Raqqa.",
+                "history": "Conquered by Shurahbil ibn Hasana in 634 AD and was the capital of Jund al-Urdun. Liberated by Saladin at Hattin. Seized by Zionists in 1948 with British help, and its Arab population was evacuated.",
+                "economy": "Famous for hot mineral baths for healing, fishing from the lake, agriculture, and tourism.",
+                "landmarks": "The Sea of Galilee (Lake Tiberias), mineral baths, Sea Mosque, Bridge Mosque, historical shrines and tombs."
+            },
+            "villages": [
+                {
+                    "id": "al-hamma",
+                    "name": "Al-Hamma"
+                },
+                {
+                    "id": "al-shajara",
+                    "name": "Al-Shajara"
+                },
+                {
+                    "id": "hittin",
+                    "name": "Hittin"
+                },
+                {
+                    "id": "lubya",
+                    "name": "Lubya"
+                },
+                {
+                    "id": "kafr-kanna",
+                    "name": "Kafr Kanna"
+                },
+                {
+                    "id": "wadi-hamam",
+                    "name": "Wadi Hamam"
+                }
+            ]
+        },
+        "haifa": {
+            "id": "haifa",
+            "name": "Haifa",
+            "sections": {
+                "location": "A coastal city in northern Palestine on the Mediterranean, 159 km from Jerusalem. Bordered by Mount Carmel and contains Palestine's most important port.",
+                "naming": "From the word 'Hafa' meaning shore, or 'Haifa' meaning protected by the shadow of Mount Carmel.",
+                "history": "An ancient Canaanite city. Conquered by Muslims during the era of Omar ibn al-Khattab. Witnessed an urban renaissance during the Ottoman era. Fell in 1948 after the displacement of the vast majority of its Arab inhabitants.",
+                "economy": "An important maritime industrial and commercial center. Famous for its port, chemical industries, and agriculture (especially olives and citrus fruits in its surroundings).",
+                "landmarks": "Mount Carmel, Baha'i sites (Baha'i Gardens), Istiqlal Mosque, Carmelite Monastery Church, and Clock Tower."
+            },
+            "villages": [
+                {
+                    "id": "ijzim",
+                    "name": "Ijzim"
+                },
+                {
+                    "id": "ibtin",
+                    "name": "Ibtin"
+                },
+                {
+                    "id": "al-sindiyana",
+                    "name": "Al-Sindiyana"
+                },
+                {
+                    "id": "al-tantura",
+                    "name": "Al-Tantura"
+                },
+                {
+                    "id": "jisar-al-zarqa",
+                    "name": "Jisar al-Zarqa"
+                },
+                {
+                    "id": "tirat-haifa",
+                    "name": "Tirat Haifa"
+                }
+            ]
+        },
+        "safad": {
+            "id": "safad",
+            "name": "Safad",
+            "sections": {
+                "location": "Located in the far north of Palestine, near Mount Jarmaq (the highest mountain in Palestine). An ancient Canaanite city rising significantly above sea level.",
+                "naming": "From the Canaanite word 'Safat' meaning giving or binding. Known to Romans as 'Sepph' (the fortified castle).",
+                "history": "Liberated by Saladin in 1188. It was an important administrative and postal center in the Mamluk era. Fell to Zionist gangs in 1948 and its population was completely displaced.",
+                "climate": "Mountainous climate: mild in summer and very cold in winter with regular snowfall.",
+                "landmarks": "Safad Castle, Mamluk mosques (Al-Younsi, Al-Ahmar), Sufi lodges, and its old quarters built with basalt stones."
+            },
+            "villages": [
+                {
+                    "id": "sasa",
+                    "name": "Sasa"
+                },
+                {
+                    "id": "safsaf",
+                    "name": "Safsaf"
+                },
+                {
+                    "id": "al-jauna",
+                    "name": "Al-Jauna"
+                },
+                {
+                    "id": "biriyya",
+                    "name": "Biriyya"
+                },
+                {
+                    "id": "firim",
+                    "name": "Firim"
+                }
+            ]
+        },
+        "bisan": {
+            "id": "bisan",
+            "name": "Bisan",
+            "sections": {
+                "location": "Located in the Jordan Valley east of Marj Ibn Amer. 38 km from Tiberias and 127 km from Jerusalem. An important link between the Jordan Valley and the interior.",
+                "naming": "Ancient Canaanite name 'Beit Shan'. Known in Greek as 'Scythopolis'.",
+                "history": "One of the oldest cities (6000 BC). Conquered by Muslims in 634 AD. It was an important commercial and administrative center across ages. Fell in the Nakba and was transformed into a city under occupation.",
+                "economy": "Depends on irrigated agriculture (vegetables, citrus, bananas) and the availability of water resources.",
+                "landmarks": "Roman Theater, ancient Tell Bisan, Roman Bridge, and many archaeological ruins."
+            },
+            "villages": [
+                {
+                    "id": "al-bira",
+                    "name": "Al-Bira"
+                },
+                {
+                    "id": "jabbul",
+                    "name": "Jabbul"
+                },
+                {
+                    "id": "shatta",
+                    "name": "Shatta"
+                },
+                {
+                    "id": "fawqa",
+                    "name": "Fawqa"
+                },
+                {
+                    "id": "kafr-misr",
+                    "name": "Kafr Misr"
+                }
+            ]
+        },
+        "bethlehem": {
+            "id": "bethlehem",
+            "name": "Bethlehem",
+            "sections": {
+                "location": "Located 10 km south of Jerusalem. A holy and international city associated with the birth of Jesus Christ.",
+                "naming": "Its name is Canaanite meaning 'House of Bread'.",
+                "history": "Founded by Canaanites (3000 BC). The Church of the Nativity was built in 326 AD. Conquered by Muslims during the era of Omar ibn al-Khattab. Witnessed great development as a world religious and tourism center.",
+                "economy": "Relies heavily on religious tourism, traditional crafts (olive wood and mother-of-pearl), and embroidery.",
+                "landmarks": "Church of the Nativity, Milk Grotto, Solomon's Pools, Bilal Mosque (Rachel's Tomb), Herodium Palace, and historical monasteries."
+            },
+            "villages": [
+                {
+                    "id": "beit-jala",
+                    "name": "Beit Jala"
+                },
+                {
+                    "id": "beit-sahour",
+                    "name": "Beit Sahour"
+                },
+                {
+                    "id": "al-khader",
+                    "name": "Al-Khader"
+                },
+                {
+                    "id": "artas",
+                    "name": "Artas"
+                },
+                {
+                    "id": "tuqu",
+                    "name": "Tuqu'"
+                },
+                {
+                    "id": "nahhalin",
+                    "name": "Nahhalin"
+                },
+                {
+                    "id": "battir",
+                    "name": "Battir"
+                }
+            ]
+        }
+    }
+}

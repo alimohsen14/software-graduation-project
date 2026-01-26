@@ -1,0 +1,22 @@
+{
+    "pageTitle": "Palestinian Customs and Traditions",
+    "backButton": "Back to Library",
+    "items": {
+        "wedding": {
+            "title": "Palestinian Wedding",
+            "short": "Marriage rituals and folk celebrations"
+        },
+        "mourning": {
+            "title": "Mourning in Palestine",
+            "short": "Social gatherings and customs"
+        },
+        "palestinian-food": {
+            "title": "Palestinian Food",
+            "short": "Most famous heritage dishes in Palestine"
+        },
+        "clothes": {
+            "title": "Palestinian Dress",
+            "short": "Our heritage in our dresses and kofiyya"
+        }
+    }
+}

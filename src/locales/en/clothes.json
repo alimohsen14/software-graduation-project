@@ -1,0 +1,27 @@
+{
+    "pageTitle": "Traditional Palestinian Clothing",
+    "backButton": "Back to Traditions",
+    "details": {
+        "titlePrefix": "📜 About this clothing",
+        "backButton": "Back to Clothing List",
+        "homeButton": "Main Library",
+        "notFound": "Item not found"
+    },
+    "items": {
+        "embroidered-dress": {
+            "title": "Embroidered Palestinian Dress",
+            "shortDesc": "Symbol of Palestinian identity and authentic hand embroidery.",
+            "fullDesc": "The embroidered Palestinian dress is one of the most important symbols of Palestinian heritage. Its patterns carry social and cultural connotations that express identity. Women used to embroider their dresses by hand with colored silk threads, and it is worn on occasions, weddings, and holidays."
+        },
+        "keffiyeh": {
+            "title": "Palestinian Keffiyeh",
+            "shortDesc": "Symbol of struggle and Palestinian national identity.",
+            "fullDesc": "The Palestinian Keffiyeh was used for protection from the sun and dust while working in the fields, then became a symbol of struggle and identity. It is worn today on national occasions, demonstrations, and cultural events."
+        },
+        "men-clothes": {
+            "title": "Traditional Men's Clothing",
+            "shortDesc": "The Qumbas, Hatta, and Abaya in daily life and occasions.",
+            "fullDesc": "Men used to wear the Qumbas with the Hatta or Keffiyeh, and sometimes the Abaya on formal occasions. This clothing reflects dignity and simplicity in traditional Palestinian society."
+        }
+    }
+}
