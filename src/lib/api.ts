@@ -1,33 +1,35 @@
 import axios from "axios";
 
 // ==========================================
-// DYNAMIC API CONFIGURATION
+// CENTRALIZED API CONFIGURATION
 // ==========================================
-// Dynamically determine the API base URL based on the current hostname.
-// This ensures that:
-// - http://localhost:3001 targets http://localhost:3000
-// - http://192.168.1.16:3001 targets http://192.168.1.16:3000
-// - http://10.0.2.2:3001 targets http://10.0.2.2:3000
-const getApiUrl = () => {
-    if (typeof window === "undefined") return process.env.REACT_APP_API_URL || "http://localhost:3000";
+// All API requests use this single axios instance.
+// The base URL is environment-driven for maximum flexibility:
+//
+// Local Dev:      VITE_API_URL=http://localhost:3000
+// LAN/Mobile:     VITE_API_URL=http://192.168.1.16:3000
+// Production:     VITE_API_URL=https://api.yourproductionsite.com
+//
+// This works seamlessly across:
+// - Desktop browsers
+// - Mobile browsers
+// - React Native WebViews
+// ==========================================
 
-    const host = window.location.hostname;
-    // If we're on localhost, use localhost
-    if (host === "localhost" || host === "127.0.0.1") {
-        return "http://localhost:3000";
-    }
+const API_URL = import.meta.env.VITE_API_URL;
 
-    // Otherwise, target the same host on port 3000
-    // This handles LAN IPs, Emulator IPs, and custom hostnames
-    return `http://${host}:3000/api`;
-};
+if (!API_URL) {
+    console.error(
+        "❌ VITE_API_URL is not defined. Please check your .env file.\n" +
+        "Example: VITE_API_URL=http://localhost:3000"
+    );
+}
 
-const API_URL = getApiUrl();
-console.log("Runtime API_URL:", API_URL);
+console.log("✅ API configured:", API_URL);
 
 const api = axios.create({
     baseURL: API_URL,
-    withCredentials: true,
+    withCredentials: true, // Required for cookie-based authentication
     headers: {
         "Content-Type": "application/json",
     },

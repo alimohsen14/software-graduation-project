@@ -15,9 +15,8 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    const [modelSrc, setModelSrc] = useState<string>(
-        window.innerWidth <= 768 ? "/models/soap-factory1.glb" : "/models/soap-factory.glb"
-    );
+    // ✅ Google Drive hosted 3D model (works for all devices)
+    const modelSrc = "https://drive.google.com/uc?export=download&id=1GD4fq4lpi6lMxEZ_9JgFLeI50La3qfn_";
 
     const [isDoorAnimating, setIsDoorAnimating] = useState(false);
     const [hotspot3Fade, setHotspot3Fade] = useState<"strong" | "faded">("strong");
@@ -182,13 +181,6 @@ function Soap3DModelViewer() {
             const width = window.innerWidth;
             const mobileMode = width <= 768;
             setIsMobile(mobileMode);
-
-            const newSrc = mobileMode ? "/models/soap-factory1.glb" : "/models/soap-factory.glb";
-            if (newSrc !== modelSrc) {
-                setModelSrc(newSrc);
-                setLoaded(false); // Reset loaded state for new model
-                setProgress(0);  // Reset progress bar
-            }
         };
 
         window.addEventListener("resize", handleResize);
@@ -201,7 +193,7 @@ function Soap3DModelViewer() {
             document.removeEventListener("mousemove", onBoxMouseMove);
             document.removeEventListener("mouseup", onBoxMouseUp);
         };
-    }, [modelSrc]);
+    }, []);
 
 
     // منع سكرول الصفحة أثناء zoom داخل الموديول
@@ -267,7 +259,7 @@ function Soap3DModelViewer() {
             el.removeEventListener("progress", onProgress);
             el.removeEventListener("load", onLoad);
         };
-    }, [modelSrc]); // Re-attach if src changes
+    }, []); // Model source is fixed (Google Drive URL)
 
 
     const getCameraPosition = (mv: any) => {

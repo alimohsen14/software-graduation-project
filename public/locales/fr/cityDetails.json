@@ -1,0 +1,136 @@
+{
+    "labels": {
+        "location": "Localisation géographique",
+        "area": "Superficie et terres",
+        "naming": "Raison du nommage",
+        "history": "Importance historique",
+        "climate": "Climat",
+        "water": "Sources d'eau",
+        "population": "Population",
+        "industry": "Industrie et économie",
+        "landmarks": "Monuments historiques",
+        "families": "Familles notables",
+        "mosques": "Mosquées",
+        "ruins": "Antiquités et ruines",
+        "villages": "Quelques villages de la ville :",
+        "cityNotFound": "Ville non trouvée"
+    },
+    "cities": {
+        "qalqilya": {
+            "name": "Qalqilya",
+            "sections": {
+                "location": "Ville palestinienne au nord de la Cisjordanie, au sud de Tulkarem et à l'ouest de Naplouse.\nÀ 16 km de Tulkarem, 25 km de Naplouse et 14 km de la Méditerranée.\nAltitude : 75 mètres.",
+                "area": "Superficie avant 1948 : 27 915 dunums. 17 663 dunums confisqués en 1949. La majorité reste sous contrôle israélien.",
+                "naming": "De 'Qaylula' (sieste), étape de caravanes, ou du cananéen 'Gilgal' signifiant pierres rondes.",
+                "history": "Étape commerciale majeure entre le Levant et l'Égypte. Point stratégique militaire historique.",
+                "climate": "Méditerranéen : étés chauds/humides, hivers doux/pluvieux.",
+                "water": "Réseau municipal depuis 1960. 42 puits artésiens en 2013.",
+                "population": "De 2 803 en 1922 à environ 59 600 en 2024.",
+                "families": "Al-Harsh, Daoud, Zaid Sud, Zaid Nord, Aqra, Al-Shanti, Yassin, Zahran, Jbara.",
+                "landmarks": "Mosquées : Huzaifa bin Al-Yaman, Abu Dhar Al-Ghifari.\nAntiquités : Khirbet Breika, Khirbet Hanouta, mazar Saraqa."
+            },
+            "villages": [
+                {
+                    "id": "imatin",
+                    "name": "Imatin"
+                },
+                {
+                    "id": "azzun",
+                    "name": "Azzun"
+                },
+                {
+                    "id": "jayyus",
+                    "name": "Jayyus"
+                },
+                {
+                    "id": "habla",
+                    "name": "Habla"
+                }
+            ]
+        },
+        "jerusalem": {
+            "name": "Jérusalem",
+            "sections": {
+                "location": "Ville centrale sur quatre monts : Moriah, Sion, Akra et Bezetha. Carrefour historique des routes commerciales.",
+                "naming": "Jebus, Cité de David, Ursalim, et Al-Quds.",
+                "history": "3 800 ans d'histoire. Domination musulmane dès 636. Reprise par Saladin en 1187. Sous occupation depuis 1967.",
+                "population": "839 000 habitants (2011). Présence palestinienne résiliente malgré l'occupation.",
+                "landmarks": "Mosquée Al-Aqsa, Dôme du Rocher, Saint-Sépulcre, et les Remparts."
+            },
+            "villages": [
+                {
+                    "id": "abu-dis",
+                    "name": "Abu Dis"
+                },
+                {
+                    "id": "al-izariya",
+                    "name": "Al-Eizariya"
+                },
+                {
+                    "id": "silwan",
+                    "name": "Silwan"
+                },
+                {
+                    "id": "lifta",
+                    "name": "Lifta"
+                }
+            ]
+        },
+        "nablus": {
+            "name": "Naplouse",
+            "sections": {
+                "location": "Au cœur de la Palestine, reliant le nord au sud et l'est à l'ouest. 69 km de Jérusalem.",
+                "history": "Surnommée 'Petite Damas'. Centre culturel et économique majeur depuis des millénaires.",
+                "economy": "Célèbre pour son savon à l'huile d'olive et son Kunafa Nabulsi mondialement connu."
+            },
+            "villages": [
+                {
+                    "id": "sebastia",
+                    "name": "Sébastie"
+                },
+                {
+                    "id": "beita",
+                    "name": "Beita"
+                },
+                {
+                    "id": "hawara",
+                    "name": "Huwwara"
+                }
+            ]
+        },
+        "gaza": {
+            "name": "Gaza",
+            "sections": {
+                "location": "Point de rencontre entre l'Asie et l'Afrique. Carrefour historique du commerce mondial.",
+                "history": "L'une des plus anciennes villes du monde. 'Gaza Hashem' en l'honneur du grand-père du Prophète."
+            },
+            "villages": [
+                {
+                    "id": "khan-younis",
+                    "name": "Khan Younis"
+                },
+                {
+                    "id": "rafah",
+                    "name": "Rafah"
+                }
+            ]
+        },
+        "bethlehem": {
+            "name": "Bethléem",
+            "sections": {
+                "history": "Lieu de naissance de Jésus-Christ. Basilique de la Nativité, construite en 326 après J.-C.",
+                "economy": "Célèbre pour l'artisanat en bois d'olivier et la nacre."
+            },
+            "villages": [
+                {
+                    "id": "beit-jala",
+                    "name": "Beit Jala"
+                },
+                {
+                    "id": "beit-sahour",
+                    "name": "Beit Sahour"
+                }
+            ]
+        }
+    }
+}

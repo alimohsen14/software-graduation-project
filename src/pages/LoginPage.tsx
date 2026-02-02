@@ -52,7 +52,7 @@ export function LoginPage() {
   const handleGoogleLogin = () => {
     const GOOGLE_CLIENT_ID =
       "553195983261-00uvqi0ur841q0urmjakc87abu40ql0r.apps.googleusercontent.com";
-    const REDIRECT_URI = "http://localhost:3000/auth/google/callback";
+    const REDIRECT_URI = `${import.meta.env.VITE_API_URL}/auth/google/callback`;
     const SCOPE = "email profile";
     const RESPONSE_TYPE = "code";
 
