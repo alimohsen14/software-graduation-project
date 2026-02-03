@@ -15,8 +15,9 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    // ✅ Dynamic Model Selection: Load lighter model for mobile users
-    const modelSrc = isMobile ? "/models/soap-factory1.glb" : "/models/soap-factory.glb";
+    const [modelSrc, setModelSrc] = useState<string>(
+        window.innerWidth <= 768 ? "/models/soap-factory1.glb" : "/models/soap-factory.glb"
+    );
 
     const [isDoorAnimating, setIsDoorAnimating] = useState(false);
     const [hotspot3Fade, setHotspot3Fade] = useState<"strong" | "faded">("strong");
@@ -181,6 +182,13 @@ function Soap3DModelViewer() {
             const width = window.innerWidth;
             const mobileMode = width <= 768;
             setIsMobile(mobileMode);
+
+            const newSrc = mobileMode ? "/models/soap-factory1.glb" : "/models/soap-factory.glb";
+            if (newSrc !== modelSrc) {
+                setModelSrc(newSrc);
+                setLoaded(false); // Reset loaded state for new model
+                setProgress(0);  // Reset progress bar
+            }
         };
 
         window.addEventListener("resize", handleResize);
@@ -193,7 +201,7 @@ function Soap3DModelViewer() {
             document.removeEventListener("mousemove", onBoxMouseMove);
             document.removeEventListener("mouseup", onBoxMouseUp);
         };
-    }, []);
+    }, [modelSrc]);
 
 
     // منع سكرول الصفحة أثناء zoom داخل الموديول
@@ -259,7 +267,7 @@ function Soap3DModelViewer() {
             el.removeEventListener("progress", onProgress);
             el.removeEventListener("load", onLoad);
         };
-    }, []); // Model source is fixed (Google Drive URL)
+    }, [modelSrc]); // Re-attach if src changes
 
 
     const getCameraPosition = (mv: any) => {
@@ -563,10 +571,10 @@ setActiveHotspot(id);
             <div
                 ref={wrapRef}
                 className={
-                    "relative rounded-2xl overflow-hidden shadow-lg h-[600px] w-full border " +
+                    "relative rounded-2xl overflow-hidden shadow-lg h-[82vh] min-h-[560px] border " +
                     (isDarkBox
                         ? "bg-black/70 border-white/10"
-                        : "bg-black border-white/10")
+                        : "bg-black/5 border-gray-200")
                 }
             >
                 {/* Loading */}
@@ -643,11 +651,10 @@ setActiveHotspot(id);
                     alt={t("module3d.loading")}
                     camera-controls
                     data-visibility-attribute="data-visible"
-                    auto-rotate
-                    ar
-                    ar-modes="webxr scene-viewer quick-look"
+                    autoplay={false}
+                    animation-loop={false}
                     shadow-intensity="1"
-                    exposure="1.2"
+                    exposure="1"
                     environment-image="neutral"
                     interaction-prompt="none"
                     orbit-sensitivity="0.6"
