@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
-
+import { SignupPage } from "./pages/SignupPage";
 import { HomePage } from "./pages/HomePage";
 
 import { ForgotPasswordPage } from "./pages/ForgotPasswordPage";
@@ -76,7 +76,7 @@ export default function App() {
 
               {/* PUBLIC ONLY (Redirect to home if logged in) */}
               <Route path="/login" element={<PublicOnly><LoginPage /></PublicOnly>} />
-
+              <Route path="/signup" element={<PublicOnly><SignupPage /></PublicOnly>} />
               <Route path="/forgot-password" element={<PublicOnly><ForgotPasswordPage /></PublicOnly>} />
               <Route path="/reset-password" element={<PublicOnly><ResetPasswordPage /></PublicOnly>} />
               <Route path="/google-redirect" element={<PublicOnly><GoogleRedirectHandler /></PublicOnly>} />
