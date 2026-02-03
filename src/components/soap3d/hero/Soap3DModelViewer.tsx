@@ -15,8 +15,8 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    // ✅ Google Drive hosted 3D model (works for all devices)
-    const modelSrc = "https://drive.google.com/uc?export=download&id=1GD4fq4lpi6lMxEZ_9JgFLeI50La3qfn_";
+    // ✅ High-performance GitHub Release URL (CORS enabled, supports large files)
+    const modelSrc = "https://github.com/alimohsen14/software-graduation-project/releases/download/v1.0-model-2/soap-factory.glb";
 
     const [isDoorAnimating, setIsDoorAnimating] = useState(false);
     const [hotspot3Fade, setHotspot3Fade] = useState<"strong" | "faded">("strong");
@@ -563,10 +563,10 @@ setActiveHotspot(id);
             <div
                 ref={wrapRef}
                 className={
-                    "relative rounded-2xl overflow-hidden shadow-lg h-[82vh] min-h-[560px] border " +
+                    "relative rounded-2xl overflow-hidden shadow-lg h-[600px] w-full border " +
                     (isDarkBox
                         ? "bg-black/70 border-white/10"
-                        : "bg-black/5 border-gray-200")
+                        : "bg-black border-white/10")
                 }
             >
                 {/* Loading */}
@@ -643,10 +643,11 @@ setActiveHotspot(id);
                     alt={t("module3d.loading")}
                     camera-controls
                     data-visibility-attribute="data-visible"
-                    autoplay={false}
-                    animation-loop={false}
+                    auto-rotate
+                    ar
+                    ar-modes="webxr scene-viewer quick-look"
                     shadow-intensity="1"
-                    exposure="1"
+                    exposure="1.2"
                     environment-image="neutral"
                     interaction-prompt="none"
                     orbit-sensitivity="0.6"
