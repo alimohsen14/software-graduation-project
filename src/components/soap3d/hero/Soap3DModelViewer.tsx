@@ -15,9 +15,8 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    const [modelSrc, setModelSrc] = useState<string>(
-        window.innerWidth <= 768 ? "/models/soap-factory1.glb" : "/models/soap-factory.glb"
-    );
+    // ✅ High-performance GitHub Release URL (CORS enabled, supports large files)
+    const modelSrc = "https://github.com/alimohsen14/software-graduation-project/releases/download/v1.0-model-2/soap-factory.glb?raw=1";
 
     const [isDoorAnimating, setIsDoorAnimating] = useState(false);
     const [hotspot3Fade, setHotspot3Fade] = useState<"strong" | "faded">("strong");
@@ -182,13 +181,6 @@ function Soap3DModelViewer() {
             const width = window.innerWidth;
             const mobileMode = width <= 768;
             setIsMobile(mobileMode);
-
-            const newSrc = mobileMode ? "/models/soap-factory1.glb" : "/models/soap-factory.glb";
-            if (newSrc !== modelSrc) {
-                setModelSrc(newSrc);
-                setLoaded(false); // Reset loaded state for new model
-                setProgress(0);  // Reset progress bar
-            }
         };
 
         window.addEventListener("resize", handleResize);
@@ -650,6 +642,9 @@ setActiveHotspot(id);
                     src={modelSrc}
                     alt={t("module3d.loading")}
                     camera-controls
+                    reveal="auto"
+                    camera-orbit="-3rad 1.2rad 200m"
+                    camera-target="-80m -20m 40m"
                     data-visibility-attribute="data-visible"
                     autoplay={false}
                     animation-loop={false}
