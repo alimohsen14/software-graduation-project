@@ -133,9 +133,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 if (permission !== 'granted') return null;
 
                 // Get Web Token
-                const vapidKey = import.meta.env.VITE_FIREBASE_VAPID_KEY;
+                const vapidKey = process.env.REACT_APP_FIREBASE_VAPID_KEY;
                 if (!vapidKey) {
-                    console.warn("⚠️ VITE_FIREBASE_VAPID_KEY not configured. Web push notifications disabled.");
+                    console.warn("⚠️ REACT_APP_FIREBASE_VAPID_KEY not configured. Web push notifications disabled.");
                     return null;
                 }
 

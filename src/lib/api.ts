@@ -6,9 +6,9 @@ import axios from "axios";
 // All API requests use this single axios instance.
 // The base URL is environment-driven for maximum flexibility:
 //
-// Local Dev:      VITE_API_URL=http://localhost:3000
-// LAN/Mobile:     VITE_API_URL=http://192.168.1.16:3000
-// Production:     VITE_API_URL=https://api.yourproductionsite.com
+// Local Dev:      REACT_APP_API_URL=http://localhost:3000
+// LAN/Mobile:     REACT_APP_API_URL=http://192.168.1.16:3000
+// Production:     REACT_APP_API_URL=https://api.yourproductionsite.com
 //
 // This works seamlessly across:
 // - Desktop browsers
@@ -16,12 +16,12 @@ import axios from "axios";
 // - React Native WebViews
 // ==========================================
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
 if (!API_URL) {
     console.error(
-        "❌ VITE_API_URL is not defined. Please check your .env file.\n" +
-        "Example: VITE_API_URL=http://localhost:3000"
+        "❌ REACT_APP_API_URL is not defined. Please check your .env file.\n" +
+        "Example: REACT_APP_API_URL=http://localhost:3000"
     );
 }
 
