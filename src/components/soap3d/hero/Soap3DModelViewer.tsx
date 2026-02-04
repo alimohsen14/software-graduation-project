@@ -15,8 +15,9 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    // ✅ High-performance GitHub Release URL (CORS enabled, bypasses Git LFS issues)
-    const modelSrc = "https://github.com/alimohsen14/software-graduation-project/releases/download/v1.0-model-2/soap-factory.glb";
+    // ✅ High-performance Cloudflare R2 Hosting (CORS enabled, highly reliable)
+    const MODEL_URL = "https://pub-c5f0cf9c1f29433e89d3a79ff038f525.r2.dev/soap-factory.glb";
+    const modelSrc = MODEL_URL;
 
     // 🔬 DIAGNOSTIC: Fetch Pre-check
     useEffect(() => {
