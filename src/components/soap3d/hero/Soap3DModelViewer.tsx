@@ -15,8 +15,8 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    // ✅ High-performance GitHub Release URL (CORS enabled, supports large files)
-    const modelSrc = "https://github.com/alimohsen14/software-graduation-project/releases/download/v1.0-model-2/soap-factory.glb?raw=1";
+    // ✅ Optimized 70MB GitHub Release URL (CORS enabled, binary download forced)
+    const modelSrc = "https://github.com/alimohsen14/software-graduation-project/releases/download/v1.0-model-2/soap-factory1.glb?raw=1";
 
     const [isDoorAnimating, setIsDoorAnimating] = useState(false);
     const [hotspot3Fade, setHotspot3Fade] = useState<"strong" | "faded">("strong");
@@ -245,10 +245,17 @@ function Soap3DModelViewer() {
 
             setProgress(1);
             setLoaded(true);
+            console.log("✅ 3D Model loaded successfully");
+        };
+
+        const onError = (error: any) => {
+            console.error("❌ 3D Loading Error:", error);
+            // This event fires if the GLB is invalid or network fails
         };
 
         el.addEventListener("progress", onProgress);
         el.addEventListener("load", onLoad);
+        el.addEventListener("error", onError);
 
         // If it's already loaded for some reason
         if (el.complete) {
@@ -258,6 +265,7 @@ function Soap3DModelViewer() {
         return () => {
             el.removeEventListener("progress", onProgress);
             el.removeEventListener("load", onLoad);
+            el.removeEventListener("error", onError);
         };
     }, [modelSrc]); // Re-attach if src changes
 
