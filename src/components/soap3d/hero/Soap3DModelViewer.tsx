@@ -15,8 +15,8 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    // ✅ Local Model Selection: Load lighter model for mobile users
-    const modelSrc = isMobile ? "/models/soap-factory1.glb" : "/models/soap-factory.glb";
+    // ✅ High-performance GitHub Release URL (CORS enabled, bypasses Git LFS issues)
+    const modelSrc = "https://github.com/alimohsen14/software-graduation-project/releases/download/v1.0-model-2/soap-factory.glb";
 
     // 🔬 DIAGNOSTIC: Fetch Pre-check
     useEffect(() => {
