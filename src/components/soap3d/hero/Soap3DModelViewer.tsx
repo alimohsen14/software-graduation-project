@@ -15,8 +15,29 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    // ✅ Optimized 70MB GitHub Release URL (CORS enabled, binary download forced)
-    const modelSrc = "https://github.com/alimohsen14/software-graduation-project/releases/download/v1.0-model-2/soap-factory1.glb?raw=1";
+    // ✅ Local Model Selection: Load lighter model for mobile users
+    const modelSrc = isMobile ? "/models/soap-factory1.glb" : "/models/soap-factory.glb";
+
+    // 🔬 DIAGNOSTIC: Fetch Pre-check
+    useEffect(() => {
+        console.log(`🔍 [Diagnostic] Pre-checking model availability: ${modelSrc}`);
+        setLoaded(false);
+        setProgress(0);
+
+        fetch(modelSrc)
+            .then(res => {
+                console.log(`📡 [Diagnostic] Fetch Status: ${res.status} (${res.statusText})`);
+                console.log(`📡 [Diagnostic] Content-Type: ${res.headers.get("content-type")}`);
+                console.log(`📡 [Diagnostic] Content-Length: ${res.headers.get("content-length")} bytes`);
+
+                if (!res.ok) {
+                    throw new Error(`File not being served correctly. Server returned ${res.status}`);
+                }
+            })
+            .catch(err => {
+                console.error("❌ [Diagnostic] Fetch Pre-check Failed:", err.message);
+            });
+    }, [modelSrc]);
 
     const [isDoorAnimating, setIsDoorAnimating] = useState(false);
     const [hotspot3Fade, setHotspot3Fade] = useState<"strong" | "faded">("strong");
@@ -180,7 +201,11 @@ function Soap3DModelViewer() {
         const handleResize = () => {
             const width = window.innerWidth;
             const mobileMode = width <= 768;
-            setIsMobile(mobileMode);
+            if (mobileMode !== isMobile) {
+                setIsMobile(mobileMode);
+                setLoaded(false);
+                setProgress(0);
+            }
         };
 
         window.addEventListener("resize", handleResize);
@@ -193,7 +218,7 @@ function Soap3DModelViewer() {
             document.removeEventListener("mousemove", onBoxMouseMove);
             document.removeEventListener("mouseup", onBoxMouseUp);
         };
-    }, [modelSrc]);
+    }, [isMobile]); // 🛠 Fixed: Dependency on isMobile per request
 
 
     // منع سكرول الصفحة أثناء zoom داخل الموديول
@@ -229,35 +254,38 @@ function Soap3DModelViewer() {
         const el = mvRef.current;
         if (!el) return;
 
+        console.log(`⏳ [3D] Loading started: ${modelSrc}`);
+
         const onProgress = (e: any) => {
             const p = e?.detail?.totalProgress ?? 0;
+            console.log(`📈 [3D] Progress: ${Math.round(p * 100)}%`);
             setProgress(p);
-            // Don't setLoaded(true) here, let onLoad handle it for a smoother transition
         };
 
         const onLoad = () => {
             const mv = mvRef.current;
             if (!mv) return;
 
+            console.log("✅ [3D] Load event fired!");
+            console.log("📦 [3D] Parsed Model Object:", mv.model);
+
             mv.animationName = "Door_Open";
-            mv.currentTime = 0; // الباب مسكّر بالبداية
+            mv.currentTime = 0;
             mv.pause();
 
             setProgress(1);
             setLoaded(true);
-            console.log("✅ 3D Model loaded successfully");
         };
 
         const onError = (error: any) => {
-            console.error("❌ 3D Loading Error:", error);
-            // This event fires if the GLB is invalid or network fails
+            console.error("❌ [3D] Error Event:", error);
+            if (error.detail) console.error("❌ [3D] Error Details:", error.detail);
         };
 
         el.addEventListener("progress", onProgress);
         el.addEventListener("load", onLoad);
         el.addEventListener("error", onError);
 
-        // If it's already loaded for some reason
         if (el.complete) {
             onLoad();
         }
@@ -267,7 +295,7 @@ function Soap3DModelViewer() {
             el.removeEventListener("load", onLoad);
             el.removeEventListener("error", onError);
         };
-    }, [modelSrc]); // Re-attach if src changes
+    }, [modelSrc]);
 
 
     const getCameraPosition = (mv: any) => {
@@ -646,6 +674,7 @@ setActiveHotspot(id);
 
 
                 <model-viewer
+                    key={modelSrc}
                     ref={mvRef}
                     src={modelSrc}
                     alt={t("module3d.loading")}
