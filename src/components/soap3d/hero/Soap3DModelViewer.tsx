@@ -15,9 +15,11 @@ function Soap3DModelViewer() {
     const [showDoorMenu, setShowDoorMenu] = useState(false);
 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    // ✅ High-performance Cloudflare R2 Hosting (CORS enabled, highly reliable)
-    const MODEL_URL = "https://pub-c5f0cf9c1f29433e89d3a79ff038f525.r2.dev/soap-factory.glb";
-    const modelSrc = MODEL_URL;
+    // ✅ Responsive R2 URLs: Automatically switches between full and light versions
+    const DESKTOP_MODEL = "https://pub-c5f0cf9c1f29433e89d3a79ff038f525.r2.dev/soap-factory.glb";
+    const MOBILE_MODEL = "https://pub-c5f0cf9c1f29433e89d3a79ff038f525.r2.dev/soap-factory1.glb";
+
+    const modelSrc = isMobile ? MOBILE_MODEL : DESKTOP_MODEL;
 
     // 🔬 DIAGNOSTIC: Fetch Pre-check
     useEffect(() => {

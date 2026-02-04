@@ -3,6 +3,8 @@ import Navbar from "../navbar/Navbar";
 import Sidebar from "../sidebar/Sidebar";
 import { useLocation } from "react-router-dom";
 
+import Footer from "./Footer";
+
 interface DashboardLayoutProps {
   children: React.ReactNode;
   onToggleAISidebar?: () => void;
@@ -78,6 +80,9 @@ export default function DashboardLayout({
             </div>
           )}
         </main>
+
+        {/* Footer - HIDDEN on Full-width pages (like AI Chat) and Heritage Page for visual consistency */}
+        {!isFullWidth && !isHeritagePage && <Footer />}
       </div>
     </div>
   );
